@@ -1,0 +1,6 @@
+D:/0_Projekty/Project_Template/test/template/out/CMakeFiles/template_test.dir
+D:/0_Projekty/Project_Template/test/template/out/CMakeFiles/edit_cache.dir
+D:/0_Projekty/Project_Template/test/template/out/CMakeFiles/rebuild_cache.dir
+D:/0_Projekty/Project_Template/test/template/out/unity/CMakeFiles/unity.dir
+D:/0_Projekty/Project_Template/test/template/out/unity/CMakeFiles/edit_cache.dir
+D:/0_Projekty/Project_Template/test/template/out/unity/CMakeFiles/rebuild_cache.dir

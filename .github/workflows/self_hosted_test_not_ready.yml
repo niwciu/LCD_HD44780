@@ -1,0 +1,23 @@
+name: self-hosted test
+# on: [push, pull_request]
+on: workflow_dispatch
+jobs: 
+  formatting_check_docker_runner:
+    name: Gcc_test
+    runs-on: test-runner
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4.1.0
+    
+    - name: test
+      run: arm-none-eabi-gcc --version
+
+    - name: programmer check
+      run: STM32_Programmer_CLI -l
+
+    - name: Build binary
+      working-directory: test/inputs
+      run: |
+        mkdir out
+        cmake -Bout -GNinja
+        cmake --build out

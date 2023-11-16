@@ -1,0 +1,14 @@
+This folder will contain output from GCov tool. Look at the template task shown below
+
+        // {   // to use it replace "template" with specific module and provide whole"directory_to_your_project_folder" for exampel "D_/Projects/Project_a"      
+        //     "label": "template module.c code coverage report generation",
+        //     "type": "shell",
+        //     "command": "python -m gcovr CMakeFiles/template_test.dir/directory_to_your_project_folder -r ../../.. --html-details ../../../reports/Code_Coverage/template_gcov_report.html",
+        //     "args": [],
+        //     "options": {
+        //         "cwd": "${workspaceFolder}/test/template/out"
+        //     },
+        //     "group": "test",
+            
+        // },
+    Delete this file after generating first report.

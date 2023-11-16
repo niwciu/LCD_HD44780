@@ -1,0 +1,3 @@
+This folder should contain documentation for the projekt. 
+
+This file can be delated after placing here any other content

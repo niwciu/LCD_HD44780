@@ -1,0 +1,105 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build template_test",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "all",
+                "-j12",
+                "-o template_test.o"
+                
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/test/template/out"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            // "problemMatcher": [],
+            // "dependsOn":["run lizard test"],
+        },
+        {
+            "label": "clean template_test",
+            "type": "shell",
+            "command": "make clean",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}/test/template/out"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "run template_test",
+            "command": "./template_test.exe",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}/test/template/out"
+            },
+            "group": "test"
+        },
+        {         
+            "label": "run lizard test",
+            "type": "shell",
+            "command": "lizard src/ --CCN 12 -Tnloc=21 --languages cpp -V -w -i 1",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "test",
+            
+        },
+        {         
+            "label": "run lizard test with report",
+            "type": "shell",
+            "command": "lizard src/ --CCN 12 -Tnloc=21 --languages cpp -V -o reports/Cyclomatic_Complexity/Lizard_report.html",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "test",
+            
+        },
+        {
+            "label": "run cppcheck for src",
+            "type": "shell",
+            "command": "cppcheck",
+            "args": [
+                //  ".",   // option for whole project
+                 "src/",
+                //  "-itest/unity/",  //suppress directory test/unity/
+                // "-itest/template/", //suppress directory test/template/
+                "--enable=all",
+                "--inconclusive",
+                "--force" ,
+                "--inline-suppr",
+                // "--output-file=reports/cppcheck.out",  // this will print out report instead of printing problems in terminal
+                "--platform=win64",
+                "--suppress=missingIncludeSystem"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "test",
+        },
+        // {   // to use it replace "template" with specific module and provide whole"directory_to_your_project_folder" for exampel "D_/Projects/Project_a"      
+        //     "label": "template module.c code coverage report generation",
+        //     "type": "shell",
+        //     "command": "python -m gcovr CMakeFiles/template_test.dir/directory_to_your_project_folder -r ../../.. --html-details ../../../reports/Code_Coverage/template_gcov_report.html",
+        //     "args": [],
+        //     "options": {
+        //         "cwd": "${workspaceFolder}/test/template/out"
+        //     },
+        //     "group": "test",
+            
+        // },
+    ]
+}

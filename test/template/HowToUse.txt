@@ -1,0 +1,12 @@
+1. Copy Template folder and rename it according to module that gone be tested inside
+2. Update CMakeList.txt - lock at commented lines. 
+    #../../src/tested_module_folder/tested_module.c
+    #mock_module.c
+
+    they need/can be updated acordingly to project needs 
+3. Rename also otehr files starting from "template" acordingly to module that you will test inside
+4. edit all template files and replace word "template" acording to your needs
+5. create out folder
+6. go to out folder and type cmake .. -G"Ninja" or cmake .. -G"Unix Makefiles" or modify the command so it will suite to your tools
+8. next type Ninja -V or make all
+9. look at example tasks in .vscode folder you can modify it and create new task for building cleaning and running the tests of your new module
