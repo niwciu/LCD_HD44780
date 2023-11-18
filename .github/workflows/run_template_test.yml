@@ -23,7 +23,7 @@ jobs:
       uses: seanmiddleditch/gha-setup-ninja@v3
         
     - name: Build binary
-      working-directory: test/pump
+      working-directory: test/template
       run: |
         mkdir out
         cmake -Bout -GNinja
@@ -33,8 +33,8 @@ jobs:
       working-directory: test/template/out
       run: dir
 
-    - name: Run pump tests
-      working-directory: test/pump/out
+    - name: Run template tests
+      working-directory: test/template/out
       run: ./template_test.exe -v
 
   # template_2_test_running:
