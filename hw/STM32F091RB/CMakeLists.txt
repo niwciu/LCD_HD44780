@@ -60,13 +60,6 @@ set(ASM_SRCS
 )
 
 set(GLOBAL_DEFINES
-    # -DON=1 
-    # -DOFF=0 
-    # -DTYP_S=0 
-    # -DTYP_P=1 
-    # -DTYP_E=2 
-    # -DSTEROWNIK_TYP=TYP_S 
-    # -DMODBUS_RTU=OFF
     -DSTM32F091xC
 )
 
