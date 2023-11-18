@@ -1,18 +1,27 @@
 {
-  "configurations": [
-    {
-      "name": "windows-gcc-x64",
-      "includePath": [
-        "${workspaceFolder}/**"
-      ],
-      "compilerPath": "C:/Qt_6_5/Tools/mingw1120_64/bin/gcc.exe",
-      "cStandard": "${default}",
-      "cppStandard": "${default}",
-      "intelliSenseMode": "windows-gcc-x64",
-      "compilerArgs": [
-        ""
-      ]
-    }
-  ],
-  "version": 4
+    "configurations": [
+        {
+            "name": "arm-gcc",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/hw/STM32G070RB/Core/",
+                "${workspaceFolder}/hw/STM32G070RB/Core/Inc/",
+                "${workspaceFolder}/hw/STM32G070RB/Core/Startup/",
+                "${workspaceFolder}/hw/STM32G070RB/Drivers/",
+                "${workspaceFolder}/hw/STM32G070RB/Drivers/CMSIS/",
+                "${workspaceFolder}/hw/STM32G070RB/Drivers/CMSIS/Device/",
+                "${workspaceFolder}/hw/STM32G070RB/Drivers/CMSIS/Include/"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "C:/Program Files (x86)/GNU Arm Embedded Toolchain/10 2021.10/bin/arm-none-eabi-gcc.exe",
+            "cStandard": "c89",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-arm"
+        }
+    ],
+    "version": 4
 }

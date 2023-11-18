@@ -1,0 +1,3 @@
+Folder for external librarys
+
+This file can be delated after placing here any other content
