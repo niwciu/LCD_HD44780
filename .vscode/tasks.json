@@ -49,7 +49,7 @@
         {         
             "label": "run lizard test",
             "type": "shell",
-            "command": "lizard src/ --CCN 12 -Tnloc=21 --languages cpp -V -w -i 1",
+            "command": "lizard src/ --CCN 12 -Tnloc=21 -a 4 --languages cpp -V -w -i 1",
             "args": [],
             "options": {
                 "cwd": "${workspaceFolder}"
@@ -60,7 +60,7 @@
         {         
             "label": "run lizard test with report",
             "type": "shell",
-            "command": "lizard src/ --CCN 12 -Tnloc=21 --languages cpp -V -o reports/Cyclomatic_Complexity/Lizard_report.html",
+            "command": "lizard src/ --CCN 12 -Tnloc=21 -a 4 --languages cpp -V -o reports/Cyclomatic_Complexity/Lizard_report.html",
             "args": [],
             "options": {
                 "cwd": "${workspaceFolder}"
