@@ -91,7 +91,7 @@ set_target_properties(
 	PROPERTIES
 		OUTPUT_NAME ${elf_file}
 )
-add_custom_target( size ALL COMMAND ${CMAKE_SIZE} --format=avr ${elf_file} DEPENDS ${hex_file})
+add_custom_target( size ALL COMMAND ${CMAKE_SIZE} -C --mcu=${MMCU} --format=avr ${elf_file} DEPENDS ${hex_file})
 
 # check if programmer software is available 
 find_program(AVR_Programmer avrdude)

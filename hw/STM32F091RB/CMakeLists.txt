@@ -19,7 +19,7 @@
 #############################################################################################################################
 cmake_minimum_required(VERSION 3.10)
 
-set(CMAKE_TOOLCHAIN_FILE ../../config/Toolchain-arm-gcc.cmake)
+set(CMAKE_TOOLCHAIN_FILE ../config/STM32/Toolchain-arm-gcc.cmake)
 
 # Allow assembler
 enable_language(ASM)
@@ -75,7 +75,7 @@ include_directories(${INCLUDE_DIRS})
 add_definitions(${GLOBAL_DEFINES})
 
 set(MCPU "-mcpu=cortex-m0")
-include(    ../../config/compiler_flags.cmake)
+include(    ../config/STM32/compiler_flags.cmake)
 
 # generate elf file
 add_arm_executable(${CMAKE_PROJECT_NAME} ${C_SRCS} ${ASM_SRCS})

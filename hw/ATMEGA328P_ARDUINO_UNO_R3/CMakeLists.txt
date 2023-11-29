@@ -19,7 +19,7 @@
 #############################################################################################################################
 cmake_minimum_required(VERSION 3.10)
 
-set(CMAKE_TOOLCHAIN_FILE ../../config/Toolchain-AVR-gcc.cmake)
+set(CMAKE_TOOLCHAIN_FILE ../config/AVR/Toolchain-AVR-gcc.cmake)
 
 # Allow assembler
 enable_language(ASM)
@@ -29,11 +29,13 @@ project(AVR_ATMEGA328P_TEMPLATE)
 ## AVR Chip Configuration
 # Set the CPU Freq coresponding with fusebit settings
 set(F_CPU 16000000UL)
-# CPU, you can find the list here:
+# CPU definition, you can find the list here:
 # https://gcc.gnu.org/onlinedocs/gcc/AVR-Options.html
 set(MMCU atmega328p)
+
 # Default Baudrate for UART, read avr include/util/setbaud.h for usage
 # set(BAUD 9600)
+
 # The programmer to use, read avrdude manual for list
 set(PROG_TYPE usbasp)
 
@@ -75,7 +77,7 @@ link_directories(
 include_directories(${INCLUDE_DIRS})
 add_definitions(${GLOBAL_DEFINES})
 
-include(    ../../config/AVR_compiler_flags.cmake)
+include(    ../config/AVR/AVR_compiler_flags.cmake)
 add_compile_options(${COMPILE_OPTIONS})
 # generate elf file
 add_AVR_executable(${CMAKE_PROJECT_NAME} ${C_SRCS} ${ASM_SRCS})
