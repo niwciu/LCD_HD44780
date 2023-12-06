@@ -95,14 +95,16 @@ add_custom_command(
 	TARGET ${PROJECT_NAME} POST_BUILD 
 	COMMAND ${CMAKE_SIZE} --format=berkeley ${elf_file} ${hex_file})
 # check if programmer software is available 
-find_program(STM32_Programmer STM32_Programmer_CLi)
+find_program(STM32_Programmer STM32_Programmer_CLI)
 if(STM32_Programmer)
-	message(STATUS "$STM32 Programmer was found, you can program your device with target: \r\n\t flash.")
+	message(STATUS "STM32 Programmer was found, you can work with your device using targets: \r\n\t flash,\r\n\t erase,\r\n\t reset.")	
 else()
 	message(STATUS "STM32 Programmer was not found.")  
 endif()
 # add "flash" command for programming the uC
 add_custom_target(flash COMMAND ${STM32_Programmer} --connect port=SWD --write $<TARGET_FILE:${elf_file}> --verify -rst)
+add_custom_target(erase COMMAND ${STM32_Programmer} -c port=SWD -e all)
+add_custom_target(reset COMMAND ${STM32_Programmer} -c port=SWD -rst)
 
 endmacro(add_arm_executable)
 
