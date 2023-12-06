@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 22:11:49
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-06 23:54:20
+ * @Last Modified time: 2023-12-07 00:13:12
  */
 
 #include "mock_LCD_IO_driver.h"
@@ -14,7 +14,8 @@ uint8_t mock_LCD_SIG_PORT = 0;
 uint8_t mock_LCD_DATA_PORT_DIRECTION = 0;
 uint8_t mock_LCD_SIG_PORT_DIRECTION = 0;
 
-uint32_t mock_LCD_Port_delay_dump_data[BUF_SIZE][LOG_DATA_AMOUNT];
+uint16_t mock_LCD_Port_delay_dump_data[BUF_SIZE][LOG_DATA_AMOUNT];
+uint16_t dump_reg_pointer=0;
 
 static void mock_init_LCD_PINS(void);
 static void mock_set_LCD_DATA_PINS_as_outputs(void);
@@ -127,7 +128,7 @@ static void mock_dump_LCD_SIG_DATA_DELAY_state(uint32_t delay_us)
         dump_reg_pointer = 0;
 }
 
-static uint8_t mock_get_lcd_init_state(void)
+uint8_t mock_get_lcd_init_state(void)
 {
     return (mock_LCD_SIG_PORT_DIRECTION << 4) | (mock_LCD_DATA_PORT_DIRECTION);
 }
