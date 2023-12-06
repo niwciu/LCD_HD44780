@@ -10,7 +10,7 @@ extern "C"
 #include "lcd_hd44780_config.h"
 #include "lcd_hd44780_interface.h"
 
-
+void lcd_init(void);
 
 
 
