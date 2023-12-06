@@ -4,17 +4,17 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build template_test",
+            "label": "build lcd_hd44780",
             "type": "shell",
             "command": "make",
             "args": [
                 "all",
                 "-j12",
-                "-o template_test.o"
+                "-o lcd_hd44780.o"
                 
             ],
             "options": {
-                "cwd": "${workspaceFolder}/test/template/out"
+                "cwd": "${workspaceFolder}/test/lcd_hd44780/out"
             },
             "group": {
                 "kind": "build",
@@ -24,12 +24,12 @@
             // "dependsOn":["run lizard test"],
         },
         {
-            "label": "clean template_test",
+            "label": "clean lcd_hd44780",
             "type": "shell",
             "command": "make clean",
             "args": [],
             "options": {
-                "cwd": "${workspaceFolder}/test/template/out"
+                "cwd": "${workspaceFolder}/test/lcd_hd44780/out"
             },
             "group": {
                 "kind": "build",
@@ -38,11 +38,11 @@
         },
         {
             "type": "shell",
-            "label": "run template_test",
-            "command": "./template_test.exe",
+            "label": "run lcd_hd44780_test",
+            "command": "./lcd_hd44780_test.exe",
             "args": [],
             "options": {
-                "cwd": "${workspaceFolder}/test/template/out"
+                "cwd": "${workspaceFolder}/test/lcd_hd44780/out"
             },
             "group": "test"
         },
