@@ -14,7 +14,37 @@ TEST_TEAR_DOWN(lcd_hd44780_init)
 {
     /* Cleanup after every test */
 }
-TEST(lcd_hd44780_init, FirstTest)
+TEST(lcd_hd44780_init, WhenLcdInitThenLcdDataPinsInit)
 {
-    TEST_FAIL_MESSAGE("Implement your test!");
+    TEST_ASSERT_EQUAL(0x7F,mock_get_lcd_init_state());
 }
+
+// TEST(lcd_hd44780_init, FirstTest)
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
+
+// TEST(lcd_hd44780_init, FirstTest)
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
+
+// TEST(lcd_hd44780_init, FirstTest)
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
+
+// TEST(lcd_hd44780_init, FirstTest)
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
+
+// TEST(lcd_hd44780_init, FirstTest)
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
+
+// TEST(lcd_hd44780_init, FirstTest)
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }

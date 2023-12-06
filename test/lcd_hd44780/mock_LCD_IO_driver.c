@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-06 22:11:49 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-06 22:41:19
+ * @Last Modified time: 2023-12-06 23:12:12
  */
 
 
@@ -76,4 +76,9 @@ void mock_LCD_reset_SIG(enum lcd_sig LCD_SIG)
 
 void mock_delay_us(uint32_t delay_us)
 {
+}
+
+uint8_t mock_get_lcd_init_state(void)
+{
+    return 0;
 }
