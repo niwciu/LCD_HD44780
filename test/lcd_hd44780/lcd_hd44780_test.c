@@ -24,10 +24,11 @@ TEST(lcd_hd44780_init, WhenLcdInitThenLcdDataPinsInit)
     #endif
 }
 
-// TEST(lcd_hd44780_init, FirstTest)
-// {
-//     TEST_FAIL_MESSAGE("Implement your test!");
-// }
+TEST(lcd_hd44780_init, GivenLcdIniAndPinsInitWhensetallSignalsFor15msThenLcdPinStatIsCorrect)
+{
+    //set_correct_signal_sequence_to_log
+    TEST_FAIL_MESSAGE("Implement your test!");
+}
 
 // TEST(lcd_hd44780_init, FirstTest)
 // {
