@@ -16,7 +16,12 @@ TEST_TEAR_DOWN(lcd_hd44780_init)
 }
 TEST(lcd_hd44780_init, WhenLcdInitThenLcdDataPinsInit)
 {
+    lcd_init();
+    #if USE_RW_PIN == ON
     TEST_ASSERT_EQUAL(0x7F,mock_get_lcd_init_state());
+    #else
+    TEST_ASSERT_EQUAL(0x3F,mock_get_lcd_init_state());
+    #endif
 }
 
 // TEST(lcd_hd44780_init, FirstTest)

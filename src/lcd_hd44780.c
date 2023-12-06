@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-06 21:39:30 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-06 22:33:11
+ * @Last Modified time: 2023-12-06 23:22:03
  */
 
 
@@ -17,9 +17,10 @@ static const struct LCD_IO_driver_interface_struct *LCD = NULL;
  */
 void lcd_init(void)
 {
+    LCD=LCD_IO_driver_interface_get();
     /**************************BASIC LCD INIT - taken from DS***************************************/
     //init I/O for LCD
-
+    LCD->init_LCD_pins();
     // set all LCD signals to High for more than 15ms
 
     // send 0x03 & wait more then 4,1ms

@@ -2,14 +2,16 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-06 22:11:49 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-06 23:12:12
+ * @Last Modified time: 2023-12-06 23:25:38
  */
 
 
 #include "mock_LCD_IO_driver.h"
 #include "lcd_hd44780_config.h"
 #include "lcd_hd44780_interface.h"
-// #include <stdio.h>
+
+uint8_t mock_LCD_DATA_PORT_DIRECTION=0;
+uint8_t mock_LCD_SIG_PORT_DIRECTION=0;
 
 void mock_init_LCD_PINS(void);
 void mock_set_LCD_DATA_PINS_as_outputs(void);
@@ -43,10 +45,13 @@ const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 
 void mock_init_LCD_PINS(void)
 {
+    mock_init_LCD_SIGNAL_PINS_as_outputs();
+    mock_set_LCD_DATA_PINS_as_outputs();
 }
 
 void mock_set_LCD_DATA_PINS_as_outputs(void)
 {
+    mock_LCD_DATA_PORT_DIRECTION=0x0f;
 }
 
 void mock_set_LCD_DATA_PINS_as_inputs(void)
@@ -64,6 +69,11 @@ uint8_t mock_get_LCD_DATA_PINS_state(void)
 
 void mock_init_LCD_SIGNAL_PINS_as_outputs(void)
 {
+    #if USE_RW_PIN == ON
+    mock_LCD_SIG_PORT_DIRECTION=0x07;
+    #else
+    mock_LCD_SIG_PORT_DIRECTION=0x03;
+    #endif
 }
 
 void mock_LCD_set_SIG(enum lcd_sig LCD_SIG)
@@ -80,5 +90,5 @@ void mock_delay_us(uint32_t delay_us)
 
 uint8_t mock_get_lcd_init_state(void)
 {
-    return 0;
+    return (mock_LCD_SIG_PORT_DIRECTION<<4)|(mock_LCD_DATA_PORT_DIRECTION);
 }
