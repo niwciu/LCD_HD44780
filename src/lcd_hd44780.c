@@ -2,11 +2,13 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-06 21:39:30 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-06 22:03:18
+ * @Last Modified time: 2023-12-06 22:33:11
  */
 
 
 #include "lcd_hd44780.h"
+
+static const struct LCD_IO_driver_interface_struct *LCD = NULL;
 
 /**
  * @brief  Function that initialize LCD in 4-bit mode with or without LCD R/W Pin handling.
