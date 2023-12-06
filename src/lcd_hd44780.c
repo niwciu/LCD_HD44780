@@ -2,13 +2,15 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-06 21:39:30 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-06 23:22:03
+ * @Last Modified time: 2023-12-06 23:30:53
  */
 
 
 #include "lcd_hd44780.h"
 
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
+
+static void register_LCD_IO_driver(void);
 
 /**
  * @brief  Function that initialize LCD in 4-bit mode with or without LCD R/W Pin handling.
@@ -17,7 +19,7 @@ static const struct LCD_IO_driver_interface_struct *LCD = NULL;
  */
 void lcd_init(void)
 {
-    LCD=LCD_IO_driver_interface_get();
+    register_LCD_IO_driver();
     /**************************BASIC LCD INIT - taken from DS***************************************/
     //init I/O for LCD
     LCD->init_LCD_pins();
@@ -41,4 +43,9 @@ void lcd_init(void)
     /*********************************END of BASIC LCD INIT***************************************/
     // define sepcial characters in LCD CGRAM
 
+}
+
+static void register_LCD_IO_driver(void)
+{
+    LCD=LCD_IO_driver_interface_get();
 }
