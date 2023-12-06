@@ -1,28 +1,32 @@
 /*
- * @Author: lukasz.niewelt 
- * @Date: 2023-12-06 22:11:49 
+ * @Author: lukasz.niewelt
+ * @Date: 2023-12-06 22:11:49
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-06 23:28:54
+ * @Last Modified time: 2023-12-06 23:54:20
  */
-
 
 #include "mock_LCD_IO_driver.h"
 #include "lcd_hd44780_config.h"
 #include "lcd_hd44780_interface.h"
 
-uint8_t mock_LCD_DATA_PORT_DIRECTION=0;
-uint8_t mock_LCD_SIG_PORT_DIRECTION=0;
+uint8_t mock_LCD_DATA_PORT = 0;
+uint8_t mock_LCD_SIG_PORT = 0;
+uint8_t mock_LCD_DATA_PORT_DIRECTION = 0;
+uint8_t mock_LCD_SIG_PORT_DIRECTION = 0;
 
-void mock_init_LCD_PINS(void);
-void mock_set_LCD_DATA_PINS_as_outputs(void);
-void mock_set_LCD_DATA_PINS_as_inputs(void);
-void mock_set_LCD_DATA_PINS_state(uint8_t data);
-uint8_t mock_get_LCD_DATA_PINS_state(void);
-void mock_init_LCD_SIGNAL_PINS_as_outputs(void);
-void mock_LCD_set_SIG(enum lcd_sig LCD_SIG);
-void mock_LCD_reset_SIG(enum lcd_sig LCD_SIG);
-void mock_delay_us(uint32_t delay_us);
+uint32_t mock_LCD_Port_delay_dump_data[BUF_SIZE][LOG_DATA_AMOUNT];
 
+static void mock_init_LCD_PINS(void);
+static void mock_set_LCD_DATA_PINS_as_outputs(void);
+static void mock_set_LCD_DATA_PINS_as_inputs(void);
+static void mock_set_LCD_DATA_PINS_state(uint8_t data);
+static uint8_t mock_get_LCD_DATA_PINS_state(void);
+static void mock_init_LCD_SIGNAL_PINS_as_outputs(void);
+static void mock_LCD_set_SIG(enum lcd_sig LCD_SIG);
+static void mock_LCD_reset_SIG(enum lcd_sig LCD_SIG);
+static uint8_t mock_get_pinmask(enum lcd_sig *LCD_SIG);
+static void mock_delay_us(uint32_t delay_us);
+static void mock_dump_LCD_SIG_DATA_DELAY_state(uint32_t delay_us);
 
 /************LCD_IO_driver_interface implementation START**************/
 static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
@@ -43,52 +47,87 @@ const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 
 /*************LCD_IO_driver_interface implementation END***************/
 
-void mock_init_LCD_PINS(void)
+static void mock_init_LCD_PINS(void)
 {
     mock_init_LCD_SIGNAL_PINS_as_outputs();
     mock_set_LCD_DATA_PINS_as_outputs();
 }
 
-void mock_set_LCD_DATA_PINS_as_outputs(void)
+static void mock_set_LCD_DATA_PINS_as_outputs(void)
 {
-    mock_LCD_DATA_PORT_DIRECTION=mock_LCD_D4|mock_LCD_D5|mock_LCD_D6|mock_LCD_D7;
+    mock_LCD_DATA_PORT_DIRECTION = mock_LCD_D4 | mock_LCD_D5 | mock_LCD_D6 | mock_LCD_D7;
 }
 
-void mock_set_LCD_DATA_PINS_as_inputs(void)
-{
-}
-
-void mock_set_LCD_DATA_PINS_state(uint8_t data)
+static void mock_set_LCD_DATA_PINS_as_inputs(void)
 {
 }
 
-uint8_t mock_get_LCD_DATA_PINS_state(void)
+static void mock_set_LCD_DATA_PINS_state(uint8_t data)
+{
+}
+
+static uint8_t mock_get_LCD_DATA_PINS_state(void)
 {
     return 0;
 }
 
-void mock_init_LCD_SIGNAL_PINS_as_outputs(void)
+static void mock_init_LCD_SIGNAL_PINS_as_outputs(void)
 {
-    #if USE_RW_PIN == ON
-    mock_LCD_SIG_PORT_DIRECTION=mock_LCD_E | mock_LCD_RS | mock_LCD_RW;;
-    #else
-    mock_LCD_SIG_PORT_DIRECTION=mock_LCD_E | mock_LCD_RS;
-    #endif
+#if USE_RW_PIN == ON
+    mock_LCD_SIG_PORT_DIRECTION = mock_LCD_E | mock_LCD_RS | mock_LCD_RW;
+    ;
+#else
+    mock_LCD_SIG_PORT_DIRECTION = mock_LCD_E | mock_LCD_RS;
+#endif
 }
 
-void mock_LCD_set_SIG(enum lcd_sig LCD_SIG)
+static void mock_LCD_set_SIG(enum lcd_sig LCD_SIG)
 {
+    mock_LCD_SIG_PORT|=mock_get_pinmask(&LCD_SIG);
+    mock_dump_LCD_SIG_DATA_DELAY_state(0);
 }
 
-void mock_LCD_reset_SIG(enum lcd_sig LCD_SIG)
+static void mock_LCD_reset_SIG(enum lcd_sig LCD_SIG)
 {
+    mock_LCD_SIG_PORT&=~(mock_get_pinmask(&LCD_SIG));
+    mock_dump_LCD_SIG_DATA_DELAY_state(0);
+}
+static uint8_t mock_get_pinmask(enum lcd_sig *LCD_SIG)
+{
+    uint8_t Pin_Mask=0;
+    switch (*LCD_SIG)
+    {
+    case LCD_E:
+        Pin_Mask=mock_LCD_E;
+        break;
+    case LCD_RW:
+        Pin_Mask=mock_LCD_RW;
+        break;
+    case LCD_RS:
+        Pin_Mask=mock_LCD_RS;
+        break;
+    default:
+        break;
+    }
+   return Pin_Mask; 
 }
 
-void mock_delay_us(uint32_t delay_us)
+static void mock_delay_us(uint32_t delay_us)
 {
+    mock_dump_LCD_SIG_DATA_DELAY_state(delay_us);
+    while (delay_us--);
 }
 
-uint8_t mock_get_lcd_init_state(void)
+static void mock_dump_LCD_SIG_DATA_DELAY_state(uint32_t delay_us)
 {
-    return (mock_LCD_SIG_PORT_DIRECTION<<4)|(mock_LCD_DATA_PORT_DIRECTION);
+    mock_LCD_Port_delay_dump_data[dump_reg_pointer][0] = mock_LCD_SIG_PORT;
+    mock_LCD_Port_delay_dump_data[dump_reg_pointer][1] = mock_LCD_DATA_PORT;
+    mock_LCD_Port_delay_dump_data[dump_reg_pointer][2] = delay_us;
+    if (++dump_reg_pointer > BUF_SIZE - 1)
+        dump_reg_pointer = 0;
+}
+
+static uint8_t mock_get_lcd_init_state(void)
+{
+    return (mock_LCD_SIG_PORT_DIRECTION << 4) | (mock_LCD_DATA_PORT_DIRECTION);
 }
