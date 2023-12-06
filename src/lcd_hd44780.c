@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-06 21:39:30 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-06 23:30:53
+ * @Last Modified time: 2023-12-07 00:32:33
  */
 
 
@@ -24,6 +24,17 @@ void lcd_init(void)
     //init I/O for LCD
     LCD->init_LCD_pins();
     // set all LCD signals to High for more than 15ms
+    LCD->set_SIG(LCD_E);
+    LCD->set_SIG(LCD_RS);
+    #if USE_RW_PIN==ON
+    LCD->set_SIG(LCD_RW);
+    #endif
+    LCD->delay_us(15000);
+    #if USE_RW_PIN==ON
+    LCD->reset_SIG(LCD_RW);
+    #endif
+    LCD->reset_SIG(LCD_RS);
+    LCD->reset_SIG(LCD_E);
 
     // send 0x03 & wait more then 4,1ms
 
