@@ -55,14 +55,11 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSetAllSignalsFor15msThenLcdPinStatIsCorre
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data,mock_LCD_Port_delay_dump_data,expected_buf_lenght);
 
 }
-//po init wyjscia w stanie niskim
 
-
-
-// TEST(lcd_hd44780_init, FirstTest)
-// {
-//     TEST_FAIL_MESSAGE("Implement your test!");
-// }
+TEST(lcd_hd44780_init, GivenLcdInitWhenSendFirst0x03ThenLcdPinStateSequenceIsCorrect)
+{
+    TEST_FAIL_MESSAGE("Implement your test!");
+}
 
 // TEST(lcd_hd44780_init, FirstTest)
 // {
