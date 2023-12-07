@@ -12,6 +12,7 @@ uint16_t expected_LCD_Port_delay_dump_data[BUF_SIZE][LOG_DATA_AMOUNT];
 
 static void clear_expected_LCD_Port_delay_dump_data(void);
 static uint16_t define_expected_sequence_for_first_15_ms_delay(void);
+static uint8_t define_expected_sequence_for_sending_0x03_init_data(uint8_t log_no,uint16_t delay);
 
 TEST_GROUP(lcd_hd44780_init);
 
@@ -58,27 +59,10 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSetAllSignalsFor15msThenLcdPinStatIsCorre
 
 TEST(lcd_hd44780_init, GivenLcdInitWhenSendFirst0x03ThenLcdPinStateSequenceIsCorrect)
 {
-    // set expected log sequence
-    uint16_t log_no=next_log_no;
+    // set expected log sequence for sending 0x03 at init
+    next_log_no=define_expected_sequence_for_sending_0x03_init_data(next_log_no,4500);
     uint16_t expected_buf_lenght=0;
-    //setE
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=mock_LCD_E;
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x00;
-    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0; 
-    //send data on Port
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=mock_LCD_E;
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x03;// first 0x03 init command
-    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0; 
-    //Reset E
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=0x00;
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x03;// first 0x03 init command
-    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0; 
-    //delay 4500us
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=0x00;
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x03;// first 0x03 init command
-    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=4500; 
-
-    next_log_no=log_no;
+    // next_log_no=log_no;
 
     expected_buf_lenght=(next_log_no-1)*(LOG_DATA_AMOUNT);
 
@@ -151,5 +135,26 @@ static uint16_t define_expected_sequence_for_first_15_ms_delay(void)
     expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=0x00;
     expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x00;
     expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0;
+    return log_no;
+}
+
+static uint8_t define_expected_sequence_for_sending_0x03_init_data(uint8_t log_no, uint16_t delay)
+{
+        //setE
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=mock_LCD_E;
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x00;
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0; 
+    //send data on Port
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=mock_LCD_E;
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x03;// first 0x03 init command
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0; 
+    //Reset E
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=0x00;
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x03; //previous value written to DATA_port
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0; 
+    //delay 4500us
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=0x00;
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x03; //previous value written to DATA_port
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=delay; 
     return log_no;
 }
