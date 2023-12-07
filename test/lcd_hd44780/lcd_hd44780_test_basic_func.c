@@ -55,7 +55,17 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenLcdDefCharPol_eCalledThenSigna
 
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenDefineSepcialCharactersFromBank1ThenSignalSequenceIsCorrect)
 {
-    TEST_FAIL_MESSAGE("Implement your test!");
+    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no,pol_e,Pol_e);
+    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no,pol_o,Pol_o);
+    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no,pol_s,Pol_s);
+    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no,pol_l,Pol_l);
+    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no,pol_c,Pol_c);
+    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no,pol_a,Pol_a);
+    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no,pol_n,Pol_n);
+    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no,zn_wody,Zn_wody);
+    expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+    lcd_load_char_bank(&char_bank_1);
+    TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
 // TEST(lcd_hd44780_basic_functions, FirstTest)
