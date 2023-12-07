@@ -61,18 +61,16 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSendFirst0x03ThenLcdPinStateSequenceIsCor
 {
     // set expected log sequence for sending 0x03 at init
     next_log_no=define_expected_sequence_for_sending_0x03_init_data(next_log_no,4500);
-    uint16_t expected_buf_lenght=0;
-    // next_log_no=log_no;
 
-    expected_buf_lenght=(next_log_no-1)*(LOG_DATA_AMOUNT);
+    uint16_t expected_buf_lenght=(next_log_no-1)*(LOG_DATA_AMOUNT);
 
    TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data,mock_LCD_Port_delay_dump_data,expected_buf_lenght);
 }
 
-// TEST(lcd_hd44780_init, FirstTest)
-// {
-//     TEST_FAIL_MESSAGE("Implement your test!");
-// }
+TEST(lcd_hd44780_init, GivenLcdInitWhenSendSecond0x03ThenLcdPinStateSequenceIsCorrect)
+{
+    TEST_FAIL_MESSAGE("Implement your test!");
+}
 
 // TEST(lcd_hd44780_init, FirstTest)
 // {
