@@ -99,22 +99,20 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSend4thCmd0x03ThenLcdPinStateSequenceIsCo
 }
 TEST(lcd_hd44780_init, GivenLcdInitWhenSendFunctionSetCmdThenLcdPinStateSequenceIsCorrect)
 {
-
     uint8_t cmd = (LCDC_FUNC | LCDC_FUNC4B | LCDC_FUNC2L | LCDC_FUNC5x7);
     uint8_t expected_data_from_LCD=0;
-    // uint8_t read_data = 0x00; //ten only readed data is BF when sending 0x00 means taht all bits including BF are reset. When BR is reset lcd is ready to take new cmd
    
     //set expeted log sequence when sending cmd to LCD
     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd,expected_data_from_LCD, 0);
 
     uint16_t expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
-
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
-// TEST(lcd_hd44780_init, FirstTest)
-// {
-//     TEST_FAIL_MESSAGE("Implement your test!");
-// }
+
+TEST(lcd_hd44780_init, GivenLcdInitWhenSendDisplaySettingsCmdThenLcdPinStateSequenceIsCorrect)
+{
+    TEST_FAIL_MESSAGE("Implement your test!");
+}
 // TEST(lcd_hd44780_init, FirstTest)
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");
