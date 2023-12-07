@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 14:58:13
+ * @Last Modified time: 2023-12-07 15:11:23
  */
 
 #include "lcd_hd44780.h"
@@ -86,12 +86,13 @@ void lcd_init(void)
 
     // FUNCTION SET ->send cmd -> LCD in 4-bit mode, 2 rows, char size 5x7
     lcd_write_cmd(LCDC_FUNC | LCDC_FUNC4B | LCDC_FUNC2L | LCDC_FUNC5x7);
-
     // DISPLAY_ON_OFF send cmd -> enable lcd
     lcd_write_cmd(LCDC_ONOFF | LCDC_CURSOROFF | LCDC_DISPLAYON);
+    // LCD clear screen
+    lcd_write_cmd (LCDC_CLS);
+    LCD->delay_us(4900);
     // ENTRY MODe SET do not shift LCD shift cursor right after placing a char
 
-    // LCD clear screen
     /*********************************END of BASIC LCD INIT***************************************/
     // define sepcial characters in LCD CGRAM
 }
