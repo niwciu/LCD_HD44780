@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-07 16:59:56 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 20:07:35
+ * @Last Modified time: 2023-12-07 20:21:33
  */
 
 #include "lcd_hd44780_test_common.h"
@@ -162,7 +162,14 @@ uint8_t define_expected_sequence_for_send_data_to_LCD(uint8_t log_no, uint8_t da
 {
     //reset RS
     expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT]  | mock_LCD_RS);
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] =read_prev_LCD_PORT_state();
+    if(log_no!=0) 
+    {
+        expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
+    }
+    else
+    {
+        expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = read_prev_LCD_PORT_state();
+    }
     expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
 #if USE_RW_PIN == ON
     //reset RW

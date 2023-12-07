@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 18:20:18
+ * @Last Modified time: 2023-12-07 20:11:11
  */
 
 #include "lcd_hd44780.h"
@@ -42,6 +42,8 @@
 #define LCDC_SET_CGRAM      0x40
 #define LCDC_SET_DDRAM      0x80
 // clang-format on
+
+
 
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
 
@@ -192,6 +194,16 @@ void lcd_cls(void)
 {
     lcd_write_cmd (LCDC_CLS);
     LCD->delay_us(4900);
+}
+
+void lcd_def_char(enum LCD_CGRAM CGRAM_char_index, const uint8_t *def_char)
+{
+    lcd_write_cmd(LCDC_SET_CGRAM | ((DEF_CHAR_ADR_MASK & CGRAM_char_index) * LCD_CGRAM_BYTES_PER_CHAR));
+    for (uint8_t j = 0; j < LCD_CGRAM_BYTES_PER_CHAR; j++)
+    {
+        lcd_write_data(def_char[j]);
+    }
+    lcd_write_cmd(LCDC_SET_DDRAM);
 }
 
 /**
