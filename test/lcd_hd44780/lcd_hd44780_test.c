@@ -12,7 +12,7 @@ uint16_t expected_LCD_Port_delay_dump_data[BUF_SIZE][LOG_DATA_AMOUNT];
 
 static void clear_expected_LCD_Port_delay_dump_data(void);
 static uint16_t define_expected_sequence_for_first_15_ms_delay(void);
-static uint8_t define_expected_sequence_for_sending_0x03_init_data(uint8_t log_no, uint16_t delay);
+static uint8_t define_expected_sequence_for_sending_4_bit_cmd(uint8_t log_no, uint8_t cmd,uint16_t delay);
 
 TEST_GROUP(lcd_hd44780_init);
 
@@ -60,7 +60,7 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSetAllSignalsFor15msThenLcdPinStatIsCorre
 TEST(lcd_hd44780_init, GivenLcdInitWhenSendFirst0x03ThenLcdPinStateSequenceIsCorrect)
 {
     // set expected log sequence for sending 0x03 at init
-    next_log_no = define_expected_sequence_for_sending_0x03_init_data(next_log_no, 4500);
+    next_log_no = define_expected_sequence_for_sending_4_bit_cmd(next_log_no,0x03, 4500);
 
     uint16_t expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
 
@@ -70,7 +70,7 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSendFirst0x03ThenLcdPinStateSequenceIsCor
 TEST(lcd_hd44780_init, GivenLcdInitWhenSendSecond0x03ThenLcdPinStateSequenceIsCorrect)
 {
     // set expected log sequence for sending second 0x03 data at init of LCD
-    next_log_no = define_expected_sequence_for_sending_0x03_init_data(next_log_no, 110);
+    next_log_no = define_expected_sequence_for_sending_4_bit_cmd(next_log_no,0x03, 110);
 
     uint16_t expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
 
@@ -141,7 +141,7 @@ static uint16_t define_expected_sequence_for_first_15_ms_delay(void)
     return log_no;
 }
 
-static uint8_t define_expected_sequence_for_sending_0x03_init_data(uint8_t log_no, uint16_t delay)
+static uint8_t define_expected_sequence_for_sending_4_bit_cmd(uint8_t log_no,uint8_t cmd, uint16_t delay)
 {
     // setE
     expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = mock_LCD_E;
@@ -149,7 +149,7 @@ static uint8_t define_expected_sequence_for_sending_0x03_init_data(uint8_t log_n
     expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
     // send data on Port
     expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = mock_LCD_E;
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = 0x03; // set second 0x03 init command
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = cmd; // set second 0x03 init command
     expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
     // Reset E
     expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = 0x00;
