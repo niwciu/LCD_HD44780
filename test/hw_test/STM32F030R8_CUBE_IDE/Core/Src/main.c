@@ -91,6 +91,7 @@ int main(void)
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
   lcd_init();
+  lcd_char('G');
   /* USER CODE END 2 */
 
   /* Infinite loop */
