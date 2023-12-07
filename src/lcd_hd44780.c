@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 18:07:32
+ * @Last Modified time: 2023-12-07 18:19:18
  */
 
 #include "lcd_hd44780.h"
@@ -175,14 +175,19 @@ void lcd_init(void)
     // DISPLAY_ON_OFF send cmd -> enable lcd
     lcd_write_cmd(LCDC_ONOFF | LCDC_CURSOROFF | LCDC_DISPLAYON);
     // LCD clear screen
-    lcd_write_cmd (LCDC_CLS);
-    LCD->delay_us(4900);
+    lcd_cls();
     // ENTRY MODe SET do not shift LCD shift cursor right after placing a char
     lcd_write_cmd(LCDC_ENTRY_MODE | LCDC_ENTRYR);
     /*********************************END of BASIC LCD INIT***************************************/
 
     // ToDo define sepcial characters in LCD CGRAM
     
+}
+
+void lcd_cls(void)
+{
+    lcd_write_cmd (LCDC_CLS);
+    LCD->delay_us(4900);
 }
 
 void lcd_char(char C)

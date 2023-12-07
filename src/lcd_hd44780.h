@@ -11,6 +11,7 @@ extern "C"
 #include "lcd_hd44780_interface.h"
 
 void lcd_init(void);
+void lcd_cls(void);
 
 void lcd_char(char C);
 
