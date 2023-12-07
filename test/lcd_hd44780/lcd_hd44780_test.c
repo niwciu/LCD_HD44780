@@ -33,6 +33,11 @@ TEST(lcd_hd44780_init, WhenLcdInitThenLcdDataPinsInit)
     TEST_ASSERT_EQUAL(0x5F,mock_get_lcd_init_state());
     #endif
 }
+TEST(lcd_hd44780_init, WhenLcdInitThenLcdPinLow)
+{
+    lcd_init();
+    TEST_ASSERT_EQUAL(0x00,(mock_LCD_DATA_PORT| mock_LCD_SIG_PORT));
+}
 
 TEST(lcd_hd44780_init, GivenLcdIniAndPinsInitWhensetallSignalsFor15msThenLcdPinStatIsCorrect)
 {
@@ -50,10 +55,7 @@ TEST(lcd_hd44780_init, GivenLcdIniAndPinsInitWhensetallSignalsFor15msThenLcdPinS
 }
 //po init wyjscia w stanie niskim
 
-// TEST(lcd_hd44780_init, FirstTest)
-// {
-//     TEST_FAIL_MESSAGE("Implement your test!");
-// }
+
 
 // TEST(lcd_hd44780_init, FirstTest)
 // {
