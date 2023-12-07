@@ -47,21 +47,9 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenLcdClearScreenThenSignalSequen
 
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenLcdDefCharPol_eCalledThenSignalSequenceForLcdDefCharIsCorrect )
 {
-    uint8_t CGRAM_start_adress=((DEF_CHAR_ADR_MASK & pol_e) * LCD_CGRAM_BYTES_PER_CHAR);
-    uint8_t cmd=(LCDC_SET_CGRAM |CGRAM_start_adress);
-
-    next_log_no=define_expected_sequence_for_send_cmd_to_LCD(next_log_no,cmd,0x00, 0);
-
-    for (uint8_t j = 0; j < LCD_CGRAM_BYTES_PER_CHAR; j++)
-    {
-        next_log_no=define_expected_sequence_for_send_data_to_LCD(next_log_no,Pol_e[j],0x00, 0);
-    }
-    
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no,LCDC_SET_DDRAM,0x00, 0);
+    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no,pol_e,Pol_e);
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
-
     lcd_def_char(pol_e,Pol_e);
-
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 

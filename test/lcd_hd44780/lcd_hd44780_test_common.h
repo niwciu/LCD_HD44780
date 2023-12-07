@@ -2,10 +2,11 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-07 16:59:53 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 20:07:51
+ * @Last Modified time: 2023-12-07 21:20:56
  */
 #include <stdint.h>
 #include "mock_LCD_IO_driver.h"
+#include "lcd_hd44780.h"
 
 #define SIG_PORT 0
 #define DATA_PORT 1
@@ -21,3 +22,4 @@ uint16_t define_expected_sequence_for_first_15_ms_delay(void);
 uint8_t define_expected_sequence_for_read_write_4_bit_data(uint8_t log_no, uint8_t R_W_data, uint16_t delay);
 uint8_t define_expected_sequence_for_send_cmd_to_LCD(uint8_t log_no, uint8_t cmd,uint8_t expected_readed_data, uint16_t additional_cmd_delay);
 uint8_t define_expected_sequence_for_send_data_to_LCD(uint8_t log_no, uint8_t data,uint8_t expected_readed_data, uint16_t additional_cmd_delay);
+uint8_t define_expect_sequence_for_lcd_def_char(uint8_t log_no,enum LCD_CGRAM CGRAM_char_index,const uint8_t *def_char);
