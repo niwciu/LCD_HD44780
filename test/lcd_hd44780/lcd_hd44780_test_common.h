@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-07 16:59:53 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 17:46:14
+ * @Last Modified time: 2023-12-07 20:07:51
  */
 #include <stdint.h>
 #include "mock_LCD_IO_driver.h"
@@ -13,6 +13,7 @@
 
 extern uint16_t next_log_no;
 extern uint16_t expected_LCD_Port_delay_dump_data[BUF_SIZE][LOG_DATA_AMOUNT];
+extern uint16_t expected_buf_lenght;
 
 void clear_expected_LCD_Port_delay_dump_data(void);
 uint8_t read_prev_LCD_PORT_state (void);

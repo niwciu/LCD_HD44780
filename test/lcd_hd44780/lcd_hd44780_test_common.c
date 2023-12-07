@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-07 16:59:56 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 18:18:21
+ * @Last Modified time: 2023-12-07 20:07:35
  */
 
 #include "lcd_hd44780_test_common.h"
@@ -11,6 +11,7 @@
 
 uint16_t next_log_no;
 uint16_t expected_LCD_Port_delay_dump_data[BUF_SIZE][LOG_DATA_AMOUNT];
+uint16_t expected_buf_lenght;
 
 void clear_expected_LCD_Port_delay_dump_data(void)
 {
