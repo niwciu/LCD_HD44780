@@ -131,10 +131,10 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSendDisplayClearScrCmdThenLcdPinStateSequ
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
-// TEST(lcd_hd44780_init, FirstTest)
-// {
-//     TEST_FAIL_MESSAGE("Implement your test!");
-// }
+TEST(lcd_hd44780_init, GivenLcdInitWhenSendDisplayEntryModeCmdThenLcdPinStateSequenceIsCorrect)
+{
+    TEST_FAIL_MESSAGE("Implement your test!");
+}
 
 // TEST(lcd_hd44780_init, FirstTest)
 // {

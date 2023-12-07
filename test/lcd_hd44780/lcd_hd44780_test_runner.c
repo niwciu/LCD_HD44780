@@ -14,7 +14,7 @@ TEST_GROUP_RUNNER(lcd_hd44780_init)
     RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSendFunctionSetCmdThenLcdPinStateSequenceIsCorrect);
     RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSendDisplaySettingsCmdThenLcdPinStateSequenceIsCorrect);
     RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSendDisplayClearScrCmdThenLcdPinStateSequenceIsCorrect)
-    // RUN_TEST_CASE(lcd_hd44780_init, )
+    RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSendDisplayEntryModeCmdThenLcdPinStateSequenceIsCorrect)
     // RUN_TEST_CASE(lcd_hd44780_init, )
     // RUN_TEST_CASE(lcd_hd44780_init, )
     // RUN_TEST_CASE(lcd_hd44780_init, )
