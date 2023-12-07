@@ -13,6 +13,7 @@ uint16_t expected_LCD_Port_delay_dump_data[BUF_SIZE][LOG_DATA_AMOUNT];
 static void clear_expected_LCD_Port_delay_dump_data(void);
 static uint16_t define_expected_sequence_for_first_15_ms_delay(void);
 static uint8_t define_expected_sequence_for_read_write_4_bit_data(uint8_t log_no, uint8_t R_W_data, uint16_t delay);
+static uint8_t define_expected_sequence_for_send_cmd_to_LCD(uint8_t log_no, uint8_t cmd,uint8_t expected_readed_data, uint16_t additional_cmd_delay);
 
 TEST_GROUP(lcd_hd44780_init);
 
@@ -98,57 +99,14 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSend4thCmd0x03ThenLcdPinStateSequenceIsCo
 }
 TEST(lcd_hd44780_init, GivenLcdInitWhenSendFunctionSetCmdThenLcdPinStateSequenceIsCorrect)
 {
-    printf("\r\ntest_start_for_buf_element_o:%i\r\no", ((next_log_no)*3));
+
     uint8_t cmd = 0x00;
-    uint8_t read_data=0x00; //ten only readed data is BF when sending 0x00 means taht all bits including BF are reset. When BR is reset lcd is ready to take new cmd
-    uint8_t log_no = next_log_no;
-    //set expeted log sequence when sending cmd to LCD
-    //reset RS
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT] &~(mock_LCD_RS));
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
-    expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
-    #if USE_RW_PIN == ON
-    //reset RW
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT] &~(mock_LCD_RW));
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
-    expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
-    #endif
-    //write_4bit_data
-    log_no=define_expected_sequence_for_read_write_4_bit_data(log_no, cmd>> 4, 0);
-
-    log_no=define_expected_sequence_for_read_write_4_bit_data(log_no, cmd & 0x0F, 0);
-     #if USE_RW_PIN == ON
-    //reset_RS
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT] &~(mock_LCD_RS));
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
-    expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
+    uint8_t expected_data_from_LCD=0;
+    // uint8_t read_data = 0x00; //ten only readed data is BF when sending 0x00 means taht all bits including BF are reset. When BR is reset lcd is ready to take new cmd
    
-    //set_RW
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT] |(mock_LCD_RW));
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
-    expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
+    //set expeted log sequence when sending cmd to LCD
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd,expected_data_from_LCD, 0);
 
-    //read_byte that confirm that LCD is not BUSY-> 0xFF
-    //read 4 MSB with from port with input value 0xFF
-    log_no=define_expected_sequence_for_read_write_4_bit_data(log_no, read_data>>4, 0);
-    //read 4 LSB with from port with input value 0xFF
-    
-    log_no=define_expected_sequence_for_read_write_4_bit_data(log_no, read_data&0x0F, 0);
-    //reset_RW
-    
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT] &~(mock_LCD_RW));
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
-    expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
-    
-    #else
-    //wait 120uS
-    printf("\r\nlog_no=%i\r\n", ((log_no)*3));
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT]);
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
-    expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 120;
-    #endif
-
-    next_log_no=log_no;
     uint16_t expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
 
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
@@ -238,5 +196,59 @@ static uint8_t define_expected_sequence_for_read_write_4_bit_data(uint8_t log_no
         expected_LCD_Port_delay_dump_data[log_no++][DELAY] = delay;
     }
 
+    return log_no;
+}
+
+uint8_t define_expected_sequence_for_send_cmd_to_LCD(uint8_t log_no, uint8_t cmd,uint8_t expected_readed_data, uint16_t additional_cmd_delay)
+{
+    //reset RS
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT] & ~(mock_LCD_RS));
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
+#if USE_RW_PIN == ON
+    //reset RW
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT] & ~(mock_LCD_RW));
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
+#endif
+    //write_4bit_data
+    log_no = define_expected_sequence_for_read_write_4_bit_data(log_no, cmd >> 4, 0);
+
+    log_no = define_expected_sequence_for_read_write_4_bit_data(log_no, cmd & 0x0F, 0);
+#if USE_RW_PIN == ON
+    //reset_RS
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT] & ~(mock_LCD_RS));
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
+
+    //set_RW
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT] | (mock_LCD_RW));
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
+
+    //read_byte that confirm that LCD is not BUSY-> 0xFF
+    //read 4 MSB with from port with input value 0xFF
+    log_no = define_expected_sequence_for_read_write_4_bit_data(log_no, expected_readed_data >> 4, 0);
+    //read 4 LSB with from port with input value 0xFF
+
+    log_no = define_expected_sequence_for_read_write_4_bit_data(log_no, expected_readed_data & 0x0F, 0);
+    //reset_RW
+
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT] & ~(mock_LCD_RW));
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
+
+#else
+    //wait 120uS
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT]);
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 120;
+#endif
+    if (additional_cmd_delay != 0)
+    {
+        expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT]);
+        expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
+        expected_LCD_Port_delay_dump_data[log_no++][DELAY] = additional_cmd_delay;
+    }
     return log_no;
 }
