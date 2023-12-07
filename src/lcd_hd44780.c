@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 14:11:37
+ * @Last Modified time: 2023-12-07 14:31:38
  */
 
 #include "lcd_hd44780.h"
@@ -48,6 +48,12 @@ static void register_LCD_IO_driver(void);
 static void lcd_set_all_SIG(void);
 static void lcd_reset_all_SIG(void);
 static void lcd_write_4bit_data(uint8_t data);
+static void lcd_write_cmd(uint8_t cmd);
+#if USE_RW_PIN == ON
+static uint8_t read_lcd_BUSY_FLAG(void);
+static uint8_t lcd_read_byte(void);
+static uint8_t lcd_read_4bit_data(void);
+#endif
 
 /**
  * @brief  Function that initialize LCD in 4-bit mode with or without LCD R/W Pin handling.
@@ -80,34 +86,8 @@ void lcd_init(void)
     LCD->delay_us(110);
 
     // FUNCTION SET ->send cmd -> LCD in 4-bit mode, 2 rows, char size 5x7
-    uint8_t cmd = (LCDC_FUNC | LCDC_FUNC4B | LCDC_FUNC2L | LCDC_FUNC5x7);
-    uint8_t readed_data;
-    LCD->reset_SIG(LCD_RS);
-
-#if USE_RW_PIN == ON
-    LCD->reset_SIG(LCD_RW);
-#endif
-    lcd_write_4bit_data((cmd) >> 4);
-    lcd_write_4bit_data((cmd)&0x0F);
-#if USE_RW_PIN == ON
-    //check_BUSSY_FALG
-    LCD->set_data_pins_as_inputs();
-    LCD->reset_SIG(LCD_RS);
-    LCD->set_SIG(LCD_RW);
-    //read 4 MSB
-    LCD->set_SIG(LCD_E);
-    readed_data = (LCD->read_data() << 4);
-    LCD->reset_SIG(LCD_E);
-    //read 4 LSB
-    LCD->set_SIG(LCD_E);
-    readed_data |= (LCD->read_data() & 0x0F);
-    LCD->reset_SIG(LCD_E);
-#else
-    LCD->delay_us(120);
-#endif
-    LCD->reset_SIG(LCD_RW);
-    LCD->set_data_pins_as_outputs();
-
+    lcd_write_cmd(LCDC_FUNC | LCDC_FUNC4B | LCDC_FUNC2L | LCDC_FUNC5x7);
+    
     // DISPLAY_ON_OFF send cmd -> enable lcd
 
     // ENTRY MODe SET do not shift LCD shift cursor right after placing a char
@@ -147,3 +127,56 @@ void lcd_write_4bit_data(uint8_t data)
     LCD->write_data(data);
     LCD->reset_SIG(LCD_E);
 }
+
+static void lcd_write_cmd(uint8_t cmd)
+{
+    
+    LCD->reset_SIG(LCD_RS);
+
+#if USE_RW_PIN == ON
+    LCD->reset_SIG(LCD_RW);
+#endif
+    lcd_write_4bit_data((cmd) >> 4);
+    lcd_write_4bit_data((cmd)&0x0F);
+#if USE_RW_PIN == ON
+    //check_BUSSY_FALG
+    while (read_lcd_BUSY_FLAG()&BUSY_FLAG)
+    {
+        
+    }
+
+#else
+    LCD->delay_us(120);
+#endif
+    LCD->reset_SIG(LCD_RW);
+    LCD->set_data_pins_as_outputs();
+}
+
+#if USE_RW_PIN == ON
+uint8_t read_lcd_BUSY_FLAG(void)
+{
+    LCD->set_data_pins_as_inputs();
+    LCD->reset_SIG(LCD_RS);
+    LCD->set_SIG(LCD_RW);
+    return lcd_read_byte();
+}
+
+uint8_t lcd_read_byte(void)
+{
+    uint8_t data;
+    //read 4 MSB
+    data=(lcd_read_4bit_data()<<4);
+    //read 4 LSB
+    data|=(lcd_read_4bit_data()&0x0F);
+    return data;
+}
+
+uint8_t lcd_read_4bit_data (void)
+{
+    uint8_t data;
+    LCD->set_SIG(LCD_E);
+    data = LCD->read_data();
+    LCD->reset_SIG(LCD_E);
+    return data;
+}
+#endif
