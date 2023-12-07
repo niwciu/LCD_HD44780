@@ -111,7 +111,14 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSendFunctionSetCmdThenLcdPinStateSequence
 
 TEST(lcd_hd44780_init, GivenLcdInitWhenSendDisplaySettingsCmdThenLcdPinStateSequenceIsCorrect)
 {
-    TEST_FAIL_MESSAGE("Implement your test!");
+    uint8_t cmd = (LCDC_ONOFF | LCDC_CURSOROFF | LCDC_DISPLAYON);
+    uint8_t expected_data_from_LCD=0;
+   
+    //set expeted log sequence when sending cmd to LCD
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd,expected_data_from_LCD, 0);
+
+    uint16_t expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+    TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 // TEST(lcd_hd44780_init, FirstTest)
 // {
@@ -133,6 +140,7 @@ static uint16_t define_expected_sequence_for_first_15_ms_delay(void)
 {
     uint16_t log_no = 0;
     // set E
+    
     expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = mock_LCD_E;
     expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = 0x00;
     expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
@@ -209,9 +217,7 @@ uint8_t define_expected_sequence_for_send_cmd_to_LCD(uint8_t log_no, uint8_t cmd
     expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
     expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
 #endif
-    //write_4bit_data
     log_no = define_expected_sequence_for_read_write_4_bit_data(log_no, cmd >> 4, 0);
-
     log_no = define_expected_sequence_for_read_write_4_bit_data(log_no, cmd & 0x0F, 0);
 #if USE_RW_PIN == ON
     //reset_RS

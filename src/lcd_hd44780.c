@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 14:33:23
+ * @Last Modified time: 2023-12-07 14:58:13
  */
 
 #include "lcd_hd44780.h"
@@ -88,7 +88,7 @@ void lcd_init(void)
     lcd_write_cmd(LCDC_FUNC | LCDC_FUNC4B | LCDC_FUNC2L | LCDC_FUNC5x7);
 
     // DISPLAY_ON_OFF send cmd -> enable lcd
-
+    lcd_write_cmd(LCDC_ONOFF | LCDC_CURSOROFF | LCDC_DISPLAYON);
     // ENTRY MODe SET do not shift LCD shift cursor right after placing a char
 
     // LCD clear screen
@@ -129,7 +129,6 @@ void lcd_write_4bit_data(uint8_t data)
 
 static void lcd_write_cmd(uint8_t cmd)
 {
-
     LCD->reset_SIG(LCD_RS);
 
 #if USE_RW_PIN == ON
@@ -145,12 +144,12 @@ static void lcd_write_cmd(uint8_t cmd)
     while (lcd_read_byte() & BUSY_FLAG)
     {
     }
+    LCD->reset_SIG(LCD_RW);
+    LCD->set_data_pins_as_outputs();
 
 #else
     LCD->delay_us(120);
 #endif
-    LCD->reset_SIG(LCD_RW);
-    LCD->set_data_pins_as_outputs();
 }
 
 #if USE_RW_PIN == ON
