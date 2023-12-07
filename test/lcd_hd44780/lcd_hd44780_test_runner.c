@@ -9,7 +9,7 @@ TEST_GROUP_RUNNER(lcd_hd44780_init)
    
     RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSendFirst0x03ThenLcdPinStateSequenceIsCorrect)
     RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSendSecond0x03ThenLcdPinStateSequenceIsCorrect)
-    // RUN_TEST_CASE(lcd_hd44780_init, )
+    RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSendThirdCmd0x03ThenLcdPinStateSequenceIsCorrect )
     // RUN_TEST_CASE(lcd_hd44780_init, )
     // RUN_TEST_CASE(lcd_hd44780_init, )
     // RUN_TEST_CASE(lcd_hd44780_init, )
