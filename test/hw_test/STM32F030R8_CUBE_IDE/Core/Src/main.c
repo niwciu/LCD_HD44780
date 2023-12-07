@@ -96,8 +96,11 @@ int main(void)
   delay_ms(2000);
   lcd_cls();
   lcd_def_char(pol_e,Pol_e);
+  lcd_load_char_bank(&char_bank_1);
   lcd_char(pol_e);
-  delay_ms(2000);
+  lcd_char(pol_o);
+  lcd_char(zn_wody);
+  lcd_char('l');
   /* USER CODE END 2 */
 
   /* Infinite loop */
