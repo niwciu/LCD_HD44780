@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-07 15:51:41 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 16:17:22
+ * @Last Modified time: 2023-12-07 18:30:27
  */
 
 #define LCD_DATA_PORT LCD_D7_GPIO_Port
