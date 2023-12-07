@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "lcd_hd44780.h"
+#include "tim_delay.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -94,6 +95,9 @@ int main(void)
   lcd_char('G');
   delay_ms(2000);
   lcd_cls();
+  lcd_def_char(pol_e,Pol_e);
+  lcd_char(pol_e);
+  delay_ms(2000);
   /* USER CODE END 2 */
 
   /* Infinite loop */

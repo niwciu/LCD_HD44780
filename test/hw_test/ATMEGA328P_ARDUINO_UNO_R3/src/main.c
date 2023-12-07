@@ -20,6 +20,8 @@ int main(void)
     lcd_char('G');
     _delay_ms(2000);
     lcd_cls();
+    lcd_def_char(pol_e,Pol_e);
+    lcd_char(pol_e);
     while (1)
     {
 
