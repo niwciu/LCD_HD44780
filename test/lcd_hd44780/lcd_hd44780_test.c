@@ -41,7 +41,7 @@ TEST(lcd_hd44780_init, WhenLcdInitThenLcdPinLow)
     TEST_ASSERT_EQUAL(0x00,(mock_LCD_DATA_PORT| mock_LCD_SIG_PORT));
 }
 
-TEST(lcd_hd44780_init, GivenLcdIniAndPinsInitWhensetallSignalsFor15msThenLcdPinStatIsCorrect)
+TEST(lcd_hd44780_init, GivenLcdInitWhenSetAllSignalsFor15msThenLcdPinStatIsCorrect)
 {
     uint16_t expected_buf_lenght=0;
 

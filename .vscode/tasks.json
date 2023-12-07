@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build lcd_hd44780",
+            "label": "build lcd_hd44780_test",
             "type": "shell",
             "command": "make",
             "args": [
@@ -24,7 +24,7 @@
             // "dependsOn":["run lizard test"],
         },
         {
-            "label": "clean lcd_hd44780",
+            "label": "clean lcd_hd44780_test",
             "type": "shell",
             "command": "make clean",
             "args": [],
