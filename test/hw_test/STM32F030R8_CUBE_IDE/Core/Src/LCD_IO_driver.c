@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-07 15:51:41 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 16:09:27
+ * @Last Modified time: 2023-12-07 16:17:22
  */
 
 #define LCD_DATA_PORT LCD_D7_GPIO_Port
@@ -51,6 +51,8 @@ const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 
 static void init_LCD_data_and_SIG_pins(void)
 {
+    //enable BCKL of the LCD
+    LL_GPIO_SetOutputPin(LCD_BCKL_GPIO_Port, LCD_BCKL_Pin);
     //enable CLK -> for this setup it's done by CUBE_IDE when generatig project files from it
     //set_LCD_DATA_PINS_as_outputs -> for this setup it's done by CUBE_IDE when generatig project files from it
     //init_LCD_SIGNAL_PINS_as_outputs -> for this setup it's done by CUBE_IDE when generatig project files from it
