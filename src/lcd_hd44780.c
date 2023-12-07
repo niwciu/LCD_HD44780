@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 16:20:58
+ * @Last Modified time: 2023-12-07 17:39:59
  */
 
 #include "lcd_hd44780.h"
@@ -171,4 +171,30 @@ void lcd_init(void)
 
     // ToDo define sepcial characters in LCD CGRAM
     
+}
+
+void lcd_char(char C)
+{
+    uint8_t data = (uint8_t)(C);
+    LCD->set_SIG(LCD_RS);
+
+#if USE_RW_PIN == ON
+    LCD->reset_SIG(LCD_RW);
+#endif
+    lcd_write_4bit_data((data) >> 4);
+    lcd_write_4bit_data((data)&0x0F);
+#if USE_RW_PIN == ON
+    //check_BUSSY_FALG
+    LCD->set_data_pins_as_inputs();
+    LCD->reset_SIG(LCD_RS);
+    LCD->set_SIG(LCD_RW);
+    while (lcd_read_byte() & BUSY_FLAG)
+    {
+    }
+    LCD->reset_SIG(LCD_RW);
+    LCD->set_data_pins_as_outputs();
+
+#else
+    LCD->delay_us(120);
+#endif
 }

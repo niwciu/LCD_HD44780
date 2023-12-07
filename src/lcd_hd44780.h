@@ -12,7 +12,7 @@ extern "C"
 
 void lcd_init(void);
 
-
+void lcd_char(char C);
 
 
 #ifdef __cplusplus

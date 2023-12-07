@@ -2,10 +2,11 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-07 16:59:56 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 17:33:21
+ * @Last Modified time: 2023-12-07 17:50:50
  */
 
 #include "lcd_hd44780_test_common.h"
+#include "lcd_hd44780_config.h"
 
 
 uint16_t next_log_no;
@@ -20,6 +21,11 @@ void clear_expected_LCD_Port_delay_dump_data(void)
             expected_LCD_Port_delay_dump_data[i][j] = 0x00;
         }
     }
+}
+
+uint8_t read_prev_LCD_PORT_state(void)
+{
+    return mock_LCD_DATA_PORT;
 }
 
 uint16_t define_expected_sequence_for_first_15_ms_delay(void)
@@ -147,8 +153,8 @@ uint8_t define_expected_sequence_for_send_cmd_to_LCD(uint8_t log_no, uint8_t cmd
 uint8_t define_expected_sequence_for_send_data_to_LCD(uint8_t log_no, uint8_t data,uint8_t expected_readed_data, uint16_t additional_cmd_delay)
 {
     //reset RS
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT] & ~(mock_LCD_RS));
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT]  | mock_LCD_RS);
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] =read_prev_LCD_PORT_state();
     expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
 #if USE_RW_PIN == ON
     //reset RW
