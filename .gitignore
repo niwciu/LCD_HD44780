@@ -2,5 +2,11 @@ out/
 Release/
 Debug/
 Build/
+# HW test ingnored files
+.metadata/
+.cproject
+.project
+
+
 
 

@@ -285,5 +285,6 @@ uint8_t define_expected_sequence_for_send_cmd_to_LCD(uint8_t log_no, uint8_t cmd
         expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
         expected_LCD_Port_delay_dump_data[log_no++][DELAY] = additional_cmd_delay;
     }
+    expected_readed_data++; //to avoid warnings about unused variable and not complicate the test code too much
     return log_no;
 }
