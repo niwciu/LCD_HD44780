@@ -35,10 +35,10 @@ TEST(lcd_hd44780_init, WhenLcdInitThenLcdDataPinsInit)
     #endif
     TEST_ASSERT_EQUAL(expected_resoult,mock_get_lcd_init_state());
 }
-TEST(lcd_hd44780_init, WhenLcdInitThenLcdPinLow)
+TEST(lcd_hd44780_init, WhenLcdInitThenLcdDataPinsLowAtFirstLog)
 {
     lcd_init();
-    TEST_ASSERT_EQUAL(0x00,(mock_LCD_DATA_PORT| mock_LCD_SIG_PORT));
+    TEST_ASSERT_EQUAL(0x00,mock_LCD_Port_delay_dump_data[0][DATA_PORT]);
 }
 
 TEST(lcd_hd44780_init, GivenLcdInitWhenSetAllSignalsFor15msThenLcdPinStatIsCorrect)

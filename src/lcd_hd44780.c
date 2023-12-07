@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 01:09:33
+ * @Last Modified time: 2023-12-07 10:46:40
  */
 
 #include "lcd_hd44780.h"
@@ -30,6 +30,10 @@ void lcd_init(void)
     lcd_reset_all_SIG();
 
     // send 0x03 & wait more then 4,1ms
+    LCD->set_SIG(LCD_E);
+    LCD->write_data(0x03);
+    LCD->reset_SIG(LCD_E);
+    
 
     // send 0x03 & wait more then 100us
 
