@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-07 16:59:56 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 21:17:57
+ * @Last Modified time: 2023-12-07 23:25:31
  */
 
 #include "lcd_hd44780_test_common.h"
@@ -74,7 +74,7 @@ uint16_t define_expected_sequence_for_first_15_ms_delay(void)
     return log_no;
 }
 
-uint8_t define_expected_sequence_for_read_write_4_bit_data(uint8_t log_no, uint8_t R_W_data, uint16_t delay)
+uint16_t define_expected_sequence_for_read_write_4_bit_data(uint16_t log_no, uint8_t R_W_data, uint16_t delay)
 {
     // setE
     expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT] | mock_LCD_E;
@@ -99,7 +99,7 @@ uint8_t define_expected_sequence_for_read_write_4_bit_data(uint8_t log_no, uint8
     return log_no;
 }
 
-uint8_t define_expected_sequence_for_send_cmd_to_LCD(uint8_t log_no, uint8_t cmd,uint8_t expected_readed_data, uint16_t additional_cmd_delay)
+uint16_t define_expected_sequence_for_send_cmd_to_LCD(uint16_t log_no, uint8_t cmd,uint8_t expected_readed_data, uint16_t additional_cmd_delay)
 {
     //reset RS
     expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT] & ~(mock_LCD_RS));
@@ -159,7 +159,7 @@ uint8_t define_expected_sequence_for_send_cmd_to_LCD(uint8_t log_no, uint8_t cmd
     return log_no;
 }
 
-uint8_t define_expected_sequence_for_send_data_to_LCD(uint8_t log_no, uint8_t data,uint8_t expected_readed_data, uint16_t additional_cmd_delay)
+uint16_t define_expected_sequence_for_send_data_to_LCD(uint16_t log_no, uint8_t data,uint8_t expected_readed_data, uint16_t additional_cmd_delay)
 {
     //reset RS
     expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT]  | mock_LCD_RS);
@@ -219,7 +219,7 @@ uint8_t define_expected_sequence_for_send_data_to_LCD(uint8_t log_no, uint8_t da
     return log_no;
 }
 
-uint8_t define_expect_sequence_for_lcd_def_char(uint8_t log_no, enum LCD_CGRAM CGRAM_char_index, const uint8_t *def_char)
+uint16_t define_expect_sequence_for_lcd_def_char(uint16_t log_no, enum LCD_CGRAM CGRAM_char_index, const uint8_t *def_char)
 {
     uint8_t CGRAM_start_adress=((DEF_CHAR_ADR_MASK & CGRAM_char_index) * LCD_CGRAM_BYTES_PER_CHAR);
     uint8_t cmd=(LCDC_SET_CGRAM |CGRAM_start_adress);

@@ -2,10 +2,10 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-06 22:11:42 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 20:06:32
+ * @Last Modified time: 2023-12-07 23:15:32
  */
 #include <stdint.h>
-#define BUF_SIZE 1000
+#define BUF_SIZE 2000
 #define LOG_DATA_AMOUNT 3
 
 #define mock_LCD_D4 1 << 0

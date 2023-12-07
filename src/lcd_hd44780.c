@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 20:31:57
+ * @Last Modified time: 2023-12-08 00:01:47
  */
 
 #include "lcd_hd44780.h"
@@ -45,7 +45,9 @@
 
 
 
+
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
+// const struct char_bank_struct *char_bank = &char_bank_1;
 
 static void register_LCD_IO_driver(void);
 static void lcd_set_all_SIG(void);
@@ -213,6 +215,18 @@ void lcd_def_char(enum LCD_CGRAM CGRAM_char_index, const uint8_t *def_char)
         lcd_write_data(def_char[j]);
     }
     lcd_write_cmd(LCDC_SET_DDRAM);
+}
+
+void lcd_load_char_bank(const struct char_bank_struct *char_bank)
+{
+    lcd_def_char(0,char_bank->char_0);
+    lcd_def_char(1,char_bank->char_1);
+    lcd_def_char(2,char_bank->char_2);
+    lcd_def_char(3,char_bank->char_3);
+    lcd_def_char(4,char_bank->char_4);
+    lcd_def_char(5,char_bank->char_5);
+    lcd_def_char(6,char_bank->char_6);
+    lcd_def_char(7,char_bank->char_7);
 }
 
 /**
