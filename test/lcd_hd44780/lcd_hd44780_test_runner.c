@@ -23,7 +23,7 @@ TEST_GROUP_RUNNER(lcd_hd44780_basic_functions)
 {
     /* Test cases to run */
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenPrintGcharaterOnLcdThenSignalSequenceForSendingCharIsCorrect )
-    // RUN_TEST_CASE(lcd_hd44780_basic_functions, )
+    RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenLcdClearScreenThenSignalSequenceForLcdClearScreenIsCorrect)
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, )
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, )
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, )

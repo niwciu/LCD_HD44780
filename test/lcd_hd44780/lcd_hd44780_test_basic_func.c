@@ -23,11 +23,51 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenPrintGcharaterOnLcdThenSignalS
 {
     uint8_t data = (uint8_t)('G');
     uint16_t expected_buf_lenght = 0;
-    
-    next_log_no=define_expected_sequence_for_send_data_to_LCD(0, data, 0x00, 0);
+
+    next_log_no = define_expected_sequence_for_send_data_to_LCD(0, data, 0x00, 0);
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
 
     lcd_char('G');
-    
+
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
+
+TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenLcdClearScreenThenSignalSequenceForLcdClearScreenIsCorrect)
+{
+    TEST_FAIL_MESSAGE("Implement your test!");
+}
+
+// TEST(template, FirstTest)
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
+
+// TEST(template, FirstTest)
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
+
+// TEST(template, FirstTest)
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
+
+// TEST(template, FirstTest)
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
+
+// TEST(template, FirstTest)
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
+
+// TEST(template, FirstTest)
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
+
+// TEST(template, FirstTest)
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
