@@ -79,7 +79,12 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSendSecond0x03ThenLcdPinStateSequenceIsCo
 
 TEST(lcd_hd44780_init, GivenLcdInitWhenSendThirdCmd0x03ThenLcdPinStateSequenceIsCorrect)
 {
-    TEST_FAIL_MESSAGE("Implement your test!");
+        // set expected log sequence for sending second 0x03 data at init of LCD
+    next_log_no = define_expected_sequence_for_sending_4_bit_cmd(next_log_no,0x03, 110);
+
+    uint16_t expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+
+    TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
 // TEST(lcd_hd44780_init, FirstTest)
