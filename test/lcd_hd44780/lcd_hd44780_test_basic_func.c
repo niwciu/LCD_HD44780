@@ -14,7 +14,7 @@ TEST_TEAR_DOWN(lcd_hd44780_basic_functions)
     /* Cleanup after every test */
 }
 
-TEST(lcd_hd44780_basic_functions, FirstTest)
+TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenSendPrtCharToLcdThenSignalSequenceForSendingCharIsCorrect)
 {
     TEST_FAIL_MESSAGE("Implement your test!");
 }

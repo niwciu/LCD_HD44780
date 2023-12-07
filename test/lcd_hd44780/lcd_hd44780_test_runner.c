@@ -22,7 +22,7 @@ TEST_GROUP_RUNNER(lcd_hd44780_init)
 TEST_GROUP_RUNNER(lcd_hd44780_basic_functions)
 {
     /* Test cases to run */
-    RUN_TEST_CASE(lcd_hd44780_basic_functions, FirstTest )
+    RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenSendPrtCharToLcdThenSignalSequenceForSendingCharIsCorrect )
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, )
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, )
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, )
