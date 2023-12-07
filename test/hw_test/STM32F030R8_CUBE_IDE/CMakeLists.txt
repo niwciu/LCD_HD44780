@@ -39,8 +39,6 @@ set(INCLUDE_DIRS
 
 ../../../src
 
-../../../lib
-
 .
 )
 
@@ -50,6 +48,7 @@ set(C_SRCS
     Core/Src/syscalls.c
     Core/Src/sysmem.c
     Core/Src/system_stm32f0xx.c
+    Core/Src/LCD_IO_driver.c
 
     Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_exti.c
     Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_gpio.c
@@ -57,7 +56,7 @@ set(C_SRCS
     Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_rcc.c
     Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_utils.c
 
-
+    ../../../src/lcd_hd44780.c
 	
 )
 

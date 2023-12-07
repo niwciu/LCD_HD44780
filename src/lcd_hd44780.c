@@ -2,10 +2,11 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 15:16:51
+ * @Last Modified time: 2023-12-07 15:54:59
  */
 
 #include "lcd_hd44780.h"
+#include <stddef.h>
 
 #define BUSY_FLAG 1 << 7
 
