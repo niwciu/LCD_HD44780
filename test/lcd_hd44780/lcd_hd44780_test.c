@@ -26,12 +26,14 @@ TEST_TEAR_DOWN(lcd_hd44780_init)
 }
 TEST(lcd_hd44780_init, WhenLcdInitThenLcdDataPinsInit)
 {
+    uint8_t expected_resoult=0;
     lcd_init();
     #if USE_RW_PIN == ON
-    TEST_ASSERT_EQUAL(0x7F,mock_get_lcd_init_state());
+    expected_resoult=((mock_LCD_RW|mock_LCD_E|mock_LCD_RS)<<4)|(mock_LCD_D4|mock_LCD_D5|mock_LCD_D6|mock_LCD_D7);
     #else
-    TEST_ASSERT_EQUAL(0x5F,mock_get_lcd_init_state());
+    expected_resoult=((mock_LCD_E|mock_LCD_RS)<<4)|(mock_LCD_D4|mock_LCD_D5|mock_LCD_D6|mock_LCD_D7);
     #endif
+    TEST_ASSERT_EQUAL(expected_resoult,mock_get_lcd_init_state());
 }
 TEST(lcd_hd44780_init, WhenLcdInitThenLcdPinLow)
 {
