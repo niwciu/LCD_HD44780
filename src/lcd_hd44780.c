@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 18:19:18
+ * @Last Modified time: 2023-12-07 18:20:18
  */
 
 #include "lcd_hd44780.h"
@@ -184,12 +184,22 @@ void lcd_init(void)
     
 }
 
+/**
+ * @brief Function that clear the LCD screen and set the cursor on the position of first character in first line of LCD
+ * screen.
+ */
 void lcd_cls(void)
 {
     lcd_write_cmd (LCDC_CLS);
     LCD->delay_us(4900);
 }
 
+/**
+ * @brief Function for print the char on the LCD screen under current position of the LCD cursor.
+ * @param C char (for example '1') or it's ASCI code (0x31).
+ * @note For user defined char, place CGRAM_char_index (Position/addres of the character in CGRAM of the LCD where
+ * defined char was written).
+ */
 void lcd_char(char C)
 {
     uint8_t data = (uint8_t)(C);
