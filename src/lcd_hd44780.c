@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 20:11:11
+ * @Last Modified time: 2023-12-07 20:31:57
  */
 
 #include "lcd_hd44780.h"
@@ -196,6 +196,15 @@ void lcd_cls(void)
     LCD->delay_us(4900);
 }
 
+/**
+ * @brief Function for defining custom user characters in CGRAM of the LCD.
+ * @param CGRAM_char_index Position/addres of the character in CGRAM of the LCD where defined char should be written.
+ * For the predefined example of special characters, taken values are defined in the type enum LCD_CGRAM that is defined
+ * in lcd-hd44780.h
+ * @param def_char Pointer to the predefined special character.
+ * @note CGRAM_char_index - This Parameter can take values from 0 to 7. For the predefined example of special
+ * characters, taken values are defined in the type enum LCD_CGRAM that is defined in lcd-hd44780.h
+ */
 void lcd_def_char(enum LCD_CGRAM CGRAM_char_index, const uint8_t *def_char)
 {
     lcd_write_cmd(LCDC_SET_CGRAM | ((DEF_CHAR_ADR_MASK & CGRAM_char_index) * LCD_CGRAM_BYTES_PER_CHAR));
