@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 14:31:38
+ * @Last Modified time: 2023-12-07 14:33:23
  */
 
 #include "lcd_hd44780.h"
@@ -50,7 +50,6 @@ static void lcd_reset_all_SIG(void);
 static void lcd_write_4bit_data(uint8_t data);
 static void lcd_write_cmd(uint8_t cmd);
 #if USE_RW_PIN == ON
-static uint8_t read_lcd_BUSY_FLAG(void);
 static uint8_t lcd_read_byte(void);
 static uint8_t lcd_read_4bit_data(void);
 #endif
@@ -87,7 +86,7 @@ void lcd_init(void)
 
     // FUNCTION SET ->send cmd -> LCD in 4-bit mode, 2 rows, char size 5x7
     lcd_write_cmd(LCDC_FUNC | LCDC_FUNC4B | LCDC_FUNC2L | LCDC_FUNC5x7);
-    
+
     // DISPLAY_ON_OFF send cmd -> enable lcd
 
     // ENTRY MODe SET do not shift LCD shift cursor right after placing a char
@@ -130,7 +129,7 @@ void lcd_write_4bit_data(uint8_t data)
 
 static void lcd_write_cmd(uint8_t cmd)
 {
-    
+
     LCD->reset_SIG(LCD_RS);
 
 #if USE_RW_PIN == ON
@@ -140,9 +139,11 @@ static void lcd_write_cmd(uint8_t cmd)
     lcd_write_4bit_data((cmd)&0x0F);
 #if USE_RW_PIN == ON
     //check_BUSSY_FALG
-    while (read_lcd_BUSY_FLAG()&BUSY_FLAG)
+    LCD->set_data_pins_as_inputs();
+    LCD->reset_SIG(LCD_RS);
+    LCD->set_SIG(LCD_RW);
+    while (lcd_read_byte() & BUSY_FLAG)
     {
-        
     }
 
 #else
@@ -153,25 +154,17 @@ static void lcd_write_cmd(uint8_t cmd)
 }
 
 #if USE_RW_PIN == ON
-uint8_t read_lcd_BUSY_FLAG(void)
-{
-    LCD->set_data_pins_as_inputs();
-    LCD->reset_SIG(LCD_RS);
-    LCD->set_SIG(LCD_RW);
-    return lcd_read_byte();
-}
-
 uint8_t lcd_read_byte(void)
 {
     uint8_t data;
     //read 4 MSB
-    data=(lcd_read_4bit_data()<<4);
+    data = (lcd_read_4bit_data() << 4);
     //read 4 LSB
-    data|=(lcd_read_4bit_data()&0x0F);
+    data |= (lcd_read_4bit_data() & 0x0F);
     return data;
 }
 
-uint8_t lcd_read_4bit_data (void)
+uint8_t lcd_read_4bit_data(void)
 {
     uint8_t data;
     LCD->set_SIG(LCD_E);
