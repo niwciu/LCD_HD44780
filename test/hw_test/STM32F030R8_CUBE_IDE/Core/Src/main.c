@@ -92,6 +92,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
   lcd_init();
   lcd_char('G');
+  delay_ms(2000);
+  lcd_cls();
   /* USER CODE END 2 */
 
   /* Infinite loop */
