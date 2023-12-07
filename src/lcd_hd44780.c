@@ -1,16 +1,17 @@
 /*
- * @Author: lukasz.niewelt 
- * @Date: 2023-12-06 21:39:30 
+ * @Author: lukasz.niewelt
+ * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 00:32:33
+ * @Last Modified time: 2023-12-07 01:09:33
  */
-
 
 #include "lcd_hd44780.h"
 
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
 
 static void register_LCD_IO_driver(void);
+static void lcd_set_all_SIG(void);
+static void lcd_reset_all_SIG(void);
 
 /**
  * @brief  Function that initialize LCD in 4-bit mode with or without LCD R/W Pin handling.
@@ -21,25 +22,17 @@ void lcd_init(void)
 {
     register_LCD_IO_driver();
     /**************************BASIC LCD INIT - taken from DS***************************************/
-    //init I/O for LCD
+    // init I/O for LCD
     LCD->init_LCD_pins();
     // set all LCD signals to High for more than 15ms
-    LCD->set_SIG(LCD_E);
-    LCD->set_SIG(LCD_RS);
-    #if USE_RW_PIN==ON
-    LCD->set_SIG(LCD_RW);
-    #endif
+    lcd_set_all_SIG();
     LCD->delay_us(15000);
-    #if USE_RW_PIN==ON
-    LCD->reset_SIG(LCD_RW);
-    #endif
-    LCD->reset_SIG(LCD_RS);
-    LCD->reset_SIG(LCD_E);
+    lcd_reset_all_SIG();
 
     // send 0x03 & wait more then 4,1ms
 
     // send 0x03 & wait more then 100us
-    
+
     // send 0x03 & wait more then 100us
 
     // send 0x02 & wait more then 100us
@@ -53,10 +46,27 @@ void lcd_init(void)
     // LCD clear screen
     /*********************************END of BASIC LCD INIT***************************************/
     // define sepcial characters in LCD CGRAM
-
 }
 
 static void register_LCD_IO_driver(void)
 {
-    LCD=LCD_IO_driver_interface_get();
+    LCD = LCD_IO_driver_interface_get();
+}
+
+static void lcd_set_all_SIG(void)
+{
+    LCD->set_SIG(LCD_E);
+    LCD->set_SIG(LCD_RS);
+#if USE_RW_PIN == ON
+    LCD->set_SIG(LCD_RW);
+#endif
+}
+
+static void lcd_reset_all_SIG(void)
+{
+#if USE_RW_PIN == ON
+    LCD->reset_SIG(LCD_RW);
+#endif
+    LCD->reset_SIG(LCD_RS);
+    LCD->reset_SIG(LCD_E);
 }
