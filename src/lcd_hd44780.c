@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 11:42:13
+ * @Last Modified time: 2023-12-07 11:47:23
  */
 
 #include "lcd_hd44780.h"
@@ -12,6 +12,7 @@ static const struct LCD_IO_driver_interface_struct *LCD = NULL;
 static void register_LCD_IO_driver(void);
 static void lcd_set_all_SIG(void);
 static void lcd_reset_all_SIG(void);
+static void lcd_write_4bit_data(uint8_t data);
 
 /**
  * @brief  Function that initialize LCD in 4-bit mode with or without LCD R/W Pin handling.
@@ -30,16 +31,12 @@ void lcd_init(void)
     lcd_reset_all_SIG();
 
     // send 0x03 & wait more then 4,1ms
-    LCD->set_SIG(LCD_E);
-    LCD->write_data(0x03);
-    LCD->reset_SIG(LCD_E);
+    lcd_write_4bit_data(0x03);
     LCD->delay_us(4500);
     
 
     // send 0x03 & wait more then 100us
-    LCD->set_SIG(LCD_E);
-    LCD->write_data(0x03);
-    LCD->reset_SIG(LCD_E);
+    lcd_write_4bit_data(0x03);
     LCD->delay_us(110);
 
     // send 0x03 & wait more then 100us
@@ -77,5 +74,13 @@ static void lcd_reset_all_SIG(void)
     LCD->reset_SIG(LCD_RW);
 #endif
     LCD->reset_SIG(LCD_RS);
+    LCD->reset_SIG(LCD_E);
+}
+
+void lcd_write_4bit_data(uint8_t data)
+{
+    LCD->set_SIG(LCD_E);
+    data &= 0x0F;
+    LCD->write_data(data);
     LCD->reset_SIG(LCD_E);
 }
