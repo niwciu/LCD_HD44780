@@ -133,7 +133,12 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSendDisplayClearScrCmdThenLcdPinStateSequ
 
 TEST(lcd_hd44780_init, GivenLcdInitWhenSendDisplayEntryModeCmdThenLcdPinStateSequenceIsCorrect)
 {
-    TEST_FAIL_MESSAGE("Implement your test!");
+    uint8_t cmd = (LCDC_ENTRY_MODE | LCDC_ENTRYR);
+    uint8_t expected_data_from_LCD=0;
+
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd,expected_data_from_LCD, 0);
+    uint16_t expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+    TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
 // TEST(lcd_hd44780_init, FirstTest)
