@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 15:54:59
+ * @Last Modified time: 2023-12-07 16:20:58
  */
 
 #include "lcd_hd44780.h"
@@ -54,49 +54,6 @@ static void lcd_write_cmd(uint8_t cmd);
 static uint8_t lcd_read_byte(void);
 static uint8_t lcd_read_4bit_data(void);
 #endif
-
-/**
- * @brief  Function that initialize LCD in 4-bit mode with or without LCD R/W Pin handling.
- * @attention LCD R/W handling should be configured in lcd_hd44780_config.h by setting USE_RW_PIN to  1 (Enable R/W Pin
- * handling) or 0 (disable R/W Pin handling).
- */
-void lcd_init(void)
-{
-    register_LCD_IO_driver();
-    /**************************BASIC LCD INIT - basing on DS init procedure***************************************/
-    // init I/O for LCD
-    LCD->init_LCD_pins();
-
-    // set all LCD signals to High for more than 15ms ->bit different then in DS base on other implementation from internet
-    lcd_set_all_SIG();
-    LCD->delay_us(15000);
-    lcd_reset_all_SIG();
-
-    // send 0x03 & wait more then 4,1ms
-    lcd_write_4bit_data(0x03);
-    LCD->delay_us(4500);
-    // send 0x03 & wait more then 100us
-    lcd_write_4bit_data(0x03);
-    LCD->delay_us(110);
-    // send 0x03 & wait more then 100us
-    lcd_write_4bit_data(0x03);
-    LCD->delay_us(110);
-    // send 0x02 & wait more then 100us
-    lcd_write_4bit_data(0x02);
-    LCD->delay_us(110);
-
-    // FUNCTION SET ->send cmd -> LCD in 4-bit mode, 2 rows, char size 5x7
-    lcd_write_cmd(LCDC_FUNC | LCDC_FUNC4B | LCDC_FUNC2L | LCDC_FUNC5x7);
-    // DISPLAY_ON_OFF send cmd -> enable lcd
-    lcd_write_cmd(LCDC_ONOFF | LCDC_CURSOROFF | LCDC_DISPLAYON);
-    // LCD clear screen
-    lcd_write_cmd (LCDC_CLS);
-    LCD->delay_us(4900);
-    // ENTRY MODe SET do not shift LCD shift cursor right after placing a char
-    lcd_write_cmd(LCDC_ENTRY_MODE | LCDC_ENTRYR);
-    /*********************************END of BASIC LCD INIT***************************************/
-    // define sepcial characters in LCD CGRAM
-}
 
 static void register_LCD_IO_driver(void)
 {
@@ -174,3 +131,44 @@ uint8_t lcd_read_4bit_data(void)
     return data;
 }
 #endif
+
+/**
+ * @brief  Function that initialize LCD in 4-bit mode with or without LCD R/W Pin handling.
+ * @attention LCD R/W handling should be configured in lcd_hd44780_config.h by setting USE_RW_PIN to  1 (Enable R/W Pin
+ * handling) or 0 (disable R/W Pin handling).
+ */
+void lcd_init(void)
+{
+    register_LCD_IO_driver();
+    LCD->init_LCD_pins();
+    /**************************BASIC LCD INIT - basing on DS init procedure***************************************/
+    // set all LCD signals to High for more than 15ms ->bit different then in DS base on other implementation from internet
+    lcd_set_all_SIG();
+    LCD->delay_us(15000);
+    lcd_reset_all_SIG();
+    // send 0x03 & wait more then 4,1ms
+    lcd_write_4bit_data(0x03);
+    LCD->delay_us(4500);
+    // send 0x03 & wait more then 100us
+    lcd_write_4bit_data(0x03);
+    LCD->delay_us(110);
+    // send 0x03 & wait more then 100us
+    lcd_write_4bit_data(0x03);
+    LCD->delay_us(110);
+    // send 0x02 & wait more then 100us
+    lcd_write_4bit_data(0x02);
+    LCD->delay_us(110);
+    // FUNCTION SET ->send cmd -> LCD in 4-bit mode, 2 rows, char size 5x7
+    lcd_write_cmd(LCDC_FUNC | LCDC_FUNC4B | LCDC_FUNC2L | LCDC_FUNC5x7);
+    // DISPLAY_ON_OFF send cmd -> enable lcd
+    lcd_write_cmd(LCDC_ONOFF | LCDC_CURSOROFF | LCDC_DISPLAYON);
+    // LCD clear screen
+    lcd_write_cmd (LCDC_CLS);
+    LCD->delay_us(4900);
+    // ENTRY MODe SET do not shift LCD shift cursor right after placing a char
+    lcd_write_cmd(LCDC_ENTRY_MODE | LCDC_ENTRYR);
+    /*********************************END of BASIC LCD INIT***************************************/
+
+    // ToDo define sepcial characters in LCD CGRAM
+    
+}
