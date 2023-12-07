@@ -90,6 +90,17 @@
             },
             "group": "test",
         },
+        {   // to use it replace "template" with specific module and provide whole"directory_to_your_project_folder" for exampel "D_/Projects/Project_a"      D:/0_Projekty/6_Biblioteki/LCD_HD44780/
+            "label": "lcd_hd44780 code coverage report generation",
+            "type": "shell",
+            "command": "python3 -m gcovr CMakeFiles/lcd_hd44780_test.dir/D_/0_Projekty/6_Biblioteki/LCD_HD44780 -r ../../.. --html-details ../../../reports/Code_Coverage/lcd_hd44780_gcov_report.html",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}/test/lcd_hd44780/out"
+            },
+            "group": "test",
+            
+        // },
         // {   // to use it replace "template" with specific module and provide whole"directory_to_your_project_folder" for exampel "D_/Projects/Project_a"      
         //     "label": "template module.c code coverage report generation",
         //     "type": "shell",
