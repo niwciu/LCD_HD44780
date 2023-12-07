@@ -45,7 +45,7 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenLcdClearScreenThenSignalSequen
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
-TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenLcdDefCharCalledThenSignalSequenceForLcdDefCharIsCorrect )
+TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenLcdDefCharPol_eCalledThenSignalSequenceForLcdDefCharIsCorrect )
 {
     uint8_t CGRAM_start_adress=((DEF_CHAR_ADR_MASK & pol_e) * LCD_CGRAM_BYTES_PER_CHAR);
     uint8_t cmd=(LCDC_SET_CGRAM |CGRAM_start_adress);
