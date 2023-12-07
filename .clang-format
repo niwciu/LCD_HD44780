@@ -1,3 +1,4 @@
 BasedOnStyle: Microsoft
 IncludeBlocks: Regroup
 SortIncludes: false
+ColumnLimit: 0
