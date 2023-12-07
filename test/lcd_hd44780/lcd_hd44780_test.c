@@ -100,7 +100,7 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSend4thCmd0x03ThenLcdPinStateSequenceIsCo
 TEST(lcd_hd44780_init, GivenLcdInitWhenSendFunctionSetCmdThenLcdPinStateSequenceIsCorrect)
 {
 
-    uint8_t cmd = 0x00;
+    uint8_t cmd = (LCDC_FUNC | LCDC_FUNC4B | LCDC_FUNC2L | LCDC_FUNC5x7);
     uint8_t expected_data_from_LCD=0;
     // uint8_t read_data = 0x00; //ten only readed data is BF when sending 0x00 means taht all bits including BF are reset. When BR is reset lcd is ready to take new cmd
    

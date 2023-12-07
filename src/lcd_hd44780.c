@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 14:09:56
+ * @Last Modified time: 2023-12-07 14:11:37
  */
 
 #include "lcd_hd44780.h"
@@ -80,7 +80,7 @@ void lcd_init(void)
     LCD->delay_us(110);
 
     // FUNCTION SET ->send cmd -> LCD in 4-bit mode, 2 rows, char size 5x7
-    uint8_t cmd = 0x00; //define cmd to send
+    uint8_t cmd = (LCDC_FUNC | LCDC_FUNC4B | LCDC_FUNC2L | LCDC_FUNC5x7);
     uint8_t readed_data;
     LCD->reset_SIG(LCD_RS);
 
