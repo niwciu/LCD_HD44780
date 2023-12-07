@@ -58,7 +58,31 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSetAllSignalsFor15msThenLcdPinStatIsCorre
 
 TEST(lcd_hd44780_init, GivenLcdInitWhenSendFirst0x03ThenLcdPinStateSequenceIsCorrect)
 {
-    TEST_FAIL_MESSAGE("Implement your test!");
+    // set expected log sequence
+    uint16_t log_no=next_log_no;
+    uint16_t expected_buf_lenght=0;
+    //setE
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=mock_LCD_E;
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x00;
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0; 
+    //send data on Port
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=mock_LCD_E;
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x03;// first 0x03 init command
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0; 
+    //Reset E
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=0x00;
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x03;// first 0x03 init command
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0; 
+    //delay 4500us
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=0x00;
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x03;// first 0x03 init command
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=4500; 
+
+    next_log_no=log_no;
+
+    expected_buf_lenght=(next_log_no-1)*(LOG_DATA_AMOUNT);
+
+   TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data,mock_LCD_Port_delay_dump_data,expected_buf_lenght);
 }
 
 // TEST(lcd_hd44780_init, FirstTest)
@@ -91,41 +115,41 @@ static uint16_t define_expected_sequence_for_first_15_ms_delay(void)
 {
     uint16_t log_no=0;
     //set E
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=mock_LCD_E;//SIG_PORT_log
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x00;//Data_Port_log
-    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0; // delay_log
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=mock_LCD_E;
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x00;
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0;
     //set RS
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=mock_LCD_E|mock_LCD_RS;//SIG_PORT_log
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x00;//Data_Port_log
-    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0; // delay_log
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=mock_LCD_E|mock_LCD_RS;
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x00;
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0;
     #if USE_RW_PIN == ON
     //set RW
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=mock_LCD_E|mock_LCD_RS|mock_LCD_RW;//SIG_PORT_log
-    expected_LCD_Port_delay_dump_data[log_no][1]=0x00;//Data_Port_log
-    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0; // delay_log
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=mock_LCD_E|mock_LCD_RS|mock_LCD_RW;
+    expected_LCD_Port_delay_dump_data[log_no][1]=0x00;
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0;
     
     //delay
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=mock_LCD_E|mock_LCD_RS|mock_LCD_RW;//SIG_PORT_log
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x00;//Data_Port_log
-    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=15000; // delay_log
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=mock_LCD_E|mock_LCD_RS|mock_LCD_RW;
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x00;
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=15000;
     #else
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=(mock_LCD_E|mock_LCD_RS);//SIG_PORT_log
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x00;//Data_Port_log
-    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=15000; // delay_log
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=(mock_LCD_E|mock_LCD_RS);
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x00;
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=15000;
     #endif
     #if USE_RW_PIN == ON
     //reset RW
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=mock_LCD_E|mock_LCD_RS;//SIG_PORT_log
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x00;//Data_Port_log
-    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0; // delay_log
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=mock_LCD_E|mock_LCD_RS;
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x00;
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0;
     #endif
     //reset RS
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=mock_LCD_E;//SIG_PORT_log
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x00;//Data_Port_log
-    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0; // delay_log
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=mock_LCD_E;
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x00;
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0;
     //Reset E
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=0x00;//SIG_PORT_log
-    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x00;//Data_Port_log
-    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0; // delay_log
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT]=0x00;
+    expected_LCD_Port_delay_dump_data[log_no][DATA_PORT]=0x00;
+    expected_LCD_Port_delay_dump_data[log_no++][DELAY]=0;
     return log_no;
 }
