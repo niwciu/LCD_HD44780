@@ -70,22 +70,22 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define LCD_RS_Pin_Pin LL_GPIO_PIN_7
-#define LCD_RS_Pin_GPIO_Port GPIOC
-#define LCD_RW_Pin_Pin LL_GPIO_PIN_8
-#define LCD_RW_Pin_GPIO_Port GPIOC
-#define LCD_E_Pin_Pin LL_GPIO_PIN_9
-#define LCD_E_Pin_GPIO_Port GPIOC
-#define LCD_BCKL_Pin_Pin LL_GPIO_PIN_11
-#define LCD_BCKL_Pin_GPIO_Port GPIOA
-#define LCD_D4_Pin_Pin LL_GPIO_PIN_3
-#define LCD_D4_Pin_GPIO_Port GPIOB
-#define LCD_D5_Pin_Pin LL_GPIO_PIN_4
-#define LCD_D5_Pin_GPIO_Port GPIOB
-#define LCD_D6_Pin_Pin LL_GPIO_PIN_5
-#define LCD_D6_Pin_GPIO_Port GPIOB
-#define LCD_D7_Pin_Pin LL_GPIO_PIN_6
-#define LCD_D7_Pin_GPIO_Port GPIOB
+#define LCD_RS_Pin LL_GPIO_PIN_7
+#define LCD_RS_GPIO_Port GPIOC
+#define LCD_RW_Pin LL_GPIO_PIN_8
+#define LCD_RW_GPIO_Port GPIOC
+#define LCD_E_Pin LL_GPIO_PIN_9
+#define LCD_E_GPIO_Port GPIOC
+#define LCD_BCKL_Pin LL_GPIO_PIN_11
+#define LCD_BCKL_GPIO_Port GPIOA
+#define LCD_D4_Pin LL_GPIO_PIN_3
+#define LCD_D4_GPIO_Port GPIOB
+#define LCD_D5_Pin LL_GPIO_PIN_4
+#define LCD_D5_GPIO_Port GPIOB
+#define LCD_D6_Pin LL_GPIO_PIN_5
+#define LCD_D6_GPIO_Port GPIOB
+#define LCD_D7_Pin LL_GPIO_PIN_6
+#define LCD_D7_GPIO_Port GPIOB
 #ifndef NVIC_PRIORITYGROUP_0
 #define NVIC_PRIORITYGROUP_0         ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority,
                                                                  4 bits for subpriority */

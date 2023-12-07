@@ -49,6 +49,7 @@ set(C_SRCS
     Core/Src/sysmem.c
     Core/Src/system_stm32f0xx.c
     Core/Src/LCD_IO_driver.c
+    Core/Src/tim_delay.c
 
     Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_exti.c
     Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_gpio.c

@@ -60,7 +60,9 @@
     "stat.h": "c",
     "crtdefs.h": "c",
     "time.h": "c",
-    "signal.h": "c"
+    "signal.h": "c",
+    "tim_delay.h": "c",
+    "main.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }
