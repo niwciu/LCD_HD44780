@@ -100,7 +100,7 @@
             },
             "group": "test",
             
-        // },
+         }
         // {   // to use it replace "template" with specific module and provide whole"directory_to_your_project_folder" for exampel "D_/Projects/Project_a"      
         //     "label": "template module.c code coverage report generation",
         //     "type": "shell",
