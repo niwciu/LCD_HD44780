@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 15:11:23
+ * @Last Modified time: 2023-12-07 15:16:51
  */
 
 #include "lcd_hd44780.h"
@@ -92,7 +92,7 @@ void lcd_init(void)
     lcd_write_cmd (LCDC_CLS);
     LCD->delay_us(4900);
     // ENTRY MODe SET do not shift LCD shift cursor right after placing a char
-
+    lcd_write_cmd(LCDC_ENTRY_MODE | LCDC_ENTRYR);
     /*********************************END of BASIC LCD INIT***************************************/
     // define sepcial characters in LCD CGRAM
 }
