@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 11:53:28
+ * @Last Modified time: 2023-12-07 11:59:39
  */
 
 #include "lcd_hd44780.h"
@@ -33,7 +33,6 @@ void lcd_init(void)
     // send 0x03 & wait more then 4,1ms
     lcd_write_4bit_data(0x03);
     LCD->delay_us(4500);
-    
 
     // send 0x03 & wait more then 100us
     lcd_write_4bit_data(0x03);
@@ -44,6 +43,8 @@ void lcd_init(void)
     LCD->delay_us(110);
 
     // send 0x02 & wait more then 100us
+    lcd_write_4bit_data(0x02);
+    LCD->delay_us(110);
 
     // FUNCTION SET ->send cmd -> LCD in 4-bit mode, 2 rows, char size 5x7
 
