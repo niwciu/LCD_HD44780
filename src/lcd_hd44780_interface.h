@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:38:59
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-06 22:31:49
+ * @Last Modified time: 2023-12-07 12:46:27
  */
 
 #ifndef _LCD_HD44780_INTERFACE_H_
@@ -34,7 +34,7 @@ extern "C"
     {
         init_LCD_data_and_SIG_pins_func_p init_LCD_pins;
         set_LCD_data_pins_as_outputs_func_p set_data_pins_as_outputs;
-        set_LCD_data_pins_as_inputs_func_p init_data_pins_as_inputs;
+        set_LCD_data_pins_as_inputs_func_p set_data_pins_as_inputs;
         set_LCD_data_port_func_p write_data;
         get_LCD_data_port_func_p read_data;
         init_LCD_SIG_func_p init_SIG;

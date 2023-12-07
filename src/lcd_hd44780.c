@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 11:59:39
+ * @Last Modified time: 2023-12-07 13:48:35
  */
 
 #include "lcd_hd44780.h"
@@ -22,10 +22,11 @@ static void lcd_write_4bit_data(uint8_t data);
 void lcd_init(void)
 {
     register_LCD_IO_driver();
-    /**************************BASIC LCD INIT - taken from DS***************************************/
+    /**************************BASIC LCD INIT - basing on DS init procedure***************************************/
     // init I/O for LCD
     LCD->init_LCD_pins();
-    // set all LCD signals to High for more than 15ms
+
+    // set all LCD signals to High for more than 15ms ->bit different then in DS base on other implementation from internet
     lcd_set_all_SIG();
     LCD->delay_us(15000);
     lcd_reset_all_SIG();
@@ -33,20 +34,44 @@ void lcd_init(void)
     // send 0x03 & wait more then 4,1ms
     lcd_write_4bit_data(0x03);
     LCD->delay_us(4500);
-
     // send 0x03 & wait more then 100us
     lcd_write_4bit_data(0x03);
     LCD->delay_us(110);
-
     // send 0x03 & wait more then 100us
     lcd_write_4bit_data(0x03);
     LCD->delay_us(110);
-
     // send 0x02 & wait more then 100us
     lcd_write_4bit_data(0x02);
     LCD->delay_us(110);
 
     // FUNCTION SET ->send cmd -> LCD in 4-bit mode, 2 rows, char size 5x7
+    uint8_t cmd = 0x00; //define cmd to send
+    uint8_t readed_data;
+    LCD->reset_SIG(LCD_RS);
+
+#if USE_RW_PIN == ON
+    LCD->reset_SIG(LCD_RW);
+#endif
+    lcd_write_4bit_data((cmd) >> 4);
+    lcd_write_4bit_data((cmd)&0x0F);
+#if USE_RW_PIN == ON
+    //check_BUSSY_FALG
+    LCD->set_data_pins_as_inputs();
+    LCD->reset_SIG(LCD_RS);
+    LCD->set_SIG(LCD_RW);
+    //read 4 MSB
+    LCD->set_SIG(LCD_E);
+    readed_data = (LCD->read_data() << 4);
+    LCD->reset_SIG(LCD_E);
+    //read 4 LSB
+    LCD->set_SIG(LCD_E);
+    readed_data |= (LCD->read_data() & 0x0F);
+    LCD->reset_SIG(LCD_E);
+#else
+    LCD->delay_us(120);
+#endif
+    LCD->reset_SIG(LCD_RW);
+    LCD->set_data_pins_as_outputs();
 
     // DISPLAY_ON_OFF send cmd -> enable lcd
 

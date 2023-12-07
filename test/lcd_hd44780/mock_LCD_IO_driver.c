@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 22:11:49
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 10:58:04
+ * @Last Modified time: 2023-12-07 13:34:24
  */
 
 #include "mock_LCD_IO_driver.h"
@@ -74,7 +74,8 @@ static void mock_set_LCD_DATA_PORT_state(uint8_t data)
 
 static uint8_t mock_get_LCD_DATA_PORT_state(void)
 {
-    // mock_dump_LCD_SIG_DATA_DELAY_state(0);
+    mock_LCD_DATA_PORT=0x00;
+    mock_dump_LCD_SIG_DATA_DELAY_state(0);
     return mock_LCD_DATA_PORT;
 }
 
