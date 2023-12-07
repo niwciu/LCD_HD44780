@@ -12,4 +12,5 @@ int main(int argc, const char **argv)
 static void run_all_tests(void)
 {
     RUN_TEST_GROUP(lcd_hd44780_init);
+    RUN_TEST_GROUP(lcd_hd44780_basic_functions);
 }
