@@ -21,8 +21,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "lcd_hd44780.h"
-#include "tim_delay.h"
+//#include "lcd_hd44780.h"
+// #include "tim_delay.h"
+#include "hw_test_main.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -91,16 +92,16 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-  lcd_init();
-  lcd_char('G');
-  delay_ms(2000);
-  lcd_cls();
-  lcd_def_char(pol_e,Pol_e);
-  lcd_load_char_bank(&char_bank_1);
-  lcd_char(pol_e);
-  lcd_char(pol_o);
-  lcd_char(zn_wody);
-  lcd_char('l');
+  // lcd_init();
+  // lcd_char('G');
+  // delay_ms(2000);
+  // lcd_cls();
+  // lcd_def_char(pol_e,Pol_e);
+  // lcd_load_char_bank(&char_bank_1);
+  // lcd_char(pol_e);
+  // lcd_char(pol_o);
+  // lcd_char(zn_wody);
+  // lcd_char('l');
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -108,7 +109,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+  main_hw_test();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

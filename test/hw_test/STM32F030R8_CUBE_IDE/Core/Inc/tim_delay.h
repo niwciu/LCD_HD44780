@@ -10,8 +10,8 @@
 
 #include "main.h"
 
-void delay_ms (uint32_t delay_ms);
-void delay_us (uint32_t delay_us);
+void _delay_ms (uint32_t delay_ms);
+void _delay_us (uint32_t delay_us);
 
 /*
  * Procedura w��czaj�ca odliczanie konkretnego op�nienia ale nie blokuj�ca.

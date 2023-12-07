@@ -27,6 +27,7 @@ enable_language(ASM)
 project(STM32F030R8)
 
 set(INCLUDE_DIRS
+../
 ./Core
 ./Core/Inc
 # Core/Src
@@ -58,6 +59,7 @@ set(C_SRCS
     Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_utils.c
 
     ../../../src/lcd_hd44780.c
+    ../hw_test_main.c
 	
 )
 
@@ -79,6 +81,7 @@ set(GLOBAL_DEFINES
     -DPREFETCH_ENABLE=1 
     -DINSTRUCTION_CACHE_ENABLE=0 
     -DDATA_CACHE_ENABLE=0
+    -DSTM
 )
 
 set(LINKED_LIBS

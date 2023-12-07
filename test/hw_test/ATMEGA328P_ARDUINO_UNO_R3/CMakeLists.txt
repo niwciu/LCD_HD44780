@@ -40,6 +40,7 @@ set(L_FUSE 0xfd)
 set(LOCK_BIT 0xff)
 
 set(INCLUDE_DIRS
+	../
 	./inc	
 	../../../src/
 )
@@ -50,6 +51,7 @@ set(C_SRCS
 	./src/LCD_IO_driver.c
 
 	../../../src/lcd_hd44780.c
+	../hw_test_main.c
 )
 
 set(ASM_SRCS
@@ -58,6 +60,7 @@ set(ASM_SRCS
 
 set(GLOBAL_DEFINES
 -DF_CPU=${F_CPU}
+-DAVR
 # -DBAUD=${BAUD}
 )
 

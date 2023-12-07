@@ -6,7 +6,7 @@
  */
 #include "tim_delay.h"
 
-void delay_ms(uint32_t delay_ms)
+void _delay_ms(uint32_t delay_ms)
 {
 	RCC-> APB1ENR |= RCC_APB1ENR_TIM6EN;
 
@@ -28,11 +28,11 @@ void delay_ms(uint32_t delay_ms)
 		}
 	}
 	TIM6 -> CR1 &=~((uint32_t)(TIM_CR1_CEN));
-	RCC-> APB1ENR &= ~((uint32_t)RCC_APB1ENR_TIM6EN);  //wy³¹cz clocka dla timera
+	RCC-> APB1ENR &= ~((uint32_t)RCC_APB1ENR_TIM6EN);  //wyï¿½ï¿½cz clocka dla timera
 
 }
 
-void delay_us(uint32_t delay_us)
+void _delay_us(uint32_t delay_us)
 {
 	RCC-> APB1ENR |= RCC_APB1ENR_TIM6EN;
 
@@ -54,7 +54,7 @@ void delay_us(uint32_t delay_us)
 		}
 	}
 	TIM6 -> CR1 &=~((uint32_t)(TIM_CR1_CEN));
-	RCC-> APB1ENR &= ~((uint32_t)RCC_APB1ENR_TIM6EN);  //wy³¹cz clocka dla timera
+	RCC-> APB1ENR &= ~((uint32_t)RCC_APB1ENR_TIM6EN);  //wyï¿½ï¿½cz clocka dla timera
 }
 
 void count_ms(uint16_t *delay_ms)
@@ -83,7 +83,7 @@ void count_ms(uint16_t *delay_ms)
 	if(*delay_ms==0)
 	{
 		TIM6 -> CR1 &=~((uint32_t)(TIM_CR1_CEN));
-		RCC-> APB1ENR &= ~((uint32_t)RCC_APB1ENR_TIM6EN);  //wy³¹cz clocka dla timera
+		RCC-> APB1ENR &= ~((uint32_t)RCC_APB1ENR_TIM6EN);  //wyï¿½ï¿½cz clocka dla timera
 	}
 }
 
@@ -113,6 +113,6 @@ void count_s(uint16_t *delay_s)
 	if(*delay_s==0)
 	{
 		TIM6 -> CR1 &=~((uint32_t)(TIM_CR1_CEN));
-		RCC-> APB1ENR &= ~((uint32_t)RCC_APB1ENR_TIM6EN);  //wy³¹cz clocka dla timera
+		RCC-> APB1ENR &= ~((uint32_t)RCC_APB1ENR_TIM6EN);  //wyï¿½ï¿½cz clocka dla timera
 	}
 }

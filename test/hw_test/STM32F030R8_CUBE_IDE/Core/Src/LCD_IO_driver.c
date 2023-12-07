@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-07 15:51:41 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 18:30:27
+ * @Last Modified time: 2023-12-08 00:34:48
  */
 
 #define LCD_DATA_PORT LCD_D7_GPIO_Port
@@ -40,7 +40,7 @@ static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
     init_LCD_SIGNAL_PINS_as_outputs,
     LCD_set_SIG,
     LCD_reset_SIG,
-    delay_us,
+    _delay_us,
 };
 const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 {
