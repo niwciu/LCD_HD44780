@@ -25,6 +25,7 @@ set(TEST_SRCS
 	lcd_hd44780_test_init.c
 	mock_LCD_IO_driver.c
 	lcd_hd44780_test_basic_func.c
+	lcd_hd44780_test_common.c
 	#mock_module.c
 )
 
