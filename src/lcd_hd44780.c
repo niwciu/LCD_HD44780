@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 11:47:23
+ * @Last Modified time: 2023-12-07 11:53:28
  */
 
 #include "lcd_hd44780.h"
@@ -40,6 +40,8 @@ void lcd_init(void)
     LCD->delay_us(110);
 
     // send 0x03 & wait more then 100us
+    lcd_write_4bit_data(0x03);
+    LCD->delay_us(110);
 
     // send 0x02 & wait more then 100us
 
