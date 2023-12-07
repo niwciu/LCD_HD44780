@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 17:39:59
+ * @Last Modified time: 2023-12-07 18:07:32
  */
 
 #include "lcd_hd44780.h"
@@ -50,6 +50,8 @@ static void lcd_set_all_SIG(void);
 static void lcd_reset_all_SIG(void);
 static void lcd_write_4bit_data(uint8_t data);
 static void lcd_write_cmd(uint8_t cmd);
+static void lcd_write_data(uint8_t data);
+static void lcd_write_byte(uint8_t byte);
 #if USE_RW_PIN == ON
 static uint8_t lcd_read_byte(void);
 static uint8_t lcd_read_4bit_data(void);
@@ -89,12 +91,22 @@ void lcd_write_4bit_data(uint8_t data)
 static void lcd_write_cmd(uint8_t cmd)
 {
     LCD->reset_SIG(LCD_RS);
+    lcd_write_byte(cmd);
+}
 
-#if USE_RW_PIN == ON
+void lcd_write_data(uint8_t data)
+{
+    LCD->set_SIG(LCD_RS);
+    lcd_write_byte(data);
+}
+
+void lcd_write_byte(uint8_t byte)
+{
+    #if USE_RW_PIN == ON
     LCD->reset_SIG(LCD_RW);
 #endif
-    lcd_write_4bit_data((cmd) >> 4);
-    lcd_write_4bit_data((cmd)&0x0F);
+    lcd_write_4bit_data((byte) >> 4);
+    lcd_write_4bit_data((byte)&0x0F);
 #if USE_RW_PIN == ON
     //check_BUSSY_FALG
     LCD->set_data_pins_as_inputs();
@@ -176,25 +188,5 @@ void lcd_init(void)
 void lcd_char(char C)
 {
     uint8_t data = (uint8_t)(C);
-    LCD->set_SIG(LCD_RS);
-
-#if USE_RW_PIN == ON
-    LCD->reset_SIG(LCD_RW);
-#endif
-    lcd_write_4bit_data((data) >> 4);
-    lcd_write_4bit_data((data)&0x0F);
-#if USE_RW_PIN == ON
-    //check_BUSSY_FALG
-    LCD->set_data_pins_as_inputs();
-    LCD->reset_SIG(LCD_RS);
-    LCD->set_SIG(LCD_RW);
-    while (lcd_read_byte() & BUSY_FLAG)
-    {
-    }
-    LCD->reset_SIG(LCD_RW);
-    LCD->set_data_pins_as_outputs();
-
-#else
-    LCD->delay_us(120);
-#endif
+    lcd_write_data(data);
 }
