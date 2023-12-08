@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 00:01:47
+ * @Last Modified time: 2023-12-08 10:19:25
  */
 
 #include "lcd_hd44780.h"
@@ -42,9 +42,6 @@
 #define LCDC_SET_CGRAM      0x40
 #define LCDC_SET_DDRAM      0x80
 // clang-format on
-
-
-
 
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
 // const struct char_bank_struct *char_bank = &char_bank_1;
@@ -106,7 +103,7 @@ void lcd_write_data(uint8_t data)
 
 void lcd_write_byte(uint8_t byte)
 {
-    #if USE_RW_PIN == ON
+#if USE_RW_PIN == ON
     LCD->reset_SIG(LCD_RW);
 #endif
     lcd_write_4bit_data((byte) >> 4);
@@ -185,7 +182,6 @@ void lcd_init(void)
     /*********************************END of BASIC LCD INIT***************************************/
 
     // ToDo define sepcial characters in LCD CGRAM
-    
 }
 
 /**
@@ -194,8 +190,10 @@ void lcd_init(void)
  */
 void lcd_cls(void)
 {
-    lcd_write_cmd (LCDC_CLS);
+    lcd_write_cmd(LCDC_CLS);
+#if USE_RW_PIN == OFF
     LCD->delay_us(4900);
+#endif
 }
 
 /**
@@ -219,14 +217,14 @@ void lcd_def_char(enum LCD_CGRAM CGRAM_char_index, const uint8_t *def_char)
 
 void lcd_load_char_bank(const struct char_bank_struct *char_bank)
 {
-    lcd_def_char(0,char_bank->char_0);
-    lcd_def_char(1,char_bank->char_1);
-    lcd_def_char(2,char_bank->char_2);
-    lcd_def_char(3,char_bank->char_3);
-    lcd_def_char(4,char_bank->char_4);
-    lcd_def_char(5,char_bank->char_5);
-    lcd_def_char(6,char_bank->char_6);
-    lcd_def_char(7,char_bank->char_7);
+    lcd_def_char(0, char_bank->char_0);
+    lcd_def_char(1, char_bank->char_1);
+    lcd_def_char(2, char_bank->char_2);
+    lcd_def_char(3, char_bank->char_3);
+    lcd_def_char(4, char_bank->char_4);
+    lcd_def_char(5, char_bank->char_5);
+    lcd_def_char(6, char_bank->char_6);
+    lcd_def_char(7, char_bank->char_7);
 }
 
 /**
@@ -239,4 +237,12 @@ void lcd_char(char C)
 {
     uint8_t data = (uint8_t)(C);
     lcd_write_data(data);
+}
+
+void lcd_home(void)
+{
+    lcd_write_cmd(LCDC_CLS | LCDC_HOME);
+#if USE_RW_PIN == OFF
+    LCD->delay_us(4900);
+#endif
 }
