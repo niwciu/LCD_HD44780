@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 13:39:34
+ * @Last Modified time: 2023-12-08 14:23:27
  */
 
 #include "lcd_hd44780.h"
@@ -71,6 +71,8 @@
 #define LCD_LINE3_ADR   0x10 
 #define LCD_LINE4_ADR   0x50 
 #endif
+
+
 // clang-format on
 
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
@@ -263,18 +265,17 @@ void lcd_load_char_bank(const struct char_bank_struct *char_bank)
  * @note For user defined char, place CGRAM_char_index (Position/addres of the character in CGRAM of the LCD where
  * defined char was written).
  */
-void lcd_char(char C)
+void lcd_char(const char C)
 {
     uint8_t data = (uint8_t)(C);
     lcd_write_data(data);
 }
 /**
- * @brief Function that move LCD cursot to specific posiotion located under x and y coordinate
- * @param y LCD row/ line number (starting from 0).
- * @param x LCD column position. This parameter define specific position of character in row/line defined by y
- * argument (starting from 0).
+ * @brief Function that move LCD cursor to specific posiotion located under x and y coordinate
+ * @param y LCD row/line number. Defined enum value LINE_1, LINE_2,... etc.
+ * @param x LCD column number. Defined enum value C1, C2, C3,... etc.
  */
-void lcd_locate(uint8_t y, uint8_t x)
+void lcd_locate(enum LCD_LINES y, enum LCD_COLUMNS x)
 {
     switch (y)
     {
@@ -284,25 +285,23 @@ void lcd_locate(uint8_t y, uint8_t x)
 
 #if (LCD_Y > 1)
     case 1:
-        y = LCD_LINE2_ADR
-    ;
-        break; 
+        y = LCD_LINE2_ADR;
+        break;
 #endif
 #if (LCD_Y > 2)
     case 2:
         y = LCD_LINE3_ADR;
-        break; 
+        break;
 #endif
 #if (LCD_Y > 3)
     case 3:
         y = LCD_LINE4_ADR;
-        break; 
+        break;
 #endif
     default:
         break;
     }
     lcd_write_cmd((uint8_t)(LCDC_SET_DDRAM + y + x));
-    printf("\r\ncmd=%i\r\n",(uint8_t)(LCDC_SET_DDRAM + y + x));
 }
 #if USE_LCD_CURSOR_HOME == ON
 /**

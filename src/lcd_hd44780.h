@@ -19,9 +19,9 @@ void lcd_cls(void);
 void lcd_def_char(const uint8_t CGRAM_bank_x_char_adr, const uint8_t *def_char);
 void lcd_load_char_bank(const struct char_bank_struct *char_bank);
 
-void lcd_char(char C);
+void lcd_char(const char C);
 
-void lcd_locate(uint8_t y, uint8_t x);
+void lcd_locate(enum LCD_LINES y, enum LCD_COLUMNS x);
 
 void lcd_home(void);
 void lcd_cursor_on(void);

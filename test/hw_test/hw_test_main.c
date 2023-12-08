@@ -32,9 +32,7 @@ void main_hw_test(void)
     _delay_ms(2000);
     lcd_home();
     lcd_char('2');
-    lcd_locate(1,5);
+    lcd_locate(LINE_2,C8);
     lcd_char('W');
-
-
     while(1);
 }
