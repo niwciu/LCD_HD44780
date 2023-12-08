@@ -67,6 +67,7 @@ void lcd_char(char C);
 void lcd_home(void);
 void lcd_cursor_on(void);
 void lcd_cursor_off(void);
+void lcd_blinking_cursor_on(void);
 
 #ifdef __cplusplus
 }
