@@ -1,4 +1,9 @@
-
+/*
+ * @Author: lukasz.niewelt 
+ * @Date: 2023-12-06 21:40:29 
+ * @Last Modified by: lukasz.niewelt
+ * @Last Modified time: 2023-12-08 14:43:51
+ */
 
 #ifndef _LCD_HD_44780_H_
 #define _LCD_HD_44780_H_
