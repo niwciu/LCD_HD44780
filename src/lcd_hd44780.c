@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 14:23:27
+ * @Last Modified time: 2023-12-08 14:48:43
  */
 
 #include "lcd_hd44780.h"
