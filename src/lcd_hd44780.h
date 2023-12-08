@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-06 21:40:29 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 15:29:13
+ * @Last Modified time: 2023-12-08 16:29:49
  */
 
 #ifndef _LCD_HD_44780_H_
@@ -18,21 +18,32 @@ extern "C"
 #include "lcd_hd44780_def_char.h"
 #endif
 
-void lcd_init(void);
-void lcd_cls(void);
+    enum alignment
+    {
+        left,
+        right
+    };
 
-void lcd_def_char(const uint8_t CGRAM_bank_x_char_adr, const uint8_t *def_char);
-void lcd_load_char_bank(const struct char_bank_struct *char_bank);
+    void lcd_init(void);
+    void lcd_cls(void);
 
-void lcd_char(const char C);
-void lcd_str(const char *str);
+    void lcd_def_char(const uint8_t CGRAM_bank_x_char_adr, const uint8_t *def_char);
+    void lcd_load_char_bank(const struct char_bank_struct *char_bank);
 
-void lcd_locate(enum LCD_LINES y, enum LCD_COLUMNS x);
+    void lcd_char(const char C);
+    void lcd_str(const char *str);
+    void lcd_int(int val, uint8_t width, enum alignment alignment);
+    void lcd_hex(int val, uint8_t width, enum alignment alignment);
+    void lcd_bin(int val, uint8_t width, enum alignment alignment);
 
-void lcd_home(void);
-void lcd_cursor_on(void);
-void lcd_cursor_off(void);
-void lcd_blinking_cursor_on(void);
+    void lcd_value_with_prefix(uint8_t buf_lenght, uint8_t width, char buffer[17], enum alignment alignment, const char *prefix);
+
+    void lcd_locate(enum LCD_LINES y, enum LCD_COLUMNS x);
+
+    void lcd_home(void);
+    void lcd_cursor_on(void);
+    void lcd_cursor_off(void);
+    void lcd_blinking_cursor_on(void);
 
 #ifdef __cplusplus
 }

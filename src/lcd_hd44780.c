@@ -2,12 +2,14 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 15:22:49
+ * @Last Modified time: 2023-12-08 16:46:28
  */
 
 #include "lcd_hd44780.h"
 #include <stddef.h>
 #include "stdio.h"
+#include "stdlib.h"
+#include "string.h"
 
 #define BUSY_FLAG 1 << 7
 
@@ -72,7 +74,6 @@
 #define LCD_LINE4_ADR   0x50 
 #endif
 
-
 // clang-format on
 
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
@@ -85,6 +86,7 @@ static void lcd_write_4bit_data(uint8_t data);
 static void lcd_write_cmd(uint8_t cmd);
 static void lcd_write_data(uint8_t data);
 static void lcd_write_byte(uint8_t byte);
+static void lcd_put_spaces(uint8_t empty_spaces);
 #if USE_RW_PIN == ON
 static uint8_t lcd_read_byte(void);
 static uint8_t lcd_read_4bit_data(void);
@@ -177,6 +179,14 @@ uint8_t lcd_read_4bit_data(void)
 }
 #endif
 
+static void lcd_put_spaces(uint8_t empty_spaces)
+{
+    for (uint8_t i = 0; i < empty_spaces; i++)
+    {
+        lcd_char(' ');
+    }
+}
+
 /**
  * @brief  Function that initialize LCD in 4-bit mode with or without LCD R/W Pin handling.
  * @attention LCD R/W handling should be configured in lcd_hd44780_config.h by setting USE_RW_PIN to  1 (Enable R/W Pin
@@ -227,6 +237,7 @@ void lcd_cls(void)
     LCD->delay_us(4900);
 #endif
 }
+
 #if USE_DEF_CHAR_FUNCTION == ON
 /**
  * @brief Function for defining custom user characters in CGRAM of the LCD.
@@ -259,6 +270,7 @@ void lcd_load_char_bank(const struct char_bank_struct *char_bank)
     lcd_def_char(7, char_bank->char_7);
 }
 #endif
+
 /**
  * @brief Function for print the char on the LCD screen under current position of the LCD cursor.
  * @param C char (for example '1') or it's ASCI code (0x31).
@@ -270,6 +282,12 @@ void lcd_char(const char C)
     uint8_t data = (uint8_t)(C);
     lcd_write_data(data);
 }
+
+/**
+ * @brief Function for printing/writing string on LCD screen. Writing the string on LCD screen start from current LCD
+ * cursor position.
+ * @param str string that should be printed/written on the LCD screen
+ */
 void lcd_str(const char *str)
 {
     register char znak;
@@ -278,6 +296,126 @@ void lcd_str(const char *str)
         lcd_write_data((uint8_t)(znak));
     }
 }
+
+#if USE_LCD_INT == ON
+/**
+ * @brief Function for print the integer value on the LCD screen under current position of the LCD cursor.
+ * @param val int type value to print on LCD screen
+ * @param width Minimum number of characters to be printed. If the value to be printed is shorter than this number, the
+ * result is padded with blank spaces. The value is not truncated even if the result is larger.
+ * @param alignment If the value to be printed is shorter than width, this parmaeter will specify aligment of the
+ * printed tekst value. This parameter can be set to "left" or "right"
+ */
+void lcd_int(int val, uint8_t width, enum alignment alignment)
+{
+    uint8_t buf_lenght = 0;
+    char buffer[20]; // 19chars for 64 bit int + end char '\0'
+    buffer[0] = '\0';
+    itoa(val, buffer, 10);
+    buf_lenght = strlen(buffer);
+    if (buf_lenght >= (width))
+    {
+        lcd_str(buffer);
+    }
+    else
+    {
+        uint8_t empty_spaces_qty = width - buf_lenght;
+        if (alignment == right)
+        {
+            lcd_put_spaces(empty_spaces_qty);
+            lcd_str(buffer);
+        }
+        else
+        {
+            lcd_str(buffer);
+            lcd_put_spaces(empty_spaces_qty);
+        }
+    }
+}
+#endif
+
+#if USE_LCD_HEX == ON
+/**
+ * @brief Function for print the integer value in hexadecimal format on the LCD screen under current position of the LCD
+ * cursor.
+ * @param val int type value to print on LCD screen in hexadecimal format
+ * @param width Minimum number of characters to be printed. If the value to be printed is shorter than this number, the
+ * result is padded with blank spaces. The value is not truncated even if the result is larger. Width should contain
+ * additional 2 characters for '0x' at the begining of the printed value.
+ * @param alignment If the value to be printed is shorter than width, this parmaeter will specify aligment of the
+ * printed tekst value. This parameter can be set to "left" or "right"
+ */
+void lcd_hex(int val, uint8_t width, enum alignment alignment)
+{
+    uint8_t buf_lenght = 0;
+    char buffer[17];
+    static const char *prefix = {"0x"};
+    buffer[0] = '\0';
+
+    itoa(val, buffer, 16);
+    buf_lenght = strlen(buffer);
+    if (buf_lenght >= (width - 2))
+    {
+        lcd_str(buffer);
+    }
+    else
+    {
+        uint8_t empty_spaces_qty = width - 2 - buf_lenght;
+        if (alignment == right)
+        {
+            lcd_put_spaces(empty_spaces_qty);
+            lcd_str(prefix);
+            lcd_str(buffer);
+        }
+        else
+        {
+            lcd_str(prefix);
+            lcd_str(buffer);
+            lcd_put_spaces(empty_spaces_qty);
+        }
+    }
+}
+#endif
+
+#if USE_LCD_BIN == ON
+/**
+ * @brief Function for print the integer value in hexadecimal format on the LCD screen under current position of the LCD
+ * cursor.
+ * @param val int type value to print on LCD screen in hexadecimal format
+ * @param width Minimum number of characters to be printed. If the value to be printed is shorter than this number, the
+ * result is padded with blank spaces. The value is not truncated even if the result is larger. Width should contain
+ * additional 2 characters for '0x' at the begining of the printed value.
+ * @param alignment If the value to be printed is shorter than width, this parmaeter will specify aligment of the
+ * printed tekst value. This parameter can be set to "left" or "right"
+ */
+void lcd_bin(int val, uint8_t width, enum alignment alignment)
+{
+    uint8_t buf_lenght = 0;
+    char buffer[17];
+    static const char *prefix = {"0b"};
+    buffer[0] = '\0';
+
+    itoa(val, buffer, 2);
+    buf_lenght = strlen(buffer);
+    if (buf_lenght < (width - 2))
+    {
+        uint8_t zeros_qty = ((width - 2) - buf_lenght);
+        lcd_str(prefix);
+        for (uint8_t i = 0; i < zeros_qty; i++)
+        {
+            lcd_char('0');
+        }
+        lcd_str(buffer);
+    }
+    else 
+    {
+        lcd_str(prefix);
+        lcd_str(buffer);  
+    }
+
+}
+#endif
+
 /**
  * @brief Function that move LCD cursor to specific posiotion located under x and y coordinate
  * @param y LCD row/line number. Defined enum value LINE_1, LINE_2,... etc.

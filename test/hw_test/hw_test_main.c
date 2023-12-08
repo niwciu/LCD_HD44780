@@ -11,7 +11,7 @@ void main_hw_test(void)
 {
     lcd_init();
     lcd_char('G');
-    _delay_ms(2000);
+    _delay_ms(1000);
     lcd_cls();
     lcd_def_char(pol_e,Pol_e);
     lcd_load_char_bank(&lcd_cgram_bank_1);
@@ -20,21 +20,25 @@ void main_hw_test(void)
     lcd_char(zn_wody);
     lcd_char('l');
 
-    _delay_ms(2000);
+    _delay_ms(1000);
     lcd_cls();
     lcd_cursor_on();
-    _delay_ms(2000);
+    _delay_ms(1000);
     lcd_cursor_off();
-    _delay_ms(2000);
+    _delay_ms(1000);
     lcd_blinking_cursor_on();
-    _delay_ms(2000);
+    _delay_ms(1000);
     lcd_char('1');
-    _delay_ms(2000);
+    _delay_ms(1000);
     lcd_home();
     lcd_char('2');
     lcd_locate(LINE_2,C8);
     lcd_char('W');
     lcd_cls();
     lcd_str("TEst");
+    lcd_hex(24,6,right);
+    lcd_int(24,6,right);
+    lcd_locate(LINE_2,C5);
+    lcd_bin(3,6,right);
     while(1);
 }

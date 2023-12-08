@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-06 21:38:27 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 15:22:42
+ * @Last Modified time: 2023-12-08 16:18:20
  */
 
 #ifndef _LCD_HD44780_CONFIG_H_
@@ -52,6 +52,9 @@ enum LCD_COLUMNS{
  *          OFF - exclude specific procedure from complitaion
 ********************************************************************************************/
 #define USE_DEF_CHAR_FUNCTION           ON
+#define USE_LCD_INT                     ON
+#define USE_LCD_HEX                     ON
+#define USE_LCD_BIN                     ON
 
 #define USE_LCD_CURSOR_HOME             ON
 #define USE_LCD_CURSOR_ON               ON
