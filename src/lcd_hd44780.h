@@ -65,6 +65,7 @@ void lcd_load_char_bank(const struct char_bank_struct *char_bank);
 void lcd_char(char C);
 
 void lcd_home(void);
+void lcd_cursor_on(void);
 
 #ifdef __cplusplus
 }
