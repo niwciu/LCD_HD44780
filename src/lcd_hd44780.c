@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 10:27:32
+ * @Last Modified time: 2023-12-08 10:30:58
  */
 
 #include "lcd_hd44780.h"
@@ -250,4 +250,9 @@ void lcd_home(void)
 void lcd_cursor_on(void)
 {
     lcd_write_cmd(LCDC_ONOFF | LCDC_DISPLAYON | LCDC_CURSORON);
+}
+
+void lcd_cursor_off(void)
+{
+    lcd_write_cmd(LCDC_ONOFF | LCDC_DISPLAYON);
 }
