@@ -34,5 +34,7 @@ void main_hw_test(void)
     lcd_char('2');
     lcd_locate(LINE_2,C8);
     lcd_char('W');
+    lcd_cls();
+    lcd_str("TEst");
     while(1);
 }
