@@ -1,4 +1,5 @@
 #include "unity/fixture/unity_fixture.h"
+#include "lcd_hd44780_config.h"
 
 TEST_GROUP_RUNNER(lcd_hd44780_init)
 {
@@ -26,10 +27,18 @@ TEST_GROUP_RUNNER(lcd_hd44780_basic_functions)
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenLcdClearScreenThenSignalSequenceForLcdClearScreenIsCorrect);
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenLcdDefCharPol_eCalledThenSignalSequenceForLcdDefCharIsCorrect);
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenDefineSepcialCharactersFromBank1ThenSignalSequenceIsCorrect);
+#if USE_LCD_CURSOR_HOME == ON
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdHomeThenSignalSequenceIsCorrect);
+#endif
+#if USE_LCD_CURSOR_ON == ON
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdCursorOnThenSignalSequenceIsCorrect);
+#endif
+#if USE_LCD_CURSOR_OFF == ON
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdCursorOffThenSignalSequenceIsCorrect);
+#endif
+#if USE_LCD_BLINKING_CURSOR_ON == ON
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdBlinkingCursorOnThenSignalSequenceIsCorrect);
+#endif
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, );

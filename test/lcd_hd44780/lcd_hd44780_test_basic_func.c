@@ -67,7 +67,7 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenDefineSepcialCharactersFromBan
     lcd_load_char_bank(&char_bank_1);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
-
+#if USE_LCD_CURSOR_HOME == ON
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdHomeThenSignalSequenceIsCorrect)
 {
     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (LCDC_CLS | LCDC_HOME), 0x00,4900);
@@ -75,8 +75,9 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdHomeThenSignalSequenceIs
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
+#endif
 
-
+#if USE_LCD_CURSOR_ON == ON
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdCursorOnThenSignalSequenceIsCorrect)
 {
     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (LCDC_ONOFF | LCDC_DISPLAYON | LCDC_CURSORON), 0x00,0);
@@ -84,7 +85,9 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdCursorOnThenSignalSequen
     lcd_cursor_on();
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
+#endif
 
+#if USE_LCD_CURSOR_OFF == ON
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdCursorOffThenSignalSequenceIsCorrect)
 {
     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (LCDC_ONOFF | LCDC_DISPLAYON), 0x00,0);
@@ -92,7 +95,9 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdCursorOffThenSignalSeque
     lcd_cursor_off();
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
+#endif
 
+#if USE_LCD_BLINKING_CURSOR_ON == ON
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdBlinkingCursorOnThenSignalSequenceIsCorrect)
 {
     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (LCDC_ONOFF | LCDC_DISPLAYON | LCDC_CURSORON | LCDC_BLINKON), 0x00,0);
@@ -100,7 +105,7 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdBlinkingCursorOnThenSign
     lcd_blinking_cursor_on();
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
-
+#endif
 // TEST(lcd_hd44780_basic_functions, )
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");

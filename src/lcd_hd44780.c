@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 10:36:15
+ * @Last Modified time: 2023-12-08 10:39:09
  */
 
 #include "lcd_hd44780.h"
@@ -238,7 +238,10 @@ void lcd_char(char C)
     uint8_t data = (uint8_t)(C);
     lcd_write_data(data);
 }
-
+#if USE_LCD_CURSOR_HOME == ON
+/**
+ * @brief Function that move lcd cursor to the first posision at first row of LCD screen
+ */
 void lcd_home(void)
 {
     lcd_write_cmd(LCDC_CLS | LCDC_HOME);
@@ -246,18 +249,33 @@ void lcd_home(void)
     LCD->delay_us(4900);
 #endif
 }
+#endif
 
+#if USE_LCD_CURSOR_ON == ON
+/**
+ * @brief Function that activates the visibility of the LCD cursor.
+ */
 void lcd_cursor_on(void)
 {
     lcd_write_cmd(LCDC_ONOFF | LCDC_DISPLAYON | LCDC_CURSORON);
 }
+#endif
 
+#if USE_LCD_CURSOR_OFF == ON
+/**
+ * @brief Function that deactivates the visibility and blinking of the LCD cursor.
+ */
 void lcd_cursor_off(void)
 {
     lcd_write_cmd(LCDC_ONOFF | LCDC_DISPLAYON);
 }
-
+#endif
+#if USE_LCD_BLINKING_CURSOR_ON == ON
+/**
+ * @brief Function that activates the visibility and blinking of the LCD cursor.
+ */
 void lcd_blinking_cursor_on(void)
 {
     lcd_write_cmd(LCDC_ONOFF | LCDC_DISPLAYON | LCDC_CURSORON | LCDC_BLINKON);
 }
+#endif
