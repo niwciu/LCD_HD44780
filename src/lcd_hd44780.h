@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-06 21:40:29 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 14:43:51
+ * @Last Modified time: 2023-12-08 14:54:21
  */
 
 #ifndef _LCD_HD_44780_H_
@@ -25,6 +25,7 @@ void lcd_def_char(const uint8_t CGRAM_bank_x_char_adr, const uint8_t *def_char);
 void lcd_load_char_bank(const struct char_bank_struct *char_bank);
 
 void lcd_char(const char C);
+void lcd_str(const char *str);
 
 void lcd_locate(enum LCD_LINES y, enum LCD_COLUMNS x);
 

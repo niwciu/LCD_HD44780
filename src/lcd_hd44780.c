@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 14:48:43
+ * @Last Modified time: 2023-12-08 14:55:30
  */
 
 #include "lcd_hd44780.h"
@@ -269,6 +269,14 @@ void lcd_char(const char C)
 {
     uint8_t data = (uint8_t)(C);
     lcd_write_data(data);
+}
+void lcd_str(const char *str)
+{
+    register char znak;
+    while ((znak = *(str++)))
+    {
+        lcd_write_data((uint8_t)(znak));
+    }
 }
 /**
  * @brief Function that move LCD cursor to specific posiotion located under x and y coordinate
