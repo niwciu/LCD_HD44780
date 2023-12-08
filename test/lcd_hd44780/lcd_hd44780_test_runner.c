@@ -41,7 +41,7 @@ TEST_GROUP_RUNNER(lcd_hd44780_basic_functions)
 #if USE_LCD_BLINKING_CURSOR_ON == ON
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdBlinkingCursorOnThenSignalSequenceIsCorrect);
 #endif
-    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
+    RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdLocateThenSignalSequenceIsCorrect);
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, );

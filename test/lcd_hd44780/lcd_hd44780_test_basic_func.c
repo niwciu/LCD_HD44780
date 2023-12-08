@@ -107,10 +107,15 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdBlinkingCursorOnThenSign
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 #endif
-// TEST(lcd_hd44780_basic_functions, )
-// {
-//     TEST_FAIL_MESSAGE("Implement your test!");
-// }
+TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdLocateThenSignalSequenceIsCorrect)
+{
+    uint8_t line_no=2;
+    uint8_t column_no=5;
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, ((uint8_t)(LCDC_SET_DDRAM + line_no + column_no)), 0x00,0);
+    expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+    lcd_locate(line_no,column_no);
+    TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
+}
 
 
 // TEST(lcd_hd44780_basic_functions, )
