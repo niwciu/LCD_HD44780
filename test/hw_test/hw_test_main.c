@@ -19,6 +19,20 @@ void main_hw_test(void)
     lcd_char(pol_o);
     lcd_char(zn_wody);
     lcd_char('l');
+    
+    _delay_ms(2000);
+    lcd_cls();
+    lcd_cursor_on();
+    _delay_ms(2000);
+    lcd_cursor_off();
+    _delay_ms(2000);
+    lcd_blinking_cursor_on();
+    _delay_ms(2000);
+    lcd_char('1');
+    _delay_ms(2000);
+    lcd_home();
+    lcd_char('2');
+
 
     while(1);
 }
