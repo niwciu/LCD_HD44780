@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 10:39:09
+ * @Last Modified time: 2023-12-08 11:12:01
  */
 
 #include "lcd_hd44780.h"
@@ -195,7 +195,7 @@ void lcd_cls(void)
     LCD->delay_us(4900);
 #endif
 }
-
+#if  USE_DEF_CHAR_FUNCTION == ON
 /**
  * @brief Function for defining custom user characters in CGRAM of the LCD.
  * @param CGRAM_char_index Position/addres of the character in CGRAM of the LCD where defined char should be written.
@@ -226,7 +226,7 @@ void lcd_load_char_bank(const struct char_bank_struct *char_bank)
     lcd_def_char(6, char_bank->char_6);
     lcd_def_char(7, char_bank->char_7);
 }
-
+#endif 
 /**
  * @brief Function for print the char on the LCD screen under current position of the LCD cursor.
  * @param C char (for example '1') or it's ASCI code (0x31).

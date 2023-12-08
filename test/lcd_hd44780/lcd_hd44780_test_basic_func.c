@@ -44,7 +44,7 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenLcdClearScreenThenSignalSequen
 
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
-
+#if  USE_DEF_CHAR_FUNCTION == ON
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenLcdDefCharPol_eCalledThenSignalSequenceForLcdDefCharIsCorrect )
 {
     next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no,pol_e,Pol_e);
@@ -67,6 +67,7 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenDefineSepcialCharactersFromBan
     lcd_load_char_bank(&char_bank_1);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
+#endif
 #if USE_LCD_CURSOR_HOME == ON
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdHomeThenSignalSequenceIsCorrect)
 {

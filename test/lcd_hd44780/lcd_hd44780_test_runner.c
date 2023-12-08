@@ -25,8 +25,10 @@ TEST_GROUP_RUNNER(lcd_hd44780_basic_functions)
     /* Test cases to run */
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenPrintGcharaterOnLcdThenSignalSequenceForSendingCharIsCorrect);
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenLcdClearScreenThenSignalSequenceForLcdClearScreenIsCorrect);
+#if USE_DEF_CHAR_FUNCTION == ON
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenLcdDefCharPol_eCalledThenSignalSequenceForLcdDefCharIsCorrect);
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenDefineSepcialCharactersFromBank1ThenSignalSequenceIsCorrect);
+#endif
 #if USE_LCD_CURSOR_HOME == ON
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdHomeThenSignalSequenceIsCorrect);
 #endif
@@ -45,5 +47,3 @@ TEST_GROUP_RUNNER(lcd_hd44780_basic_functions)
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
 }
-
-
