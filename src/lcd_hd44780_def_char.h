@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-08 11:15:52 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 12:14:58
+ * @Last Modified time: 2023-12-08 12:28:49
  */
 
 #ifndef _LCD_HD44780_DEF_CHAR_H_
@@ -23,39 +23,37 @@ extern "C"
     static const uint8_t Pol_n[8] = {2, 4, 22, 25, 17, 17, 17, 0};
     static const uint8_t Zn_wody[8] = {0, 0, 0, 6, 9, 2, 4, 15};
 
-struct char_bank_struct
-{
-    const uint8_t *char_0;
-    const uint8_t *char_1;
-    const uint8_t *char_2;
-    const uint8_t *char_3;
-    const uint8_t *char_4;
-    const uint8_t *char_5;
-    const uint8_t *char_6;
-    const uint8_t *char_7;
-};
-static const struct char_bank_struct char_bank_1 = {
-    Pol_e,
-    Pol_o,
-    Pol_s,
-    Pol_l,
-    Pol_c,
-    Pol_a,
-    Pol_n,
-    Zn_wody
-};
-enum LCD_CGRAM
-{
-    pol_e,
-    pol_o,
-    pol_s,
-    pol_l,
-    pol_c,
-    pol_a,
-    pol_n,
-    zn_wody,
-};
-
+    struct char_bank_struct
+    {
+        const uint8_t *char_0;
+        const uint8_t *char_1;
+        const uint8_t *char_2;
+        const uint8_t *char_3;
+        const uint8_t *char_4;
+        const uint8_t *char_5;
+        const uint8_t *char_6;
+        const uint8_t *char_7;
+    };
+    static const struct char_bank_struct lcd_cgram_bank_1 = {
+        Pol_e,
+        Pol_o,
+        Pol_s,
+        Pol_l,
+        Pol_c,
+        Pol_a,
+        Pol_n,
+        Zn_wody};
+    enum LCD_CGRAM_BANK_1
+    {
+        pol_e,
+        pol_o,
+        pol_s,
+        pol_l,
+        pol_c,
+        pol_a,
+        pol_n,
+        zn_wody,
+    };
 
 #ifdef __cplusplus
 }

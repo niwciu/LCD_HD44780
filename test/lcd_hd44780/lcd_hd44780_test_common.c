@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-07 16:59:56 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 10:10:06
+ * @Last Modified time: 2023-12-08 12:30:37
  */
 
 #include "lcd_hd44780_test_common.h"
@@ -221,9 +221,9 @@ uint16_t define_expected_sequence_for_send_data_to_LCD(uint16_t log_no, uint8_t 
     return log_no;
 }
 
-uint16_t define_expect_sequence_for_lcd_def_char(uint16_t log_no, enum LCD_CGRAM CGRAM_char_index, const uint8_t *def_char)
+uint16_t define_expect_sequence_for_lcd_def_char(uint16_t log_no, const uint8_t CGRAM_bank_x_char_index, const uint8_t *def_char)
 {
-    uint8_t CGRAM_start_adress=((DEF_CHAR_ADR_MASK & CGRAM_char_index) * LCD_CGRAM_BYTES_PER_CHAR);
+    uint8_t CGRAM_start_adress=((DEF_CHAR_ADR_MASK & CGRAM_bank_x_char_index) * LCD_CGRAM_BYTES_PER_CHAR);
     uint8_t cmd=(LCDC_SET_CGRAM |CGRAM_start_adress);
     
     log_no=define_expected_sequence_for_send_cmd_to_LCD(log_no,cmd,0x00, 0);

@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 11:12:01
+ * @Last Modified time: 2023-12-08 12:27:12
  */
 
 #include "lcd_hd44780.h"
@@ -205,9 +205,9 @@ void lcd_cls(void)
  * @note CGRAM_char_index - This Parameter can take values from 0 to 7. For the predefined example of special
  * characters, taken values are defined in the type enum LCD_CGRAM that is defined in lcd-hd44780.h
  */
-void lcd_def_char(enum LCD_CGRAM CGRAM_char_index, const uint8_t *def_char)
+void lcd_def_char(const uint8_t CGRAM_bank_x_char_adr, const uint8_t *def_char)
 {
-    lcd_write_cmd(LCDC_SET_CGRAM | ((DEF_CHAR_ADR_MASK & CGRAM_char_index) * LCD_CGRAM_BYTES_PER_CHAR));
+    lcd_write_cmd(LCDC_SET_CGRAM | ((DEF_CHAR_ADR_MASK & CGRAM_bank_x_char_adr) * LCD_CGRAM_BYTES_PER_CHAR));
     for (uint8_t j = 0; j < LCD_CGRAM_BYTES_PER_CHAR; j++)
     {
         lcd_write_data(def_char[j]);
