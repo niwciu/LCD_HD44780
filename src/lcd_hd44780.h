@@ -21,6 +21,8 @@ void lcd_load_char_bank(const struct char_bank_struct *char_bank);
 
 void lcd_char(char C);
 
+void lcd_locate(uint8_t y, uint8_t x);
+
 void lcd_home(void);
 void lcd_cursor_on(void);
 void lcd_cursor_off(void);

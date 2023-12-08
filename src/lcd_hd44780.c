@@ -2,11 +2,12 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 12:27:12
+ * @Last Modified time: 2023-12-08 13:39:34
  */
 
 #include "lcd_hd44780.h"
 #include <stddef.h>
+#include "stdio.h"
 
 #define BUSY_FLAG 1 << 7
 
@@ -41,6 +42,35 @@
 /********************************/
 #define LCDC_SET_CGRAM      0x40
 #define LCDC_SET_DDRAM      0x80
+
+
+/********************  definitions of Line addres for different lcd screens ****************/
+#if LCD_TYPE ==1604
+#define LCD_Y   4 
+#define LCD_X   16 
+#define LCD_LINE1_ADR   0x00 
+#define LCD_LINE2_ADR   0x28 
+#define LCD_LINE3_ADR   0x14 
+#define LCD_LINE4_ADR   0x54 
+#endif
+
+#if LCD_TYPE==2004
+#define LCD_Y   4 
+#define LCD_X   20 
+#define LCD_LINE1_ADR   0x00 
+#define LCD_LINE2_ADR   0x40 
+#define LCD_LINE3_ADR   0x14 
+#define LCD_LINE4_ADR   0x54 
+#endif
+
+#if LCD_TYPE==1602
+#define LCD_Y   2 
+#define LCD_X   16 
+#define LCD_LINE1_ADR   0x00 
+#define LCD_LINE2_ADR   0x40 
+#define LCD_LINE3_ADR   0x10 
+#define LCD_LINE4_ADR   0x50 
+#endif
 // clang-format on
 
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
@@ -195,7 +225,7 @@ void lcd_cls(void)
     LCD->delay_us(4900);
 #endif
 }
-#if  USE_DEF_CHAR_FUNCTION == ON
+#if USE_DEF_CHAR_FUNCTION == ON
 /**
  * @brief Function for defining custom user characters in CGRAM of the LCD.
  * @param CGRAM_char_index Position/addres of the character in CGRAM of the LCD where defined char should be written.
@@ -226,7 +256,7 @@ void lcd_load_char_bank(const struct char_bank_struct *char_bank)
     lcd_def_char(6, char_bank->char_6);
     lcd_def_char(7, char_bank->char_7);
 }
-#endif 
+#endif
 /**
  * @brief Function for print the char on the LCD screen under current position of the LCD cursor.
  * @param C char (for example '1') or it's ASCI code (0x31).
@@ -237,6 +267,42 @@ void lcd_char(char C)
 {
     uint8_t data = (uint8_t)(C);
     lcd_write_data(data);
+}
+/**
+ * @brief Function that move LCD cursot to specific posiotion located under x and y coordinate
+ * @param y LCD row/ line number (starting from 0).
+ * @param x LCD column position. This parameter define specific position of character in row/line defined by y
+ * argument (starting from 0).
+ */
+void lcd_locate(uint8_t y, uint8_t x)
+{
+    switch (y)
+    {
+    case 0:
+        y = LCD_LINE1_ADR;
+        break;
+
+#if (LCD_Y > 1)
+    case 1:
+        y = LCD_LINE2_ADR
+    ;
+        break; 
+#endif
+#if (LCD_Y > 2)
+    case 2:
+        y = LCD_LINE3_ADR;
+        break; 
+#endif
+#if (LCD_Y > 3)
+    case 3:
+        y = LCD_LINE4_ADR;
+        break; 
+#endif
+    default:
+        break;
+    }
+    lcd_write_cmd((uint8_t)(LCDC_SET_DDRAM + y + x));
+    printf("\r\ncmd=%i\r\n",(uint8_t)(LCDC_SET_DDRAM + y + x));
 }
 #if USE_LCD_CURSOR_HOME == ON
 /**
