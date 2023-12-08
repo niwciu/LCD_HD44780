@@ -29,7 +29,7 @@ TEST_GROUP_RUNNER(lcd_hd44780_basic_functions)
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdHomeThenSignalSequenceIsCorrect);
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdCursorOnThenSignalSequenceIsCorrect);
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdCursorOffThenSignalSequenceIsCorrect);
-    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
+    RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdBlinkingCursorOnThenSignalSequenceIsCorrect);
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
