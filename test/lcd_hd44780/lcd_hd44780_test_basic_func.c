@@ -117,19 +117,19 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdLocateThenSignalSequence
 }
 
 
-// TEST(lcd_hd44780_basic_functions, )
+TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdStrThenSignalSequenceIsCorrect)
+{
+    TEST_FAIL_MESSAGE("Implement your test!");
+}
+
+
+// TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdHexThenSignalSequenceIsCorrect)
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");
 // }
 
 
-// TEST(lcd_hd44780_basic_functions, )
-// {
-//     TEST_FAIL_MESSAGE("Implement your test!");
-// }
-
-
-// TEST(lcd_hd44780_basic_functions, )
+// TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdIntThenSignalSequenceIsCorrect)
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");
 // }
