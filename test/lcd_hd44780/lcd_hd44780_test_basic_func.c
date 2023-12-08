@@ -68,27 +68,72 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenDefineSepcialCharactersFromBan
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
-// TEST(lcd_hd44780_basic_functions, FirstTest)
+TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdHomeThenSignalSequenceIsCorrect)
+{
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (LCDC_CLS | LCDC_HOME), 0x00,4900);
+    lcd_home();
+    expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+    TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
+}
+
+// TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdHomeThenSignalSequenceIsCorrect)
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");
 // }
 
-// TEST(lcd_hd44780_basic_functions, FirstTest)
+// TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdCursorOnThenSignalSequenceIsCorrect)
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");
 // }
 
-// TEST(lcd_hd44780_basic_functions, FirstTest)
+// TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdCursorOffThenSignalSequenceIsCorrect)
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");
 // }
 
-// TEST(lcd_hd44780_basic_functions, FirstTest)
+// TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdBlinkingCursorOnThenSignalSequenceIsCorrect)
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");
 // }
 
-// TEST(lcd_hd44780_basic_functions, FirstTest)
+// TEST(lcd_hd44780_basic_functions, )
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");
 // }
+
+
+// TEST(lcd_hd44780_basic_functions, )
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
+
+
+// TEST(lcd_hd44780_basic_functions, )
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
+
+
+// TEST(lcd_hd44780_basic_functions, )
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
+
+
+// TEST(lcd_hd44780_basic_functions, )
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
+
+
+// TEST(lcd_hd44780_basic_functions, )
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
+
+
+// TEST(lcd_hd44780_basic_functions, )
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
+

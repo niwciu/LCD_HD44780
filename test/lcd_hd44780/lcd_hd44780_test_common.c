@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-07 16:59:56 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-07 23:25:31
+ * @Last Modified time: 2023-12-08 10:10:06
  */
 
 #include "lcd_hd44780_test_common.h"
@@ -148,13 +148,15 @@ uint16_t define_expected_sequence_for_send_cmd_to_LCD(uint16_t log_no, uint8_t c
     expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT]);
     expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
     expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 120;
-#endif
+
     if (additional_cmd_delay != 0)
     {
         expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT]);
         expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
         expected_LCD_Port_delay_dump_data[log_no++][DELAY] = additional_cmd_delay;
     }
+#endif
+    additional_cmd_delay++; //to avoid warnings about unused variable and not complicate the test code too much
     expected_readed_data++; //to avoid warnings about unused variable and not complicate the test code too much
     return log_no;
 }
