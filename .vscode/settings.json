@@ -63,7 +63,8 @@
     "signal.h": "c",
     "tim_delay.h": "c",
     "main.h": "c",
-    "lcd_hd44780_config.h": "c"
+    "lcd_hd44780_config.h": "c",
+    "lcd_hd44780_def_char.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }
