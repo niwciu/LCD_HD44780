@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-06 21:38:27 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 13:23:08
+ * @Last Modified time: 2023-12-08 13:41:57
  */
 
 #ifndef _LCD_HD44780_CONFIG_H_
@@ -17,7 +17,7 @@ extern "C"
 #define OFF 0
 
 #define LCD_TYPE 2004
-#define USE_RW_PIN                      OF
+#define USE_RW_PIN                      OFF
 
 /********************************  LCD LIBRARY COMPILATION SETTINGS ************************
  *      Setting USE_(procedure name) to:

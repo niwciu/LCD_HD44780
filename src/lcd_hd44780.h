@@ -9,7 +9,7 @@ extern "C"
 #endif /* __cplusplus */
 #include "lcd_hd44780_config.h"
 #include "lcd_hd44780_interface.h"
-#if USE_DEF_CHAR == OFF
+#if USE_DEF_CHAR_FUNCTION == ON
 #include "lcd_hd44780_def_char.h"
 #endif
 

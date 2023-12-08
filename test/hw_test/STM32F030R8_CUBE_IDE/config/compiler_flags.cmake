@@ -34,7 +34,8 @@ set(ASM_FLAGS "-c -x assembler-with-cpp --specs=nano.specs")
 # Warning flags for C++
 # -Wall - standard warnings
 # -Wextra - extended warnings
-set(CXX_WARNINGS "-Wall -Wextra")
+# -Werror - warning as error
+set(CXX_WARNINGS "-Wall -Wextra -Werror")
 
 # Warning flags for C
 # -Wall - standard warnings

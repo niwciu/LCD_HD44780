@@ -14,12 +14,12 @@ void main_hw_test(void)
     _delay_ms(2000);
     lcd_cls();
     lcd_def_char(pol_e,Pol_e);
-    lcd_load_char_bank(&char_bank_1);
+    lcd_load_char_bank(&lcd_cgram_bank_1);
     lcd_char(pol_e);
     lcd_char(pol_o);
     lcd_char(zn_wody);
     lcd_char('l');
-    
+
     _delay_ms(2000);
     lcd_cls();
     lcd_cursor_on();
@@ -32,6 +32,8 @@ void main_hw_test(void)
     _delay_ms(2000);
     lcd_home();
     lcd_char('2');
+    lcd_locate(1,5);
+    lcd_char('W');
 
 
     while(1);
