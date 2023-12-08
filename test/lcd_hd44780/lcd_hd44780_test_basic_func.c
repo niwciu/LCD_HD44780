@@ -85,10 +85,10 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdCursorOnThenSignalSequen
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
-// TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdCursorOffThenSignalSequenceIsCorrect)
-// {
-//     TEST_FAIL_MESSAGE("Implement your test!");
-// }
+TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdCursorOffThenSignalSequenceIsCorrect)
+{
+    TEST_FAIL_MESSAGE("Implement your test!");
+}
 
 // TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdBlinkingCursorOnThenSignalSequenceIsCorrect)
 // {
