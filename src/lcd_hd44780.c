@@ -366,7 +366,6 @@ void lcd_hex(int val, uint8_t width, enum alignment alignment)
 #ifdef AVR
     uint8_t buf_lenght = 0;
     char buffer[17];
-    static const char *prefix = {"0x"};
     buffer[0] = '\0';
 
     itoa(val, buffer, 16);
@@ -378,6 +377,7 @@ void lcd_hex(int val, uint8_t width, enum alignment alignment)
     else
     {
         uint8_t empty_spaces_qty = width - VAL_PREFIX_LENGHT - buf_lenght;
+        static const char *prefix = {"0x"};
         if (alignment == right)
         {
             lcd_put_spaces(empty_spaces_qty);
@@ -443,7 +443,7 @@ void lcd_bin(int val, uint8_t width)
     buffer[0] = '\0';
     char bin_val_buffer[35];
     bin_val_buffer[0] = '\0';
-    static const char *prefix = {"0b"};
+    
     // sprintf(buffer,"%s",prefix);
     uint32_t bit_mask = 0x80000000;
     while (bit_mask != 0)
@@ -468,6 +468,7 @@ void lcd_bin(int val, uint8_t width)
         uint8_t zeros_qty = width - (strlen(buffer) + VAL_PREFIX_LENGHT);
         char temp_buf[zeros_qty];
         temp_buf[0] = '\0';
+        static const char *prefix = {"0b"};
         for (uint8_t t = 0; t < zeros_qty; t++)
         {
             // sprintf(temp_buf,"%s0",temp_buf);
