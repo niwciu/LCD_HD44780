@@ -24,7 +24,7 @@ set(CMAKE_TOOLCHAIN_FILE config/Toolchain-arm-gcc.cmake)
 # Allow assembler
 enable_language(ASM)
 
-project(STM32F030R8)
+project(STM32F030R8_LCD_HW_TEST)
 
 set(INCLUDE_DIRS
 ../
