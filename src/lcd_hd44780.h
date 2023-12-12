@@ -36,8 +36,6 @@ extern "C"
     void lcd_hex(int val, uint8_t width, enum alignment alignment);
     void lcd_bin(int val, uint8_t width);
 
-    void lcd_value_with_prefix(uint8_t buf_lenght, uint8_t width, char buffer[17], enum alignment alignment, const char *prefix);
-
     void lcd_locate(enum LCD_LINES y, enum LCD_COLUMNS x);
 
     void lcd_home(void);
