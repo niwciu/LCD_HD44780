@@ -173,6 +173,16 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_LcdInt_61045_8_left_ThenSi
 }
 
 
+TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_hex_10_1_left_ThenSignalSequenceForSendigIsEqualToLcdStrWithValueInHexAsStrig)
+{
+    TEST_FAIL_MESSAGE("Implement your test!");
+}
+
+// TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdHexThenSignalSequenceIsCorrect)
+// {
+//     TEST_FAIL_MESSAGE("Implement your test!");
+// }
+
 // TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdHexThenSignalSequenceIsCorrect)
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");
