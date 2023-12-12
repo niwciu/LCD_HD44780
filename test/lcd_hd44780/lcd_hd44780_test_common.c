@@ -237,3 +237,14 @@ uint16_t define_expect_sequence_for_lcd_def_char(uint16_t log_no, const uint8_t 
 
     return log_no;
 }
+
+uint16_t define_expected_sequence_for_send_string_to_LCD(const char *string)
+{
+    uint16_t next_log=0;
+    register char c;
+    while ((c = *(string++)))
+    {
+        next_log = define_expected_sequence_for_send_data_to_LCD(next_log, (uint8_t)(c), 0x00, 0);
+    }
+    return next_log;
+}
