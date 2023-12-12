@@ -17,7 +17,7 @@ set(CMAKE_TOOLCHAIN_FILE ./config/Toolchain-AVR-gcc.cmake)
 # Allow assembler
 enable_language(ASM)
 
-project(AVR_ATMEGA328P_TEMPLATE)
+project(AVR_ATMEGA328P_LCD_HW_TEST)
 
 ## AVR Chip Configuration
 # Set the CPU Freq coresponding with fusebit settings

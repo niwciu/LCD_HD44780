@@ -101,7 +101,7 @@ else()
 	message(STATUS "AVR_Programmer was not found.")    
 endif()
 # Upload the firmware with avrdude
-add_custom_target(flash avrdude -c ${PROG_TYPE} -p ${MMCU} -D -U flash:w:${CMAKE_SOURCE_DIR}/build/${hex_file}:i DEPENDS size erase)
+add_custom_target(flash avrdude -c ${PROG_TYPE} -p ${MMCU} -D -U flash:w:${CMAKE_SOURCE_DIR}/Build/${hex_file}:i DEPENDS size erase)
 # Erase the chip via avrdude
 add_custom_target(erase avrdude -p ${MMCU} -c ${PROG_TYPE} -e)
 # Write AVR Fuses via avrdude
