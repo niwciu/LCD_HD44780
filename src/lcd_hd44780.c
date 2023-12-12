@@ -48,13 +48,15 @@
 
 
 /********************  definitions of Line addres for different lcd screens ****************/
+//https://web.alfredstate.edu/faculty/weimandn/lcd/lcd_addressing/lcd_addressing_index.html
+
 #if LCD_TYPE ==1604
 #define LCD_Y   4 
 #define LCD_X   16 
 #define LCD_LINE1_ADR   0x00 
-#define LCD_LINE2_ADR   0x28 
-#define LCD_LINE3_ADR   0x14 
-#define LCD_LINE4_ADR   0x54 
+#define LCD_LINE2_ADR   0x40 
+#define LCD_LINE3_ADR   0x10 
+#define LCD_LINE4_ADR   0x50 
 #endif
 
 #if LCD_TYPE==2004
@@ -71,8 +73,6 @@
 #define LCD_X   16 
 #define LCD_LINE1_ADR   0x00 
 #define LCD_LINE2_ADR   0x40 
-#define LCD_LINE3_ADR   0x10 
-#define LCD_LINE4_ADR   0x50 
 #endif
 
 // clang-format on
