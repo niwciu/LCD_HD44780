@@ -189,16 +189,13 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_hex_255_6_right_ThenSi
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
-// TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdHexThenSignalSequenceIsCorrect)
-// {
-//     TEST_FAIL_MESSAGE("Implement your test!");
-// }
-
-// TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdHexThenSignalSequenceIsCorrect)
-// {
-//     TEST_FAIL_MESSAGE("Implement your test!");
-// }
-
+TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_hex_20_5_right_ThenSignalSequenceForSendigIsEqualToLcdStrWithValueInHexAsStrig)
+{
+    next_log_no = define_expected_sequence_for_send_string_to_LCD("  0xff");
+    expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+    lcd_hex(20,5,right);
+    TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
+}
 
 
 // TEST(lcd_hd44780_basic_functions, )
