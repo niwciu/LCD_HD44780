@@ -46,6 +46,16 @@
             },
             "group": "test"
         },
+        {
+            "type": "shell",
+            "label": "UBUNTU run lcd_hd44780_test",
+            "command": "./lcd_hd44780_test",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}/test/lcd_hd44780/out"
+            },
+            "group": "test"
+        },
         {         
             "label": "run lizard test",
             "type": "shell",
