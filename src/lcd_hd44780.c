@@ -87,12 +87,19 @@ static void lcd_write_4bit_data(uint8_t data);
 static void lcd_write_cmd(uint8_t cmd);
 static void lcd_write_data(uint8_t data);
 static void lcd_write_byte(uint8_t byte);
-#ifdef AVR
-static void lcd_put_spaces(uint8_t empty_spaces);
-#endif
+
 #if USE_RW_PIN == ON
 static uint8_t lcd_read_byte(void);
 static uint8_t lcd_read_4bit_data(void);
+#endif
+#ifdef AVR
+static void lcd_put_spaces(uint8_t empty_spaces);
+static void lcd_int_AVR(int val, uint8_t width, enum alignment alignment);
+static void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment);
+static void lcd_bin_AVR(int val, uint8_t width);
+#else
+static void fill_bin_value_buffer(int val, char *bin_val_buffer);
+static void fill_zeros_buffer(char *buffer, uint8_t width, char * zeros_buf);
 #endif
 
 static void register_LCD_IO_driver(void)
@@ -187,6 +194,118 @@ static void lcd_put_spaces(uint8_t empty_spaces)
     for (uint8_t i = 0; i < empty_spaces; i++)
     {
         lcd_char(' ');
+    }
+}
+void lcd_int_AVR(int val, uint8_t width, enum alignment alignment)
+{
+    uint8_t buf_lenght = 0;
+    char buffer[20]; // 19chars for 64 bit int + end char '\0'
+    buffer[0] = '\0';
+    itoa(val, buffer, 10);
+    buf_lenght = strlen(buffer);
+    if (buf_lenght >= (width))
+    {
+        lcd_str(buffer);
+    }
+    else
+    {
+        uint8_t empty_spaces_qty = width - buf_lenght;
+        if (alignment == right)
+        {
+            lcd_put_spaces(empty_spaces_qty);
+            lcd_str(buffer);
+        }
+        else
+        {
+            lcd_str(buffer);
+            lcd_put_spaces(empty_spaces_qty);
+        }
+    }
+}
+void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment)
+{
+    uint8_t buf_lenght = 0;
+    char buffer[17];
+    buffer[0] = '\0';
+    itoa(val, buffer, 16);
+    buf_lenght = strlen(buffer);
+    if (buf_lenght >= (width - VAL_PREFIX_LENGHT))
+    {
+        lcd_str(buffer);
+    }
+    else
+    {
+        uint8_t empty_spaces_qty = width - VAL_PREFIX_LENGHT - buf_lenght;
+        static const char *prefix = {"0x"};
+        if (alignment == right)
+        {
+            lcd_put_spaces(empty_spaces_qty);
+            lcd_str(prefix);
+            lcd_str(buffer);
+        }
+        else
+        {
+            lcd_str(prefix);
+            lcd_str(buffer);
+            lcd_put_spaces(empty_spaces_qty);
+        }
+    }
+}
+void lcd_bin_AVR(int val, uint8_t width)
+{
+    uint8_t buf_lenght = 0;
+    char buffer[35]; //0b 0000 0000 0000 0000 0000 0000 0000 0000
+    static const char *prefix = {"0b"};
+    buffer[0] = '\0';
+
+    itoa(val, buffer, 2);
+    buf_lenght = strlen(buffer);
+    if (buf_lenght < (width - VAL_PREFIX_LENGHT))
+    {
+        uint8_t zeros_qty = ((width - VAL_PREFIX_LENGHT) - buf_lenght);
+        lcd_str(prefix);
+        for (uint8_t i = 0; i < zeros_qty; i++)
+        {
+            lcd_char('0');
+        }
+        lcd_str(buffer);
+    }
+    else
+    {
+        lcd_str(prefix);
+        lcd_str(buffer);
+    }
+}
+#else
+
+static void fill_bin_value_buffer(int val, char *bin_val_buffer)
+{
+    uint32_t bit_mask = 0x80000000;
+    while (bit_mask != 0)
+    {
+        if ((bit_mask & val) != 0)
+        {
+            strcat(bin_val_buffer, "1");
+        }
+        else
+        {
+            if (strlen(bin_val_buffer) != 0)
+            {
+                strcat(bin_val_buffer, "0");
+            }
+        }
+        bit_mask = bit_mask >> 1;
+    }
+}
+static void fill_zeros_buffer(char *buffer, uint8_t width, char * zeros_buf)
+{
+    if (strlen(buffer) < (unsigned int)(width - VAL_PREFIX_LENGHT))
+    {
+        uint8_t zeros_qty = width - (strlen(buffer) + VAL_PREFIX_LENGHT);
+        for (uint8_t t = 0; t < zeros_qty; t++)
+        {
+            strcat(zeros_buf, "0");
+        }
     }
 }
 #endif
@@ -314,29 +433,7 @@ void lcd_str(const char *str)
 void lcd_int(int val, uint8_t width, enum alignment alignment)
 {
 #ifdef AVR
-    uint8_t buf_lenght = 0;
-    char buffer[20]; // 19chars for 64 bit int + end char '\0'
-    buffer[0] = '\0';
-    itoa(val, buffer, 10);
-    buf_lenght = strlen(buffer);
-    if (buf_lenght >= (width))
-    {
-        lcd_str(buffer);
-    }
-    else
-    {
-        uint8_t empty_spaces_qty = width - buf_lenght;
-        if (alignment == right)
-        {
-            lcd_put_spaces(empty_spaces_qty);
-            lcd_str(buffer);
-        }
-        else
-        {
-            lcd_str(buffer);
-            lcd_put_spaces(empty_spaces_qty);
-        }
-    }
+    lcd_int_AVR(val,width,alignment);
 #else
     char buffer[20]; // 19chars for 64 bit int + end char '\0'
     buffer[0] = '\0';
@@ -364,33 +461,7 @@ void lcd_int(int val, uint8_t width, enum alignment alignment)
 void lcd_hex(int val, uint8_t width, enum alignment alignment)
 {
 #ifdef AVR
-    uint8_t buf_lenght = 0;
-    char buffer[17];
-    buffer[0] = '\0';
-
-    itoa(val, buffer, 16);
-    buf_lenght = strlen(buffer);
-    if (buf_lenght >= (width - VAL_PREFIX_LENGHT))
-    {
-        lcd_str(buffer);
-    }
-    else
-    {
-        uint8_t empty_spaces_qty = width - VAL_PREFIX_LENGHT - buf_lenght;
-        static const char *prefix = {"0x"};
-        if (alignment == right)
-        {
-            lcd_put_spaces(empty_spaces_qty);
-            lcd_str(prefix);
-            lcd_str(buffer);
-        }
-        else
-        {
-            lcd_str(prefix);
-            lcd_str(buffer);
-            lcd_put_spaces(empty_spaces_qty);
-        }
-    }
+    lcd_hex_AVR(val,width,alignment);
 #else
     char buffer[17];
     buffer[0] = '\0';
@@ -416,79 +487,24 @@ void lcd_hex(int val, uint8_t width, enum alignment alignment)
 void lcd_bin(int val, uint8_t width)
 {
 #ifdef AVR
-    uint8_t buf_lenght = 0;
-    char buffer[35]; //0b 0000 0000 0000 0000 0000 0000 0000 0000
-    static const char *prefix = {"0b"};
-    buffer[0] = '\0';
-
-    itoa(val, buffer, 2);
-    buf_lenght = strlen(buffer);
-    if (buf_lenght < (width - VAL_PREFIX_LENGHT))
-    {
-        uint8_t zeros_qty = ((width - VAL_PREFIX_LENGHT) - buf_lenght);
-        lcd_str(prefix);
-        for (uint8_t i = 0; i < zeros_qty; i++)
-        {
-            lcd_char('0');
-        }
-        lcd_str(buffer);
-    }
-    else
-    {
-        lcd_str(prefix);
-        lcd_str(buffer);
-    }
+    lcd_bin_AVR(val,width);
 #else
     char buffer[35];
-    buffer[0] = '\0';
     char bin_val_buffer[35];
+    char zeros_buf[35];
+    buffer[0] = '\0';
     bin_val_buffer[0] = '\0';
-    
-    // sprintf(buffer,"%s",prefix);
-    uint32_t bit_mask = 0x80000000;
-    while (bit_mask != 0)
-    {
-        if ((bit_mask & val) != 0)
-        {
-            // sprintf(buffer,"%s1",buffer);
-            strcat(buffer, "1");
-        }
-        else
-        {
-            if (strlen(buffer) != 0)
-            {
-                // sprintf(buffer,"%s0",buffer);
-                strcat(buffer, "0");
-            }
-        }
-        bit_mask = bit_mask >> 1;
-    };
-    if (strlen(buffer) < (unsigned int)(width - VAL_PREFIX_LENGHT))
-    {
-        uint8_t zeros_qty = width - (strlen(buffer) + VAL_PREFIX_LENGHT);
-        char temp_buf[zeros_qty];
-        temp_buf[0] = '\0';
-        static const char *prefix = {"0b"};
-        for (uint8_t t = 0; t < zeros_qty; t++)
-        {
-            // sprintf(temp_buf,"%s0",temp_buf);
-            strcat(temp_buf, "0");
-        }
-        // sprintf(buffer,"%s%s%s",prefix,temp_buf,buffer);
-        strcat(bin_val_buffer, prefix);
-        strcat(bin_val_buffer, temp_buf);
-        strcat(bin_val_buffer, buffer);
-    }
-    else
-    {
-        // sprintf(buffer,"0b%s",buffer);
-        strcat(bin_val_buffer, "0b");
-        strcat(bin_val_buffer, buffer);
-    }
-    lcd_str(bin_val_buffer);
+    zeros_buf[0] = '\0';
+
+    fill_bin_value_buffer(val, bin_val_buffer);
+    fill_zeros_buffer(buffer, width,zeros_buf);
+    strcat(buffer, "0b");
+    strcat(buffer, zeros_buf);
+    strcat(buffer, bin_val_buffer);
+    lcd_str(buffer);
 #endif
-    
 }
+
 #endif
 
 /**
