@@ -51,7 +51,8 @@
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE",
-                "__AVR_ATmega3250P__"
+                "__AVR_ATmega3250P__",
+                "AVR"
             ],
             "cppStandard": "gnu++17",
             "compilerPath": "D:\\19_EMBEDED_TOOLS\\1_AVR_toolchain\\bin\\avr-gcc.exe",

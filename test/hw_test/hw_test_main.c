@@ -39,6 +39,6 @@ void main_hw_test(void)
     lcd_hex(24,6,right);
     lcd_int(24,6,right);
     lcd_locate(LINE_2,C5);
-    lcd_bin(3,6,right);
+    lcd_bin(3,6);
     while(1);
 }

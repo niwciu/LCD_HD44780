@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-08 11:15:52 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 12:53:27
+ * @Last Modified time: 2023-12-12 17:27:13
  */
 
 #ifndef _LCD_HD44780_DEF_CHAR_H_
@@ -15,6 +15,7 @@ extern "C"
 #define LCD_CGRAM_BYTES_PER_CHAR 8
 #define DEF_CHAR_ADR_MASK 7
 /**********************USER CHAR DEFINITIONS START*******************************/
+/******To sace flash when using defchar comment char definitions that are unused*/
     static const uint8_t Pol_e[8] = {32, 32, 14, 17, 31, 16, 14, 3};
     static const uint8_t Pol_o[8] = {2, 4, 14, 17, 17, 17, 14, 0};
     static const uint8_t Pol_s[8] = {2, 4, 14, 16, 14, 1, 30, 32};

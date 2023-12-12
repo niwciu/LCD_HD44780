@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-06 21:40:29 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 16:29:49
+ * @Last Modified time: 2023-12-12 18:03:17
  */
 
 #ifndef _LCD_HD_44780_H_
@@ -34,7 +34,7 @@ extern "C"
     void lcd_str(const char *str);
     void lcd_int(int val, uint8_t width, enum alignment alignment);
     void lcd_hex(int val, uint8_t width, enum alignment alignment);
-    void lcd_bin(int val, uint8_t width, enum alignment alignment);
+    void lcd_bin(int val, uint8_t width);
 
     void lcd_value_with_prefix(uint8_t buf_lenght, uint8_t width, char buffer[17], enum alignment alignment, const char *prefix);
 

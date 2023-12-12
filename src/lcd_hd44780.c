@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 16:46:28
+ * @Last Modified time: 2023-12-12 19:08:59
  */
 
 #include "lcd_hd44780.h"
@@ -11,10 +11,11 @@
 #include "stdlib.h"
 #include "string.h"
 
-#define BUSY_FLAG 1 << 7
+// clang-format off
+#define BUSY_FLAG           1 << 7
+#define VAL_PREFIX_LENGHT   2
 
 // LCD driver commands
-// clang-format off
 #define LCDC_CLS            0x01
 #define LCDC_HOME           0x02
 /********************************/
@@ -86,7 +87,9 @@ static void lcd_write_4bit_data(uint8_t data);
 static void lcd_write_cmd(uint8_t cmd);
 static void lcd_write_data(uint8_t data);
 static void lcd_write_byte(uint8_t byte);
+#ifdef AVR
 static void lcd_put_spaces(uint8_t empty_spaces);
+#endif
 #if USE_RW_PIN == ON
 static uint8_t lcd_read_byte(void);
 static uint8_t lcd_read_4bit_data(void);
@@ -178,7 +181,7 @@ uint8_t lcd_read_4bit_data(void)
     return data;
 }
 #endif
-
+#ifdef AVR
 static void lcd_put_spaces(uint8_t empty_spaces)
 {
     for (uint8_t i = 0; i < empty_spaces; i++)
@@ -186,6 +189,7 @@ static void lcd_put_spaces(uint8_t empty_spaces)
         lcd_char(' ');
     }
 }
+#endif
 
 /**
  * @brief  Function that initialize LCD in 4-bit mode with or without LCD R/W Pin handling.
@@ -305,9 +309,11 @@ void lcd_str(const char *str)
  * result is padded with blank spaces. The value is not truncated even if the result is larger.
  * @param alignment If the value to be printed is shorter than width, this parmaeter will specify aligment of the
  * printed tekst value. This parameter can be set to "left" or "right"
+ * @attention to compile for AVR ucontrollers definition of flag AVR is required.
  */
 void lcd_int(int val, uint8_t width, enum alignment alignment)
 {
+#ifdef AVR
     uint8_t buf_lenght = 0;
     char buffer[20]; // 19chars for 64 bit int + end char '\0'
     buffer[0] = '\0';
@@ -331,6 +337,15 @@ void lcd_int(int val, uint8_t width, enum alignment alignment)
             lcd_put_spaces(empty_spaces_qty);
         }
     }
+#else
+    char buffer[20]; // 19chars for 64 bit int + end char '\0'
+    buffer[0] = '\0';
+    if (alignment == right)
+        sprintf(buffer, "%*i", width, val);
+    else
+        sprintf(buffer, "%-*i", width, val);
+    lcd_str(buffer);
+#endif
 }
 #endif
 
@@ -344,9 +359,11 @@ void lcd_int(int val, uint8_t width, enum alignment alignment)
  * additional 2 characters for '0x' at the begining of the printed value.
  * @param alignment If the value to be printed is shorter than width, this parmaeter will specify aligment of the
  * printed tekst value. This parameter can be set to "left" or "right"
+ * @attention to compile for AVR ucontrollers definition of flag AVR is required.
  */
 void lcd_hex(int val, uint8_t width, enum alignment alignment)
 {
+#ifdef AVR
     uint8_t buf_lenght = 0;
     char buffer[17];
     static const char *prefix = {"0x"};
@@ -354,13 +371,13 @@ void lcd_hex(int val, uint8_t width, enum alignment alignment)
 
     itoa(val, buffer, 16);
     buf_lenght = strlen(buffer);
-    if (buf_lenght >= (width - 2))
+    if (buf_lenght >= (width - VAL_PREFIX_LENGHT))
     {
         lcd_str(buffer);
     }
     else
     {
-        uint8_t empty_spaces_qty = width - 2 - buf_lenght;
+        uint8_t empty_spaces_qty = width - VAL_PREFIX_LENGHT - buf_lenght;
         if (alignment == right)
         {
             lcd_put_spaces(empty_spaces_qty);
@@ -374,6 +391,15 @@ void lcd_hex(int val, uint8_t width, enum alignment alignment)
             lcd_put_spaces(empty_spaces_qty);
         }
     }
+#else
+    char buffer[17];
+    buffer[0] = '\0';
+    if (alignment == right)
+        sprintf(buffer, "%#*x", width, val);
+    else
+        sprintf(buffer, "%-#*x", width, val);
+    lcd_str(buffer);
+#endif
 }
 #endif
 
@@ -385,21 +411,21 @@ void lcd_hex(int val, uint8_t width, enum alignment alignment)
  * @param width Minimum number of characters to be printed. If the value to be printed is shorter than this number, the
  * result is padded with blank spaces. The value is not truncated even if the result is larger. Width should contain
  * additional 2 characters for '0x' at the begining of the printed value.
- * @param alignment If the value to be printed is shorter than width, this parmaeter will specify aligment of the
- * printed tekst value. This parameter can be set to "left" or "right"
+ * @attention to compile for AVR ucontrollers definition of flag AVR is required.
  */
-void lcd_bin(int val, uint8_t width, enum alignment alignment)
+void lcd_bin(int val, uint8_t width)
 {
+#ifdef AVR
     uint8_t buf_lenght = 0;
-    char buffer[17];
+    char buffer[35]; //0b 0000 0000 0000 0000 0000 0000 0000 0000
     static const char *prefix = {"0b"};
     buffer[0] = '\0';
 
     itoa(val, buffer, 2);
     buf_lenght = strlen(buffer);
-    if (buf_lenght < (width - 2))
+    if (buf_lenght < (width - VAL_PREFIX_LENGHT))
     {
-        uint8_t zeros_qty = ((width - 2) - buf_lenght);
+        uint8_t zeros_qty = ((width - VAL_PREFIX_LENGHT) - buf_lenght);
         lcd_str(prefix);
         for (uint8_t i = 0; i < zeros_qty; i++)
         {
@@ -407,12 +433,60 @@ void lcd_bin(int val, uint8_t width, enum alignment alignment)
         }
         lcd_str(buffer);
     }
-    else 
+    else
     {
         lcd_str(prefix);
-        lcd_str(buffer);  
+        lcd_str(buffer);
     }
-
+#else
+    char buffer[35];
+    buffer[0] = '\0';
+    char bin_val_buffer[35];
+    bin_val_buffer[0] = '\0';
+    static const char *prefix = {"0b"};
+    // sprintf(buffer,"%s",prefix);
+    uint32_t bit_mask = 0x80000000;
+    while (bit_mask != 0)
+    {
+        if ((bit_mask & val) != 0)
+        {
+            // sprintf(buffer,"%s1",buffer);
+            strcat(buffer, "1");
+        }
+        else
+        {
+            if (strlen(buffer) != 0)
+            {
+                // sprintf(buffer,"%s0",buffer);
+                strcat(buffer, "0");
+            }
+        }
+        bit_mask = bit_mask >> 1;
+    };
+    if (strlen(buffer) < (unsigned int)(width - VAL_PREFIX_LENGHT))
+    {
+        uint8_t zeros_qty = width - (strlen(buffer) + VAL_PREFIX_LENGHT);
+        char temp_buf[zeros_qty];
+        temp_buf[0] = '\0';
+        for (uint8_t t = 0; t < zeros_qty; t++)
+        {
+            // sprintf(temp_buf,"%s0",temp_buf);
+            strcat(temp_buf, "0");
+        }
+        // sprintf(buffer,"%s%s%s",prefix,temp_buf,buffer);
+        strcat(bin_val_buffer, prefix);
+        strcat(bin_val_buffer, temp_buf);
+        strcat(bin_val_buffer, buffer);
+    }
+    else
+    {
+        // sprintf(buffer,"0b%s",buffer);
+        strcat(bin_val_buffer, "0b");
+        strcat(bin_val_buffer, buffer);
+    }
+    lcd_str(bin_val_buffer);
+#endif
+    
 }
 #endif
 

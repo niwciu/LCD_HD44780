@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-06 21:38:27 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 16:18:20
+ * @Last Modified time: 2023-12-08 16:57:42
  */
 
 #ifndef _LCD_HD44780_CONFIG_H_
@@ -29,7 +29,7 @@ extern "C"
 #define LCD_TYPE       2004
 #define USE_RW_PIN     OFF 
 
-/********************  definitions of Line and collumn labels for lcd_locate ****************/
+//definitions of Line and collumn labels for lcd_locate 
 enum LCD_LINES
 {
     LINE_1,
