@@ -443,7 +443,6 @@ void lcd_int(int val, uint8_t width, enum alignment alignment)
 {
 #ifdef AVR
     lcd_int_AVR(val,width,alignment);
-    lcd_int_AVR(val,width,alignment);
 #else
     char buffer[20]; // 19chars for 64 bit int + end char '\0'
     buffer[0] = '\0';
@@ -472,7 +471,6 @@ void lcd_hex(int val, uint8_t width, enum alignment alignment)
 {
 #ifdef AVR
     lcd_hex_AVR(val,width,alignment);
-    lcd_hex_AVR(val,width,alignment);
 #else
     char buffer[17];
     buffer[0] = '\0';
@@ -498,7 +496,6 @@ void lcd_hex(int val, uint8_t width, enum alignment alignment)
 void lcd_bin(int val, uint8_t width)
 {
 #ifdef AVR
-    lcd_bin_AVR(val,width);
     lcd_bin_AVR(val,width);
 #else
     char buffer[35];
