@@ -197,6 +197,13 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_hex_20_5_right_ThenSig
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
+TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_bin_5_6_ThenSignalSequenceForSendigIsEqualToLcdStrWithValueInHexAsStrig)
+{
+    next_log_no = define_expected_sequence_for_send_string_to_LCD("0b0101");
+    expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+    //lcd_bin(20,5);
+    TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
+}
 
 // TEST(lcd_hd44780_basic_functions, )
 // {
