@@ -316,6 +316,118 @@ static void fill_zeros_buffer(char *buffer, uint8_t width, char * zeros_buf)
         }
     }
 }
+void lcd_int_AVR(int val, uint8_t width, enum alignment alignment)
+{
+    uint8_t buf_lenght = 0;
+    char buffer[20]; // 19chars for 64 bit int + end char '\0'
+    buffer[0] = '\0';
+    itoa(val, buffer, 10);
+    buf_lenght = strlen(buffer);
+    if (buf_lenght >= (width))
+    {
+        lcd_str(buffer);
+    }
+    else
+    {
+        uint8_t empty_spaces_qty = width - buf_lenght;
+        if (alignment == right)
+        {
+            lcd_put_spaces(empty_spaces_qty);
+            lcd_str(buffer);
+        }
+        else
+        {
+            lcd_str(buffer);
+            lcd_put_spaces(empty_spaces_qty);
+        }
+    }
+}
+void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment)
+{
+    uint8_t buf_lenght = 0;
+    char buffer[17];
+    buffer[0] = '\0';
+    itoa(val, buffer, 16);
+    buf_lenght = strlen(buffer);
+    if (buf_lenght >= (width - VAL_PREFIX_LENGHT))
+    {
+        lcd_str(buffer);
+    }
+    else
+    {
+        uint8_t empty_spaces_qty = width - VAL_PREFIX_LENGHT - buf_lenght;
+        static const char *prefix = {"0x"};
+        if (alignment == right)
+        {
+            lcd_put_spaces(empty_spaces_qty);
+            lcd_str(prefix);
+            lcd_str(buffer);
+        }
+        else
+        {
+            lcd_str(prefix);
+            lcd_str(buffer);
+            lcd_put_spaces(empty_spaces_qty);
+        }
+    }
+}
+void lcd_bin_AVR(int val, uint8_t width)
+{
+    uint8_t buf_lenght = 0;
+    char buffer[35]; //0b 0000 0000 0000 0000 0000 0000 0000 0000
+    static const char *prefix = {"0b"};
+    buffer[0] = '\0';
+
+    itoa(val, buffer, 2);
+    buf_lenght = strlen(buffer);
+    if (buf_lenght < (width - VAL_PREFIX_LENGHT))
+    {
+        uint8_t zeros_qty = ((width - VAL_PREFIX_LENGHT) - buf_lenght);
+        lcd_str(prefix);
+        for (uint8_t i = 0; i < zeros_qty; i++)
+        {
+            lcd_char('0');
+        }
+        lcd_str(buffer);
+    }
+    else
+    {
+        lcd_str(prefix);
+        lcd_str(buffer);
+    }
+}
+#else
+
+static void fill_bin_value_buffer(int val, char *bin_val_buffer)
+{
+    uint32_t bit_mask = 0x80000000;
+    while (bit_mask != 0)
+    {
+        if ((bit_mask & val) != 0)
+        {
+            strcat(bin_val_buffer, "1");
+        }
+        else
+        {
+            if (strlen(bin_val_buffer) != 0)
+            {
+                strcat(bin_val_buffer, "0");
+            }
+        }
+        bit_mask = bit_mask >> 1;
+    }
+}
+static void fill_zeros_buffer(char *buffer, uint8_t width, char * zeros_buf)
+{
+    if (strlen(buffer) < (unsigned int)(width - VAL_PREFIX_LENGHT))
+    {
+        uint8_t zeros_qty = width - (strlen(buffer) + VAL_PREFIX_LENGHT);
+        for (uint8_t t = 0; t < zeros_qty; t++)
+        {
+            strcat(zeros_buf, "0");
+        }
+    }
+}
 #endif
 
 /**
@@ -502,6 +614,8 @@ void lcd_bin(int val, uint8_t width)
 #else
     char buffer[35];
     char bin_val_buffer[35];
+    char zeros_buf[35];
+    buffer[0] = '\0';
     char zeros_buf[35];
     buffer[0] = '\0';
     bin_val_buffer[0] = '\0';
