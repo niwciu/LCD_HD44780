@@ -142,10 +142,10 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdLocateAndSetAllLinesLoca
     uint8_t line_no_4_adr = 0x50;
     #endif
     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (uint8_t)(LCDC_SET_DDRAM + line_no_1_adr + C5), 0x00, 0);
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (uint8_t)(LCDC_SET_DDRAM + line_no_2_adr + C4), 0x00, 0);
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + line_no_2_adr + C4), 0x00, 0);
     #if ((LCD_TYPE==2004)||(LCD_TYTPE==1604))
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (uint8_t)(LCDC_SET_DDRAM + line_no_3_adr + C3), 0x00, 0);
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (uint8_t)(LCDC_SET_DDRAM + line_no_4_adr + C6), 0x00, 0);
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + line_no_3_adr + C3), 0x00, 0);
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + line_no_4_adr + C6), 0x00, 0);
     #endif
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
     lcd_locate(LINE_1, C5);
