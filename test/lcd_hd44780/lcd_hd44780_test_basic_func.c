@@ -179,6 +179,28 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_LcdInt_16_4_right_ThenSign
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
+TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_LcdInt_61045_8_left_ThenSignalSequenceForSendigIsEqualToLcdStrWithValueAsString)
+{   uint8_t data = (uint8_t)('6');
+    next_log_no = define_expected_sequence_for_send_data_to_LCD(0, data, 0x00, 0);
+    data = (uint8_t)('1' );
+    next_log_no = define_expected_sequence_for_send_data_to_LCD(next_log_no, data, 0x00, 0);
+    data = (uint8_t)('0');
+    next_log_no = define_expected_sequence_for_send_data_to_LCD(next_log_no, data, 0x00, 0);
+    data = (uint8_t)('4');
+    next_log_no = define_expected_sequence_for_send_data_to_LCD(next_log_no, data, 0x00, 0);
+    data = (uint8_t)('5' );
+    next_log_no = define_expected_sequence_for_send_data_to_LCD(next_log_no, data, 0x00, 0);
+    data = (uint8_t)(' ');
+    next_log_no = define_expected_sequence_for_send_data_to_LCD(next_log_no, data, 0x00, 0);
+    data = (uint8_t)(' ');
+    next_log_no = define_expected_sequence_for_send_data_to_LCD(next_log_no, data, 0x00, 0);
+    data = (uint8_t)(' ');
+    next_log_no = define_expected_sequence_for_send_data_to_LCD(next_log_no, data, 0x00, 0);
+    expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+    lcd_int(16,4,right);
+    TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
+}
+
 
 // TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdHexThenSignalSequenceIsCorrect)
 // {
