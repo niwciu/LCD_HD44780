@@ -175,7 +175,10 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_LcdInt_61045_8_left_ThenSi
 
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_hex_10_1_left_ThenSignalSequenceForSendigIsEqualToLcdStrWithValueInHexAsStrig)
 {
-    TEST_FAIL_MESSAGE("Implement your test!");
+    next_log_no = define_expected_sequence_for_send_string_to_LCD("0xa");
+    expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+    lcd_hex(10,1,left);
+    TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
 // TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdHexThenSignalSequenceIsCorrect)
