@@ -155,6 +155,13 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_LcdInt_24_2_right_ThenSign
     lcd_int(24,2,right);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
+TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_LcdInt_2444_2_right_ThenSignalSequenceForSendigIsEqualToLcdStrWithValueAsString)
+{   
+    next_log_no = define_expected_sequence_for_send_string_to_LCD("2444");
+    expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+    lcd_int(2444,2,right);
+    TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
+}
 
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_LcdInt_16_4_right_ThenSignalSequenceForSendigIsEqualToLcdStrWithValueAsString)
 {   

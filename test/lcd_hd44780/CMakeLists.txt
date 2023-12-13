@@ -30,7 +30,7 @@ set(TEST_SRCS
 )
 
 set(GLOBAL_DEFINES
-
+	# -DAVR
 )
 
 include_directories(${INCLUDE_DIRS} ${TEST_INCLUDE_DIRS})
