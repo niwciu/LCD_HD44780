@@ -1,0 +1,68 @@
+name: Run Unit Tests
+# on: [push, pull_request]
+on: workflow_dispatch
+jobs:
+  template_test_running:
+    name: LCD HD44780 Test RUN
+    runs-on: windows-latest 
+    # strategy:
+    #   matrix:
+    #     os: [ubuntu-latest, windows-latest]
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.0.0
+      with:
+        submodules: recursive
+        
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@v3
+        
+    - name: Build binary
+      working-directory: test/lcd_hd44780
+      run: |
+        mkdir out
+        cmake -Bout -GNinja
+        cmake --build out
+
+    - name: List files
+      working-directory: test/lcd_hd44780/out
+      run: dir
+
+    - name: Run LCD HD44780 tests
+      working-directory: test/lcd_hd44780/out
+      run: ./lcd_hd44780_test.exe -v
+
+  # template_2_test_running:
+  #   name: template_2 Test RUN
+  #   runs-on: windows-latest 
+  #   # strategy:
+  #   #   matrix:
+  #   #     os: [ubuntu-latest, windows-latest]
+  #   steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v4.0.0
+  #     with:
+  #       submodules: recursive
+        
+  #   - name: arm-none-eabi-gcc
+  #     uses: ryanwinter/arm-none-eabi-gcc@master
+  #     with:
+  #       release: '10-2021.10'
+        
+  #   - name: Install Ninja
+  #     uses: seanmiddleditch/gha-setup-ninja@v3
+        
+  #   - name: Build binary
+  #     working-directory: test/template_2
+  #     run: |
+  #       mkdir out
+  #       cmake -Bout -GNinja
+  #       cmake --build out
+
+  #   - name: List files
+  #     working-directory: test/template_2/out
+  #     run: dir
+
+  #   - name: Run inputs tests
+  #     working-directory: test/template_2/out
+  #     run: ./template_2_test.exe -v
