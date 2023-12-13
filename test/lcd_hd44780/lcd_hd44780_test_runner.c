@@ -51,6 +51,16 @@ TEST_GROUP_RUNNER(lcd_hd44780_basic_functions)
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_hex_255_6_right_ThenSignalSequenceForSendigIsEqualToLcdStrWithValueInHexAsStrig);
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_hex_20_5_right_ThenSignalSequenceForSendigIsEqualToLcdStrWithValueInHexAsStrig);
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_bin_5_6_ThenSignalSequenceForSendigIsEqualToLcdStrWithValueInHexAsStrig);
+    RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_bin_5_1_ThenSignalSequenceForSendigIsEqualToLcdStrWithValueInHexAsStrig);
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
+    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
+    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
+    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
+    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
+    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
+    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
+    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
+    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
+
 }

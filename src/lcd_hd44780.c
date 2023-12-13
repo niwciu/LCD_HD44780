@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-12 19:08:59
+ * @Last Modified time: 2023-12-13 10:50:33
  */
 
 #include "lcd_hd44780.h"
@@ -13,7 +13,7 @@
 
 // clang-format off
 #define BUSY_FLAG           1 << 7
-#define VAL_PREFIX_LENGHT   2
+#define VAL_PREFIX_LENGHT   2U
 
 // LCD driver commands
 #define LCDC_CLS            0x01
@@ -307,13 +307,14 @@ static void fill_bin_value_buffer(int val, char *bin_val_buffer)
 }
 static void fill_zeros_buffer(char *buffer, uint8_t width, char * zeros_buf)
 {
-    if (strlen(buffer) < (unsigned int)(width - VAL_PREFIX_LENGHT))
+    if (strlen(buffer) < (width + VAL_PREFIX_LENGHT))
     {
-        uint8_t zeros_qty = width - (strlen(buffer) + VAL_PREFIX_LENGHT);
+        uint8_t zeros_qty = width - ((strlen(buffer) + VAL_PREFIX_LENGHT));
         for (uint8_t t = 0; t < zeros_qty; t++)
         {
             strcat(zeros_buf, "0");
         }
+       
     }
 }
 
