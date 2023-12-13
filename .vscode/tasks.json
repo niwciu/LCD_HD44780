@@ -92,9 +92,10 @@
                 "--force" ,
                 "--inline-suppr",
                 // "--output-file=reports/cppcheck.out",  // this will print out report instead of printing problems in terminal
-                // "--platform=win64",
+                "--platform=win64",
                 "--suppress=missingInclude",
-                //"--suppress=unusedFunction",
+                "--suppress=missingIncludeSystem",
+                "--suppress=unusedFunction",
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
