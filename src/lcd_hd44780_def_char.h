@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-08 11:15:52 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-13 12:23:16
+ * @Last Modified time: 2023-12-13 13:17:53
  */
 
 #ifndef _LCD_HD44780_DEF_CHAR_H_
@@ -15,8 +15,8 @@ extern "C"
 #if USE_DEF_CHAR_FUNCTION == ON
 #define LCD_CGRAM_BYTES_PER_CHAR 8
 #define DEF_CHAR_ADR_MASK 7
-/**********************USER CHAR DEFINITIONS START*******************************/
-/******To sace flash when using defchar comment char definitions that are unused*/
+    /**********************USER CHAR DEFINITIONS START*******************************/
+    /******To sace flash when using defchar comment char definitions that are unused*/
     static const uint8_t Pol_e[8] = {32, 32, 14, 17, 31, 16, 14, 3};
     static const uint8_t Pol_o[8] = {2, 4, 14, 17, 17, 17, 14, 0};
     static const uint8_t Pol_s[8] = {2, 4, 14, 16, 14, 1, 30, 32};
@@ -26,7 +26,7 @@ extern "C"
     static const uint8_t Pol_n[8] = {2, 4, 22, 25, 17, 17, 17, 0};
     static const uint8_t Zn_wody[8] = {0, 0, 0, 6, 9, 2, 4, 15};
     //here add "definition" of new chars
-/**********************USER CHAR DEFINITIONS END********************************/
+    /**********************USER CHAR DEFINITIONS END********************************/
 
     struct char_bank_struct
     {
@@ -39,7 +39,7 @@ extern "C"
         const uint8_t *char_6;
         const uint8_t *char_7;
     };
-/**********************USER CHAR CGRAM BANKS DEFINITIONS START*******************/
+    /**********************USER CHAR CGRAM BANKS DEFINITIONS START*******************/
     static const struct char_bank_struct lcd_cgram_bank_1 = {
         Pol_e,
         Pol_o,
@@ -70,7 +70,7 @@ extern "C"
     //     Pol_a,
     //     Pol_n,
     //     Zn_wody};
-    // // here define labels for lcd_cgram_bank_x 
+    // // here define labels for lcd_cgram_bank_x
     // enum LCD_CGRAM_BANK_x
     // {
     //     pol_e_bank_x,

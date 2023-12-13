@@ -2,6 +2,7 @@ out/
 Release/
 Debug/
 Build/
+.vscode/settings.json
 # HW test ingnored files
 .metadata/
 .cproject
