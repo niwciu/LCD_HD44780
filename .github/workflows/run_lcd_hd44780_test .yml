@@ -1,6 +1,11 @@
 name: Run LCD HD44780 Unit Tests
 # on: [push, pull_request]
-on: workflow_dispatch
+# on: workflow_dispatch
+on: 
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
 jobs:
   template_test_running:
     name: LCD HD44780 Test RUN
@@ -43,11 +48,6 @@ jobs:
   #     uses: actions/checkout@v4.0.0
   #     with:
   #       submodules: recursive
-        
-  #   - name: arm-none-eabi-gcc
-  #     uses: ryanwinter/arm-none-eabi-gcc@master
-  #     with:
-  #       release: '10-2021.10'
         
   #   - name: Install Ninja
   #     uses: seanmiddleditch/gha-setup-ninja@v3

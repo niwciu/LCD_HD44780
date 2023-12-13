@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/0_Projekty/Project_Template/test/template",
-      "program": "d:/0_Projekty/Project_Template/test/template/build/Debug/outDebug",
+      "cwd": "d:/0_Projekty/6_Biblioteki/LCD_HD44780/test/lcd_hd44780",
+      "program": "d:/0_Projekty/6_Biblioteki/LCD_HD44780/test/lcd_hd44780/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
