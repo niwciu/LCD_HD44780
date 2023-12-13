@@ -209,7 +209,7 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_bin_5_1_ThenSignalSequ
 {
     next_log_no = define_expected_sequence_for_send_string_to_LCD("0b101");
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
-    // lcd_bin(5,1);
+    lcd_bin(5,1);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
