@@ -201,7 +201,7 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_hex_20_1_right_ThenSig
 {
     next_log_no = define_expected_sequence_for_send_string_to_LCD("0x14");
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
-    // lcd_hex(20,1,right);
+    lcd_hex(20,1,right);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
