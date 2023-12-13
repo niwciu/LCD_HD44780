@@ -107,8 +107,7 @@ static void register_LCD_IO_driver(void)
     LCD = LCD_IO_driver_interface_get();
 }
 
-static void lcd_set_all_SIG(void)
-{
+static void lcd_set_all_SIG(void){
     LCD->set_SIG(LCD_E);
     LCD->set_SIG(LCD_RS);
 #if USE_RW_PIN == ON
