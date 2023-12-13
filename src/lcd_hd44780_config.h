@@ -1,6 +1,6 @@
 /*
- * @Author: lukasz.niewelt 
- * @Date: 2023-12-06 21:38:27 
+ * @Author: lukasz.niewelt
+ * @Date: 2023-12-06 21:38:27
  * @Last Modified by: lukasz.niewelt
  * @Last Modified time: 2023-12-08 16:57:42
  */
@@ -16,7 +16,7 @@ extern "C"
 #define ON 1
 #define OFF 0
 
-// clang-format off
+    // clang-format off
 /************************************  LCD HARDWARE SETTINGS *******************************
  *   LCD_TYPE -> set one of the predefined types:
  *               2004 -> 4 lines 20 characters per line
