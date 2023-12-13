@@ -99,16 +99,7 @@ static void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment);
 static void lcd_bin_AVR(int val, uint8_t width);
 #else
 static void fill_bin_value_buffer(int val, char *bin_val_buffer);
-static void fill_zeros_buffer(char *buffer, uint8_t width, char *zeros_buf);
-#endif
-#ifdef AVR
-static void lcd_put_spaces(uint8_t empty_spaces);
-static void lcd_int_AVR(int val, uint8_t width, enum alignment alignment);
-static void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment);
-static void lcd_bin_AVR(int val, uint8_t width);
-#else
-static void fill_bin_value_buffer(int val, char *bin_val_buffer);
-static void fill_zeros_buffer(char *buffer, uint8_t width, char *zeros_buf);
+static void fill_zeros_buffer(const char *buffer, uint8_t width, char *zeros_buf);
 #endif
 
 static void register_LCD_IO_driver(void)
@@ -304,7 +295,7 @@ static void fill_bin_value_buffer(int val, char *bin_val_buffer)
         bit_mask = bit_mask >> 1;
     }
 }
-static void fill_zeros_buffer(char *buffer, uint8_t width, char *zeros_buf)
+static void fill_zeros_buffer(const char *buffer, uint8_t width, char *zeros_buf)
 {
     if (strlen(buffer) < (width + VAL_PREFIX_LENGHT))
     {
