@@ -34,11 +34,14 @@ void main_hw_test(void)
     lcd_char('2');
     lcd_locate(LINE_2,C8);
     lcd_char('W');
+    _delay_ms(1000);
     lcd_cls();
     lcd_str("TEst");
     lcd_hex(24,6,right);
     lcd_int(24,6,right);
-    lcd_locate(LINE_2,C5);
-    lcd_bin(3,6);
+    lcd_locate(LINE_2,C1);
+    lcd_bin(5,1);
+    lcd_locate(LINE_2,C8);
+    lcd_bin(5,8);
     while(1);
 }
