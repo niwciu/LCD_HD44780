@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2023-12-08 11:15:52 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-12 17:27:13
+ * @Last Modified time: 2023-12-13 12:23:16
  */
 
 #ifndef _LCD_HD44780_DEF_CHAR_H_
@@ -12,6 +12,7 @@
 extern "C"
 {
 #endif /* __cplusplus */
+#if USE_DEF_CHAR_FUNCTION == ON
 #define LCD_CGRAM_BYTES_PER_CHAR 8
 #define DEF_CHAR_ADR_MASK 7
 /**********************USER CHAR DEFINITIONS START*******************************/
@@ -83,6 +84,7 @@ extern "C"
     // };
     /**********************USER CHAR CGRAM BANKS DEFINITIONS END*********************/
 
+#endif // USE_DEF_CHAR_FUNC
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
