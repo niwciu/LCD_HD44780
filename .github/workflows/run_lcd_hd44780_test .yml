@@ -7,7 +7,7 @@ on:
   pull_request:
     branches: [main, develop]
 jobs:
-  template_test_running:
+  LCD_HD44780_test_running_win:
     name: LCD HD44780 Test RUN
     runs-on: windows-latest 
     # strategy:
@@ -29,13 +29,70 @@ jobs:
         cmake -Bout -GNinja
         cmake --build out
 
-    - name: List files
-      working-directory: test/lcd_hd44780/out
-      run: dir
+    # - name: List files
+    #   working-directory: test/lcd_hd44780/out
+    #   run: dir
 
     - name: Run LCD HD44780 tests
       working-directory: test/lcd_hd44780/out
       run: ./lcd_hd44780_test.exe -v
+
+  LCD_HD44780_AVR_test_running_win:
+    name: LCD HD44780 AVR Test RUN
+    runs-on: windows-latest 
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.0.0
+      with:
+        submodules: recursive
+        
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@v3
+        
+    - name: Build binary
+      working-directory: test/lcd_hd44780
+      run: |
+        mkdir out_avr
+        cmake -S ./avr_code_test -B out_avr -GNinja
+        cmake --build out_avr
+
+    # - name: List files
+    #   working-directory: test/lcd_hd44780/out
+    #   run: dir
+
+    - name: Run LCD HD44780 tests
+      working-directory: test/lcd_hd44780/out_avr
+      run: ./lcd_hd44780_test.exe -v
+
+  LCD_HD44780_test_running_ubuntu:
+    name: LCD HD44780 Test RUN Ubuntu
+    runs-on: ubuntu-latest 
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.0.0
+      with:
+        submodules: recursive
+        
+    - name: Install Ninja
+      uses: seanmiddleditch/gha-setup-ninja@v3
+        
+    - name: Build binary
+      working-directory: test/lcd_hd44780
+      run: |
+        mkdir out
+        cmake -Bout -GNinja
+        cmake --build out
+
+    # - name: List files
+    #   working-directory: test/lcd_hd44780/out
+    #   run: dir
+
+    - name: Run LCD HD44780 tests
+      working-directory: test/lcd_hd44780/out
+      run: ./lcd_hd44780_test -v      
+
+
+
 
   # template_2_test_running:
   #   name: template_2 Test RUN
