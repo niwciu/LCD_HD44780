@@ -1,6 +1,6 @@
 /*
- * @Author: lukasz.niewelt 
- * @Date: 2023-12-06 21:40:29 
+ * @Author: lukasz.niewelt
+ * @Date: 2023-12-06 21:40:29
  * @Last Modified by: lukasz.niewelt
  * @Last Modified time: 2023-12-12 18:03:17
  */
