@@ -1,77 +1,51 @@
 {
-    "configurations": [
-        {
-            "name": "windows-gcc-x64",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "D:\\19_EMBEDED_TOOLS\\1_AVR_toolchain\\avr\\include",
-                "D:\\19_EMBEDED_TOOLS\\1_AVR_toolchain\\avr\\include\\sys",
-                "D:\\19_EMBEDED_TOOLS\\1_AVR_toolchain\\avr\\include\\util",
-                "D:\\19_EMBEDED_TOOLS\\1_AVR_toolchain\\avr\\include\\avr",
-                "D:\\19_EMBEDED_TOOLS\\1_AVR_toolchain\\avr\\include\\compat",
-                "${workspaceFolder}/hw/STM32G070RB/Core/",
-                "${workspaceFolder}/hw/STM32G070RB/Core/Inc/",
-                "${workspaceFolder}/hw/STM32G070RB/Core/Startup/",
-                "${workspaceFolder}/hw/STM32G070RB/Drivers/",
-                "${workspaceFolder}/hw/STM32G070RB/Drivers/CMSIS/",
-                "${workspaceFolder}/hw/STM32G070RB/Drivers/CMSIS/Device/",
-                "${workspaceFolder}/hw/STM32G070RB/Drivers/CMSIS/Include/",
-                "${workspaceFolder}/hw/STM32F030R8/Core/",
-                "${workspaceFolder}/hw/STM32F030R8/Core/Inc/",
-                "${workspaceFolder}/hw/STM32F030R8/Core/Startup/",
-                "${workspaceFolder}/hw/STM32F030R8/Drivers/",
-                "${workspaceFolder}/hw/STM32F030R8/Drivers/CMSIS/",
-                "${workspaceFolder}/hw/STM32F030R8/Drivers/CMSIS/Device/",
-                "${workspaceFolder}/hw/STM32F030R8/Drivers/CMSIS/Include/",
-                "${workspaceFolder}/hw/STM32F091RB/Core/",
-                "${workspaceFolder}/hw/STM32F091RB/Core/Inc/",
-                "${workspaceFolder}/hw/STM32F091RB/Core/Startup/",
-                "${workspaceFolder}/hw/STM32F091RB/Drivers/",
-                "${workspaceFolder}/hw/STM32F091RB/Drivers/CMSIS/",
-                "${workspaceFolder}/hw/STM32F091RB/Drivers/CMSIS/Device/",
-                "${workspaceFolder}/hw/STM32F091RB/Drivers/CMSIS/Include/"
-            ],
-            "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE"
-            ],
-            "compilerPath": "C:/Qt_6_5/Tools/mingw1120_64/bin/gcc.exe",
-            "cStandard": "${default}",
-            "cppStandard": "${default}",
-            "intelliSenseMode": "${default}"
-        },
-        {
-            "name": "AVR-GCC ATMega328P",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "D:/19_EMBEDED_TOOLS/1_AVR_toolchain/avr/include/**"
-            ],
-            "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE",
-                "__AVR_ATmega3250P__",
-                "AVR"
-            ],
-            "cppStandard": "gnu++17",
-            "compilerPath": "D:\\19_EMBEDED_TOOLS\\1_AVR_toolchain\\bin\\avr-gcc.exe",
-            "cStandard": "c99"
-        },
-        {
-            "name": "ARM-GCC",
-            "includePath": [
-                "${workspaceFolder}/**"
-            ],
-            "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE"
-            ],
-            "cppStandard": "gnu++17",
-            "compilerPath": "C:\\ST\\STM32CubeCLT\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe",
-            "cStandard": "c99"
-        }
-    ],
-    "version": 4
+  "configurations": [
+    {
+      "name": "windows-gcc-x64",
+      "includePath": [
+        "${workspaceFolder}/**"
+      ],
+      "defines": [
+        "_DEBUG",
+        "UNICODE",
+        "_UNICODE"
+      ],
+      "compilerPath": "C:/Qt_6_5/Tools/mingw1120_64/bin/gcc.exe",
+      "cStandard": "${default}",
+      "cppStandard": "${default}",
+      "intelliSenseMode": "windows-gcc-x64"
+    },
+    {
+      "name": "AVR-GCC ATMega328P",
+      "includePath": [
+        "${workspaceFolder}/**",
+        "D:/19_EMBEDED_TOOLS/1_AVR_toolchain/avr/include/**"
+      ],
+      "defines": [
+        "_DEBUG",
+        "UNICODE",
+        "_UNICODE",
+        "__AVR_ATmega3250P__",
+        "AVR"
+      ],
+      "cppStandard": "gnu++17",
+      "compilerPath": "D:\\19_EMBEDED_TOOLS\\1_AVR_toolchain\\bin\\avr-gcc.exe",
+      "cStandard": "c99"
+    },
+    {
+      "name": "ARM-GCC",
+      "includePath": [
+        "${workspaceFolder}/**"
+      ],
+      "defines": [
+        "_DEBUG",
+        "UNICODE",
+        "_UNICODE"
+      ],
+      "cppStandard": "gnu++17",
+      "compilerPath": "C:\\ST\\STM32CubeCLT\\GNU-tools-for-STM32\\bin\\arm-none-eabi-gcc.exe",
+      "cStandard": "c99"
+    }
+  ],
+  "version": 4
 }
