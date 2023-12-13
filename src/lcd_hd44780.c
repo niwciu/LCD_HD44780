@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-13 11:57:25
+ * @Last Modified time: 2023-12-13 13:18:13
  */
 
 #include "lcd_hd44780.h"
@@ -99,7 +99,7 @@ static void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment);
 static void lcd_bin_AVR(int val, uint8_t width);
 #else
 static void fill_bin_value_buffer(int val, char *bin_val_buffer);
-static void fill_zeros_buffer(char *buffer, uint8_t width, char * zeros_buf);
+static void fill_zeros_buffer(char *buffer, uint8_t width, char *zeros_buf);
 #endif
 #ifdef AVR
 static void lcd_put_spaces(uint8_t empty_spaces);
@@ -108,7 +108,7 @@ static void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment);
 static void lcd_bin_AVR(int val, uint8_t width);
 #else
 static void fill_bin_value_buffer(int val, char *bin_val_buffer);
-static void fill_zeros_buffer(char *buffer, uint8_t width, char * zeros_buf);
+static void fill_zeros_buffer(char *buffer, uint8_t width, char *zeros_buf);
 #endif
 
 static void register_LCD_IO_driver(void)
@@ -237,7 +237,7 @@ void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment)
     buffer[0] = '\0';
     itoa(val, buffer, 16);
     static const char *prefix = {"0x"};
-    if (width <= (strlen(buffer)+ VAL_PREFIX_LENGHT))
+    if (width <= (strlen(buffer) + VAL_PREFIX_LENGHT))
     {
         lcd_str(prefix);
         lcd_str(buffer);
@@ -268,11 +268,10 @@ void lcd_bin_AVR(int val, uint8_t width)
 
     itoa(val, buffer, 2);
     // if (buf_lenght < (width - VAL_PREFIX_LENGHT))
-    if (width <= (strlen(buffer)+ VAL_PREFIX_LENGHT))
+    if (width <= (strlen(buffer) + VAL_PREFIX_LENGHT))
     {
         lcd_str(prefix);
         lcd_str(buffer);
-
     }
     else
     {
@@ -305,7 +304,7 @@ static void fill_bin_value_buffer(int val, char *bin_val_buffer)
         bit_mask = bit_mask >> 1;
     }
 }
-static void fill_zeros_buffer(char *buffer, uint8_t width, char * zeros_buf)
+static void fill_zeros_buffer(char *buffer, uint8_t width, char *zeros_buf)
 {
     if (strlen(buffer) < (width + VAL_PREFIX_LENGHT))
     {
@@ -314,7 +313,6 @@ static void fill_zeros_buffer(char *buffer, uint8_t width, char * zeros_buf)
         {
             strcat(zeros_buf, "0");
         }
-       
     }
 }
 
@@ -443,7 +441,7 @@ void lcd_str(const char *str)
 void lcd_int(int val, uint8_t width, enum alignment alignment)
 {
 #ifdef AVR
-    lcd_int_AVR(val,width,alignment);
+    lcd_int_AVR(val, width, alignment);
 #else
     char buffer[20]; // 19chars for 64 bit int + end char '\0'
     buffer[0] = '\0';
@@ -471,7 +469,7 @@ void lcd_int(int val, uint8_t width, enum alignment alignment)
 void lcd_hex(int val, uint8_t width, enum alignment alignment)
 {
 #ifdef AVR
-    lcd_hex_AVR(val,width,alignment);
+    lcd_hex_AVR(val, width, alignment);
 #else
     char buffer[17];
     buffer[0] = '\0';
@@ -497,7 +495,7 @@ void lcd_hex(int val, uint8_t width, enum alignment alignment)
 void lcd_bin(int val, uint8_t width)
 {
 #ifdef AVR
-    lcd_bin_AVR(val,width);
+    lcd_bin_AVR(val, width);
 #else
     char buffer[35];
     char bin_val_buffer[35];
@@ -507,14 +505,13 @@ void lcd_bin(int val, uint8_t width)
     zeros_buf[0] = '\0';
 
     fill_bin_value_buffer(val, bin_val_buffer);
-    fill_zeros_buffer(bin_val_buffer, width,zeros_buf);
+    fill_zeros_buffer(bin_val_buffer, width, zeros_buf);
     strcat(buffer, "0b");
     strcat(buffer, zeros_buf);
     strcat(buffer, bin_val_buffer);
     lcd_str(buffer);
 #endif
 }
-
 
 #endif
 
