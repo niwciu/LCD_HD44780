@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-13 10:50:33
+ * @Last Modified time: 2023-12-13 11:57:25
  */
 
 #include "lcd_hd44780.h"
@@ -233,19 +233,19 @@ void lcd_int_AVR(int val, uint8_t width, enum alignment alignment)
 }
 void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment)
 {
-    uint8_t buf_lenght = 0;
     char buffer[17];
     buffer[0] = '\0';
     itoa(val, buffer, 16);
-    buf_lenght = strlen(buffer);
-    if (buf_lenght >= (width - VAL_PREFIX_LENGHT))
+    static const char *prefix = {"0x"};
+    if (width <= (strlen(buffer)+ VAL_PREFIX_LENGHT))
     {
+        lcd_str(prefix);
         lcd_str(buffer);
     }
     else
     {
-        uint8_t empty_spaces_qty = width - VAL_PREFIX_LENGHT - buf_lenght;
-        static const char *prefix = {"0x"};
+        uint8_t empty_spaces_qty = width - (VAL_PREFIX_LENGHT + strlen(buffer));
+
         if (alignment == right)
         {
             lcd_put_spaces(empty_spaces_qty);
@@ -262,26 +262,26 @@ void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment)
 }
 void lcd_bin_AVR(int val, uint8_t width)
 {
-    uint8_t buf_lenght = 0;
     char buffer[35]; //0b 0000 0000 0000 0000 0000 0000 0000 0000
     static const char *prefix = {"0b"};
     buffer[0] = '\0';
 
     itoa(val, buffer, 2);
-    buf_lenght = strlen(buffer);
-    if (buf_lenght < (width - VAL_PREFIX_LENGHT))
+    // if (buf_lenght < (width - VAL_PREFIX_LENGHT))
+    if (width <= (strlen(buffer)+ VAL_PREFIX_LENGHT))
     {
-        uint8_t zeros_qty = ((width - VAL_PREFIX_LENGHT) - buf_lenght);
+        lcd_str(prefix);
+        lcd_str(buffer);
+
+    }
+    else
+    {
+        uint8_t zeros_qty = (width - (VAL_PREFIX_LENGHT + strlen(buffer)));
         lcd_str(prefix);
         for (uint8_t i = 0; i < zeros_qty; i++)
         {
             lcd_char('0');
         }
-        lcd_str(buffer);
-    }
-    else
-    {
-        lcd_str(prefix);
         lcd_str(buffer);
     }
 }
