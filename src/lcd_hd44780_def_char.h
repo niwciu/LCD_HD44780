@@ -1,6 +1,6 @@
 /*
- * @Author: lukasz.niewelt 
- * @Date: 2023-12-08 11:15:52 
+ * @Author: lukasz.niewelt
+ * @Date: 2023-12-08 11:15:52
  * @Last Modified by: lukasz.niewelt
  * @Last Modified time: 2023-12-13 13:17:53
  */
@@ -25,7 +25,7 @@ extern "C"
     static const uint8_t Pol_a[8] = {32, 32, 14, 1, 15, 17, 15, 3};
     static const uint8_t Pol_n[8] = {2, 4, 22, 25, 17, 17, 17, 0};
     static const uint8_t Zn_wody[8] = {0, 0, 0, 6, 9, 2, 4, 15};
-    //here add "definition" of new chars
+    // here add "definition" of new chars
     /**********************USER CHAR DEFINITIONS END********************************/
 
     struct char_bank_struct

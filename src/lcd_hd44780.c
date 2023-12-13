@@ -160,9 +160,9 @@ void lcd_write_byte(uint8_t byte)
     LCD->reset_SIG(LCD_RW);
 #endif
     lcd_write_4bit_data((byte) >> 4);
-    lcd_write_4bit_data((byte)&0x0F);
+    lcd_write_4bit_data((byte) & 0x0F);
 #if USE_RW_PIN == ON
-    //check_BUSSY_FALG
+    // check_BUSSY_FALG
     LCD->set_data_pins_as_inputs();
     LCD->reset_SIG(LCD_RS);
     LCD->set_SIG(LCD_RW);
@@ -181,9 +181,9 @@ void lcd_write_byte(uint8_t byte)
 uint8_t lcd_read_byte(void)
 {
     uint8_t data;
-    //read 4 MSB
+    // read 4 MSB
     data = (lcd_read_4bit_data() << 4);
-    //read 4 LSB
+    // read 4 LSB
     data |= (lcd_read_4bit_data() & 0x0F);
     return data;
 }
@@ -262,7 +262,7 @@ void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment)
 }
 void lcd_bin_AVR(int val, uint8_t width)
 {
-    char buffer[35]; //0b 0000 0000 0000 0000 0000 0000 0000 0000
+    char buffer[35]; // 0b 0000 0000 0000 0000 0000 0000 0000 0000
     static const char *prefix = {"0b"};
     buffer[0] = '\0';
 
