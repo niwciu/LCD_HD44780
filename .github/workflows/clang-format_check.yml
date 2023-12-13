@@ -11,7 +11,7 @@ jobs:
           - check: 'src'
             exclude: ''              # Nothing to exclude
           - check: 'test'
-            exclude: '(template|unity|hw_test)' # Exclude file paths containing "template" or "unity"
+            exclude: '(template|unity|hw_test)'  # Exclude file paths containing "template" or "unity"
 
     steps:
     - uses: actions/checkout@v4.1.0
