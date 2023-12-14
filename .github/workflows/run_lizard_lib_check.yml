@@ -1,0 +1,21 @@
+name: Run Lizard Library Check
+on: 
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  lizard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Lizard Runner
+        uses: Uno-Takashi/Lizard-Runner@v3
+        with:
+          path: "./src"
+          CCN: "12"
+          length: "30"
+          language: "cpp"
+          verbose: "true"
+          arguments: "4"
