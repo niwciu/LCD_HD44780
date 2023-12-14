@@ -1,0 +1,22 @@
+name: Run Lizard Library Check
+# on: 
+  # push:
+  #   branches: [main, develop]
+  # pull_request:
+  #   branches: [main, develop]
+on: workflow_dispatch
+
+jobs:
+  lizard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Lizard Runner
+        uses: Uno-Takashi/Lizard-Runner@v3
+        with:
+          path: "./src"
+          CCN: "12"
+          Threshold: "30"
+          language: "cpp"
+          verbose: "true"
+          arguments: "4"
