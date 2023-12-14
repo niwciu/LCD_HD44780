@@ -116,14 +116,25 @@
          {   // to use it replace "template" with specific module and provide whole"directory_to_your_project_folder" for exampel "D_/Projects/Project_a"      D:/0_Projekty/6_Biblioteki/LCD_HD44780/
          "label": "lcd_hd44780 code coverage report generation",
          "type": "shell",
-         "command": "python3 -m gcovr CMakeFiles/lcd_hd44780_test.dir/home/sandra/Pulpit/test/LCD_HD44780 -r ../../.. --html-details ../../../reports/Code_Coverage/lcd_hd44780_gcov_report.html",
+         "command": "python3 -m gcovr CMakeFiles/lcd_hd44780_test.dir/D_/0_Projekty/6_Biblioteki/LCD_HD44780/src -r ../../.. --html-details ../../../reports/Code_Coverage/lcd_hd44780_gcov_report.html",
          "args": [],
          "options": {
              "cwd": "${workspaceFolder}/test/lcd_hd44780/out"
          },
          "group": "test",
          
-      }
+        }
+        {   // to use it replace "template" with specific module and provide whole"directory_to_your_project_folder" for exampel "D_/Projects/Project_a"      D:/0_Projekty/6_Biblioteki/LCD_HD44780/
+        "label": "lcd_hd44780 AVR code coverage report generation",
+        "type": "shell",
+        "command": "python3 -m gcovr CMakeFiles/lcd_hd44780_test.dir/D_/0_Projekty/6_Biblioteki/LCD_HD44780/src -r ../../.. --html-details ../../../reports/Code_Coverage/lcd_hd44780_AVR_gcov_report.html",
+        "args": [],
+        "options": {
+            "cwd": "${workspaceFolder}/test/lcd_hd44780/out_avr"
+        },
+        "group": "test",
+        
+       }
         // {   // to use it replace "template" with specific module and provide whole"directory_to_your_project_folder" for exampel "D_/Projects/Project_a"      
         //     "label": "template module.c code coverage report generation",
         //     "type": "shell",

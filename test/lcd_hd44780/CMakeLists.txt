@@ -5,6 +5,11 @@ project(lcd_hd44780_test C)
 add_subdirectory(../unity unity)
 
 set(CMAKE_C_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -Wextra")
+if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fdiagnostics-color=always")
+elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fcolor-diagnostics")
+endif()
 
 set(INCLUDE_DIRS
 	../../src
