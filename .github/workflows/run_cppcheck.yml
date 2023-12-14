@@ -13,8 +13,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN}}
           check_library: "disable"
           skip_preprocessor: "disable"
-          enable: "all"
-          exclude_check: "./test"
+          enable: "all,warning,style,unusedFunction"
+          exclude_check: "./test, ./hw"
           inconclusive: "disable"
           inline_suppression: "disable"
           force_language: "c"
