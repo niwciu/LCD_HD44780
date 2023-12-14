@@ -1,4 +1,4 @@
-name: clang-format Check
+name: Run clang-format Check
 on: 
   push:
     branches: [main, develop]
