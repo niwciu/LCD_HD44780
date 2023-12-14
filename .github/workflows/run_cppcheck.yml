@@ -22,11 +22,11 @@ jobs:
           max_ctu_depth: "2"
           platform: "unspecified"
           std: "c99"
-          output_file: ./reports/cppcheck_report.txt
+          # output_file: ./reports/cppcheck_report.txt
           other_options: "disable"
 
-      - name: publish report    
-        uses: mikeal/publish-to-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_NAME: 'feature/add_gihubactions_cppcheck' # your branch name goes here
+      # - name: publish report    
+      #   uses: mikeal/publish-to-github-action@master
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     BRANCH_NAME: 'feature/add_gihubactions_cppcheck' # your branch name goes here
