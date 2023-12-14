@@ -17,7 +17,7 @@ jobs:
           exclude_check: "./test"
           inconclusive: "disable"
           inline_suppression: "disable"
-          force_language: "c,c++"
+          force_language: "c"
           force: "enable"
           max_ctu_depth: "2"
           platform: "unspecified"
@@ -30,4 +30,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH_NAME: 'feature/add_gihubactions_cppcheck' # your branch name goes here
-          
