@@ -15,7 +15,7 @@ jobs:
         with:
           path: "./src"
           CCN: "12"
-          Threshold: "30"
+          Threshold: "nloc=30"
           language: "cpp"
           verbose: "true"
           arguments: "4"
