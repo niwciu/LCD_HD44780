@@ -16,5 +16,5 @@ jobs:
       - name: publish report    
         uses: mikeal/publish-to-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.new_token }}
+          GITHUB_TOKEN: ${{ secrets.TEST }}
           BRANCH_NAME: "feature/add_gihubactions_cppcheck" # your branch name goes here
