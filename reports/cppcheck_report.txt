@@ -478,6 +478,9 @@ test/hw_test/STM32F030R8_CUBE_IDE/Core/Src/main.c:273:0: style: The function 'Er
 test/hw_test/STM32F030R8_CUBE_IDE/Core/Src/stm32f0xx_it.c:84:0: style: The function 'HardFault_Handler' is never used. [unusedFunction]
 
 ^
+test/hw_test/STM32F030R8_CUBE_IDE/Core/Src/LCD_IO_driver.c:45:0: style: The function 'LCD_IO_driver_interface_get' is never used. [unusedFunction]
+
+^
 test/hw_test/STM32F030R8_CUBE_IDE/Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_exti.c:80:0: style: The function 'LL_EXTI_DeInit' is never used. [unusedFunction]
 
 ^
