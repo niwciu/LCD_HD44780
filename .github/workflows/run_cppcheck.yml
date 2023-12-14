@@ -1,6 +1,5 @@
 name: cppcheck-action-test
-on: workflow_dispatch
-
+on: push
 jobs:
   build:
     name: cppcheck-test
