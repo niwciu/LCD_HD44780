@@ -5,7 +5,6 @@ name: Run Lizard Library Check
   # pull_request:
   #   branches: [main, develop]
 on: workflow_dispatch
-
 jobs:
   lizard:
     runs-on: ubuntu-latest
