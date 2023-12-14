@@ -9,6 +9,13 @@ endif()
 # Hardware float support
 set(CORE_FLAGS "${CORE_FLAGS} -mfloat-abi=soft")
 
+#enable showing compile diagnostic output colored (ninja require this opctions to show colored errors)
+if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
+	set(CORE_FLAGS "${CORE_FLAGS} -fdiagnostics-color=always")
+elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
+	set(CORE_FLAGS "${CORE_FLAGS} -fcolor-diagnostics")
+endif()
+
 # Use newlib-nano, links with libc_nano.a
 # set(CORE_FLAGS "${CORE_FLAGS} --specs=nano.specs")
 
