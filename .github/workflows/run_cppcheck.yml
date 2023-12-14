@@ -14,7 +14,7 @@ jobs:
           check_library: "disable"
           skip_preprocessor: "disable"
           enable: "all,warning,style,unusedFunction"
-          exclude_check: ./src
+          exclude_check: ./hw ,./test
           inconclusive: "disable"
           inline_suppression: "disable"
           force_language: "c"
