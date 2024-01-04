@@ -1,19 +1,46 @@
-# Simple cross-platform C library for LCD with HD44780 controller
+Simple cross-platform C library for LCD with HD44780 controller
+- [Hardware configuration](#hardware-configuration)
+  - [Reguirements](#reguirements)
+  - [Schematic of possible hardware configurations](#schematic-of-possible-hardware-configurations)
+- [Examples](#examples)
+  - [STM32G0](#stm32g0)
+    - [Requirements](#requirements)
+    - [Hadrware connections](#hadrware-connections)
+    - [How to build and run example](#how-to-build-and-run-example)
+  - [AVR](#avr)
+    - [Requirements](#requirements-1)
+    - [Hadrware connections](#hadrware-connections-1)
+    - [How to build and run example](#how-to-build-and-run-example-1)
+  - [ESP8266 NONOS SDK](#esp8266-nonos-sdk)
+    - [Requirements](#requirements-2)
+    - [Hadrware connections](#hadrware-connections-2)
+    - [How to build and run example](#how-to-build-and-run-example-2)
+- [How to use in your Project - simple case](#how-to-use-in-your-project---simple-case)
+- [How to use in your Project - advance case](#how-to-use-in-your-project---advance-case)
+- [Project file structure](#project-file-structure)
+
+
 ## Hardware configuration
 ### Reguirements
 - LCD should be connected to uC in 4bit mode 
 - LCD RW Pin can be connected to uC or to GND -> user can define specyfic option in code.
 - LCD data pins from LCD D4-D7 must be connected to the same port on uC side
 - LCD signals pins E,RS and optionaly RW must be connected to the sam port on uC side. This port can be different then port for LCD data pins
-### Schematic of possible Hardware configurations
+### Schematic of possible hardware configurations
 
 ## Examples
-### Requirements to run the example on STM32G0
-### How to run STM32G0 example
-### Requirements to run the example on AVR
-### How to run Example example
-### Requirements to run the example on ESP8266 NONOS SDK
-### How to run ESP8266 NONOS SDK
+### STM32G0
+#### Requirements
+#### Hadrware connections
+#### How to build and run example
+### AVR
+#### Requirements
+#### Hadrware connections
+#### How to build and run example
+### ESP8266 NONOS SDK
+#### Requirements
+#### Hadrware connections
+#### How to build and run example
 ## How to use in your Project - simple case
 1. Copy LCD src files to your project
 2. In lcd_hd44780.config.h 
