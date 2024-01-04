@@ -28,7 +28,7 @@
 - LCD data pins from LCD D4-D7 must be connected to the same port on uC side
 - LCD signals pins E,RS and optionaly RW must be connected to the sam port on uC side. This port can be different then port for LCD data pins
 ### Schematic of possible hardware configurations
-
+![alt](./doc/HW%20connection.png)
 ## Examples
 ### STM32G0
 #### Requirements
