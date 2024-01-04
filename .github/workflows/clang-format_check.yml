@@ -1,5 +1,6 @@
 name: Run clang-format Check
-on: 
+on:
+  workflow_dispatch:  
   push:
     branches: [main, develop]
   pull_request:
