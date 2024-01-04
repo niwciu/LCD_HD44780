@@ -1,12 +1,13 @@
 name: Run LCD HD44780 Unit Tests
-on: 
+on:
+  workflow_dispatch: 
   push:
     branches: [main, develop]
   pull_request:
     branches: [main, develop]
 jobs:
   LCD_HD44780_test_running_win:
-    name: LCD HD44780 Test RUN on Win
+    name: LCD HD44780 Unit Test RUN on Win
     runs-on: windows-latest 
     steps:
     - name: Checkout code
@@ -29,7 +30,7 @@ jobs:
       run: ./lcd_hd44780_test.exe -v
 
   LCD_HD44780_AVR_test_running_win:
-    name: LCD HD44780 AVR Test RUN on Win
+    name: LCD HD44780 for AVR Unit Test RUN on Win
     runs-on: windows-latest 
     steps:
     - name: Checkout code
@@ -52,7 +53,7 @@ jobs:
       run: ./lcd_hd44780_test.exe -v
 
   LCD_HD44780_test_running_ubuntu:
-    name:  RUN LCD HD44780 Test on Ubuntu
+    name:  RUN LCD HD44780 Unit Test on Ubuntu
     runs-on: ubuntu-latest 
     steps:
     - name: Checkout code
