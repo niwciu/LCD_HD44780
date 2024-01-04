@@ -28,10 +28,11 @@
 - LCD data pins from LCD D4-D7 must be connected to the same port on uC side
 - LCD signals pins E,RS and optionaly RW must be connected to the sam port on uC side. This port can be different then port for LCD data pins
 ### Schematic of possible hardware configurations
-- Using RW pin of the LCD  (set **USE_RW_PIN &nbsp; ON** in lcd_hd44780_configuration.h)
-![alt](./doc/HW%20connection%20using%20RW.png) <br> <bt>
-- Withiut RW pin of the LCD  (set **USE_RW_PIN &nbsp; OFF** in lcd_hd44780_configuration.h)
-![alt](./doc/HW%20connection%20no%20RW.png)
+- Using RW pin of the LCD  (set **USE_RW_PIN &nbsp; ON** in lcd_hd44780_configuration.h)<br><br>
+<img src="./doc/HW%20connection%20using%20RW.png"   height="400"><br> <br><br>
+- Without RW pin of the LCD  (set **USE_RW_PIN &nbsp; OFF** in lcd_hd44780_configuration.h)
+<br><br>
+<img src="./doc/HW%20connection%20no%20RW.png"   height="400"><br> <br>
 ## Examples
 ### STM32G0
 #### Requirements
