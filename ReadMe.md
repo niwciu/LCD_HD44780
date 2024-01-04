@@ -168,7 +168,7 @@ Below you can find a simple example of two special characters bank definitions:
     static const uint8_t Pol_z1[8] = {4, 32, 31, 2, 4, 8, 31, 0};
     static const uint8_t Pol_z2[8] = {2, 4, 31, 2, 4, 8, 31, 0};
     ```
-  2. Definition of lcd_cgram_bank_1 in lcd_hd44780_def_char.h:
+2. Definition of lcd_cgram_bank_1 in lcd_hd44780_def_char.h:
     ```C
     static const struct char_bank_struct lcd_cgram_bank_1 = {
         Pol_e,
@@ -191,7 +191,7 @@ Below you can find a simple example of two special characters bank definitions:
         zn_wody,
     };
     ```
-  3. Definition of lcd_cgram_bank_2 in lcd_hd44780_def_char.h:
+3. Definition of lcd_cgram_bank_2 in lcd_hd44780_def_char.h:
     ```C
         static const struct char_bank_struct lcd_cgram_bank_1 = {
         Pol_e,
@@ -214,11 +214,11 @@ Below you can find a simple example of two special characters bank definitions:
         pol_z2,
     };
     ```
-  4. When special characters from bank_1 are needed to display content on an LCD screen, it's required to call in the code:
+4. When special characters from bank_1 are needed to display content on an LCD screen, it's required to call in the code:
     ```C
     lcd_load_char_bank(&lcd_cgram_bank_1);
     ```
-  5. When special characters from bank_2 are required to display content on an LCD screen, then it's required to call in code:
+5. When special characters from bank_2 are required to display content on an LCD screen, then it's required to call in code:
     ```C
     lcd_load_char_bank(&lcd_cgram_bank_2);
     ```
