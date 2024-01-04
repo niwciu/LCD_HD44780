@@ -1,40 +1,40 @@
 # Simple cross-platform C library for LCD with HD44780 controller
 - [Simple cross-platform C library for LCD with HD44780 controller](#simple-cross-platform-c-library-for-lcd-with-hd44780-controller)
   - [Hardware configuration](#hardware-configuration)
-    - [Reguirements](#reguirements)
-    - [Schematic of possible hardware configurations](#schematic-of-possible-hardware-configurations)
+    - [Requirements](#requirements)
+    - [Schematic for possible hardware configurations](#schematic-for-possible-hardware-configurations)
   - [Examples](#examples)
     - [STM32G0](#stm32g0)
-      - [Requirements](#requirements)
+      - [Requirements](#requirements-1)
       - [Hadrware connections](#hadrware-connections)
       - [How to build and run example](#how-to-build-and-run-example)
     - [AVR](#avr)
-      - [Requirements](#requirements-1)
+      - [Requirements](#requirements-2)
       - [Hadrware connections](#hadrware-connections-1)
       - [How to build and run example](#how-to-build-and-run-example-1)
     - [ESP8266 NONOS SDK](#esp8266-nonos-sdk)
-      - [Requirements](#requirements-2)
+      - [Requirements](#requirements-3)
       - [Hadrware connections](#hadrware-connections-2)
       - [How to build and run example](#how-to-build-and-run-example-2)
   - [How to use in your Project - simple case](#how-to-use-in-your-project---simple-case)
-  - [How to use in your Project - advance case](#how-to-use-in-your-project---advance-case)
-  - [How to define custome charatcters and custom character banks.](#how-to-define-custome-charatcters-and-custom-character-banks)
+  - [How to use in your Project - advanced case](#how-to-use-in-your-project---advanced-case)
+  - [How to define custom characters and custom character banks.](#how-to-define-custom-characters-and-custom-character-banks)
     - [Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)](#example-of-correspondence-between-eprom-address-data-and-character-pattern-5--8-dots)
-    - [Definifg special characters in code.](#definifg-special-characters-in-code)
-    - [Definif banks for special characters.](#definif-banks-for-special-characters)
+    - [Defining special characters in code.](#defining-special-characters-in-code)
+    - [Defining banks for special characters.](#defining-banks-for-special-characters)
   - [Project file structure](#project-file-structure)
 
 
 ## Hardware configuration
-### Reguirements
+### Requirements
 - LCD should be connected to uC in 4bit mode 
-- LCD RW Pin can be connected to uC or to GND -> user can define specyfic option in code.
+- LCD RW Pin can be connected to uC or GND -> user can define specific options in code.
 - LCD data pins from LCD D4-D7 must be connected to the same port on uC side
-- LCD signals pins E,RS and optionaly RW must be connected to the sam port on uC side. This port can be different then port for LCD data pins
-### Schematic of possible hardware configurations
+- LCD signals pins that are E, RS, and optionally RW must be connected to the same port on the uC side. This port can be different then port for LCD data pins
+### Schematic for possible hardware configurations
 - Using RW pin of the LCD  (set **USE_RW_PIN &nbsp; ON** in lcd_hd44780_config.h)<br><br>
 <img src="./doc/HW%20connection%20using%20RW.png"   height="400"><br> <br><br>
-- Without RW pin of the LCD  (set **USE_RW_PIN &nbsp; OFF** in lcd_hd44780_config.h)
+- Without using RW pin of the LCD  (set **USE_RW_PIN &nbsp; OFF** in lcd_hd44780_config.h)
 <br><br>
 <img src="./doc/HW%20connection%20no%20RW.png"   height="400"><br> <br>
 ## Examples
@@ -51,9 +51,9 @@
 #### Hadrware connections
 #### How to build and run example
 ## How to use in your Project - simple case
-1. Copy LCD src files to your project
+1. Copy LCD library src files (files from src folder) to your project
 2. In lcd_hd44780.config.h 
-   - Define specyfic **LCD_TYPE** and usage of **RW Pin**<br>
+   - Define specific **LCD_TYPE** and usage of **RW Pin**<br>
     &emsp; &emsp;LCD_TYPE -> set one of the predefined types:<br>
                 &emsp; &emsp;&emsp; &emsp;2004 -> 4 lines 20 characters per line<br>
                 &emsp; &emsp;&emsp; &emsp;1604 -> 4 lines 16 characters per line<br>
@@ -63,7 +63,7 @@
                 &emsp; &emsp;&emsp; &emsp;OFF - when RW pin is not connected<br>
 
 
-3. Define LCD IO driver interface in you application. This interface should contain fallowing inplementation defined in lcd_hd44780_interface.h
+3. Define the LCD IO driver interface in your application. This interface should contain the following implementation defined in lcd_hd44780_interface.h
 ```C 
    /************LCD_IO_driver_interface implementation START**************/
 static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
@@ -83,11 +83,11 @@ const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 }
 
 ```
-It's a basic interfafce that connect library with your hw driver layer in application withiut making any depedencies between them. For more details, please lock at the example folder and search for LCD_IO_driver.c file for specific uController that you want to use.
+It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. For more details, please lock in the example folder and search for the LCD_IO_driver.c file for the specific uController that you want to use.
 
 
-## How to use in your Project - advance case
-1. Copy LCD src files to your project
+## How to use in your Project - advanced case
+1. Copy LCD library src files (files from src folder) to your project
 2. In lcd_hd44780.config.h 
    - Define specyfic **LCD_TYPE** and usage of **RW Pin**<br>
     &emsp; &emsp;LCD_TYPE -> set one of the predefined types:<br>
@@ -98,8 +98,8 @@ It's a basic interfafce that connect library with your hw driver layer in applic
                 &emsp; &emsp;&emsp; &emsp;ON - when RW pin is connected<br>
                 &emsp; &emsp;&emsp; &emsp;OFF - when RW pin is not connected<br>
 
-    - Specify which procedures form to library you would like to compile and use in you project.<br>
-    To do this, Edit defines in secction: <br><br>
+    - Specify which procedures from to library you would like to compile and use in your project.<br>
+      To do this, Edit defines in section: <br><br>
     ```C
     /********************************  LCD LIBRARY COMPILATION SETTINGS ************************
     *      Setting USE_(procedure name) to:
@@ -118,9 +118,10 @@ It's a basic interfafce that connect library with your hw driver layer in applic
     ...
     ```
     <br>
-3. If setting USE_DEF_CHAR_FUNCTION &nbsp; ON define special characters and character banks in lcd_hd44780_def_char.h <br> For more details about defininfg custome char please refer to [How to define custome charatcters and custom character banks.](#how-to-define-custome-charatcters-and-custom-character-banks)
-4. Define LCD IO driver interface in you application.<br>
-   This interface should contain fallowing inplementation defined in lcd_hd44780_interface.h<br><br>
+3. If setting USE_DEF_CHAR_FUNCTION &nbsp; ON define special characters and character banks in lcd_hd44780_def_char.h <br> For more details about defining custom char please refer to [How to define custom characters and custom character banks.](#how-to-define-custome-charatcters-and-custom-character-banks)
+4. Define the LCD IO driver interface in your application. <br> 
+   This interface should contain the following implementation defined in lcd_hd44780_interface.h<br>
+   <br><br>
     ```C 
    /************LCD_IO_driver_interface implementation START**************/
     static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
@@ -140,21 +141,21 @@ It's a basic interfafce that connect library with your hw driver layer in applic
     }
     ```
     <br>
-    It's a basic interfafce that connect library with your hardware driver layer in application without making any depedencies between them. For more details, please lock at the example folder and search for LCD_IO_driver.c file for specific uController that you want to use.
-## How to define custome charatcters and custom character banks.
+    It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. For more details, please lock in the example folder and search for the LCD_IO_driver.c file for the specific uController that you want to use.
+## How to define custom characters and custom character banks.
 ### Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)
 <img src="./doc/font map.png" height="350"><br> <br>
 <br>
-### Definifg special characters in code.
-If the letter shown on the picture above should be defined as special character its definition should look like this:
+### Defining special characters in code.
+If the letter shown in the picture above should be defined as a special character its definition should look like this:
 ```C
 static const uint8_t leter_b[8] = {16, 16, 22, 25, 17, 17, 30, 0};
 ```
-### Definif banks for special characters. 
+### Defining banks for special characters.
 HD44780 allows the user to define a maximum of 8 user characters. Therefore on character bank can contain only up to 8 characters. Nevertheless, it's possible to define a couple of special character banks with different combinations of special characters. Depending on needs one of the banks can be loaded to the CGRAM and switched to another if the information presented on the LCD requires different special characters
 
-Below you can find a simple example of 2 special characters bank definition:
-  - definition of special characters in lcd_hd44780_def_char:
+Below you can find a simple example of two special characters bank definitions:
+1.  Definition of special characters in lcd_hd44780_def_char.h:
     ```C
     static const uint8_t Pol_e[8] = {0, 0, 14, 17, 31, 16, 14, 3};
     static const uint8_t Pol_o[8] = {2, 4, 14, 17, 17, 17, 14, 0};
@@ -167,7 +168,7 @@ Below you can find a simple example of 2 special characters bank definition:
     static const uint8_t Pol_z1[8] = {4, 32, 31, 2, 4, 8, 31, 0};
     static const uint8_t Pol_z2[8] = {2, 4, 31, 2, 4, 8, 31, 0};
     ```
-  - definition of lcd_cgram_bank_1 in LCDhd44780_def_char:
+  2. Definition of lcd_cgram_bank_1 in lcd_hd44780_def_char.h:
     ```C
     static const struct char_bank_struct lcd_cgram_bank_1 = {
         Pol_e,
@@ -190,7 +191,7 @@ Below you can find a simple example of 2 special characters bank definition:
         zn_wody,
     };
     ```
-  - definition of lcd_cgram_bank_2 in LCDhd44780_def_char:
+  3. Definition of lcd_cgram_bank_2 in lcd_hd44780_def_char.h:
     ```C
         static const struct char_bank_struct lcd_cgram_bank_1 = {
         Pol_e,
@@ -213,11 +214,11 @@ Below you can find a simple example of 2 special characters bank definition:
         pol_z2,
     };
     ```
-  - When special characters from bank_1 are needed to display content on an LCD screen, it's required to call in the code:
+  4. When special characters from bank_1 are needed to display content on an LCD screen, it's required to call in the code:
     ```C
     lcd_load_char_bank(&lcd_cgram_bank_1);
     ```
-  - When special characters from bank_2 are required to display content on an LCD screen, then it's required to call in code:
+  5. When special characters from bank_2 are required to display content on an LCD screen, then it's required to call in code:
     ```C
     lcd_load_char_bank(&lcd_cgram_bank_2);
     ```
