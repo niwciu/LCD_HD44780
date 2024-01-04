@@ -22,7 +22,7 @@
     - [Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)](#example-of-correspondence-between-eprom-address-data-and-character-pattern-5--8-dots)
     - [Defining special characters in code.](#defining-special-characters-in-code)
     - [Defining banks for special characters.](#defining-banks-for-special-characters)
-  - [Project file structure](#project-file-structure)
+  - [Project main folders file structure](#project-main-folders-file-structure)
 
 
 ## Hardware configuration
@@ -193,7 +193,7 @@ Below you can find a simple example of two special characters bank definitions:
     ```
 3. Definition of lcd_cgram_bank_2 in lcd_hd44780_def_char.h:
     ```C
-        static const struct char_bank_struct lcd_cgram_bank_1 = {
+    static const struct char_bank_struct lcd_cgram_bank_1 = {
         Pol_e,
         Pol_o,
         Pol_s,
@@ -224,8 +224,7 @@ Below you can find a simple example of two special characters bank definitions:
     ```
 
 
-## Project file structure
-Main folder structure
+## Project main folders file structure
 ```bash 
 LCD_HD44780
 ├───.github
