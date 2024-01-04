@@ -18,6 +18,10 @@
       - [How to build and run example](#how-to-build-and-run-example-2)
   - [How to use in your Project - simple case](#how-to-use-in-your-project---simple-case)
   - [How to use in your Project - advance case](#how-to-use-in-your-project---advance-case)
+  - [How to define custome charatcters and custom character banks.](#how-to-define-custome-charatcters-and-custom-character-banks)
+    - [Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)](#example-of-correspondence-between-eprom-address-data-and-character-pattern-5--8-dots)
+    - [Definifg special characters in code.](#definifg-special-characters-in-code)
+    - [Definif banks for special characters.](#definif-banks-for-special-characters)
   - [Project file structure](#project-file-structure)
 
 
@@ -28,9 +32,9 @@
 - LCD data pins from LCD D4-D7 must be connected to the same port on uC side
 - LCD signals pins E,RS and optionaly RW must be connected to the sam port on uC side. This port can be different then port for LCD data pins
 ### Schematic of possible hardware configurations
-- Using RW pin of the LCD  (set **USE_RW_PIN &nbsp; ON** in lcd_hd44780_configuration.h)<br><br>
+- Using RW pin of the LCD  (set **USE_RW_PIN &nbsp; ON** in lcd_hd44780_config.h)<br><br>
 <img src="./doc/HW%20connection%20using%20RW.png"   height="400"><br> <br><br>
-- Without RW pin of the LCD  (set **USE_RW_PIN &nbsp; OFF** in lcd_hd44780_configuration.h)
+- Without RW pin of the LCD  (set **USE_RW_PIN &nbsp; OFF** in lcd_hd44780_config.h)
 <br><br>
 <img src="./doc/HW%20connection%20no%20RW.png"   height="400"><br> <br>
 ## Examples
@@ -114,7 +118,8 @@ It's a basic interfafce that connect library with your hw driver layer in applic
     ...
     ```
     <br>
-3. Define LCD IO driver interface in you application.<br>
+3. If setting USE_DEF_CHAR_FUNCTION &nbsp; ON define special characters and character banks in lcd_hd44780_def_char.h <br> For more details about defininfg custome char please refer to [How to define custome charatcters and custom character banks.](#how-to-define-custome-charatcters-and-custom-character-banks)
+4. Define LCD IO driver interface in you application.<br>
    This interface should contain fallowing inplementation defined in lcd_hd44780_interface.h<br><br>
     ```C 
    /************LCD_IO_driver_interface implementation START**************/
@@ -136,6 +141,87 @@ It's a basic interfafce that connect library with your hw driver layer in applic
     ```
     <br>
     It's a basic interfafce that connect library with your hardware driver layer in application without making any depedencies between them. For more details, please lock at the example folder and search for LCD_IO_driver.c file for specific uController that you want to use.
+## How to define custome charatcters and custom character banks.
+### Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)
+<img src="./doc/font map.png" height="350"><br> <br>
+<br>
+### Definifg special characters in code.
+If the letter shown on the picture above should be defined as special character its definition should look like this:
+```C
+static const uint8_t leter_b[8] = {16, 16, 22, 25, 17, 17, 30, 0};
+```
+### Definif banks for special characters. 
+HD44780 allows the user to define a maximum of 8 user characters. Therefore on character bank can contain only up to 8 characters. Nevertheless, it's possible to define a couple of special character banks with different combinations of special characters. Depending on needs one of the banks can be loaded to the CGRAM and switched to another if the information presented on the LCD requires different special characters
+
+Below you can find a simple example of 2 special characters bank definition:
+  - definition of special characters in lcd_hd44780_def_char:
+    ```C
+    static const uint8_t Pol_e[8] = {0, 0, 14, 17, 31, 16, 14, 3};
+    static const uint8_t Pol_o[8] = {2, 4, 14, 17, 17, 17, 14, 0};
+    static const uint8_t Pol_s[8] = {2, 4, 14, 16, 14, 1, 30, 0};
+    static const uint8_t Pol_l[8] = {12, 4, 6, 12, 4, 4, 14, 0};
+    static const uint8_t Pol_c[8] = {2, 4, 14, 16, 16, 17, 14, 0};
+    static const uint8_t Pol_a[8] = {0, 0, 14, 1, 15, 17, 15, 3};
+    static const uint8_t Pol_n[8] = {2, 4, 22, 25, 17, 17, 17, 0};
+    static const uint8_t Zn_wody[8] = {0, 0, 0, 6, 9, 2, 4, 15};
+    static const uint8_t Pol_z1[8] = {4, 32, 31, 2, 4, 8, 31, 0};
+    static const uint8_t Pol_z2[8] = {2, 4, 31, 2, 4, 8, 31, 0};
+    ```
+  - definition of lcd_cgram_bank_1 in LCDhd44780_def_char:
+    ```C
+    static const struct char_bank_struct lcd_cgram_bank_1 = {
+        Pol_e,
+        Pol_o,
+        Pol_s,
+        Pol_l,
+        Pol_c,
+        Pol_a,
+        Pol_n,
+        Zn_wody};
+    enum LCD_CGRAM_BANK_1
+    {
+        pol_e,
+        pol_o,
+        pol_s,
+        pol_l,
+        pol_c,
+        pol_a,
+        pol_n,
+        zn_wody,
+    };
+    ```
+  - definition of lcd_cgram_bank_2 in LCDhd44780_def_char:
+    ```C
+        static const struct char_bank_struct lcd_cgram_bank_1 = {
+        Pol_e,
+        Pol_o,
+        Pol_s,
+        Pol_l,
+        Pol_c,
+        Pol_a,
+        Pol_z1,
+        Pol_z2};
+    enum LCD_CGRAM_BANK_1
+    {
+        pol_e,
+        pol_o,
+        pol_s,
+        pol_l,
+        pol_c,
+        pol_a,
+        pol_z1,
+        pol_z2,
+    };
+    ```
+  - When special characters from bank_1 are needed to display content on an LCD screen, it's required to call in the code:
+    ```C
+    lcd_load_char_bank(&lcd_cgram_bank_1);
+    ```
+  - When special characters from bank_2 are required to display content on an LCD screen, then it's required to call in code:
+    ```C
+    lcd_load_char_bank(&lcd_cgram_bank_2);
+    ```
+
 
 ## Project file structure
 Main folder structure
