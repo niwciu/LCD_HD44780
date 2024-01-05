@@ -1,0 +1,122 @@
+hw/STM32F030R8/Core/Src/system_stm32f0xx.c:273:0: information: Skipping configuration 'HSE_VALUE' since the value of 'HSE_VALUE' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+      SystemCoreClock = HSE_VALUE;
+^
+hw/STM32F030R8/Core/Src/system_stm32f0xx.c:285:0: information: Skipping configuration 'HSE_VALUE' since the value of 'HSE_VALUE' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+        SystemCoreClock = (HSE_VALUE/predivfactor) * pllmull;
+^
+hw/STM32F030R8/Core/Src/system_stm32f0xx.c:270:0: information: Skipping configuration 'HSI_VALUE' since the value of 'HSI_VALUE' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+      SystemCoreClock = HSI_VALUE;
+^
+hw/STM32F030R8/Core/Src/system_stm32f0xx.c:303:0: information: Skipping configuration 'HSI_VALUE' since the value of 'HSI_VALUE' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+        SystemCoreClock = (HSI_VALUE >> 1) * pllmull;
+^
+hw/STM32F030R8/Core/Src/system_stm32f0xx.c:310:0: information: Skipping configuration 'HSI_VALUE' since the value of 'HSI_VALUE' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+      SystemCoreClock = HSI_VALUE;
+^
+hw/STM32F091RB/Core/Src/system_stm32f0xx.c:273:0: information: Skipping configuration 'HSE_VALUE' since the value of 'HSE_VALUE' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+      SystemCoreClock = HSE_VALUE;
+^
+hw/STM32F091RB/Core/Src/system_stm32f0xx.c:285:0: information: Skipping configuration 'HSE_VALUE' since the value of 'HSE_VALUE' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+        SystemCoreClock = (HSE_VALUE/predivfactor) * pllmull;
+^
+hw/STM32F091RB/Core/Src/system_stm32f0xx.c:270:0: information: Skipping configuration 'HSI_VALUE' since the value of 'HSI_VALUE' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+      SystemCoreClock = HSI_VALUE;
+^
+hw/STM32F091RB/Core/Src/system_stm32f0xx.c:303:0: information: Skipping configuration 'HSI_VALUE' since the value of 'HSI_VALUE' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+        SystemCoreClock = (HSI_VALUE >> 1) * pllmull;
+^
+hw/STM32F091RB/Core/Src/system_stm32f0xx.c:310:0: information: Skipping configuration 'HSI_VALUE' since the value of 'HSI_VALUE' is unknown. Use -D if you want to check it. You can use -U to skip it explicitly. [ConfigurationNotChecked]
+      SystemCoreClock = HSI_VALUE;
+^
+hw/STM32F030R8/Core/Src/system_stm32f0xx.c:260:0: style: The function 'SystemCoreClockUpdate' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/system_stm32f0xx.c:163:0: style: The function 'SystemInit' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/syscalls.c:92:0: style: The function '_close' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/syscalls.c:169:0: style: The function '_execve' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/syscalls.c:61:0: style: The function '_exit' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/syscalls.c:163:0: style: The function '_fork' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/syscalls.c:99:0: style: The function '_fstat' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/syscalls.c:48:0: style: The function '_getpid' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/syscalls.c:106:0: style: The function '_isatty' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/syscalls.c:155:0: style: The function '_link' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/syscalls.c:112:0: style: The function '_lseek' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/syscalls.c:120:0: style: The function '_open' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/syscalls.c:67:0: style: The function '_read' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/sysmem.c:54:0: style: The function '_sbrk' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/syscalls.c:148:0: style: The function '_stat' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/syscalls.c:142:0: style: The function '_times' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/syscalls.c:135:0: style: The function '_unlink' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/syscalls.c:128:0: style: The function '_wait' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/syscalls.c:80:0: style: The function '_write' is never used. [unusedFunction]
+
+^
+hw/STM32F030R8/Core/Src/syscalls.c:44:0: style: The function 'initialise_monitor_handles' is never used. [unusedFunction]
+
+^
+src/lcd_hd44780.c:486:0: style: The function 'lcd_bin' is never used. [unusedFunction]
+
+^
+src/lcd_hd44780.c:578:0: style: The function 'lcd_blinking_cursor_on' is never used. [unusedFunction]
+
+^
+src/lcd_hd44780.c:569:0: style: The function 'lcd_cursor_off' is never used. [unusedFunction]
+
+^
+src/lcd_hd44780.c:559:0: style: The function 'lcd_cursor_on' is never used. [unusedFunction]
+
+^
+src/lcd_hd44780.c:460:0: style: The function 'lcd_hex' is never used. [unusedFunction]
+
+^
+src/lcd_hd44780.c:546:0: style: The function 'lcd_home' is never used. [unusedFunction]
+
+^
+src/lcd_hd44780.c:317:0: style: The function 'lcd_init' is never used. [unusedFunction]
+
+^
+src/lcd_hd44780.c:432:0: style: The function 'lcd_int' is never used. [unusedFunction]
+
+^
+src/lcd_hd44780.c:383:0: style: The function 'lcd_load_char_bank' is never used. [unusedFunction]
+
+^
+src/lcd_hd44780.c:514:0: style: The function 'lcd_locate' is never used. [unusedFunction]
+
+^
+nofile:0:0: information: Cppcheck cannot find all the include files (use --check-config for details) [missingInclude]
+
