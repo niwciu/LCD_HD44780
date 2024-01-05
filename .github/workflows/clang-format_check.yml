@@ -19,7 +19,7 @@ jobs:
             exclude: '(template|unity|hw_test)'  # Exclude file paths containing "template" or "unity"
 
     steps:
-    - uses: actions/checkout@v4.1.0
+    - uses: actions/checkout@v4.1.1
     - name: Run clang-format style check for C/C++/Protobuf programs.
       uses: jidicula/clang-format-action@v4.11.0
       with:

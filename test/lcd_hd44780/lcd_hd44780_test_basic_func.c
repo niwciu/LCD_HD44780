@@ -24,8 +24,11 @@ TEST_TEAR_DOWN(lcd_hd44780_basic_functions)
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenPrintGcharaterOnLcdThenSignalSequenceForSendingCharIsCorrect)
 {
     uint8_t data = (uint8_t)('G');
-
+#if USE_RW_PIN == ON
     next_log_no = define_expected_sequence_for_send_data_to_LCD(0, data, 0x00, 0);
+#else
+    next_log_no = define_expected_sequence_for_send_data_to_LCD(0, data, 0);
+#endif
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
 
     lcd_char('G');
@@ -36,8 +39,12 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenPrintGcharaterOnLcdThenSignalS
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenLcdClearScreenThenSignalSequenceForLcdClearScreenIsCorrect)
 {
     uint8_t cmd = (LCDC_CLS);
+#if USE_RW_PIN == ON
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, cmd, 0x00);
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, cmd, 4900);
+#endif
 
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, cmd, 0x00, 4900);
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
 
     lcd_cls();
@@ -71,7 +78,11 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenDefineSepcialCharactersFromBan
 #if USE_LCD_CURSOR_HOME == ON
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdHomeThenSignalSequenceIsCorrect)
 {
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (LCDC_CLS | LCDC_HOME), 0x00, 4900);
+#if USE_RW_PIN == ON
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (LCDC_CLS | LCDC_HOME), 0x00);
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (LCDC_CLS | LCDC_HOME), 4900);
+#endif
     lcd_home();
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
@@ -81,7 +92,11 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdHomeThenSignalSequenceIs
 #if USE_LCD_CURSOR_ON == ON
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdCursorOnThenSignalSequenceIsCorrect)
 {
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (LCDC_ONOFF | LCDC_DISPLAYON | LCDC_CURSORON), 0x00, 0);
+#if USE_RW_PIN == ON
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (LCDC_ONOFF | LCDC_DISPLAYON | LCDC_CURSORON), 0x00);
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (LCDC_ONOFF | LCDC_DISPLAYON | LCDC_CURSORON), 0);
+#endif
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
     lcd_cursor_on();
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
@@ -91,7 +106,11 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdCursorOnThenSignalSequen
 #if USE_LCD_CURSOR_OFF == ON
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdCursorOffThenSignalSequenceIsCorrect)
 {
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (LCDC_ONOFF | LCDC_DISPLAYON), 0x00, 0);
+#if USE_RW_PIN == ON
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (LCDC_ONOFF | LCDC_DISPLAYON), 0x00);
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (LCDC_ONOFF | LCDC_DISPLAYON), 0);
+#endif
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
     lcd_cursor_off();
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
@@ -101,7 +120,11 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdCursorOffThenSignalSeque
 #if USE_LCD_BLINKING_CURSOR_ON == ON
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdBlinkingCursorOnThenSignalSequenceIsCorrect)
 {
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (LCDC_ONOFF | LCDC_DISPLAYON | LCDC_CURSORON | LCDC_BLINKON), 0x00, 0);
+#if USE_RW_PIN == ON
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (LCDC_ONOFF | LCDC_DISPLAYON | LCDC_CURSORON | LCDC_BLINKON), 0x00);
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (LCDC_ONOFF | LCDC_DISPLAYON | LCDC_CURSORON | LCDC_BLINKON), 0);
+#endif
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
     lcd_blinking_cursor_on();
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
@@ -110,7 +133,12 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdBlinkingCursorOnThenSign
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdLocateThenSignalSequenceIsCorrect)
 {
     uint8_t line_no_2_adr = 0x40;
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (uint8_t)(LCDC_SET_DDRAM + line_no_2_adr + C5), 0x00, 0);
+#if USE_RW_PIN == ON
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (uint8_t)(LCDC_SET_DDRAM + line_no_2_adr + C5), 0x00);
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (uint8_t)(LCDC_SET_DDRAM + line_no_2_adr + C5), 0);
+#endif
+
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
     lcd_locate(LINE_2, C5);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
@@ -134,12 +162,22 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdLocateAndSetAllLinesLoca
     uint8_t line_no_3_adr = 0x10;
     uint8_t line_no_4_adr = 0x50;
 #endif
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (uint8_t)(LCDC_SET_DDRAM + line_no_1_adr + C5), 0x00, 0);
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + line_no_2_adr + C4), 0x00, 0);
+#if USE_RW_PIN == ON
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (uint8_t)(LCDC_SET_DDRAM + line_no_1_adr + C5), 0x00);
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + line_no_2_adr + C4), 0x00);
 #if ((LCD_TYPE == 2004) || (LCD_TYTPE == 1604))
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + line_no_3_adr + C3), 0x00, 0);
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + line_no_4_adr + C6), 0x00, 0);
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + line_no_3_adr + C3), 0x00);
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + line_no_4_adr + C6), 0x00);
 #endif
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(0, (uint8_t)(LCDC_SET_DDRAM + line_no_1_adr + C5), 0);
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + line_no_2_adr + C4), 0);
+#if ((LCD_TYPE == 2004) || (LCD_TYTPE == 1604))
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + line_no_3_adr + C3), 0);
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + line_no_4_adr + C6), 0);
+#endif
+#endif
+
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
     lcd_locate(LINE_1, C5);
     lcd_locate(LINE_2, C4);
