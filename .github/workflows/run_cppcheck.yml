@@ -34,4 +34,4 @@ jobs:
       - name: c-linter
         uses: tonybaloney/cppcheck-action@master
         with:
-          path: "./src"
+          # path: "./src"
