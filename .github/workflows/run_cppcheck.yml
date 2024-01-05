@@ -20,7 +20,7 @@ jobs:
           std: 'c99'
           platform: 'unix64'
           log-level: 'verbose'
-          sources: './src'
+          sources: './src,./test/lcd_hd44780'
           annotation-failures: 'warning'
           # suppress: 'unusedFunction'
           # annotation-level-default: 'error'
