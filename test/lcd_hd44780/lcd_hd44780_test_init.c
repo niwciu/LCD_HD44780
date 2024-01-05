@@ -35,7 +35,7 @@ TEST(lcd_hd44780_init, WhenLcdInitThenLcdDataPinsLowAtFirstLog)
 
 TEST(lcd_hd44780_init, GivenLcdInitWhenSetAllSignalsFor15msThenLcdPinStatIsCorrect)
 {
-    uint16_t expected_buf_lenght = 0;
+    expected_buf_lenght = 0;
 
     mock_clear_LCD_Port_delay_dump_data();
     clear_expected_LCD_Port_delay_dump_data();
@@ -52,7 +52,7 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSendFirstCmd0x03ThenLcdPinStateSequenceIs
     // set expected log sequence for sending cmd 0x03 at init
     next_log_no = define_expected_sequence_for_read_write_4_bit_data(next_log_no, 0x03, 4500);
 
-    uint16_t expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+    expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
 
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
@@ -62,7 +62,7 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSendSecondCmd0x03ThenLcdPinStateSequenceI
     // set expected log sequence for sending second cmd 0x03 at init of LCD
     next_log_no = define_expected_sequence_for_read_write_4_bit_data(next_log_no, 0x03, 110);
 
-    uint16_t expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+    expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
 
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
@@ -72,7 +72,7 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSendThirdCmd0x03ThenLcdPinStateSequenceIs
     // set expected log sequence for sending third cmd 0x03 at init of LCD
     next_log_no = define_expected_sequence_for_read_write_4_bit_data(next_log_no, 0x03, 110);
 
-    uint16_t expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+    expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
 
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
@@ -82,7 +82,7 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSend4thCmd0x03ThenLcdPinStateSequenceIsCo
     // set expected log sequence for sending 4'thcmd 0x02 at init of LCD
     next_log_no = define_expected_sequence_for_read_write_4_bit_data(next_log_no, 0x02, 110);
 
-    uint16_t expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+    expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
 
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
@@ -94,7 +94,7 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSendFunctionSetCmdThenLcdPinStateSequence
     // set expeted log sequence when sending cmd to LCD
     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd, expected_data_from_LCD, 0);
 
-    uint16_t expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+    expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
@@ -106,7 +106,7 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSendDisplaySettingsCmdThenLcdPinStateSequ
     // set expeted log sequence when sending cmd to LCD
     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd, expected_data_from_LCD, 0);
 
-    uint16_t expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+    expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
@@ -116,7 +116,7 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSendDisplayClearScrCmdThenLcdPinStateSequ
     uint8_t expected_data_from_LCD = 0;
 
     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd, expected_data_from_LCD, 4900);
-    uint16_t expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+    expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
@@ -126,7 +126,7 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSendDisplayEntryModeCmdThenLcdPinStateSeq
     uint8_t expected_data_from_LCD = 0;
 
     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd, expected_data_from_LCD, 0);
-    uint16_t expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+    expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
