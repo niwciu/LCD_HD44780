@@ -31,12 +31,6 @@ jobs:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           title: 'Results of CppCheck src files'
           input: 'annotations.json'
-  # cppcheck-annotations_unit_tests:
-  #   name: cppcheck-annotations
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4.1.1
 
       - name: Run cppcheck-annotation-action
         uses: Konstantin343/cppcheck-annotation-action@v1.0
