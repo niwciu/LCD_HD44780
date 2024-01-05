@@ -1,9 +1,13 @@
-name: cppcheck-action
-on: [push]
-
+name: Run cppcheck-action
+on:
+  workflow_dispatch:  
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
 jobs:
   build:
-    name: cppcheck
+    name: Run cppcheck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
