@@ -5,52 +5,24 @@ on:
     branches: [main, develop, feature/add_gihubactions_cppcheck]
   pull_request:
     branches: [main, develop]
-# jobs:
-#   build:
-#     name: Run cppcheck
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v2
-#       - name: cppcheck
-#         uses: deep5050/cppcheck-action@main
-#         with:
-#           github_token: ${{ secrets.GITHUB_TOKEN}}
-#           check_library: "disable"
-#           skip_preprocessor: "disable"
-#           enable: "all,warning,style,unusedFunction"
-#           exclude_check: "./test"
-#           inconclusive: "disable"
-#           inline_suppression: "disable"
-#           force_language: "c"
-#           force: "enable"
-#           max_ctu_depth: "2"
-#           platform: "unspecified"
-#           std: "c99"
-#           # output_file: ./reports/cppcheck_report.txt
-#           other_options: "disable"
-
-#       # - name: publish report    
-#       #   uses: mikeal/publish-to-github-action@master
-#       #   env:
-#       #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#       #     BRANCH_NAME: 'feature/add_gihubactions_cppcheck' # your branch name goes here
-
-
-# name: cppcheck
-# on:
-#   pull_request_target:
-#     types: [opened, synchronize]
+    
 jobs:
-  cppchceck:
-    name: cppcheck
+  build:
+    name: cppcheck-annotations
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+
+      - name: Run cppcheck-annotation-action
+        uses: Konstantin343/cppcheck-annotation-action@v1.0
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          persist-credentials: false
-      - uses: linuxdeepin/action-cppcheck@main
+          std: 'c++14'
+          platform: 'unix64'
+          log-level: 'verbose'
+
+      - name: Annotate lines with errors
+        uses: yuzutech/annotations-action@v0.4.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          repository: ${{ github.repository }}
-          pull_request_id: ${{ github.event.pull_request.number }}
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          title: 'Results of CppCheck'
+          input: 'annotations.json'
