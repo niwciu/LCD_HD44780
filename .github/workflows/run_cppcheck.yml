@@ -21,7 +21,7 @@ jobs:
           platform: 'unix64'
           log-level: 'verbose'
           sources: './src'
-          annotation-failures: 'warning,error'
+          annotation-failures: 'warning,failure'
           # suppress: 'unusedFunction'
           # annotation-level-default: 'error'
 
