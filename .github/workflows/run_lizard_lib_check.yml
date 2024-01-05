@@ -1,10 +1,10 @@
 name: Run Lizard Library Check
-# on: 
-  # push:
-  #   branches: [main, develop]
-  # pull_request:
-  #   branches: [main, develop]
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
 jobs:
   lizard:
     runs-on: ubuntu-latest
@@ -15,7 +15,7 @@ jobs:
         with:
           path: "./src"
           CCN: "12"
-          Threshold: "30"
+          Threshold: "nloc=30"
           language: "cpp"
           verbose: "true"
           arguments: "4"
