@@ -33,5 +33,5 @@ jobs:
     steps:
       - name: c-linter
         uses: tonybaloney/cppcheck-action@master
-        with:
-          # path: "./src"
+        # with:
+        #    path: <./src>
