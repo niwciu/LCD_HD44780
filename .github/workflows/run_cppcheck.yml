@@ -11,7 +11,8 @@ jobs:
     name: cppcheck-annotations
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
 
       - name: Run cppcheck-annotation-action
         uses: Konstantin343/cppcheck-annotation-action@v1.0
@@ -20,9 +21,9 @@ jobs:
           platform: 'unix64'
           log-level: 'verbose'
           sources: './src'
-          annotation-failures: 'error, warning'
+          annotation-failures: 'error,warning'
           # suppress: 'unusedFunction'
-          annotation-level-default: 'error'
+          # annotation-level-default: 'error'
 
 
       - name: Annotate lines with errors
