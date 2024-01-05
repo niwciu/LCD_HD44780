@@ -17,7 +17,8 @@ extern uint16_t expected_LCD_Port_delay_dump_data[BUF_SIZE][LOG_DATA_AMOUNT];
 extern uint16_t expected_buf_lenght;
 
 void clear_expected_LCD_Port_delay_dump_data(void);
-uint8_t read_prev_LCD_PORT_state(void);
+uint8_t read_prev_LCD_DATA_PORT_state(void);
+uint8_t read_prev_LCD_SIG_PORT_state(void);
 uint16_t define_expected_sequence_for_first_15_ms_delay(void);
 uint16_t define_expected_sequence_for_read_write_4_bit_data(uint16_t log_no, uint8_t R_W_data, uint16_t delay);
 uint16_t define_expected_sequence_for_send_cmd_to_LCD(uint16_t log_no, uint8_t cmd, uint8_t expected_readed_data, uint16_t additional_cmd_delay);
