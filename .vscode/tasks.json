@@ -102,6 +102,31 @@
             },
             "group": "test",
         },
+        {
+            "label": "run cppcheck for test",
+            "type": "shell",
+            "command": "cppcheck",
+            "args": [
+                //  ".",   // option for whole project
+                 "test/lcd_hd44780",
+                "-itest/lcd_hd44780/out",
+                "-itest/lcd_hd44780/out_avr",
+                // "-itest/template/", //suppress directory test/template/
+                "--enable=all",
+                "--inconclusive",
+                "--force" ,
+                "--inline-suppr",
+                // "--output-file=reports/cppcheck.out",  // this will print out report instead of printing problems in terminal
+                "--platform=win64",
+                "--suppress=missingInclude",
+                "--suppress=missingIncludeSystem",
+                // "--suppress=unusedFunction",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "test",
+        },
         {   // to use it replace "template" with specific module and provide whole"directory_to_your_project_folder" for exampel "D_/Projects/Project_a"      D:/0_Projekty/6_Biblioteki/LCD_HD44780/
             "label": "UBUNTU lcd_hd44780 code coverage report generation",
             "type": "shell",
