@@ -89,11 +89,14 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSend4thCmd0x03ThenLcdPinStateSequenceIsCo
 TEST(lcd_hd44780_init, GivenLcdInitWhenSendFunctionSetCmdThenLcdPinStateSequenceIsCorrect)
 {
     uint8_t cmd = (LCDC_FUNC | LCDC_FUNC4B | LCDC_FUNC2L | LCDC_FUNC5x7);
-    uint8_t expected_data_from_LCD = 0;
-
     // set expeted log sequence when sending cmd to LCD
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd, expected_data_from_LCD, 0);
 
+#if USE_RW_PIN == ON
+    uint8_t expected_data_from_LCD = 0;
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd, expected_data_from_LCD);
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd, 0);
+#endif
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
@@ -101,11 +104,14 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSendFunctionSetCmdThenLcdPinStateSequence
 TEST(lcd_hd44780_init, GivenLcdInitWhenSendDisplaySettingsCmdThenLcdPinStateSequenceIsCorrect)
 {
     uint8_t cmd = (LCDC_ONOFF | LCDC_CURSOROFF | LCDC_DISPLAYON);
-    uint8_t expected_data_from_LCD = 0;
 
     // set expeted log sequence when sending cmd to LCD
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd, expected_data_from_LCD, 0);
-
+#if USE_RW_PIN == ON
+    uint8_t expected_data_from_LCD = 0;
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd, expected_data_from_LCD);
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd, 0);
+#endif
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
@@ -113,9 +119,13 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSendDisplaySettingsCmdThenLcdPinStateSequ
 TEST(lcd_hd44780_init, GivenLcdInitWhenSendDisplayClearScrCmdThenLcdPinStateSequenceIsCorrect)
 {
     uint8_t cmd = (LCDC_CLS);
+#if USE_RW_PIN == ON
     uint8_t expected_data_from_LCD = 0;
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd, expected_data_from_LCD);
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd, 4900);
+#endif
 
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd, expected_data_from_LCD, 4900);
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
@@ -123,9 +133,13 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSendDisplayClearScrCmdThenLcdPinStateSequ
 TEST(lcd_hd44780_init, GivenLcdInitWhenSendDisplayEntryModeCmdThenLcdPinStateSequenceIsCorrect)
 {
     uint8_t cmd = (LCDC_ENTRY_MODE | LCDC_ENTRYR);
+#if USE_RW_PIN == ON
     uint8_t expected_data_from_LCD = 0;
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd, expected_data_from_LCD);
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd, 0);
+#endif
 
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, cmd, expected_data_from_LCD, 0);
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
