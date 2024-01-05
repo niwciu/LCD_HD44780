@@ -22,6 +22,7 @@ jobs:
           sources: './src'
           annotation-failures: 'error, warning'
           suppress: 'unusedFunction'
+          annotation-level-default: 'notice'
 
 
       - name: Annotate lines with errors
