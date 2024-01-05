@@ -1,5 +1,7 @@
-# Simple cross-platform C library for LCD with HD44780 controller
-- [Simple cross-platform C library for LCD with HD44780 controller](#simple-cross-platform-c-library-for-lcd-with-hd44780-controller)
+# LCD HD44780 lib - simple cross platform C library
+- [LCD HD44780 lib - simple cross platform C library](#lcd-hd44780-lib---simple-cross-platform-c-library)
+  - [Features](#features)
+  - [Release info](#release-info)
   - [Hardware configuration](#hardware-configuration)
     - [Requirements](#requirements)
     - [Schematic for possible hardware configurations](#schematic-for-possible-hardware-configurations)
@@ -24,7 +26,20 @@
     - [Defining banks for special characters.](#defining-banks-for-special-characters)
   - [Project main folders file structure](#project-main-folders-file-structure)
 
+## Features
+- Works with a connected LCD display in 4-bit mode with or without the LCD RW pin connected
+- Easy to port on different microcontrollers
+- Contain examples of portability to STM32, AVR, ESP8266
+- Allows to display strings/chars directly on LCD
+- Allows to put strings/chars in buffer and refresh LCD periodically with buffer content
+- Allows to define custom chars (more than 8) as well as custom char banks where different combination of custom characters can be easily loaded to LCD CGRAM
+- Library has currently predefined LCD types:
+  - 2 lines 16 characters (1602)
+  - 4 lines 16 characters (1604)
+  - 4 lines 20 characters (2004)
+- Allows to configure and compile only functionality that will be needed in the project
 
+## Release info
 ## Hardware configuration
 ### Requirements
 - LCD should be connected to uC in 4bit mode 
