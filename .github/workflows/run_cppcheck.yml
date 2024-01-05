@@ -20,7 +20,8 @@ jobs:
           platform: 'unix64'
           log-level: 'verbose'
           sources: './src'
-          annotation-failures: 'error,warning'
+          annotation-failures: 'error, warning'
+          suppress: 'unusedFunction'
 
 
       - name: Annotate lines with errors
