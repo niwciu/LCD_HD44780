@@ -27,3 +27,11 @@ jobs:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           title: 'Results of CppCheck'
           input: 'annotations.json'
+  linting:
+    name: cppcheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: c-linter
+        uses: tonybaloney/cppcheck-action@master
+        with:
+          path: "./src"
