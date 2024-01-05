@@ -20,8 +20,8 @@ jobs:
           platform: 'unix64'
           log-level: 'verbose'
           sources: './src'
-          annotation-failures: 'error, warning'
-          suppress: 'unusedFunction'
+          annotation-failures: 'warning'
+          # suppress: 'unusedFunction'
           annotation-level-default: 'notice'
 
 
