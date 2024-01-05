@@ -2,7 +2,7 @@ name: Run cppcheck-action
 on:
   workflow_dispatch:  
   push:
-    branches: [main, develop]
+    branches: [main, develop, feature/add_gihubactions_cppcheck]
   pull_request:
     branches: [main, develop]
 jobs:
