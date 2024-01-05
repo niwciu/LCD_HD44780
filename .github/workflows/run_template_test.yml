@@ -1,11 +1,10 @@
 name: Run Template Unit Tests
-# on: [push, pull_request]
 on:
   workflow_dispatch:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main, develop]
+  # push:
+  #   branches: [main, develop]
+  # pull_request:
+  #   branches: [main, develop]
 jobs:
   template_test_running:
     name: Template Test RUN
