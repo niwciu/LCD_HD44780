@@ -106,7 +106,7 @@ uint16_t define_expected_sequence_for_read_write_4_bit_data(uint16_t log_no, uin
 uint16_t define_expected_sequence_for_send_cmd_to_LCD(uint16_t log_no, uint8_t cmd, uint8_t expected_readed_data)
 {
     // reset RS
-    
+
     if (log_no != 0)
     {
         expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT] & ~(mock_LCD_RS));
@@ -155,7 +155,7 @@ uint16_t define_expected_sequence_for_send_cmd_to_LCD(uint16_t log_no, uint8_t c
 uint16_t define_expected_sequence_for_send_cmd_to_LCD(uint16_t log_no, uint8_t cmd, uint16_t additional_cmd_delay)
 {
     // reset RS
-    
+
     if (log_no != 0)
     {
         expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT] & ~(mock_LCD_RS));
@@ -186,7 +186,6 @@ uint16_t define_expected_sequence_for_send_cmd_to_LCD(uint16_t log_no, uint8_t c
     return log_no;
 }
 #endif
-
 
 #if USE_RW_PIN == ON
 uint16_t define_expected_sequence_for_send_data_to_LCD(uint16_t log_no, uint8_t data, uint8_t expected_readed_data, uint16_t additional_cmd_delay)
@@ -292,7 +291,7 @@ uint16_t define_expect_sequence_for_lcd_def_char(uint16_t log_no, const uint8_t 
 
     log_no = define_expected_sequence_for_send_cmd_to_LCD(log_no, LCDC_SET_DDRAM, 0x00);
 #else
-    log_no = define_expected_sequence_for_send_cmd_to_LCD(log_no, cmd,  0);
+    log_no = define_expected_sequence_for_send_cmd_to_LCD(log_no, cmd, 0);
 
     for (uint8_t j = 0; j < LCD_CGRAM_BYTES_PER_CHAR; j++)
     {
@@ -301,7 +300,6 @@ uint16_t define_expect_sequence_for_lcd_def_char(uint16_t log_no, const uint8_t 
 
     log_no = define_expected_sequence_for_send_cmd_to_LCD(log_no, LCDC_SET_DDRAM, 0);
 #endif
-
 
     return log_no;
 }
