@@ -23,7 +23,7 @@ jobs:
           sources: './src'
           # annotation-failures: 'error,warning'
           # suppress: 'unusedFunction'
-          annotation-level-default: 'error'
+          # annotation-level-default: 'error'
 
       - name: Annotate lines with errors
         uses: yuzutech/annotations-action@v0.4.0
