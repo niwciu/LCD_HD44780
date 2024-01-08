@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:38:27
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 16:57:42
+ * @Last Modified time: 2024-01-08 16:02:05
  */
 
 #ifndef _LCD_HD44780_CONFIG_H_
@@ -28,6 +28,8 @@ extern "C"
  ********************************************************************************************/
 #define LCD_TYPE       2004
 #define USE_RW_PIN     OFF 
+
+#define LCD_BUFFERING  ON
 
 //definitions of Line and collumn labels for lcd_locate 
 enum LCD_LINES
@@ -61,6 +63,9 @@ enum LCD_COLUMNS{
 #define USE_LCD_CURSOR_OFF              ON
 #define USE_LCD_BLINKING_CURSOR_ON      ON
 
+#if LCD_BUFFERING == ON
+    
+#endif
 
 
 #ifdef __cplusplus

@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-13 13:18:13
+ * @Last Modified time: 2024-01-08 16:25:05
  */
 
 #include "lcd_hd44780.h"
@@ -74,9 +74,11 @@
 #define LCD_LINE1_ADR   0x00 
 #define LCD_LINE2_ADR   0x40 
 #endif
-
 // clang-format on
 
+#if LCD_BUFFERING == ON
+char lcd_buffer[LCD_Y][LCD_X];
+#endif
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
 // const struct char_bank_struct *char_bank = &char_bank_1;
 
@@ -196,6 +198,7 @@ static void lcd_put_spaces(uint8_t empty_spaces)
         lcd_char(' ');
     }
 }
+
 void lcd_int_AVR(int val, uint8_t width, enum alignment alignment)
 {
     uint8_t buf_lenght = 0;
@@ -222,6 +225,7 @@ void lcd_int_AVR(int val, uint8_t width, enum alignment alignment)
         }
     }
 }
+
 void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment)
 {
     char buffer[17];
@@ -251,6 +255,7 @@ void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment)
         }
     }
 }
+
 void lcd_bin_AVR(int val, uint8_t width)
 {
     char buffer[35]; // 0b 0000 0000 0000 0000 0000 0000 0000 0000
@@ -276,6 +281,7 @@ void lcd_bin_AVR(int val, uint8_t width)
     }
 }
 #else
+
 static void fill_bin_value_buffer(int val, char *bin_val_buffer)
 {
     uint32_t bit_mask = 0x80000000;
@@ -295,6 +301,7 @@ static void fill_bin_value_buffer(int val, char *bin_val_buffer)
         bit_mask = bit_mask >> 1;
     }
 }
+
 static void fill_zeros_buffer(const char *buffer, uint8_t width, char *zeros_buf)
 {
     if (strlen(buffer) < (width + VAL_PREFIX_LENGHT))
@@ -306,7 +313,6 @@ static void fill_zeros_buffer(const char *buffer, uint8_t width, char *zeros_buf
         }
     }
 }
-
 #endif
 
 /**
@@ -345,7 +351,13 @@ void lcd_init(void)
     lcd_write_cmd(LCDC_ENTRY_MODE | LCDC_ENTRYR);
     /*********************************END of BASIC LCD INIT***************************************/
 
-    // ToDo define sepcial characters in LCD CGRAM
+    // ToDo define sepcial characters in LCD CGRAM if needed
+
+    // init LCD buffer if LCD_BUFFERING is ON in lcdhd44780_config.h
+#if LCD_BUFFERING == ON
+    lcd_buf_cls();
+#endif
+  
 }
 
 /**
@@ -580,3 +592,17 @@ void lcd_blinking_cursor_on(void)
     lcd_write_cmd(LCDC_ONOFF | LCDC_DISPLAYON | LCDC_CURSORON | LCDC_BLINKON);
 }
 #endif
+
+#if LCD_BUFFERING == ON
+void lcd_buf_cls(void)
+{
+    for(uint8_t line=0; line<LCD_Y; line++)
+    {
+        for(uint8_t collumn=0; collumn<LCD_X; collumn++)
+        {
+            lcd_buffer[line][collumn]=' ';
+        }
+    }
+}
+#endif
+  

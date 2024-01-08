@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:40:29
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-12 18:03:17
+ * @Last Modified time: 2024-01-08 16:17:53
  */
 
 #ifndef _LCD_HD_44780_H_
@@ -42,6 +42,10 @@ extern "C"
     void lcd_cursor_on(void);
     void lcd_cursor_off(void);
     void lcd_blinking_cursor_on(void);
+    
+#if LCD_BUFFERING == ON
+    void lcd_buf_cls(void); 
+#endif   
 
 #ifdef __cplusplus
 }
