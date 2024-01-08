@@ -2,11 +2,13 @@
  * @Author: lukasz.niewelt 
  * @Date: 2024-01-08 15:45:14 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 18:20:10
+ * @Last Modified time: 2024-01-08 18:28:47
  */
 #include "unity/fixture/unity_fixture.h"
 // #include "lcd_hd44780_config.h"
 #include "lcd_hd44780.h"
+#define LAST_CHAR_IN_LCD_LINE   (LCD_X-1)
+#define LAST_LCD_LINE   (LCD_Y-1)
 
 extern char lcd_buffer[LCD_Y][LCD_X];
 char expected_lcd_buf[LCD_Y][LCD_X];
@@ -47,7 +49,7 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdBufCharThenBufferEqualToEx
     lcd_init();
     lcd_buf_char('a');
     define_expected_buffer_value_for_cls();
-    expected_lcd_buf[0][0]='a';
+    expected_lcd_buf[LINE_1][C1]='a';
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf,lcd_buffer,(LCD_X*LCD_Y));
 }
 
@@ -58,17 +60,17 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdBufCharAandLcdBufCharBUsed
     lcd_buf_char('B');
     define_expected_buffer_value_for_cls();
     expected_lcd_buf[LINE_1][C1]='A';
-    expected_lcd_buf[0][1]='B';
+    expected_lcd_buf[LINE_1][C2]='B';
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf,lcd_buffer,(LCD_X*LCD_Y));
 }
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufLocateFirstLineLastLetterAndLcdBufCharAThenBufferEqualToExpected)
 {
     lcd_init();
-    lcd_buf_locate(LINE_1,(LCD_X-1));
+    lcd_buf_locate(LINE_1,LAST_CHAR_IN_LCD_LINE);
     lcd_buf_char('A');
     define_expected_buffer_value_for_cls();
-    expected_lcd_buf[LINE_1][LCD_X-1]='A';
+    expected_lcd_buf[LINE_1][LAST_CHAR_IN_LCD_LINE]='A';
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf,lcd_buffer,(LCD_X*LCD_Y));
 }
 
