@@ -64,7 +64,7 @@ TEST_GROUP_RUNNER(lcd_hd44780_buffering)
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdBufCharThenBufferEqualToExpected);
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdBufCharAandLcdBufCharBUsedThenBufferEqualToExpected)
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufLocateFirstLineLastLetterAndLcdBufCharAThenBufferEqualToExpected)
-    // RUN_TEST_CASE(lcd_hd44780_buffering, )
+    RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufLocateFirstLineLastLetterAndLcdBufCharAandLcdBufCharBThenBufferEqualToExpected)
     // RUN_TEST_CASE(lcd_hd44780_buffering, )
     // RUN_TEST_CASE(lcd_hd44780_buffering, )
     // RUN_TEST_CASE(lcd_hd44780_buffering, )

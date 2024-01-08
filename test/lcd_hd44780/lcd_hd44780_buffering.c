@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2024-01-08 15:45:14 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 18:28:47
+ * @Last Modified time: 2024-01-08 18:30:25
  */
 #include "unity/fixture/unity_fixture.h"
 // #include "lcd_hd44780_config.h"
@@ -71,6 +71,18 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufLocateFirstLi
     lcd_buf_char('A');
     define_expected_buffer_value_for_cls();
     expected_lcd_buf[LINE_1][LAST_CHAR_IN_LCD_LINE]='A';
+    TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf,lcd_buffer,(LCD_X*LCD_Y));
+}
+
+TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufLocateFirstLineLastLetterAndLcdBufCharAandLcdBufCharBThenBufferEqualToExpected)
+{
+    lcd_init();
+    lcd_buf_locate(LINE_1,LAST_CHAR_IN_LCD_LINE);
+    lcd_buf_char('A');
+    lcd_buf_char('B');
+    define_expected_buffer_value_for_cls();
+    expected_lcd_buf[LINE_1][LAST_CHAR_IN_LCD_LINE]='A';
+    expected_lcd_buf[LINE_2][C1]='B';
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf,lcd_buffer,(LCD_X*LCD_Y));
 }
 
