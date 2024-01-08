@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2024-01-08 15:45:14 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 19:09:38
+ * @Last Modified time: 2024-01-08 19:37:38
  */
 #include "unity/fixture/unity_fixture.h"
 // #include "lcd_hd44780_config.h"
@@ -98,14 +98,19 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufLocateLastLin
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf,lcd_buffer,(LCD_X*LCD_Y));
 }
 
-// testy na przejście do następnej linii bufora
-// testy na przejście z końca bufora do początku
-
-
-// TEST(lcd_hd44780_buffering, FirstTest)
-// {
-//     TEST_FAIL_MESSAGE("Implement your test!");
-// }
+TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufStrTestThenLcdBufferEqualToExpectedLcdBuffer)
+{
+    lcd_init();
+    lcd_buf_str("Test");
+    define_expected_buffer_value_for_cls();
+    expected_lcd_buf[LINE_1][C1]='T';
+    expected_lcd_buf[LINE_1][C2]='e';
+    expected_lcd_buf[LINE_1][C3]='s';
+    expected_lcd_buf[LINE_1][C4]='t';
+    // printf("wpisany tekst:" &lcd_buffer[0][0]);
+    // printf(&expected_lcd_buf[0][0]);
+    TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf,lcd_buffer,(LCD_X*LCD_Y));
+}
 // TEST(lcd_hd44780_buffering, FirstTest)
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");
