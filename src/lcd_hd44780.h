@@ -48,7 +48,7 @@ extern "C"
     void lcd_buf_char(const char c);
     void lcd_buf_locate(enum LCD_LINES y, enum LCD_COLUMNS x);
     void lcd_buf_str(const char *str);
-    void lcd_buf_print();
+    void lcd_buf_print(void);
 #endif   
 
 #ifdef __cplusplus
