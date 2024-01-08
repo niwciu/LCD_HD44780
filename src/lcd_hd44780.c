@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 17:49:01
+ * @Last Modified time: 2024-01-08 18:10:44
  */
 
 #include "lcd_hd44780.h"
@@ -580,11 +580,14 @@ void lcd_buf_cls(void)
             lcd_buffer[line][collumn]=' ';
         }
     }
+    lcd_buf_X=0;
+    lcd_buf_Y=0;
 }
 
 void lcd_buf_char(const char c)
 {
-    lcd_buffer[lcd_buf_X][lcd_buf_Y]=c;
+    lcd_buffer[lcd_buf_Y][lcd_buf_X]=c;
+    lcd_buf_X++;
 }
 #endif
   
