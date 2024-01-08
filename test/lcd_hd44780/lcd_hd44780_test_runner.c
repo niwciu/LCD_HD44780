@@ -17,7 +17,6 @@ TEST_GROUP_RUNNER(lcd_hd44780_init)
     RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSendDisplayClearScrCmdThenLcdPinStateSequenceIsCorrect);
     RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSendDisplayEntryModeCmdThenLcdPinStateSequenceIsCorrect);
     // RUN_TEST_CASE(lcd_hd44780_init, )
-    // RUN_TEST_CASE(lcd_hd44780_init, )
 }
 
 TEST_GROUP_RUNNER(lcd_hd44780_basic_functions)
@@ -54,13 +53,19 @@ TEST_GROUP_RUNNER(lcd_hd44780_basic_functions)
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_hex_20_1_right_ThenSignalSequenceForSendigIsEqualToLcdStrWithValueInHexAsStrig);
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_bin_5_6_ThenSignalSequenceForSendigIsEqualToLcdStrWithValueInHexAsStrig);
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_bin_5_1_ThenSignalSequenceForSendigIsEqualToLcdStrWithValueInHexAsStrig);
+    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
+}
 
-    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
-    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
-    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
-    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
-    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
-    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
-    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
-    // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
+TEST_GROUP_RUNNER(lcd_hd44780_buffering)
+{
+    /* Test cases to run */
+
+    RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLcdBufferContainSpaces);
+    // RUN_TEST_CASE(lcd_hd44780_init, )
+    // RUN_TEST_CASE(lcd_hd44780_init, )
+    // RUN_TEST_CASE(lcd_hd44780_init, )
+    // RUN_TEST_CASE(lcd_hd44780_init, )
+    // RUN_TEST_CASE(lcd_hd44780_init, )
+    // RUN_TEST_CASE(lcd_hd44780_init, )
+    // RUN_TEST_CASE(lcd_hd44780_init, )
 }
