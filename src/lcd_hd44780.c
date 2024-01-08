@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 18:14:16
+ * @Last Modified time: 2024-01-08 18:22:55
  */
 
 #include "lcd_hd44780.h"
@@ -588,6 +588,12 @@ void lcd_buf_char(const char c)
 {
     lcd_buffer[lcd_buf_Y][lcd_buf_X]=c;
     lcd_buf_X++;
+}
+
+void lcd_buf_locate(enum LCD_LINES y, enum LCD_COLUMNS x)
+{
+    lcd_buf_X=x;
+    lcd_buf_Y=y;
 }
 #endif
   
