@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 19:46:35
+ * @Last Modified time: 2024-01-08 20:46:06
  */
 
 #include "lcd_hd44780.h"
@@ -619,6 +619,15 @@ void lcd_buf_str(const char *str)
         *(lcd_buf_position_ptr)=*(str++);
         check_lcd_buf_possition_ptr_overflow();
     }
+}
+
+void lcd_buf_print()
+{
+    for(lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1]; lcd_buf_position_ptr<=&lcd_buffer[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE]; lcd_buf_position_ptr++)
+    {
+        lcd_char(*lcd_buf_position_ptr);
+    }
+    lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1];
 }
 #endif
   
