@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 18:22:55
+ * @Last Modified time: 2024-01-08 19:01:14
  */
 
 #include "lcd_hd44780.h"
@@ -11,6 +11,7 @@
 #include "stdlib.h"
 #include "string.h"
 
+typedef char lcd_pos_t;
 // clang-format off
 #define BUSY_FLAG           1 << 7
 #define VAL_PREFIX_LENGHT   2U
@@ -51,10 +52,17 @@
 #else
 #define PRIVATE
 #endif
+
 #if LCD_BUFFERING == ON
+
+#define LAST_CHAR_IN_LCD_LINE   (LCD_X-1)
+#define LAST_LCD_LINE   (LCD_Y-1)
+
 PRIVATE char lcd_buffer[LCD_Y][LCD_X];
-static uint8_t lcd_buf_X=0;
-static uint8_t lcd_buf_Y=0;
+
+// static uint8_t lcd_buf_X=0;
+// static uint8_t lcd_buf_Y=0;
+static lcd_pos_t *lcd_pos_ptr;
 #endif
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
 // const struct char_bank_struct *char_bank = &char_bank_1;
@@ -573,27 +581,22 @@ void lcd_blinking_cursor_on(void)
 #if LCD_BUFFERING == ON
 void lcd_buf_cls(void)
 {
-    for(lcd_buf_Y=0; lcd_buf_Y<LCD_Y; lcd_buf_Y++)
+    for(lcd_pos_ptr=&lcd_buffer[LINE_1][C1]; lcd_pos_ptr<=&lcd_buffer[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE]; lcd_pos_ptr++)
     {
-        for(lcd_buf_X=0; lcd_buf_X<LCD_X; lcd_buf_X++)
-        {
-            lcd_buffer[lcd_buf_Y][lcd_buf_X]=' ';
-        }
+            *lcd_pos_ptr=' ';
     }
-    lcd_buf_X=0;
-    lcd_buf_Y=0;
+    lcd_pos_ptr=&lcd_buffer[LINE_1][C1];
 }
 
 void lcd_buf_char(const char c)
 {
-    lcd_buffer[lcd_buf_Y][lcd_buf_X]=c;
-    lcd_buf_X++;
+    *lcd_pos_ptr=c;
+    lcd_pos_ptr++;
 }
 
 void lcd_buf_locate(enum LCD_LINES y, enum LCD_COLUMNS x)
 {
-    lcd_buf_X=x;
-    lcd_buf_Y=y;
+    lcd_pos_ptr=&lcd_buffer[y][x];
 }
 #endif
   

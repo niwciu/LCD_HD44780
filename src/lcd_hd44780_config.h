@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:38:27
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 16:33:03
+ * @Last Modified time: 2024-01-08 18:49:27
  */
 
 #ifndef _LCD_HD44780_CONFIG_H_
@@ -95,6 +95,7 @@ enum LCD_COLUMNS{
 #define LCD_LINE1_ADR   0x00 
 #define LCD_LINE2_ADR   0x40 
 #endif
+
 // clang-format on
 
 #ifdef __cplusplus
