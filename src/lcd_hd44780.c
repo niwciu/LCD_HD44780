@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 18:10:44
+ * @Last Modified time: 2024-01-08 18:14:16
  */
 
 #include "lcd_hd44780.h"
@@ -573,11 +573,11 @@ void lcd_blinking_cursor_on(void)
 #if LCD_BUFFERING == ON
 void lcd_buf_cls(void)
 {
-    for(uint8_t line=0; line<LCD_Y; line++)
+    for(lcd_buf_Y=0; lcd_buf_Y<LCD_Y; lcd_buf_Y++)
     {
-        for(uint8_t collumn=0; collumn<LCD_X; collumn++)
+        for(lcd_buf_X=0; lcd_buf_X<LCD_X; lcd_buf_X++)
         {
-            lcd_buffer[line][collumn]=' ';
+            lcd_buffer[lcd_buf_Y][lcd_buf_X]=' ';
         }
     }
     lcd_buf_X=0;

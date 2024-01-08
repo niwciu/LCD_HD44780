@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt 
  * @Date: 2024-01-08 15:45:14 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 18:11:05
+ * @Last Modified time: 2024-01-08 18:13:24
  */
 #include "unity/fixture/unity_fixture.h"
 // #include "lcd_hd44780_config.h"
@@ -61,10 +61,16 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdBufCharAandLcdBufCharBUsed
     expected_lcd_buf[0][1]='B';
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf,lcd_buffer,(LCD_X*LCD_Y));
 }
+
 // TEST(lcd_hd44780_buffering, FirstTest)
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");
 // }
+
+// testy na przejście do następnej linii bufora
+// testy na przejście z końca bufora do początku
+
+
 // TEST(lcd_hd44780_buffering, FirstTest)
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");
