@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:40:29
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 16:17:53
+ * @Last Modified time: 2024-01-08 17:43:46
  */
 
 #ifndef _LCD_HD_44780_H_
@@ -45,6 +45,7 @@ extern "C"
     
 #if LCD_BUFFERING == ON
     void lcd_buf_cls(void); 
+    void lcd_buf_char(const char c);
 #endif   
 
 #ifdef __cplusplus

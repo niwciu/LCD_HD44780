@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 17:03:27
+ * @Last Modified time: 2024-01-08 17:49:01
  */
 
 #include "lcd_hd44780.h"
@@ -53,6 +53,8 @@
 #endif
 #if LCD_BUFFERING == ON
 PRIVATE char lcd_buffer[LCD_Y][LCD_X];
+static uint8_t lcd_buf_X=0;
+static uint8_t lcd_buf_Y=0;
 #endif
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
 // const struct char_bank_struct *char_bank = &char_bank_1;
@@ -578,6 +580,11 @@ void lcd_buf_cls(void)
             lcd_buffer[line][collumn]=' ';
         }
     }
+}
+
+void lcd_buf_char(const char c)
+{
+    lcd_buffer[lcd_buf_X][lcd_buf_Y]=c;
 }
 #endif
   
