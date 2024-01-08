@@ -61,6 +61,7 @@ TEST_GROUP_RUNNER(lcd_hd44780_buffering)
     /* Test cases to run */
 
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLcdBufferContainSpaces);
+    RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdBufCharThenBufferEqualToExpected);
     // RUN_TEST_CASE(lcd_hd44780_init, )
     // RUN_TEST_CASE(lcd_hd44780_init, )
     // RUN_TEST_CASE(lcd_hd44780_init, )
