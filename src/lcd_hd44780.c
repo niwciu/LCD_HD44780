@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 16:25:05
+ * @Last Modified time: 2024-01-08 17:03:27
  */
 
 #include "lcd_hd44780.h"
@@ -46,38 +46,13 @@
 #define LCDC_SET_CGRAM      0x40
 #define LCDC_SET_DDRAM      0x80
 
-
-/********************  definitions of Line addres for different lcd screens ****************/
-//https://web.alfredstate.edu/faculty/weimandn/lcd/lcd_addressing/lcd_addressing_index.html
-
-#if LCD_TYPE ==1604
-#define LCD_Y   4 
-#define LCD_X   16 
-#define LCD_LINE1_ADR   0x00 
-#define LCD_LINE2_ADR   0x40 
-#define LCD_LINE3_ADR   0x10 
-#define LCD_LINE4_ADR   0x50 
+#ifndef UNIT_TEST
+#define PRIVATE static
+#else
+#define PRIVATE
 #endif
-
-#if LCD_TYPE==2004
-#define LCD_Y   4 
-#define LCD_X   20 
-#define LCD_LINE1_ADR   0x00 
-#define LCD_LINE2_ADR   0x40 
-#define LCD_LINE3_ADR   0x14 
-#define LCD_LINE4_ADR   0x54 
-#endif
-
-#if LCD_TYPE==1602
-#define LCD_Y   2 
-#define LCD_X   16 
-#define LCD_LINE1_ADR   0x00 
-#define LCD_LINE2_ADR   0x40 
-#endif
-// clang-format on
-
 #if LCD_BUFFERING == ON
-char lcd_buffer[LCD_Y][LCD_X];
+PRIVATE char lcd_buffer[LCD_Y][LCD_X];
 #endif
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
 // const struct char_bank_struct *char_bank = &char_bank_1;

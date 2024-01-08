@@ -64,6 +64,7 @@ set(TEST_SRCS
 )
 
 set(GLOBAL_DEFINES
+	-DUNIT_TEST
 	# -DAVR
 )
 

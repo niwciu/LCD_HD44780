@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:38:27
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 16:02:05
+ * @Last Modified time: 2024-01-08 16:33:03
  */
 
 #ifndef _LCD_HD44780_CONFIG_H_
@@ -64,9 +64,38 @@ enum LCD_COLUMNS{
 #define USE_LCD_BLINKING_CURSOR_ON      ON
 
 #if LCD_BUFFERING == ON
-    
+
 #endif
 
+
+/********************  definitions of Line addres for different lcd screens ****************/
+//https://web.alfredstate.edu/faculty/weimandn/lcd/lcd_addressing/lcd_addressing_index.html
+
+#if LCD_TYPE ==1604
+#define LCD_Y   4 
+#define LCD_X   16 
+#define LCD_LINE1_ADR   0x00 
+#define LCD_LINE2_ADR   0x40 
+#define LCD_LINE3_ADR   0x10 
+#define LCD_LINE4_ADR   0x50 
+#endif
+
+#if LCD_TYPE==2004
+#define LCD_Y   4 
+#define LCD_X   20 
+#define LCD_LINE1_ADR   0x00 
+#define LCD_LINE2_ADR   0x40 
+#define LCD_LINE3_ADR   0x14 
+#define LCD_LINE4_ADR   0x54 
+#endif
+
+#if LCD_TYPE==1602
+#define LCD_Y   2 
+#define LCD_X   16 
+#define LCD_LINE1_ADR   0x00 
+#define LCD_LINE2_ADR   0x40 
+#endif
+// clang-format on
 
 #ifdef __cplusplus
 }
