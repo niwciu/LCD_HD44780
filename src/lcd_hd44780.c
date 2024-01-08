@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 19:40:08
+ * @Last Modified time: 2024-01-08 19:46:35
  */
 
 #include "lcd_hd44780.h"
@@ -87,6 +87,9 @@ static void lcd_bin_AVR(int val, uint8_t width);
 #else
 static void fill_bin_value_buffer(int val, char *bin_val_buffer);
 static void fill_zeros_buffer(const char *buffer, uint8_t width, char *zeros_buf);
+#endif
+#if LCD_BUFFERING==ON
+static void check_lcd_buf_possition_ptr_overflow();
 #endif
 
 static void register_LCD_IO_driver(void)
@@ -296,6 +299,16 @@ static void fill_zeros_buffer(const char *buffer, uint8_t width, char *zeros_buf
         {
             strcat(zeros_buf, "0");
         }
+    }
+}
+#endif
+
+#if LCD_BUFFERING==ON
+static void check_lcd_buf_possition_ptr_overflow()
+{
+    if(++lcd_buf_position_ptr>&lcd_buffer[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE])
+    {
+        lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1];
     }
 }
 #endif
@@ -591,10 +604,7 @@ void lcd_buf_cls(void)
 void lcd_buf_char(const char c)
 {
     *lcd_buf_position_ptr=c;
-    if(++lcd_buf_position_ptr>&lcd_buffer[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE])
-    {
-        lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1];
-    }
+    check_lcd_buf_possition_ptr_overflow();
 }
 
 void lcd_buf_locate(enum LCD_LINES y, enum LCD_COLUMNS x)
@@ -607,10 +617,7 @@ void lcd_buf_str(const char *str)
     while (*str)
     {
         *(lcd_buf_position_ptr)=*(str++);
-        if(++lcd_buf_position_ptr>&lcd_buffer[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE])
-        {
-            lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1];
-        }
+        check_lcd_buf_possition_ptr_overflow();
     }
 }
 #endif

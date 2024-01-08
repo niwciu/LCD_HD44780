@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:40:29
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 19:27:15
+ * @Last Modified time: 2024-01-08 19:47:02
  */
 
 #ifndef _LCD_HD_44780_H_
