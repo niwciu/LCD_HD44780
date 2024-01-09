@@ -2,12 +2,13 @@
  * @Author: lukasz.niewelt 
  * @Date: 2024-01-08 15:45:14 
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 20:42:57
+ * @Last Modified time: 2024-01-09 19:09:45
  */
 #include "unity/fixture/unity_fixture.h"
 // #include "lcd_hd44780_config.h"
 #include "lcd_hd44780.h"
 #include "lcd_hd44780_test_common.h"
+#include <string.h>
 
 #define LAST_CHAR_IN_LCD_LINE   (LCD_X-1)
 #define LAST_LCD_LINE   (LCD_Y-1)
@@ -136,11 +137,70 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLine
     expected_lcd_buf[LINE_1][C1]='e';
     expected_lcd_buf[LINE_1][C2]='s';
     expected_lcd_buf[LINE_1][C3]='t';
-
+    expected_lcd_buf[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE]='T';
+    char lcd_line[LCD_X];
+    
     clear_expected_LCD_Port_delay_dump_data();
     mock_clear_LCD_Port_delay_dump_data();
+    next_log_no=0;
     
-    next_log_no = define_expected_sequence_for_send_string_to_LCD(&expected_lcd_buf[0][0]);
+#if ((LCD_TYPE == 2004) || (LCD_TYPE == 1604))
+    lcd_line[C1]='\0';
+    strncat(lcd_line,&expected_lcd_buf[LINE_1][C1],LCD_X);
+    next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0],next_log_no);
+#if USE_RW_PIN == ON
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0x00);
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0);
+#endif
+
+    lcd_line[C1]='\0';
+    strncat(lcd_line,&expected_lcd_buf[LINE_2][C1],LCD_X);
+    next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0],next_log_no);
+#if USE_RW_PIN == ON
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE3_ADR + C1), 0x00);
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE3_ADR + C1), 0);
+#endif
+
+    lcd_line[C1]='\0';
+    strncat(lcd_line,&expected_lcd_buf[LINE_3][C1],LCD_X);
+    next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0],next_log_no);
+#if USE_RW_PIN == ON
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE4_ADR + C1), 0x00);
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE4_ADR + C1), 0);
+#endif
+
+    lcd_line[C1]='\0';
+    strncat(lcd_line,&expected_lcd_buf[LINE_4][C1],LCD_X);
+    next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0],next_log_no);
+#if USE_RW_PIN == ON
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE1_ADR + C1), 0x00);
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE1_ADR + C1), 0);
+#endif
+#elif LCD_TYPE==1602
+    lcd_line[C1]='\0';
+    strncat(lcd_line,&expected_lcd_buf[LINE_1][C1],LCD_X);
+    next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0],next_log_no);
+#if USE_RW_PIN == ON
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0x00);
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0);
+#endif
+
+    lcd_line[C1]='\0';
+    strncat(lcd_line,&expected_lcd_buf[LINE_2][C1],LCD_X);
+    next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0],next_log_no);
+#if USE_RW_PIN == ON
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0x00);
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE1_ADR + C1), 0);
+#endif
+#else
+#endif
+
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
     lcd_buf_print();
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);

@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-07 16:59:56
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 16:34:21
+ * @Last Modified time: 2024-01-09 18:22:13
  */
 
 #include "lcd_hd44780_test_common.h"
@@ -304,9 +304,9 @@ uint16_t define_expect_sequence_for_lcd_def_char(uint16_t log_no, const uint8_t 
     return log_no;
 }
 
-uint16_t define_expected_sequence_for_send_string_to_LCD(const char *string)
+uint16_t define_expected_sequence_for_send_string_to_LCD(const char *string, uint16_t next_log)
 {
-    uint16_t next_log = 0;
+    // uint16_t next_log = 0;
     register char c;
     while ((c = *(string++)))
     {

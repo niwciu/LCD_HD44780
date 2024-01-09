@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-07 16:59:53
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 12:30:50
+ * @Last Modified time: 2024-01-09 18:23:43
  */
 #include <stdint.h>
 #include "mock_LCD_IO_driver.h"
@@ -30,4 +30,4 @@ uint16_t define_expected_sequence_for_send_data_to_LCD(uint16_t log_no, uint8_t 
 #endif
 
 uint16_t define_expect_sequence_for_lcd_def_char(uint16_t log_no, const uint8_t CGRAM_bank_x_char_index, const uint8_t *def_char);
-uint16_t define_expected_sequence_for_send_string_to_LCD(const char *string);
+uint16_t define_expected_sequence_for_send_string_to_LCD(const char *string, uint16_t next_log);
