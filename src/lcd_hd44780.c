@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 22:22:24
+ * @Last Modified time: 2024-01-09 20:35:05
  */
 
 #include "lcd_hd44780.h"
@@ -623,9 +623,23 @@ void lcd_buf_str(const char *str)
 
 void lcd_buf_print(void)
 {
+    static uint8_t lcd_cursor_position=0;
+    static uint8_t lcd_line=0;
+    
     for(lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1]; lcd_buf_position_ptr<=&lcd_buffer[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE]; lcd_buf_position_ptr++)
     {
         lcd_char(*lcd_buf_position_ptr);
+        if((++lcd_cursor_position)>=LCD_X)
+        {
+            lcd_cursor_position=0;
+            lcd_line++;
+            if(lcd_line==LCD_Y)
+            {
+                lcd_line=LINE_1;
+            } 
+            lcd_locate(lcd_line,lcd_cursor_position);
+            
+        }
     }
     lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1];
 }
