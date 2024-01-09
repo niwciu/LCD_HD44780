@@ -4,6 +4,8 @@ project(lcd_hd44780_test C)
 
 add_subdirectory(../../unity unity)
 
+set(CUSTOM_TARGETS_FILE_DIR ../custom_targets.cmake)
+
 set(CMAKE_C_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 
 set(INCLUDE_DIRS
@@ -26,12 +28,16 @@ set(TEST_SRCS
 	../mock_LCD_IO_driver.c
 	../lcd_hd44780_test_basic_func.c
 	../lcd_hd44780_test_common.c
+	../lcd_hd44780_buffering.c
 	#mock_module.c
 )
 
 set(GLOBAL_DEFINES
 	-DAVR
+	-DUNIT_TEST
 )
+
+include(${CUSTOM_TARGETS_FILE_DIR})
 
 include_directories(${INCLUDE_DIRS} ${TEST_INCLUDE_DIRS})
 add_definitions(${GLOBAL_DEFINES})
