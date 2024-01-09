@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:40:29
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-08 20:44:22
+ * @Last Modified time: 2024-01-09 21:39:47
  */
 
 #ifndef _LCD_HD_44780_H_
@@ -42,14 +42,14 @@ extern "C"
     void lcd_cursor_on(void);
     void lcd_cursor_off(void);
     void lcd_blinking_cursor_on(void);
-    
+
 #if LCD_BUFFERING == ON
-    void lcd_buf_cls(void); 
+    void lcd_buf_cls(void);
     void lcd_buf_char(const char c);
     void lcd_buf_locate(enum LCD_LINES y, enum LCD_COLUMNS x);
     void lcd_buf_str(const char *str);
     void lcd_buf_print(void);
-#endif   
+#endif
 
 #ifdef __cplusplus
 }

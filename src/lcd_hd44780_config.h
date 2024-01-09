@@ -96,7 +96,7 @@ enum LCD_COLUMNS{
 #define LCD_LINE2_ADR   0x40 
 #endif
 
-// clang-format on
+    // clang-format on
 
 #ifdef __cplusplus
 }
