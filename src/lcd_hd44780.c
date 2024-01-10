@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 14:45:26
+ * @Last Modified time: 2024-01-10 14:56:49
  */
 
 #include "lcd_hd44780.h"
@@ -60,9 +60,8 @@ typedef char lcd_pos_t;
 #define LAST_LCD_LINE   (LCD_Y-1)
 
 PRIVATE char lcd_buffer[LCD_Y][LCD_X];
+PRIVATE char prev_lcd_buffer[LCD_Y][LCD_X];
 
-// static uint8_t lcd_buf_X=0;
-// static uint8_t lcd_buf_Y=0;
 static lcd_pos_t *lcd_buf_position_ptr;
 #endif
 
@@ -355,9 +354,12 @@ void lcd_init(void)
 
     // init LCD buffer if LCD_BUFFERING is ON in lcdhd44780_config.h
 #if LCD_BUFFERING == ON
+    //clear lcd_buffer by putting spaces inside of the buffer
     lcd_buf_cls();
-
-    LCD_UPDATE_EVENT=false; // cleared flag due to init procedure that reset lcd screan and buffers
+    //copy lcd_buffer with spaces to prev_lcd_buffer
+    strcpy(&prev_lcd_buffer[LINE_1][C1],&lcd_buffer[LINE_1][C1]);
+    // clear flag due to init procedure that reset lcd screan and buffers
+    LCD_UPDATE_EVENT=false;
 #endif
   
 }
