@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2024-01-08 15:45:14
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 15:00:48
+ * @Last Modified time: 2024-01-10 15:08:28
  */
 
 #include "unity/fixture/unity_fixture.h"
@@ -178,12 +178,12 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLcdBufStrWhenLcdUpda
     TEST_ASSERT_EQUAL_UINT8_ARRAY(lcd_buffer, prev_lcd_buffer, (LCD_X * LCD_Y));
 }
 
-// TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLcdBufStrWhenLcdUpdateThenLcdCurrentScreenBufferIsEqualToLcdBuffer)
-// {
-//     lcd_init();
-//     lcd_buf_str("TEST")
-//     TEST_FAIL_MESSAGE("New Test Added") ;
-// }
+TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufStrThenLcdCurrentScreenBufferStillContainSpaces)
+{
+    lcd_init();
+    define_expected_buffer_value_for_cls();
+    TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf, prev_lcd_buffer, (LCD_X * LCD_Y));
+}
 
 // TEST(lcd_hd44780_buffering, )
 // {
