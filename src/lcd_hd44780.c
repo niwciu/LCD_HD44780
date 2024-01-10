@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 14:33:03
+ * @Last Modified time: 2024-01-10 14:36:34
  */
 
 #include "lcd_hd44780.h"
@@ -603,6 +603,7 @@ void lcd_buf_cls(void)
             *lcd_buf_position_ptr=' ';
     }
     lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1];
+    LCD_UPDATE_EVENT=true;
 }
 
 void lcd_buf_char(const char c)
