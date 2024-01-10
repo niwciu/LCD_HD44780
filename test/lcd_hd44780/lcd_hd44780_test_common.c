@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-07 16:59:56
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-09 18:22:13
+ * @Last Modified time: 2024-01-10 10:13:21
  */
 
 #include "lcd_hd44780_test_common.h"
@@ -36,7 +36,7 @@ uint8_t read_prev_LCD_SIG_PORT_state(void)
 
 uint16_t define_expected_sequence_for_first_15_ms_delay(void)
 {
-    uint16_t log_no = 0;
+    log_no_t log_no = 0;
     // set E
 
     expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = mock_LCD_E;
@@ -78,7 +78,7 @@ uint16_t define_expected_sequence_for_first_15_ms_delay(void)
     return log_no;
 }
 
-uint16_t define_expected_sequence_for_read_write_4_bit_data(uint16_t log_no, uint8_t R_W_data, uint16_t delay)
+uint16_t define_expected_sequence_for_read_write_4_bit_data(log_no_t log_no, uint8_t R_W_data, uint16_t delay)
 {
     // setE
     expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT] | mock_LCD_E;
@@ -103,7 +103,7 @@ uint16_t define_expected_sequence_for_read_write_4_bit_data(uint16_t log_no, uin
     return log_no;
 }
 #if USE_RW_PIN == ON
-uint16_t define_expected_sequence_for_send_cmd_to_LCD(uint16_t log_no, uint8_t cmd, uint8_t expected_readed_data)
+uint16_t define_expected_sequence_for_send_cmd_to_LCD(log_no_t log_no, uint8_t cmd, uint8_t expected_readed_data)
 {
     // reset RS
 
@@ -152,7 +152,7 @@ uint16_t define_expected_sequence_for_send_cmd_to_LCD(uint16_t log_no, uint8_t c
     return log_no;
 }
 #else
-uint16_t define_expected_sequence_for_send_cmd_to_LCD(uint16_t log_no, uint8_t cmd, uint16_t additional_cmd_delay)
+uint16_t define_expected_sequence_for_send_cmd_to_LCD(log_no_t log_no, uint8_t cmd, uint16_t additional_cmd_delay)
 {
     // reset RS
 
@@ -188,7 +188,7 @@ uint16_t define_expected_sequence_for_send_cmd_to_LCD(uint16_t log_no, uint8_t c
 #endif
 
 #if USE_RW_PIN == ON
-uint16_t define_expected_sequence_for_send_data_to_LCD(uint16_t log_no, uint8_t data, uint8_t expected_readed_data, uint16_t additional_cmd_delay)
+uint16_t define_expected_sequence_for_send_data_to_LCD(log_no_t log_no, uint8_t data, uint8_t expected_readed_data, uint16_t additional_cmd_delay)
 {
     // reset RS
     if (log_no != 0)
@@ -243,7 +243,7 @@ uint16_t define_expected_sequence_for_send_data_to_LCD(uint16_t log_no, uint8_t 
     return log_no;
 }
 #else
-uint16_t define_expected_sequence_for_send_data_to_LCD(uint16_t log_no, uint8_t data, uint16_t additional_cmd_delay)
+uint16_t define_expected_sequence_for_send_data_to_LCD(log_no_t log_no, uint8_t data, uint16_t additional_cmd_delay)
 {
     // reset RS
     if (log_no != 0)
@@ -277,7 +277,7 @@ uint16_t define_expected_sequence_for_send_data_to_LCD(uint16_t log_no, uint8_t 
 }
 #endif
 
-uint16_t define_expect_sequence_for_lcd_def_char(uint16_t log_no, const uint8_t CGRAM_bank_x_char_index, const uint8_t *def_char)
+uint16_t define_expect_sequence_for_lcd_def_char(log_no_t log_no, const uint8_t CGRAM_bank_x_char_index, const uint8_t *def_char)
 {
     uint8_t CGRAM_start_adress = ((DEF_CHAR_ADR_MASK & CGRAM_bank_x_char_index) * LCD_CGRAM_BYTES_PER_CHAR);
     uint8_t cmd = (LCDC_SET_CGRAM | CGRAM_start_adress);
