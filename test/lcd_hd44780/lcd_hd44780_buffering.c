@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2024-01-08 15:45:14
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 14:17:25
+ * @Last Modified time: 2024-01-10 14:25:47
  */
 
 #include "unity/fixture/unity_fixture.h"
@@ -20,7 +20,7 @@ extern char lcd_buffer[LCD_Y][LCD_X];
 char expected_lcd_buf[LCD_Y][LCD_X];
 
 static void define_expected_buffer_value_for_cls(void);
-static log_no_t define_expected_sequence_for_lcd_update(log_no_t start_log_no);
+// static log_no_t define_expected_sequence_for_lcd_update(log_no_t start_log_no);
 
 TEST_GROUP(lcd_hd44780_buffering);
 
@@ -133,6 +133,36 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLCD_UPDATE_EVENTflag
     TEST_ASSERT_FALSE(LCD_UPDATE_EVENT)
 }
 
+TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufCharThenLCD_UPDATE_EVENTflagIsTRUE)
+{
+   TEST_FAIL_MESSAGE("New Test Added") ;
+}
+
+// TEST(lcd_hd44780_buffering, )
+// {
+//    TEST_FAIL_MESSAGE("New Test Added") ;
+// }
+
+// TEST(lcd_hd44780_buffering, )
+// {
+//    TEST_FAIL_MESSAGE("New Test Added") ;
+// }
+
+// TEST(lcd_hd44780_buffering, )
+// {
+//    TEST_FAIL_MESSAGE("New Test Added") ;
+// }
+
+// TEST(lcd_hd44780_buffering, )
+// {
+//    TEST_FAIL_MESSAGE("New Test Added") ;
+// }
+
+// TEST(lcd_hd44780_buffering, )
+// {
+//    TEST_FAIL_MESSAGE("New Test Added") ;
+// }
+
 // TEST(lcd_hd44780_buffering, )
 // {
 //    TEST_FAIL_MESSAGE("New Test Added") ;
@@ -178,72 +208,72 @@ static void define_expected_buffer_value_for_cls(void)
     }
 }
 
-static log_no_t define_expected_sequence_for_lcd_update(log_no_t start_log_no)
-{
-    char lcd_line[LCD_X + 1];
-#if ((LCD_TYPE == 2004) || (LCD_TYPE == 1604))
-    lcd_line[C1] = '\0';
-    strncpy(lcd_line, &expected_lcd_buf[LINE_1][C1], LCD_X);
-    lcd_line[LCD_X] = '\0';
-    next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0], start_log_no);
-#if USE_RW_PIN == ON
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0x00);
-#else
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0);
-#endif
+// static log_no_t define_expected_sequence_for_lcd_update(log_no_t start_log_no)
+// {
+//     char lcd_line[LCD_X + 1];
+// #if ((LCD_TYPE == 2004) || (LCD_TYPE == 1604))
+//     lcd_line[C1] = '\0';
+//     strncpy(lcd_line, &expected_lcd_buf[LINE_1][C1], LCD_X);
+//     lcd_line[LCD_X] = '\0';
+//     next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0], start_log_no);
+// #if USE_RW_PIN == ON
+//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0x00);
+// #else
+//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0);
+// #endif
 
-    lcd_line[C1] = '\0';
-    strncpy(lcd_line, &expected_lcd_buf[LINE_2][C1], LCD_X);
-    lcd_line[LCD_X] = '\0';
-    next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0], next_log_no);
-#if USE_RW_PIN == ON
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE3_ADR + C1), 0x00);
-#else
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE3_ADR + C1), 0);
-#endif
+//     lcd_line[C1] = '\0';
+//     strncpy(lcd_line, &expected_lcd_buf[LINE_2][C1], LCD_X);
+//     lcd_line[LCD_X] = '\0';
+//     next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0], next_log_no);
+// #if USE_RW_PIN == ON
+//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE3_ADR + C1), 0x00);
+// #else
+//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE3_ADR + C1), 0);
+// #endif
 
-    lcd_line[C1] = '\0';
-    strncpy(lcd_line, &expected_lcd_buf[LINE_3][C1], LCD_X);
-    lcd_line[LCD_X] = '\0';
-    next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0], next_log_no);
-#if USE_RW_PIN == ON
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE4_ADR + C1), 0x00);
-#else
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE4_ADR + C1), 0);
-#endif
+//     lcd_line[C1] = '\0';
+//     strncpy(lcd_line, &expected_lcd_buf[LINE_3][C1], LCD_X);
+//     lcd_line[LCD_X] = '\0';
+//     next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0], next_log_no);
+// #if USE_RW_PIN == ON
+//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE4_ADR + C1), 0x00);
+// #else
+//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE4_ADR + C1), 0);
+// #endif
 
-    lcd_line[C1] = '\0';
-    strncpy(lcd_line, &expected_lcd_buf[LINE_4][C1], LCD_X);
-    lcd_line[LCD_X] = '\0';
-    next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0], next_log_no);
-#if USE_RW_PIN == ON
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE1_ADR + C1), 0x00);
-#else
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE1_ADR + C1), 0);
-#endif
-#else // LCD_TYPE==1602
-    lcd_line[C1] = '\0';
-    strncat(lcd_line, &expected_lcd_buf[LINE_1][C1], LCD_X);
-    lcd_line[LCD_X] = '\0';
-    next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0], start_log_no);
-#if USE_RW_PIN == ON
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0x00);
-#else
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0);
-#endif
+//     lcd_line[C1] = '\0';
+//     strncpy(lcd_line, &expected_lcd_buf[LINE_4][C1], LCD_X);
+//     lcd_line[LCD_X] = '\0';
+//     next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0], next_log_no);
+// #if USE_RW_PIN == ON
+//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE1_ADR + C1), 0x00);
+// #else
+//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE1_ADR + C1), 0);
+// #endif
+// #else // LCD_TYPE==1602
+//     lcd_line[C1] = '\0';
+//     strncat(lcd_line, &expected_lcd_buf[LINE_1][C1], LCD_X);
+//     lcd_line[LCD_X] = '\0';
+//     next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0], start_log_no);
+// #if USE_RW_PIN == ON
+//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0x00);
+// #else
+//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0);
+// #endif
 
-    lcd_line[C1] = '\0';
-    strncat(lcd_line, &expected_lcd_buf[LINE_2][C1], LCD_X);
-    lcd_line[LCD_X] = '\0';
-    next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0], next_log_no);
-#if USE_RW_PIN == ON
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0x00);
-#else
-    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE1_ADR + C1), 0);
-#endif
+//     lcd_line[C1] = '\0';
+//     strncat(lcd_line, &expected_lcd_buf[LINE_2][C1], LCD_X);
+//     lcd_line[LCD_X] = '\0';
+//     next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0], next_log_no);
+// #if USE_RW_PIN == ON
+//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0x00);
+// #else
+//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE1_ADR + C1), 0);
+// #endif
 
-#endif
-    return next_log_no;
-}
+// #endif
+//     return next_log_no;
+// }
 
 #endif
