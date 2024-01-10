@@ -58,6 +58,8 @@ TEST_GROUP_RUNNER(lcd_hd44780_basic_functions)
 
 TEST_GROUP_RUNNER(lcd_hd44780_buffering)
 {
+#if LCD_BUFFERING == ON
+
     /* Test cases to run */
 
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLcdBufferContainSpaces);
@@ -69,4 +71,11 @@ TEST_GROUP_RUNNER(lcd_hd44780_buffering)
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufStrTestThenLcdBufferEqualToExpectedLcdBuffer);
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLineLastCharacterWhenLcdBufStrTestThenLcdBufferEqualToExpectedLcdBuffer);
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLineLastCharacterAndLcdBufStrTestWhenUpdateLcdScrThenSignalSequenceForUpdateLcdScrIsCorrect);
+    // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLCD_UPDATE_EVENTflagIsFALSE);
+    // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufCharThenLCD_UPDATE_EVENTflagIsTRUE);
+    // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufStrThenLCD_UPDATE_EVENTflagIsTRUE);
+    // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLCD_UPDATE_EVENTflagIsTRUEWhenLcdUpdateThenLCD_UPDATE_EVENTflagIsFALSE);
+    // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLcdCurrentScreenBufferContainSpaces);
+    // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdUpdateThenLcdCurrentScreenBufferIsEqualToLcdBuffer);
+#endif
 }
