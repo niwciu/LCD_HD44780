@@ -75,7 +75,7 @@ TEST_GROUP_RUNNER(lcd_hd44780_buffering)
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLCD_UPDATE_EVENTflagIsTRUEWhenLcdInitThenLCD_UPDATE_EVENTflagIsFalse);
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufCharThenLCD_UPDATE_EVENTflagIsTRUE);
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufStrThenLCD_UPDATE_EVENTflagIsTRUE);
-    // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufClsThenLCD_UPDATE_EVENTflagIsTRUE);
+    RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufClsThenLCD_UPDATE_EVENTflagIsTRUE);
     // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLCD_UPDATE_EVENTflagIsTRUEWhenLcdUpdateThenLCD_UPDATE_EVENTflagIsFALSE);
     // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLcdCurrentScreenBufferContainSpaces);
     // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdUpdateThenLcdCurrentScreenBufferIsEqualToLcdBuffer);
