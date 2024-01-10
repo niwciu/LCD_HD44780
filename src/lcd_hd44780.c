@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 17:28:31
+ * @Last Modified time: 2024-01-10 18:04:17
  */
 
 #include "lcd_hd44780.h"
@@ -90,6 +90,9 @@ static void fill_zeros_buffer(const char *buffer, uint8_t width, char *zeros_buf
 #endif
 #if LCD_BUFFERING==ON
 static void check_lcd_buf_possition_ptr_overflow(void);
+static void copy_lcd_buf_2_prev_lcd_buf(void);
+static void update_lcd_curosr_possition(uint8_t *lcd_cursor_position,uint8_t *lcd_line, uint8_t *missed_char_counter_in_LCD_line);
+static void write_lcd_buf_2_lcd(const uint8_t *lcd_cursor_position,const uint8_t *lcd_line,uint8_t * missed_char_counter_in_LCD_line, const lcd_pos_t *prev_lcd_buff_pos_ptr);
 #endif
 
 static void register_LCD_IO_driver(void)
@@ -311,6 +314,49 @@ static void check_lcd_buf_possition_ptr_overflow(void)
         lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1];
     }
 }
+static void copy_lcd_buf_2_prev_lcd_buf(void)
+{
+    for(uint8_t y=0;y<LCD_Y;y++)
+    {
+        for(uint8_t x=0;x<LCD_X;x++)
+        {
+            prev_lcd_buffer[y][x]=lcd_buffer[y][x];
+        }
+    }
+}
+static void update_lcd_curosr_possition(uint8_t *lcd_cursor_position,uint8_t *lcd_line, uint8_t *missed_char_counter_in_LCD_line)
+{
+    if((++(*lcd_cursor_position))>=LCD_X)
+    {
+        *lcd_cursor_position=0;
+        (*lcd_line)++;
+        *missed_char_counter_in_LCD_line=0;
+        if(*lcd_line==LCD_Y)
+        {
+            *lcd_line=LINE_1;
+        } 
+        lcd_locate(*lcd_line,*lcd_cursor_position);
+        
+    }
+}
+
+void write_lcd_buf_2_lcd(const uint8_t * lcd_cursor_position, const uint8_t *lcd_line, uint8_t * missed_char_counter_in_LCD_line, const lcd_pos_t *prev_lcd_buff_pos_ptr)
+{
+    if(*lcd_buf_position_ptr!=*prev_lcd_buff_pos_ptr)
+    {
+        if (*missed_char_counter_in_LCD_line!=0)
+        {
+            lcd_locate(*lcd_line,*lcd_cursor_position);
+            *missed_char_counter_in_LCD_line=0;
+        }
+        lcd_char(*lcd_buf_position_ptr);
+    }
+    else
+    {
+        (*missed_char_counter_in_LCD_line)++;
+    }
+}
+
 #endif
 
 /**
@@ -348,15 +394,11 @@ void lcd_init(void)
     // ENTRY MODe SET do not shift LCD shift cursor right after placing a char
     lcd_write_cmd(LCDC_ENTRY_MODE | LCDC_ENTRYR);
     /*********************************END of BASIC LCD INIT***************************************/
-
-    // ToDo define sepcial characters in LCD CGRAM if needed
-
-    // init LCD buffer if LCD_BUFFERING is ON in lcdhd44780_config.h
 #if LCD_BUFFERING == ON
     //clear lcd_buffer by putting spaces inside of the buffer
     lcd_buf_cls();
     //copy lcd_buffer with spaces to prev_lcd_buffer
-    strncpy(&prev_lcd_buffer[LINE_1][C1],&lcd_buffer[LINE_1][C1],(LCD_X*LCD_Y));
+    copy_lcd_buf_2_prev_lcd_buf();
     // clear flag due to init procedure that reset lcd screan and buffers
     LCD_UPDATE_EVENT=false;
 #endif
@@ -633,40 +675,18 @@ void lcd_update(void)
 {
     static uint8_t lcd_cursor_position=0;
     static uint8_t lcd_line=0;
-    static const lcd_pos_t *prev_lcd_buff_pos_ptr=&prev_lcd_buffer[LINE_1][C1];
     static uint8_t missed_char_counter_in_LCD_line=0;
+    // static const lcd_pos_t *prev_lcd_buff_pos_ptr=&prev_lcd_buffer[LINE_1][C1];
     
     for(lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1]; lcd_buf_position_ptr<=&lcd_buffer[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE]; lcd_buf_position_ptr++)
     {
-        if(*lcd_buf_position_ptr!=*prev_lcd_buff_pos_ptr)
-        {
-            if (missed_char_counter_in_LCD_line!=0)
-            {
-                lcd_locate(lcd_line,lcd_cursor_position);
-                missed_char_counter_in_LCD_line=0;
-            }
-            lcd_char(*lcd_buf_position_ptr);
-        }
-        else
-        {
-            missed_char_counter_in_LCD_line++;
-        }
-        if((++lcd_cursor_position)>=LCD_X)
-        {
-            lcd_cursor_position=0;
-            lcd_line++;
-            missed_char_counter_in_LCD_line=0;
-            if(lcd_line==LCD_Y)
-            {
-                lcd_line=LINE_1;
-            } 
-            lcd_locate(lcd_line,lcd_cursor_position);
-            
-        }
+        write_lcd_buf_2_lcd(&lcd_cursor_position,&lcd_line,&missed_char_counter_in_LCD_line,&prev_lcd_buffer[LINE_1][C1]);
+        update_lcd_curosr_possition(&lcd_cursor_position,&lcd_line,&missed_char_counter_in_LCD_line);
     }
     lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1];
-    strncpy(&prev_lcd_buffer[LINE_1][C1],&lcd_buffer[LINE_1][C1],(LCD_X*LCD_Y));
+    copy_lcd_buf_2_prev_lcd_buf();
     LCD_UPDATE_EVENT=false;
 }
+
 #endif
   

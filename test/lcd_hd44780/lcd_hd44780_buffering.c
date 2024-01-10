@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2024-01-08 15:45:14
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 16:48:21
+ * @Last Modified time: 2024-01-10 18:06:19
  */
 
 #include "unity/fixture/unity_fixture.h"
@@ -246,7 +246,7 @@ static log_no_t define_expected_sequence_for_move_to_last_character_from_first_l
     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + LAST_CHAR_IN_LCD_LINE_POSITION), 0);
 #endif
 #else
-    define sequence for added lcd or add lcd type to one of sequence above
+    ptrintf("\r\n\r\n\t define_expected_sequence_for_move_to_last_character_from_first_line_whne_nothing_to_print_on_lcd -> go to this function and specify your expected signal sequence for your LCD_TYPE");
 #endif
     return next_log_no;
 }
