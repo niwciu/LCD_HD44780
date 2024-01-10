@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2024-01-08 15:45:14
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 14:42:44
+ * @Last Modified time: 2024-01-10 14:44:13
  */
 
 #include "unity/fixture/unity_fixture.h"
@@ -122,7 +122,7 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLine
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLCD_UPDATE_EVENTflagIsFALSE)
 {
     lcd_init();
-    TEST_ASSERT_FALSE(LCD_UPDATE_EVENT)
+    TEST_ASSERT_FALSE(LCD_UPDATE_EVENT);
 }
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLCD_UPDATE_EVENTflagIsTRUEWhenLcdInitThenLCD_UPDATE_EVENTflagIsFalse)
@@ -130,33 +130,36 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLCD_UPDATE_EVENTflag
     lcd_init();
     LCD_UPDATE_EVENT=true;
     lcd_init();
-    TEST_ASSERT_FALSE(LCD_UPDATE_EVENT)
+    TEST_ASSERT_FALSE(LCD_UPDATE_EVENT);
 }
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufCharThenLCD_UPDATE_EVENTflagIsTRUE)
 {
     lcd_init();
     lcd_buf_char('a');
-    TEST_ASSERT_TRUE(LCD_UPDATE_EVENT)
+    TEST_ASSERT_TRUE(LCD_UPDATE_EVENT);
 }
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufStrThenLCD_UPDATE_EVENTflagIsTRUE)
 {
     lcd_init();
     lcd_buf_str("TEST");
-    TEST_ASSERT_TRUE(LCD_UPDATE_EVENT)
+    TEST_ASSERT_TRUE(LCD_UPDATE_EVENT);
 }
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufClsThenLCD_UPDATE_EVENTflagIsTRUE)
 {
     lcd_init();
     lcd_buf_cls();
-    TEST_ASSERT_TRUE(LCD_UPDATE_EVENT)
+    TEST_ASSERT_TRUE(LCD_UPDATE_EVENT);
 }
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLCD_UPDATE_EVENTflagIsTRUEWhenLcdUpdateThenLCD_UPDATE_EVENTflagIsFALSE)
 {
-   TEST_FAIL_MESSAGE("New Test Added") ;
+    lcd_init();
+    LCD_UPDATE_EVENT=true;
+    lcd_update();
+    TEST_ASSERT_FALSE(LCD_UPDATE_EVENT);
 }
 
 // TEST(lcd_hd44780_buffering, )
