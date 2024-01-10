@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2024-01-08 15:45:14
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 16:46:06
+ * @Last Modified time: 2024-01-10 16:48:21
  */
 
 #include "unity/fixture/unity_fixture.h"
@@ -21,7 +21,6 @@ extern char prev_lcd_buffer[LCD_Y][LCD_X];
 char expected_lcd_buf[LCD_Y][LCD_X];
 
 static void define_expected_buffer_value_for_cls(void);
-// static log_no_t define_expected_sequence_for_lcd_update(log_no_t start_log_no);
 static log_no_t define_expected_sequence_for_move_to_last_character_from_first_line_whne_nothing_to_print_on_lcd(log_no_t start_log_no);
 static log_no_t define_expected_sequence_for_lcd_locate_0_0(log_no_t start_log_no);
 
@@ -131,7 +130,7 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLCD_UPDATE_EVENTfl
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLCD_UPDATE_EVENTflagIsTRUEWhenLcdInitThenLCD_UPDATE_EVENTflagIsFalse)
 {
     lcd_init();
-    LCD_UPDATE_EVENT=true;
+    LCD_UPDATE_EVENT = true;
     lcd_init();
     TEST_ASSERT_FALSE(LCD_UPDATE_EVENT);
 }
@@ -160,7 +159,7 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufClsThenLCD_UP
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLCD_UPDATE_EVENTflagIsTRUEWhenLcdUpdateThenLCD_UPDATE_EVENTflagIsFALSE)
 {
     lcd_init();
-    LCD_UPDATE_EVENT=true;
+    LCD_UPDATE_EVENT = true;
     lcd_update();
     TEST_ASSERT_FALSE(LCD_UPDATE_EVENT);
 }
@@ -190,7 +189,7 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufStrThenLcdCur
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLineLastCharacterAndLcdBufStrTestWhenUpdateLcdScrThenSignalSequenceForUpdateLcdScrIsCorrect)
 {
     lcd_init();
-    
+
     clear_expected_LCD_Port_delay_dump_data();
     mock_clear_LCD_Port_delay_dump_data();
     next_log_no = 0;
@@ -202,44 +201,15 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLine
     next_log_no = define_expected_sequence_for_move_to_last_character_from_first_line_whne_nothing_to_print_on_lcd(next_log_no);
     // wirte "T" on LCD
     next_log_no = define_expected_sequence_for_send_string_to_LCD("T", next_log_no);
-    //move cursor to begining of LCD (0,0)
+    // move cursor to begining of LCD (0,0)
     next_log_no = define_expected_sequence_for_lcd_locate_0_0(next_log_no);
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
 
-    lcd_buf_locate(LAST_LCD_LINE,LAST_CHAR_IN_LCD_LINE_POSITION);
+    lcd_buf_locate(LAST_LCD_LINE, LAST_CHAR_IN_LCD_LINE_POSITION);
     lcd_buf_str("Test");
     lcd_update();
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
-
-// TEST(lcd_hd44780_buffering, )
-// {
-//    TEST_FAIL_MESSAGE("New Test Added") ;
-// }
-// TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLineLastCharacterAndLcdBufStrTestWhenUpdateLcdScrThenSignalSequenceForUpdateLcdScrIsCorrect)
-// {
-//     lcd_init();
-//     lcd_buf_locate(LAST_LCD_LINE, LAST_CHAR_IN_LCD_LINE_POSITION);
-//     lcd_buf_str("Test");
-
-//     define_expected_buffer_value_for_cls();
-
-//     expected_lcd_buf[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE_POSITION] = 'T';
-//     expected_lcd_buf[LINE_1][C1] = 'e';
-//     expected_lcd_buf[LINE_1][C2] = 's';
-//     expected_lcd_buf[LINE_1][C3] = 't';
-
-//     clear_expected_LCD_Port_delay_dump_data();
-//     mock_clear_LCD_Port_delay_dump_data();
-//     next_log_no = 0;
-
-//     next_log_no = define_expected_sequence_for_lcd_update(next_log_no);
-
-//     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
-//     lcd_update();
-//     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
-// }
-
 
 static void define_expected_buffer_value_for_cls(void)
 {
@@ -267,7 +237,7 @@ static log_no_t define_expected_sequence_for_move_to_last_character_from_first_l
     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE4_ADR + C1), 0);
     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE4_ADR + LAST_CHAR_IN_LCD_LINE_POSITION), 0);
 #endif
-#elif LCD_TYPE==1602
+#elif LCD_TYPE == 1602
 #if USE_RW_PIN == ON
     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(start_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0x00);
     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + LAST_CHAR_IN_LCD_LINE_POSITION), 0x00);
@@ -284,78 +254,9 @@ static log_no_t define_expected_sequence_for_move_to_last_character_from_first_l
 log_no_t define_expected_sequence_for_lcd_locate_0_0(log_no_t start_log_no)
 {
 #if USE_RW_PIN == ON
-    return  define_expected_sequence_for_send_cmd_to_LCD(start_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE1_ADR + C1), 0x00);
+    return define_expected_sequence_for_send_cmd_to_LCD(start_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE1_ADR + C1), 0x00);
 #else
     return define_expected_sequence_for_send_cmd_to_LCD(start_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE1_ADR + C1), 0);
 #endif
 }
-
-// static log_no_t define_expected_sequence_for_lcd_update(log_no_t start_log_no)
-// {
-//     char lcd_line[LCD_X + 1];
-// #if ((LCD_TYPE == 2004) || (LCD_TYPE == 1604))
-//     lcd_line[C1] = '\0';
-//     strncpy(lcd_line, &expected_lcd_buf[LINE_1][C1], LCD_X);
-//     lcd_line[LCD_X] = '\0';
-//     next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0], start_log_no);
-// #if USE_RW_PIN == ON
-//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0x00);
-// #else
-//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0);
-// #endif
-
-//     lcd_line[C1] = '\0';
-//     strncpy(lcd_line, &expected_lcd_buf[LINE_2][C1], LCD_X);
-//     lcd_line[LCD_X] = '\0';
-//     next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0], next_log_no);
-// #if USE_RW_PIN == ON
-//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE3_ADR + C1), 0x00);
-// #else
-//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE3_ADR + C1), 0);
-// #endif
-
-//     lcd_line[C1] = '\0';
-//     strncpy(lcd_line, &expected_lcd_buf[LINE_3][C1], LCD_X);
-//     lcd_line[LCD_X] = '\0';
-//     next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0], next_log_no);
-// #if USE_RW_PIN == ON
-//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE4_ADR + C1), 0x00);
-// #else
-//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE4_ADR + C1), 0);
-// #endif
-
-//     lcd_line[C1] = '\0';
-//     strncpy(lcd_line, &expected_lcd_buf[LINE_4][C1], LCD_X);
-//     lcd_line[LCD_X] = '\0';
-//     next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0], next_log_no);
-// #if USE_RW_PIN == ON
-//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE1_ADR + C1), 0x00);
-// #else
-//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE1_ADR + C1), 0);
-// #endif
-// #else // LCD_TYPE==1602
-//     lcd_line[C1] = '\0';
-//     strncat(lcd_line, &expected_lcd_buf[LINE_1][C1], LCD_X);
-//     lcd_line[LCD_X] = '\0';
-//     next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0], start_log_no);
-// #if USE_RW_PIN == ON
-//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0x00);
-// #else
-//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0);
-// #endif
-
-//     lcd_line[C1] = '\0';
-//     strncat(lcd_line, &expected_lcd_buf[LINE_2][C1], LCD_X);
-//     lcd_line[LCD_X] = '\0';
-//     next_log_no = define_expected_sequence_for_send_string_to_LCD(&lcd_line[0], next_log_no);
-// #if USE_RW_PIN == ON
-//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0x00);
-// #else
-//     next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE1_ADR + C1), 0);
-// #endif
-
-// #endif
-//     return next_log_no;
-// }
-
 #endif
