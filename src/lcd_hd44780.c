@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 15:02:01
+ * @Last Modified time: 2024-01-10 16:47:26
  */
 
 #include "lcd_hd44780.h"
@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 
 typedef char lcd_pos_t;
 // clang-format off
@@ -634,14 +633,29 @@ void lcd_update(void)
 {
     static uint8_t lcd_cursor_position=0;
     static uint8_t lcd_line=0;
+    static lcd_pos_t *prev_lcd_buff_pos_ptr=&prev_lcd_buffer[LINE_1][C1];
+    static uint8_t missed_char_counter_in_LCD_line=0;
     
     for(lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1]; lcd_buf_position_ptr<=&lcd_buffer[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE]; lcd_buf_position_ptr++)
     {
-        lcd_char(*lcd_buf_position_ptr);
+        if(*lcd_buf_position_ptr!=*prev_lcd_buff_pos_ptr)
+        {
+            if (missed_char_counter_in_LCD_line!=0)
+            {
+                lcd_locate(lcd_line,lcd_cursor_position);
+                missed_char_counter_in_LCD_line=0;
+            }
+            lcd_char(*lcd_buf_position_ptr);
+        }
+        else
+        {
+            missed_char_counter_in_LCD_line++;
+        }
         if((++lcd_cursor_position)>=LCD_X)
         {
             lcd_cursor_position=0;
             lcd_line++;
+            missed_char_counter_in_LCD_line=0;
             if(lcd_line==LCD_Y)
             {
                 lcd_line=LINE_1;
