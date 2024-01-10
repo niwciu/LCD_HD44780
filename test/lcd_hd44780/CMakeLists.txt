@@ -59,7 +59,7 @@ set(TEST_SRCS
 	mock_LCD_IO_driver.c
 	lcd_hd44780_test_basic_func.c
 	lcd_hd44780_test_common.c
-	lcd_hd44780_buffering.c
+	lcd_hd44780_test_buffering.c
 	#mock_module.c
 )
 
