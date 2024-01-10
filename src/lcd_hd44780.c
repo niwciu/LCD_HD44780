@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 16:54:27
+ * @Last Modified time: 2024-01-10 17:28:31
  */
 
 #include "lcd_hd44780.h"
@@ -356,7 +356,7 @@ void lcd_init(void)
     //clear lcd_buffer by putting spaces inside of the buffer
     lcd_buf_cls();
     //copy lcd_buffer with spaces to prev_lcd_buffer
-    strcpy(&prev_lcd_buffer[LINE_1][C1],&lcd_buffer[LINE_1][C1]);
+    strncpy(&prev_lcd_buffer[LINE_1][C1],&lcd_buffer[LINE_1][C1],(LCD_X*LCD_Y));
     // clear flag due to init procedure that reset lcd screan and buffers
     LCD_UPDATE_EVENT=false;
 #endif
@@ -665,7 +665,7 @@ void lcd_update(void)
         }
     }
     lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1];
-    strcpy(&prev_lcd_buffer[LINE_1][C1],&lcd_buffer[LINE_1][C1]);
+    strncpy(&prev_lcd_buffer[LINE_1][C1],&lcd_buffer[LINE_1][C1],(LCD_X*LCD_Y));
     LCD_UPDATE_EVENT=false;
 }
 #endif
