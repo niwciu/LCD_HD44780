@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2024-01-08 15:45:14
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 14:46:16
+ * @Last Modified time: 2024-01-10 14:50:56
  */
 
 #include "unity/fixture/unity_fixture.h"
@@ -17,6 +17,7 @@
 #define LAST_LCD_LINE (LCD_Y - 1)
 
 extern char lcd_buffer[LCD_Y][LCD_X];
+extern char prev_lcd_buffer[LCD_Y][LCD_X];
 char expected_lcd_buf[LCD_Y][LCD_X];
 
 static void define_expected_buffer_value_for_cls(void);
@@ -164,7 +165,9 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLCD_UPDATE_EVENTflag
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLcdCurrentScreenBufferContainSpaces)
 {
-    TEST_FAIL_MESSAGE("New Test Added") ;
+    lcd_init();
+    define_expected_buffer_value_for_cls();
+    TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf, prev_lcd_buffer, (LCD_X * LCD_Y));
 }
 
 // TEST(lcd_hd44780_buffering, )
