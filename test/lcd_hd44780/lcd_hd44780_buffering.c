@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2024-01-08 15:45:14
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 15:08:28
+ * @Last Modified time: 2024-01-10 16:46:06
  */
 
 #include "unity/fixture/unity_fixture.h"
@@ -22,6 +22,8 @@ char expected_lcd_buf[LCD_Y][LCD_X];
 
 static void define_expected_buffer_value_for_cls(void);
 // static log_no_t define_expected_sequence_for_lcd_update(log_no_t start_log_no);
+static log_no_t define_expected_sequence_for_move_to_last_character_from_first_line_whne_nothing_to_print_on_lcd(log_no_t start_log_no);
+static log_no_t define_expected_sequence_for_lcd_locate_0_0(log_no_t start_log_no);
 
 TEST_GROUP(lcd_hd44780_buffering);
 
@@ -185,10 +187,30 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufStrThenLcdCur
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf, prev_lcd_buffer, (LCD_X * LCD_Y));
 }
 
-// TEST(lcd_hd44780_buffering, )
-// {
-//    TEST_FAIL_MESSAGE("New Test Added") ;
-// }
+TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLineLastCharacterAndLcdBufStrTestWhenUpdateLcdScrThenSignalSequenceForUpdateLcdScrIsCorrect)
+{
+    lcd_init();
+    
+    clear_expected_LCD_Port_delay_dump_data();
+    mock_clear_LCD_Port_delay_dump_data();
+    next_log_no = 0;
+    expected_buf_lenght = 0;
+
+    // write "est" on LCD
+    next_log_no = define_expected_sequence_for_send_string_to_LCD("est", 0);
+    // move cursor to lasr line last character
+    next_log_no = define_expected_sequence_for_move_to_last_character_from_first_line_whne_nothing_to_print_on_lcd(next_log_no);
+    // wirte "T" on LCD
+    next_log_no = define_expected_sequence_for_send_string_to_LCD("T", next_log_no);
+    //move cursor to begining of LCD (0,0)
+    next_log_no = define_expected_sequence_for_lcd_locate_0_0(next_log_no);
+    expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+
+    lcd_buf_locate(LAST_LCD_LINE,LAST_CHAR_IN_LCD_LINE_POSITION);
+    lcd_buf_str("Test");
+    lcd_update();
+    TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
+}
 
 // TEST(lcd_hd44780_buffering, )
 // {
@@ -228,6 +250,44 @@ static void define_expected_buffer_value_for_cls(void)
             expected_lcd_buf[line][collumn] = ' ';
         }
     }
+}
+
+static log_no_t define_expected_sequence_for_move_to_last_character_from_first_line_whne_nothing_to_print_on_lcd(log_no_t start_log_no)
+{
+#if ((LCD_TYPE == 2004) || (LCD_TYPE == 1604))
+
+#if USE_RW_PIN == ON
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(start_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0x00);
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE3_ADR + C1), 0x00);
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE4_ADR + C1), 0x00);
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE4_ADR + LAST_CHAR_IN_LCD_LINE_POSITION), 0x00);
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(start_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0);
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE3_ADR + C1), 0);
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE4_ADR + C1), 0);
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE4_ADR + LAST_CHAR_IN_LCD_LINE_POSITION), 0);
+#endif
+#elif LCD_TYPE==1602
+#if USE_RW_PIN == ON
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(start_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0x00);
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + LAST_CHAR_IN_LCD_LINE_POSITION), 0x00);
+#else
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(start_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + C1), 0);
+    next_log_no = define_expected_sequence_for_send_cmd_to_LCD(next_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE2_ADR + LAST_CHAR_IN_LCD_LINE_POSITION), 0);
+#endif
+#else
+    define sequence for added lcd or add lcd type to one of sequence above
+#endif
+    return next_log_no;
+}
+
+log_no_t define_expected_sequence_for_lcd_locate_0_0(log_no_t start_log_no)
+{
+#if USE_RW_PIN == ON
+    return  define_expected_sequence_for_send_cmd_to_LCD(start_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE1_ADR + C1), 0x00);
+#else
+    return define_expected_sequence_for_send_cmd_to_LCD(start_log_no, (uint8_t)(LCDC_SET_DDRAM + LCD_LINE1_ADR + C1), 0);
+#endif
 }
 
 // static log_no_t define_expected_sequence_for_lcd_update(log_no_t start_log_no)
