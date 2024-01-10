@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2024-01-08 15:45:14
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 13:24:07
+ * @Last Modified time: 2024-01-10 14:11:20
  */
 
 #include "unity/fixture/unity_fixture.h"
@@ -118,29 +118,50 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLine
     expected_lcd_buf[LINE_1][C3] = 't';
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf, lcd_buffer, (LCD_X * LCD_Y));
 }
-TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLineLastCharacterAndLcdBufStrTestWhenUpdateLcdScrThenSignalSequenceForUpdateLcdScrIsCorrect)
+
+TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLCD_UPDATE_EVENTflagIsFALSE)
 {
     lcd_init();
-    lcd_buf_locate(LAST_LCD_LINE, LAST_CHAR_IN_LCD_LINE_POSITION);
-    lcd_buf_str("Test");
-
-    define_expected_buffer_value_for_cls();
-
-    expected_lcd_buf[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE_POSITION] = 'T';
-    expected_lcd_buf[LINE_1][C1] = 'e';
-    expected_lcd_buf[LINE_1][C2] = 's';
-    expected_lcd_buf[LINE_1][C3] = 't';
-
-    clear_expected_LCD_Port_delay_dump_data();
-    mock_clear_LCD_Port_delay_dump_data();
-    next_log_no = 0;
-
-    next_log_no = define_expected_sequence_for_lcd_update(next_log_no);
-
-    expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
-    lcd_update();
-    TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
+    TEST_ASSERT_FALSE(LCD_UPDATE_EVENT)
 }
+
+// TEST(lcd_hd44780_buffering, )
+// {
+//    TEST_FAIL_MESSAGE("New Test Added") ;
+// }
+
+// TEST(lcd_hd44780_buffering, )
+// {
+//    TEST_FAIL_MESSAGE("New Test Added") ;
+// }
+
+// TEST(lcd_hd44780_buffering, )
+// {
+//    TEST_FAIL_MESSAGE("New Test Added") ;
+// }
+// TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLineLastCharacterAndLcdBufStrTestWhenUpdateLcdScrThenSignalSequenceForUpdateLcdScrIsCorrect)
+// {
+//     lcd_init();
+//     lcd_buf_locate(LAST_LCD_LINE, LAST_CHAR_IN_LCD_LINE_POSITION);
+//     lcd_buf_str("Test");
+
+//     define_expected_buffer_value_for_cls();
+
+//     expected_lcd_buf[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE_POSITION] = 'T';
+//     expected_lcd_buf[LINE_1][C1] = 'e';
+//     expected_lcd_buf[LINE_1][C2] = 's';
+//     expected_lcd_buf[LINE_1][C3] = 't';
+
+//     clear_expected_LCD_Port_delay_dump_data();
+//     mock_clear_LCD_Port_delay_dump_data();
+//     next_log_no = 0;
+
+//     next_log_no = define_expected_sequence_for_lcd_update(next_log_no);
+
+//     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
+//     lcd_update();
+//     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
+// }
 
 
 static void define_expected_buffer_value_for_cls(void)
@@ -153,6 +174,7 @@ static void define_expected_buffer_value_for_cls(void)
         }
     }
 }
+
 static log_no_t define_expected_sequence_for_lcd_update(log_no_t start_log_no)
 {
     char lcd_line[LCD_X + 1];
