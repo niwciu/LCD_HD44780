@@ -19,9 +19,9 @@ else()
 	message(STATUS "Lizard was not found. \r\n\tInstall Lizard to get predefined targets for src folder Code Complexity Metrics")
 endif()
 # Prints CCM for src folder in the console
-add_custom_target(ccm lizard src/ --CCN 12 -Tnloc=30 -a 4 --languages cpp -V -i 1)
+add_custom_target(ccm lizard ../../../src/ --CCN 12 -Tnloc=30 -a 4 --languages cpp -V -i 1)
 # Create CCM report in reports/Cylcomatic_Complexity/
-add_custom_target(ccmr lizard src/ --CCN 12 -Tnloc=30 -a 4 --languages cpp -V -o ../../../reports/Cyclomatic_Complexity/Lizard_report.html)
+add_custom_target(ccmr lizard ../../../src/ --CCN 12 -Tnloc=30 -a 4 --languages cpp -V -o ../../../reports/Cyclomatic_Complexity/Lizard_report.html)
 
 # TARGET FOR MAKING STATIC ANALYSIS OF THE SOURCE CODE AND UNIT TEST CODE
 # check if cppchec software is available 
