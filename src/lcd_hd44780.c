@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 14:19:57
+ * @Last Modified time: 2024-01-10 14:29:20
  */
 
 #include "lcd_hd44780.h"
@@ -609,6 +609,7 @@ void lcd_buf_char(const char c)
 {
     *lcd_buf_position_ptr=c;
     check_lcd_buf_possition_ptr_overflow();
+    LCD_UPDATE_EVENT=true;
 }
 
 void lcd_buf_locate(enum LCD_LINES y, enum LCD_COLUMNS x)
