@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2024-01-08 15:45:14
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 14:16:06
+ * @Last Modified time: 2024-01-10 14:17:25
  */
 
 #include "unity/fixture/unity_fixture.h"
@@ -127,7 +127,10 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLCD_UPDATE_EVENTfl
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLCD_UPDATE_EVENTflagIsTRUEWhenLcdInitThenLCD_UPDATE_EVENTflagIsFalse)
 {
-   TEST_FAIL_MESSAGE("New Test Added") ;
+    lcd_init();
+    LCD_UPDATE_EVENT=true;
+    lcd_init();
+    TEST_ASSERT_FALSE(LCD_UPDATE_EVENT)
 }
 
 // TEST(lcd_hd44780_buffering, )
