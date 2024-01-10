@@ -621,7 +621,7 @@ void lcd_buf_str(const char *str)
     }
 }
 
-void lcd_buf_print(void)
+void lcd_update(void)
 {
     static uint8_t lcd_cursor_position=0;
     static uint8_t lcd_line=0;

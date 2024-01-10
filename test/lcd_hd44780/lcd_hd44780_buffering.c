@@ -138,7 +138,7 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLine
     next_log_no = define_expected_sequence_for_lcd_update(next_log_no);
 
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
-    lcd_buf_print();
+    lcd_update();
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 

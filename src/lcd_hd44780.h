@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:40:29
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-09 21:39:47
+ * @Last Modified time: 2024-01-10 13:51:38
  */
 
 #ifndef _LCD_HD_44780_H_
@@ -48,7 +48,7 @@ extern "C"
     void lcd_buf_char(const char c);
     void lcd_buf_locate(enum LCD_LINES y, enum LCD_COLUMNS x);
     void lcd_buf_str(const char *str);
-    void lcd_buf_print(void);
+    void lcd_update(void);
 #endif
 
 #ifdef __cplusplus

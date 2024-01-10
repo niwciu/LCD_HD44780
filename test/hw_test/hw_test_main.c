@@ -48,11 +48,11 @@ void main_hw_test(void)
     lcd_buf_char('G');
     lcd_buf_locate(0,2);
     lcd_buf_str("Test");
-    lcd_buf_print();
+    lcd_update();
     _delay_ms(1000);
     lcd_locate(0,0);
     lcd_buf_char('a');
-    lcd_buf_print();
+    lcd_update();
     _delay_ms(1000);
     lcd_buf_cls();
     #if LCD_TYPE==1602
@@ -71,7 +71,7 @@ void main_hw_test(void)
     lcd_buf_str("test4");
     #else
     #endif
-    lcd_buf_print();
+    lcd_update();
     while (1)
         ;
 }
