@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2024-01-08 15:45:14
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 14:50:56
+ * @Last Modified time: 2024-01-10 15:00:48
  */
 
 #include "unity/fixture/unity_fixture.h"
@@ -170,9 +170,19 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLcdCurrentScreenBu
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf, prev_lcd_buffer, (LCD_X * LCD_Y));
 }
 
-// TEST(lcd_hd44780_buffering, )
+TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLcdBufStrWhenLcdUpdateThenLcdCurrentScreenBufferIsEqualToLcdBuffer)
+{
+    lcd_init();
+    lcd_buf_str("TEST");
+    lcd_update();
+    TEST_ASSERT_EQUAL_UINT8_ARRAY(lcd_buffer, prev_lcd_buffer, (LCD_X * LCD_Y));
+}
+
+// TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLcdBufStrWhenLcdUpdateThenLcdCurrentScreenBufferIsEqualToLcdBuffer)
 // {
-//    TEST_FAIL_MESSAGE("New Test Added") ;
+//     lcd_init();
+//     lcd_buf_str("TEST")
+//     TEST_FAIL_MESSAGE("New Test Added") ;
 // }
 
 // TEST(lcd_hd44780_buffering, )
