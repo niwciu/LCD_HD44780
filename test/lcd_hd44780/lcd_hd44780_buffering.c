@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2024-01-08 15:45:14
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 14:44:13
+ * @Last Modified time: 2024-01-10 14:46:16
  */
 
 #include "unity/fixture/unity_fixture.h"
@@ -162,10 +162,10 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLCD_UPDATE_EVENTflag
     TEST_ASSERT_FALSE(LCD_UPDATE_EVENT);
 }
 
-// TEST(lcd_hd44780_buffering, )
-// {
-//    TEST_FAIL_MESSAGE("New Test Added") ;
-// }
+TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLcdCurrentScreenBufferContainSpaces)
+{
+    TEST_FAIL_MESSAGE("New Test Added") ;
+}
 
 // TEST(lcd_hd44780_buffering, )
 // {
