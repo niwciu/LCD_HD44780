@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 16:47:26
+ * @Last Modified time: 2024-01-10 16:54:27
  */
 
 #include "lcd_hd44780.h"
@@ -633,7 +633,7 @@ void lcd_update(void)
 {
     static uint8_t lcd_cursor_position=0;
     static uint8_t lcd_line=0;
-    static lcd_pos_t *prev_lcd_buff_pos_ptr=&prev_lcd_buffer[LINE_1][C1];
+    static const lcd_pos_t *prev_lcd_buff_pos_ptr=&prev_lcd_buffer[LINE_1][C1];
     static uint8_t missed_char_counter_in_LCD_line=0;
     
     for(lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1]; lcd_buf_position_ptr<=&lcd_buffer[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE]; lcd_buf_position_ptr++)
