@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 14:00:21
+ * @Last Modified time: 2024-01-10 14:19:57
  */
 
 #include "lcd_hd44780.h"
@@ -356,6 +356,8 @@ void lcd_init(void)
     // init LCD buffer if LCD_BUFFERING is ON in lcdhd44780_config.h
 #if LCD_BUFFERING == ON
     lcd_buf_cls();
+
+    LCD_UPDATE_EVENT=false; // cleared flag due to init procedure that reset lcd screan and buffers
 #endif
   
 }
