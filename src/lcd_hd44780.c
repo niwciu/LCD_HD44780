@@ -2,14 +2,15 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:39:30
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-09 20:35:05
+ * @Last Modified time: 2024-01-10 14:00:21
  */
 
 #include "lcd_hd44780.h"
 #include <stddef.h>
-#include "stdio.h"
-#include "stdlib.h"
-#include "string.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 
 typedef char lcd_pos_t;
 // clang-format off
@@ -64,8 +65,9 @@ PRIVATE char lcd_buffer[LCD_Y][LCD_X];
 // static uint8_t lcd_buf_Y=0;
 static lcd_pos_t *lcd_buf_position_ptr;
 #endif
+
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
-// const struct char_bank_struct *char_bank = &char_bank_1;
+bool LCD_UPDATE_EVENT = false;
 
 static void register_LCD_IO_driver(void);
 static void lcd_set_all_SIG(void);

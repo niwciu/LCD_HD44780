@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:40:29
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 13:51:38
+ * @Last Modified time: 2024-01-10 14:00:22
  */
 
 #ifndef _LCD_HD_44780_H_
@@ -12,6 +12,7 @@
 extern "C"
 {
 #endif /* __cplusplus */
+#include <stdbool.h>
 #include "lcd_hd44780_config.h"
 #include "lcd_hd44780_interface.h"
 #if USE_DEF_CHAR_FUNCTION == ON
@@ -23,6 +24,8 @@ extern "C"
         left,
         right
     };
+
+    extern bool LCD_UPDATE_EVENT;
 
     void lcd_init(void);
     void lcd_cls(void);
