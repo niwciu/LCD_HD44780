@@ -277,7 +277,7 @@ static void lcd_buf_put_spaces(uint8_t empty_spaces)
 {
     for (uint8_t i = 0; i < empty_spaces; i++)
     {
-        lcd_char(' ');
+        lcd_buf_char(' ');
     }
 }
 #endif
