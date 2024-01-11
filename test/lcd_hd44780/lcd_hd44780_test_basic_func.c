@@ -183,7 +183,7 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUseLcdLocateAndSetAllLinesLoca
 #endif
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
-
+#if USE_LCD_INT == ON
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_LcdInt_24_2_right_ThenSignalSequenceForSendigIsEqualToLcdStrWithValueAsString)
 {
     next_log_no = define_expected_sequence_for_send_string_to_LCD("24", 0);
@@ -214,7 +214,8 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_LcdInt_61045_8_left_ThenSi
     lcd_int(61045, 8, left);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
-
+#endif
+#if USE_LCD_HEX == ON
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_hex_10_1_left_ThenSignalSequenceForSendigIsEqualToLcdStrWithValueInHexAsStrig)
 {
     next_log_no = define_expected_sequence_for_send_string_to_LCD("0xa", 0);
@@ -246,7 +247,8 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_hex_20_1_right_ThenSig
     lcd_hex(20, 1, right);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
-
+#endif
+#if USE_LCD_BIN == ON
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_bin_5_6_ThenSignalSequenceForSendigIsEqualToLcdStrWithValueInHexAsStrig)
 {
     next_log_no = define_expected_sequence_for_send_string_to_LCD("0b0101", 0);
@@ -262,7 +264,7 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_bin_5_1_ThenSignalSequ
     lcd_bin(5, 1);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
-
+#endif
 // TEST(lcd_hd44780_basic_functions, )
 // {
 //     TEST_FAIL_MESSAGE("Implement your test!");

@@ -80,13 +80,29 @@ static uint8_t lcd_read_byte(void);
 static uint8_t lcd_read_4bit_data(void);
 #endif
 #ifdef AVR
+#if ((USE_LCD_INT == ON) || (USE_LCD_HEX == ON))
 static void lcd_put_spaces(uint8_t empty_spaces);
+#endif
+#if USE_LCD_INT == ON
 static void lcd_int_AVR(int val, uint8_t width, enum alignment alignment);
+#endif
+#if USE_LCD_HEX == ON
 static void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment);
+#endif
+#if USE_LCD_BIN == ON
 static void lcd_bin_AVR(int val, uint8_t width);
+#endif
+#if ((USE_LCD_BUF_INT == ON) || (USE_LCD_BUF_HEX == ON))
+static void lcd_buf_put_spaces(uint8_t empty_spaces);
+#endif
+#if USE_LCD_BUF_INT == ON
+void lcd_buf_int_AVR(int val, uint8_t width, enum alignment alignment);
+#endif
 #else
+#if USE_LCD_BIN == ON
 static void fill_bin_value_buffer(int val, char *bin_val_buffer);
 static void fill_zeros_buffer(const char *buffer, uint8_t width, char *zeros_buf);
+#endif
 #endif
 #if LCD_BUFFERING==ON
 static void check_lcd_buf_possition_ptr_overflow(void);
@@ -182,6 +198,7 @@ uint8_t lcd_read_4bit_data(void)
 }
 #endif
 #ifdef AVR
+#if ((USE_LCD_INT == ON) || (USE_LCD_HEX == ON))
 static void lcd_put_spaces(uint8_t empty_spaces)
 {
     for (uint8_t i = 0; i < empty_spaces; i++)
@@ -189,7 +206,8 @@ static void lcd_put_spaces(uint8_t empty_spaces)
         lcd_char(' ');
     }
 }
-
+#endif
+#if USE_LCD_INT == ON
 void lcd_int_AVR(int val, uint8_t width, enum alignment alignment)
 {
     uint8_t buf_lenght = 0;
@@ -216,7 +234,8 @@ void lcd_int_AVR(int val, uint8_t width, enum alignment alignment)
         }
     }
 }
-
+#endif
+#if USE_LCD_HEX == ON
 void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment)
 {
     char buffer[17];
@@ -246,7 +265,8 @@ void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment)
         }
     }
 }
-
+#endif
+#if USE_LCD_BIN == ON
 void lcd_bin_AVR(int val, uint8_t width)
 {
     char buffer[35]; // 0b 0000 0000 0000 0000 0000 0000 0000 0000
@@ -271,8 +291,8 @@ void lcd_bin_AVR(int val, uint8_t width)
         lcd_str(buffer);
     }
 }
-
-#if USE_LCD_BUF_INT == ON
+#endif
+#if ((USE_LCD_BUF_INT == ON) || (USE_LCD_BUF_HEX == ON))
 static void lcd_buf_put_spaces(uint8_t empty_spaces)
 {
     for (uint8_t i = 0; i < empty_spaces; i++)
@@ -310,7 +330,7 @@ void lcd_buf_int_AVR(int val, uint8_t width, enum alignment alignment)
 }
 #endif
 #else
-
+#if USE_LCD_BIN == ON
 static void fill_bin_value_buffer(int val, char *bin_val_buffer)
 {
     uint32_t bit_mask = 0x80000000;
@@ -342,6 +362,7 @@ static void fill_zeros_buffer(const char *buffer, uint8_t width, char *zeros_buf
         }
     }
 }
+#endif
 #endif
 
 #if LCD_BUFFERING==ON

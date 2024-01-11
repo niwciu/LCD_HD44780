@@ -276,7 +276,7 @@ uint16_t define_expected_sequence_for_send_data_to_LCD(log_no_t log_no, uint8_t 
     return log_no;
 }
 #endif
-
+#if USE_DEF_CHAR_FUNCTION == ON
 uint16_t define_expect_sequence_for_lcd_def_char(log_no_t log_no, const uint8_t CGRAM_bank_x_char_index, const uint8_t *def_char)
 {
     uint8_t CGRAM_start_adress = ((DEF_CHAR_ADR_MASK & CGRAM_bank_x_char_index) * LCD_CGRAM_BYTES_PER_CHAR);
@@ -303,7 +303,7 @@ uint16_t define_expect_sequence_for_lcd_def_char(log_no_t log_no, const uint8_t 
 
     return log_no;
 }
-
+#endif
 uint16_t define_expected_sequence_for_send_string_to_LCD(const char *string, uint16_t next_log)
 {
     // uint16_t next_log = 0;
