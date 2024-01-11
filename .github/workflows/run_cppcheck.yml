@@ -24,6 +24,12 @@ jobs:
           annotation-failures: 'warning'
           # suppress: 'unusedFunction'
           # annotation-level-default: 'error'
+      - name: Annotate lines with errors src
+        uses: yuzutech/annotations-action@v0.4.0
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          title: 'Results of CppCheck src files'
+          input: 'annotations.json'
       - name: Run cppcheck-annotation-action for tests
         uses: Konstantin343/cppcheck-annotation-action@v1.0
         with:
@@ -34,31 +40,10 @@ jobs:
           annotation-failures: 'warning'
           # suppress: 'unusedFunction'
           # annotation-level-default: 'error'
-
-      - name: Annotate lines with errors src
-        uses: yuzutech/annotations-action@v0.4.0
-        with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          title: 'Results of CppCheck src files'
-          input: 'annotations.json'
-  cppcheck-annotations_test_scr:
-    name: cppcheck-annotations /test/lcd_hd44780
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run cppcheck-annotation-action
-        uses: Konstantin343/cppcheck-annotation-action@v1.0
-        with:
-          std: 'c99'
-          platform: 'unix64'
-          log-level: 'verbose'
-          sources: './test/lcd_hd44780'
-          annotation-failures: 'warning'
-          # suppress: 'unusedFunction'
-          # annotation-level-default: 'error'
-
       - name: Annotate lines with errors test_src
         uses: yuzutech/annotations-action@v0.4.0
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           title: 'Results of CppCheck test lcd_hd44780 files'
           input: 'annotations.json'
+
