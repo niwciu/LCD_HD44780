@@ -14,13 +14,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Run cppcheck-annotation-action
+      - name: Run cppcheck-annotation-action for src
         uses: Konstantin343/cppcheck-annotation-action@v1.0
         with:
           std: 'c99'
           platform: 'unix64'
           log-level: 'verbose'
           sources: './src'
+          annotation-failures: 'warning'
+          # suppress: 'unusedFunction'
+          # annotation-level-default: 'error'
+      - name: Run cppcheck-annotation-action for tests
+        uses: Konstantin343/cppcheck-annotation-action@v1.0
+        with:
+          std: 'c99'
+          platform: 'unix64'
+          log-level: 'verbose'
+          sources: './test/lcd_hd44780'
           annotation-failures: 'warning'
           # suppress: 'unusedFunction'
           # annotation-level-default: 'error'
