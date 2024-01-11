@@ -82,7 +82,7 @@ TEST_GROUP_RUNNER(lcd_hd44780_buffering)
     #if USE_LCD_BUF_INT == ON
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_24_2_right_ThenLcdBufferContainInt24AsString);
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_2444_2_right_ThenLcdBufferContainInt2444AsString);
-    // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_16_4_right_ThenLcdBufferContainInt__16AsString);
+    RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_16_4_right_ThenLcdBufferContainInt__16AsString);
     // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_61045_8_left_ThenLcdBufferContainInt61045___AsString);
     #endif
     #if USE_LCD_HEX_INT == ON
