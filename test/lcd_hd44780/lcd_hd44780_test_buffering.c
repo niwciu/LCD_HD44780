@@ -29,6 +29,11 @@ TEST_GROUP(lcd_hd44780_buffering);
 TEST_SETUP(lcd_hd44780_buffering)
 {
     /* Init before every test */
+    lcd_init();
+    clear_expected_LCD_Port_delay_dump_data();
+    mock_clear_LCD_Port_delay_dump_data();
+    next_log_no = 0;
+    expected_buf_lenght = 0;
 }
 
 TEST_TEAR_DOWN(lcd_hd44780_buffering)
@@ -38,13 +43,11 @@ TEST_TEAR_DOWN(lcd_hd44780_buffering)
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLcdBufferContainSpaces)
 {
-    lcd_init();
     define_expected_buffer_value_for_cls();
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf, lcd_buffer, (LCD_X * LCD_Y));
 }
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdBufCharThenBufferEqualToExpected)
 {
-    lcd_init();
     lcd_buf_char('a');
     define_expected_buffer_value_for_cls();
     expected_lcd_buf[LINE_1][C1] = 'a';
@@ -53,7 +56,6 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdBufCharThenBufferEqualToEx
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdBufCharAandLcdBufCharBUsedThenBufferEqualToExpected)
 {
-    lcd_init();
     lcd_buf_char('A');
     lcd_buf_char('B');
     define_expected_buffer_value_for_cls();
@@ -64,7 +66,6 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdBufCharAandLcdBufCharBUsed
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufLocateFirstLineLastLetterAndLcdBufCharAThenBufferEqualToExpected)
 {
-    lcd_init();
     lcd_buf_locate(LINE_1, LAST_CHAR_IN_LCD_LINE_POSITION);
     lcd_buf_char('A');
     define_expected_buffer_value_for_cls();
@@ -74,7 +75,6 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufLocateFirstLi
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufLocateFirstLineLastLetterAndLcdBufCharAandLcdBufCharBThenBufferEqualToExpected)
 {
-    lcd_init();
     lcd_buf_locate(LINE_1, LAST_CHAR_IN_LCD_LINE_POSITION);
     lcd_buf_char('A');
     lcd_buf_char('B');
@@ -86,7 +86,6 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufLocateFirstLi
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufLocateLastLineLastLetterAndLcdBufCharAandLcdBufCharBThenBufferEqualToExpected)
 {
-    lcd_init();
     lcd_buf_locate(LAST_LCD_LINE, LAST_CHAR_IN_LCD_LINE_POSITION);
     lcd_buf_char('A');
     lcd_buf_char('B');
@@ -98,7 +97,6 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufLocateLastLin
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufStrTestThenLcdBufferEqualToExpectedLcdBuffer)
 {
-    lcd_init();
     lcd_buf_str("Test");
     define_expected_buffer_value_for_cls();
     expected_lcd_buf[LINE_1][C1] = 'T';
@@ -109,11 +107,9 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufStrTestThenLc
 }
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLineLastCharacterWhenLcdBufStrTestThenLcdBufferEqualToExpectedLcdBuffer)
 {
-    lcd_init();
     lcd_buf_locate(LAST_LCD_LINE, LAST_CHAR_IN_LCD_LINE_POSITION);
     lcd_buf_str("Test");
     define_expected_buffer_value_for_cls();
-
     expected_lcd_buf[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE_POSITION] = 'T';
     expected_lcd_buf[LINE_1][C1] = 'e';
     expected_lcd_buf[LINE_1][C2] = 's';
@@ -123,13 +119,11 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLine
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLCD_UPDATE_EVENTflagIsFALSE)
 {
-    lcd_init();
     TEST_ASSERT_FALSE(LCD_UPDATE_EVENT);
 }
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLCD_UPDATE_EVENTflagIsTRUEWhenLcdInitThenLCD_UPDATE_EVENTflagIsFalse)
 {
-    lcd_init();
     LCD_UPDATE_EVENT = true;
     lcd_init();
     TEST_ASSERT_FALSE(LCD_UPDATE_EVENT);
@@ -137,28 +131,24 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLCD_UPDATE_EVENTflag
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufCharThenLCD_UPDATE_EVENTflagIsTRUE)
 {
-    lcd_init();
     lcd_buf_char('a');
     TEST_ASSERT_TRUE(LCD_UPDATE_EVENT);
 }
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufStrThenLCD_UPDATE_EVENTflagIsTRUE)
 {
-    lcd_init();
     lcd_buf_str("TEST");
     TEST_ASSERT_TRUE(LCD_UPDATE_EVENT);
 }
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufClsThenLCD_UPDATE_EVENTflagIsTRUE)
-{
-    lcd_init();
+{ 
     lcd_buf_cls();
     TEST_ASSERT_TRUE(LCD_UPDATE_EVENT);
 }
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLCD_UPDATE_EVENTflagIsTRUEWhenLcdUpdateThenLCD_UPDATE_EVENTflagIsFALSE)
 {
-    lcd_init();
     LCD_UPDATE_EVENT = true;
     lcd_update();
     TEST_ASSERT_FALSE(LCD_UPDATE_EVENT);
@@ -166,14 +156,12 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLCD_UPDATE_EVENTflag
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLcdCurrentScreenBufferContainSpaces)
 {
-    lcd_init();
     define_expected_buffer_value_for_cls();
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf, prev_lcd_buffer, (LCD_X * LCD_Y));
 }
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLcdBufStrWhenLcdUpdateThenLcdCurrentScreenBufferIsEqualToLcdBuffer)
 {
-    lcd_init();
     lcd_buf_str("TEST");
     lcd_update();
     TEST_ASSERT_EQUAL_UINT8_ARRAY(lcd_buffer, prev_lcd_buffer, (LCD_X * LCD_Y));
@@ -181,18 +169,12 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLcdBufStrWhenLcdUpda
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufStrThenLcdCurrentScreenBufferStillContainSpaces)
 {
-    lcd_init();
     define_expected_buffer_value_for_cls();
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf, prev_lcd_buffer, (LCD_X * LCD_Y));
 }
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLineLastCharacterAndLcdBufStrTestWhenUpdateLcdScrThenSignalSequenceForUpdateLcdScrIsCorrect)
 {
-    lcd_init();
-    clear_expected_LCD_Port_delay_dump_data();
-    mock_clear_LCD_Port_delay_dump_data();
-    next_log_no = 0;
-    expected_buf_lenght = 0;
     // write "est" on LCD
     next_log_no = define_expected_sequence_for_send_string_to_LCD("est", 0);
     // move cursor to lasr line last character
@@ -202,7 +184,6 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLine
     // move cursor to begining of LCD (0,0)
     next_log_no = define_expected_sequence_for_lcd_locate_0_0(next_log_no);
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
-
     lcd_buf_locate(LAST_LCD_LINE, LAST_CHAR_IN_LCD_LINE_POSITION);
     lcd_buf_str("Test");
     lcd_update();
@@ -212,13 +193,9 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLine
 #if USE_LCD_BUF_INT == ON
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_24_2_right_ThenLcdBufferContainInt24AsString)
 {
-    lcd_init();
-    next_log_no = 0;
     define_expected_buffer_value_for_cls();
-
     expected_lcd_buf[LINE_1][C1] = '2';
     expected_lcd_buf[LINE_1][C2] = '4';
-
     lcd_buf_int(24,2,right);
     lcd_update();
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf, lcd_buffer, (LCD_X * LCD_Y));
@@ -226,15 +203,11 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_24_2_rig
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_2444_2_right_ThenLcdBufferContainInt2444AsString)
 {
-    lcd_init();
-    next_log_no = 0;
     define_expected_buffer_value_for_cls();
-
     expected_lcd_buf[LINE_1][C1] = '2';
     expected_lcd_buf[LINE_1][C2] = '4';
     expected_lcd_buf[LINE_1][C3] = '4';
     expected_lcd_buf[LINE_1][C4] = '4';
-
     lcd_buf_int(2444,2,right);
     lcd_update();
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf, lcd_buffer, (LCD_X * LCD_Y));
@@ -242,15 +215,11 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_2444_2_r
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_16_4_right_ThenLcdBufferContainInt__16AsString)
 {
-    lcd_init();
-    next_log_no = 0;
     define_expected_buffer_value_for_cls();
-
     expected_lcd_buf[LINE_1][C1] = ' ';
     expected_lcd_buf[LINE_1][C2] = ' ';
     expected_lcd_buf[LINE_1][C3] = '1';
     expected_lcd_buf[LINE_1][C4] = '6';
-
     lcd_buf_int(16,4,right);
     lcd_update();
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf, lcd_buffer, (LCD_X * LCD_Y));
@@ -258,10 +227,7 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_16_4_rig
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_61045_8_left_ThenLcdBufferContainInt61045___AsString)
 {
-    lcd_init();
-    next_log_no = 0;
     define_expected_buffer_value_for_cls();
-
     expected_lcd_buf[LINE_1][C1] = '6';
     expected_lcd_buf[LINE_1][C2] = '1';
     expected_lcd_buf[LINE_1][C3] = '0';
@@ -270,7 +236,6 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_61045_8_
     expected_lcd_buf[LINE_1][C6] = ' ';
     expected_lcd_buf[LINE_1][C7] = ' ';
     expected_lcd_buf[LINE_1][C8] = ' ';
-
     lcd_buf_str("99999999");
     lcd_buf_locate(LINE_1,C1);
     lcd_buf_int(61045,8,left);
