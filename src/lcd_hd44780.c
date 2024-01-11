@@ -272,6 +272,7 @@ void lcd_bin_AVR(int val, uint8_t width)
     }
 }
 
+#if USE_LCD_BUF_INT == ON
 static void lcd_buf_put_spaces(uint8_t empty_spaces)
 {
     for (uint8_t i = 0; i < empty_spaces; i++)
@@ -279,7 +280,8 @@ static void lcd_buf_put_spaces(uint8_t empty_spaces)
         lcd_char(' ');
     }
 }
-#if USE_LCd_BUF_INT == ON
+#endif
+#if USE_LCD_BUF_INT == ON
 void lcd_buf_int_AVR(int val, uint8_t width, enum alignment alignment)
 {
     uint8_t buf_lenght = 0;
