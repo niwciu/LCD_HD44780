@@ -209,7 +209,7 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLine
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
-
+#if USE_LCD_BUF_INT == ON
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_24_2_right_ThenLcdBufferContainInt24AsString)
 {
     lcd_init();
@@ -238,6 +238,12 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_24_2_rig
 // {
 //     TEST_FAIL_MESSAGE("Added test")
 // }
+#endif
+#if USE_LCD_HEX_INT == ON
+#endif
+#if USE_LCD_BIN_INT == ON
+#endif
+
 
 // TEST(lcd_hd44780_buffering, )
 // {

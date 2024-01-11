@@ -271,6 +271,42 @@ void lcd_bin_AVR(int val, uint8_t width)
         lcd_str(buffer);
     }
 }
+
+static void lcd_buf_put_spaces(uint8_t empty_spaces)
+{
+    for (uint8_t i = 0; i < empty_spaces; i++)
+    {
+        lcd_char(' ');
+    }
+}
+#if USE_LCd_BUF_INT == ON
+void lcd_buf_int_AVR(int val, uint8_t width, enum alignment alignment)
+{
+    uint8_t buf_lenght = 0;
+    char buffer[20]; // 19chars for 64 bit int + end char '\0'
+    buffer[0] = '\0';
+    itoa(val, buffer, 10);
+    buf_lenght = strlen(buffer);
+    if (buf_lenght >= (width))
+    {
+        lcd_buf_str(buffer);
+    }
+    else
+    {
+        uint8_t empty_spaces_qty = width - buf_lenght;
+        if (alignment == right)
+        {
+            lcd_buf_put_spaces(empty_spaces_qty);
+            lcd_buf_str(buffer);
+        }
+        else
+        {
+            lcd_buf_str(buffer);
+            lcd_buf_put_spaces(empty_spaces_qty);
+        }
+    }
+}
+#endif
 #else
 
 static void fill_bin_value_buffer(int val, char *bin_val_buffer)
@@ -688,5 +724,30 @@ void lcd_update(void)
     LCD_UPDATE_EVENT=false;
 }
 
+#if USE_LCD_BUF_INT == ON
+/**
+ * @brief Function for adding intiger value as string to the LCD buffer under current position of the LCD buffer pointer.
+ * @param val int type value to add to LCD buffer
+ * @param width Minimum number of characters to be "printed". If the value to be "printed" is shorter than this number, the
+ * result is padded with blank spaces. The value is not truncated even if the result is larger.
+ * @param alignment If the value to be printed is shorter than width, this parmaeter will specify aligment of the
+ * printed tekst value. This parameter can be set to "left" or "right"
+ * @attention to compile for AVR ucontrollers definition of flag AVR is required.
+ */
+void lcd_buf_int(int val, uint8_t width, enum alignment alignment)
+{
+#ifdef AVR
+    lcd_buf_int_AVR(val, width, alignment);
+#else
+    char buffer[20]; // 19chars for 64 bit int + end char '\0'
+    buffer[0] = '\0';
+    if (alignment == right)
+        sprintf(buffer, "%*i", width, val);
+    else
+        sprintf(buffer, "%-*i", width, val);
+    lcd_buf_str(buffer);
+#endif
+}
+#endif
 #endif
   

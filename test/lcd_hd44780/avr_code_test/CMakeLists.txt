@@ -4,15 +4,15 @@
 #
 # usage:
 #        For build using Unix Makefiles:
-#          	1.cmake -S./ -B out -G"Unix Makefiles"
-#			2.enter the "out" folder
+#          	1.cmake -S./ -B ../out_avr -G"Unix Makefiles"
+#			2.enter the "out_avr" folder
 #          	3.make all -o lcd_hd44780.o (-jXX additionaly to speed up)
 #        For build using Ninja:
-#          	1. cmake -S./ -B out -G"Ninja"
-# 			2. enter the "out" folder
+#          	1. cmake -S./ -B ../out_avr -G"Ninja"
+# 			2. enter the "out_avr" folder
 #         	3. ninja -C out -o lcd_hd44780.o (optional with -V  and -jxx ->xx numnber of cores)
 # additional custom targets for this project:
-# 		Running unit tests when you are in out folder:
+# 		Running unit tests when you are in "out_avr" folder:
 # 			1. make run /ninja run
 # 		If lizard is installed and you are in the out folder:
 # 			1. make ccm / ninja ccm -> code complexity metrix print in console

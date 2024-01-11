@@ -64,7 +64,7 @@ enum LCD_COLUMNS{
 #define USE_LCD_BLINKING_CURSOR_ON      ON
 
 #if LCD_BUFFERING == ON
-
+#define USE_LCD_BUF_INT                 ON
 #endif
 
 

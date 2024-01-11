@@ -79,16 +79,22 @@ TEST_GROUP_RUNNER(lcd_hd44780_buffering)
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLcdBufStrWhenLcdUpdateThenLcdCurrentScreenBufferIsEqualToLcdBuffer);
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufStrThenLcdCurrentScreenBufferStillContainSpaces);
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLineLastCharacterAndLcdBufStrTestWhenUpdateLcdScrThenSignalSequenceForUpdateLcdScrIsCorrect);
+    #if USE_LCD_BUF_INT == ON
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_24_2_right_ThenLcdBufferContainInt24AsString);
     // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_2444_2_right_ThenLcdBufferContainInt2444AsString);
     // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_16_4_right_ThenLcdBufferContainInt__16AsString);
     // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_61045_8_left_ThenLcdBufferContainInt61045___AsString);
+    #endif
+    #if USE_LCD_HEX_INT == ON
     // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_lcd_hex_10_1_left_ThenLcdBufferContain0xAAsString);
     // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_lcd_hex_255_6_right_ThenLcdBufferContain__0xFFAsString);
     // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_lcd_hex_20_5_right_ThenLcdBufferContainInt_0x14AsString);
     // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_lcd_hex_20_1_right_ThenLcdBufferContainInt0x14AsString);
+    #endif
+    #if USE_LCD_BIN_INT == ON
     // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_lcd_bin_5_6_ThenLcdBufferContainInt0b0101AsString);
     // RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_lcd_bin_5_1_ThenLcdBufferContainInt0b101AsString);
+    #endif
 
 }
 
