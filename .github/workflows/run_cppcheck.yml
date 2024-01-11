@@ -50,5 +50,5 @@ jobs:
         uses: yuzutech/annotations-action@v0.4.0
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          title: 'Results of CppCheck test src files'
+          title: 'Results of CppCheck test lcd_hd44780 files'
           input: 'annotations.json'
