@@ -5,7 +5,6 @@ on:
     branches: [main, develop]
   pull_request:
     branches: [main, develop]
-# on: workflow_dispatch
 jobs:
   formatting-check:
     name: Formatting Check
