@@ -256,10 +256,27 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_16_4_rig
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf, lcd_buffer, (LCD_X * LCD_Y));
 }
 
-// TEST(lcd_hd44780_buffering, )
-// {
-//     TEST_FAIL_MESSAGE("Added test")
-// }
+TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_61045_8_left_ThenLcdBufferContainInt61045___AsString)
+{
+    lcd_init();
+    next_log_no = 0;
+    define_expected_buffer_value_for_cls();
+
+    expected_lcd_buf[LINE_1][C1] = '6';
+    expected_lcd_buf[LINE_1][C2] = '1';
+    expected_lcd_buf[LINE_1][C3] = '0';
+    expected_lcd_buf[LINE_1][C4] = '4';
+    expected_lcd_buf[LINE_1][C5] = '5';
+    expected_lcd_buf[LINE_1][C6] = ' ';
+    expected_lcd_buf[LINE_1][C7] = ' ';
+    expected_lcd_buf[LINE_1][C8] = ' ';
+
+    lcd_buf_str("99999999");
+    lcd_buf_locate(LINE_1,C1);
+    lcd_buf_int(61045,8,left);
+    lcd_update();
+    TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf, lcd_buffer, (LCD_X * LCD_Y));
+}
 #endif
 #if USE_LCD_HEX_INT == ON
 #endif
