@@ -207,6 +207,9 @@ Library main header file with available library api.
   4. For make type:
       ```bash
       cmake -S ./ -B Build -G"Unix Makefiles"
+      make -C Build all
+      make -C Build write_fuse
+      make -C Build flash
       ``` 
       For Ninja type:
       ```bash 
@@ -220,7 +223,17 @@ Library main header file with available library api.
       ```bash
       ninja -C Build
       ```
-  6. Programm ucontroller using predefined targets:
+  6. Programm ucontroller Fuse Bits:
+   
+      For make: 
+      ```bash 
+      make -C Build write_fuse
+      ```
+      For Ninja
+      ```bash 
+      ninja -C Build write_fuse
+      ```
+  7. Programm ucontroller using predefined targets:
       For make: 
       ```bash 
       make -C Build flash
