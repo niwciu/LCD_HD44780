@@ -54,6 +54,7 @@ extern "C"
 
     void lcd_buf_int(int val, uint8_t width, enum alignment alignment);
     void lcd_buf_hex(int val, uint8_t width, enum alignment alignment);
+    void lcd_buf_bin(int val, uint8_t width);
 #endif
 
 #ifdef __cplusplus

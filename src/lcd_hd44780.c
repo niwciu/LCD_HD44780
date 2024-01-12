@@ -102,9 +102,12 @@ static void lcd_buf_int_AVR(int val, uint8_t width, enum alignment alignment);
 #if USE_LCD_BUF_HEX == ON
 static void lcd_buf_hex_AVR(int val, uint8_t width, enum alignment alignment);
 #endif
+#if USE_LCD_BUF_BIN == ON
+static void lcd_buf_bin_AVR(int val, uint8_t width);
+#endif
 #endif
 #else
-#if USE_LCD_BIN == ON
+#if (USE_LCD_BIN == ON || ((LCD_BUFFERING == ON) && (LCD_USE_BUF_BIN == ON)))
 static void fill_bin_value_buffer(int val, char *bin_val_buffer);
 static void fill_zeros_buffer(const char *buffer, uint8_t width, char *zeros_buf);
 #endif
@@ -365,6 +368,32 @@ void lcd_buf_hex_AVR(int val, uint8_t width, enum alignment alignment)
             lcd_buf_str(buffer);
             lcd_buf_put_spaces(empty_spaces_qty);
         }
+    }
+}
+#endif
+#if USE_LCD_BUF_BIN == ON
+static void lcd_buf_bin_AVR(int val, uint8_t width)
+{
+    char buffer[35]; // 0b 0000 0000 0000 0000 0000 0000 0000 0000
+    static const char *prefix = {"0b"};
+    buffer[0] = '\0';
+
+    itoa(val, buffer, 2);
+    // if (buf_lenght < (width - VAL_PREFIX_LENGHT))
+    if (width <= (strlen(buffer) + VAL_PREFIX_LENGHT))
+    {
+        lcd_buf_str(prefix);
+        lcd_buf_str(buffer);
+    }
+    else
+    {
+        uint8_t zeros_qty = (width - (VAL_PREFIX_LENGHT + strlen(buffer)));
+        lcd_buf_str(prefix);
+        for (uint8_t i = 0; i < zeros_qty; i++)
+        {
+            lcd_buf_char('0');
+        }
+        lcd_buf_str(buffer);
     }
 }
 #endif
@@ -814,7 +843,6 @@ void lcd_buf_int(int val, uint8_t width, enum alignment alignment)
 #endif
 
 #if USE_LCD_BUF_HEX == ON
-#if USE_LCD_HEX == ON
 /**
  * @brief  Function for adding intiger value in hexadecimal format as string to the LCD buffer under current position of the LCD buffer pointer.
  * @param val  int type value to add to LCD buffer as string in hexadecimal format
@@ -840,6 +868,37 @@ void lcd_buf_hex(int val, uint8_t width, enum alignment alignment)
 #endif
 }
 #endif
+
+#if USE_LCD_BUF_BIN == ON
+/**
+ * @brief Function for adding to the LCD buffer the integer value in binary format as string under current position of the LCD buffer pointer
+ * @param val int type value to be added to the LCD buffer as string in hexadecimal format
+ * @param width Minimum number of characters to be added to LCD buffer. If the value to be added to buffer as string lenght is shorter than width, the
+ * result is padded with blank spaces. The value to be added to buffer as string is not truncated if the string lenght represented the value i binary format lenght 
+ * is larger then width value. Width should contain additional 2 characters for "0b" at the begining of the value represented as string. example: 0b01-> width=4
+ * @attention to compile for AVR ucontrollers definition of flag AVR is required.
+ */
+void lcd_buf_bin(int val, uint8_t width)
+{
+#ifdef AVR
+    lcd_buf_bin_AVR(val, width);
+#else
+    char buffer[35];
+    char bin_val_buffer[35];
+    char zeros_buf[35];
+    buffer[0] = '\0';
+    bin_val_buffer[0] = '\0';
+    zeros_buf[0] = '\0';
+
+    fill_bin_value_buffer(val, bin_val_buffer);
+    fill_zeros_buffer(bin_val_buffer, width, zeros_buf);
+    strcat(buffer, "0b");
+    strcat(buffer, zeros_buf);
+    strcat(buffer, bin_val_buffer);
+    lcd_buf_str(buffer);
+#endif
+}
+
 #endif
 #endif
   
