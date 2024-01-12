@@ -207,41 +207,30 @@ Library main header file with available library api.
   4. For make type:
       ```bash
       cmake -S ./ -B Build -G"Unix Makefiles"
+      ``` 
+      ```bash
       make -C Build all
+      ``` 
+      ```bash
       make -C Build write_fuses
+      ``` 
+      ```bash
       make -C Build flash
       ``` 
-      For Ninja type:
+     For Ninja type:
       ```bash 
       cmake -S ./ -B Build -G"Ninja"
       ```
-  5. For make type: 
-      ```bash 
-      make -C Build all
-      ```
-      For Ninja type 
       ```bash
       ninja -C Build
       ```
-  6. Programm ucontroller Fuse Bits:
-   
-      For make: 
       ```bash 
-      make -C Build write_fuse
+      ninja -C write_fuse
       ```
-      For Ninja
       ```bash 
-      ninja -C Build write_fuse
+      ninja -C flash
       ```
-  7. Programm ucontroller using predefined targets:
-      For make: 
-      ```bash 
-      make -C Build flash
-      ```
-      For Ninja
-      ```bash 
-      ninja -C Build flash
-      ```
+
 ### ESP8266 NONOS SDK
 #### Requirements
 #### Hadrware connections
