@@ -92,11 +92,16 @@ static void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment);
 #if USE_LCD_BIN == ON
 static void lcd_bin_AVR(int val, uint8_t width);
 #endif
+#if LCD_BUFFERING == ON
 #if ((USE_LCD_BUF_INT == ON) || (USE_LCD_BUF_HEX == ON))
 static void lcd_buf_put_spaces(uint8_t empty_spaces);
 #endif
 #if USE_LCD_BUF_INT == ON
-void lcd_buf_int_AVR(int val, uint8_t width, enum alignment alignment);
+static void lcd_buf_int_AVR(int val, uint8_t width, enum alignment alignment);
+#endif
+#if USE_LCD_BUF_HEX == ON
+static void lcd_buf_hex_AVR(int val, uint8_t width, enum alignment alignment);
+#endif
 #endif
 #else
 #if USE_LCD_BIN == ON
@@ -208,7 +213,7 @@ static void lcd_put_spaces(uint8_t empty_spaces)
 }
 #endif
 #if USE_LCD_INT == ON
-void lcd_int_AVR(int val, uint8_t width, enum alignment alignment)
+static void lcd_int_AVR(int val, uint8_t width, enum alignment alignment)
 {
     uint8_t buf_lenght = 0;
     char buffer[20]; // 19chars for 64 bit int + end char '\0'
@@ -236,7 +241,7 @@ void lcd_int_AVR(int val, uint8_t width, enum alignment alignment)
 }
 #endif
 #if USE_LCD_HEX == ON
-void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment)
+static void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment)
 {
     char buffer[17];
     buffer[0] = '\0';
@@ -267,7 +272,7 @@ void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment)
 }
 #endif
 #if USE_LCD_BIN == ON
-void lcd_bin_AVR(int val, uint8_t width)
+static void lcd_bin_AVR(int val, uint8_t width)
 {
     char buffer[35]; // 0b 0000 0000 0000 0000 0000 0000 0000 0000
     static const char *prefix = {"0b"};
@@ -292,6 +297,8 @@ void lcd_bin_AVR(int val, uint8_t width)
     }
 }
 #endif
+
+#if LCD_BUFFERING== ON
 #if ((USE_LCD_BUF_INT == ON) || (USE_LCD_BUF_HEX == ON))
 static void lcd_buf_put_spaces(uint8_t empty_spaces)
 {
@@ -302,7 +309,7 @@ static void lcd_buf_put_spaces(uint8_t empty_spaces)
 }
 #endif
 #if USE_LCD_BUF_INT == ON
-void lcd_buf_int_AVR(int val, uint8_t width, enum alignment alignment)
+static void lcd_buf_int_AVR(int val, uint8_t width, enum alignment alignment)
 {
     uint8_t buf_lenght = 0;
     char buffer[20]; // 19chars for 64 bit int + end char '\0'
@@ -328,6 +335,39 @@ void lcd_buf_int_AVR(int val, uint8_t width, enum alignment alignment)
         }
     }
 }
+#endif
+
+#if USE_LCD_BUF_HEX == ON
+void lcd_buf_hex_AVR(int val, uint8_t width, enum alignment alignment)
+{
+    char buffer[17];
+    buffer[0] = '\0';
+    itoa(val, buffer, 16);
+    static const char *prefix = {"0x"};
+    if (width <= (strlen(buffer) + VAL_PREFIX_LENGHT))
+    {
+        lcd_buf_str(prefix);
+        lcd_buf_str(buffer);
+    }
+    else
+    {
+        uint8_t empty_spaces_qty = width - (VAL_PREFIX_LENGHT + strlen(buffer));
+
+        if (alignment == right)
+        {
+            lcd_buf_put_spaces(empty_spaces_qty);
+            lcd_buf_str(prefix);
+            lcd_buf_str(buffer);
+        }
+        else
+        {
+            lcd_buf_str(prefix);
+            lcd_buf_str(buffer);
+            lcd_buf_put_spaces(empty_spaces_qty);
+        }
+    }
+}
+#endif
 #endif
 #else
 #if USE_LCD_BIN == ON
@@ -751,10 +791,10 @@ void lcd_update(void)
 /**
  * @brief Function for adding intiger value as string to the LCD buffer under current position of the LCD buffer pointer.
  * @param val int type value to add to LCD buffer
- * @param width Minimum number of characters to be "printed". If the value to be "printed" is shorter than this number, the
- * result is padded with blank spaces. The value is not truncated even if the result is larger.
- * @param alignment If the value to be printed is shorter than width, this parmaeter will specify aligment of the
- * printed tekst value. This parameter can be set to "left" or "right"
+ * @param width Minimum number of characters to be added to LCD buffer. If the value to be added to the LCD buffer is shorter than width, the
+ * result is padded with blank spaces. The value to be added to buffer as string is not truncated if the string lenght is larger then width value.
+ * @param alignment If the value to be added to LCD buffer as string is shorter than width, this parameter will specify alignment of the 
+ * tekst represented the value. This parameter can be set to "left" or "right"
  * @attention to compile for AVR ucontrollers definition of flag AVR is required.
  */
 void lcd_buf_int(int val, uint8_t width, enum alignment alignment)
@@ -771,6 +811,35 @@ void lcd_buf_int(int val, uint8_t width, enum alignment alignment)
     lcd_buf_str(buffer);
 #endif
 }
+#endif
+
+#if USE_LCD_BUF_HEX == ON
+#if USE_LCD_HEX == ON
+/**
+ * @brief  Function for adding intiger value in hexadecimal format as string to the LCD buffer under current position of the LCD buffer pointer.
+ * @param val  int type value to add to LCD buffer as string in hexadecimal format
+ * @param width Minimum number of characters to be added to lcd buffer. If the value to be added to buffer is shorter than width, the
+ * result is padded with blank spaces. The value to be added to buffer as string is not truncated if the string lenght is larger then width value. Width should contain
+ * additional 2 characters for "0x" at the begining of the value represented as string. example: 0x01-> width=4
+ * @param alignment If the value to be added to LCD buffer as string is shorter than width, this parameter will specify alignment of the 
+* tekst represented the value. This parameter can be set to "left" or "right"
+ * @attention to compile for AVR ucontrollers definition of flag AVR is required.
+ */
+void lcd_buf_hex(int val, uint8_t width, enum alignment alignment)
+{
+#ifdef AVR
+    lcd_buf_hex_AVR(val, width, alignment);
+#else
+    char buffer[17];
+    buffer[0] = '\0';
+    if (alignment == right)
+        sprintf(buffer, "%#*x", width, val);
+    else
+        sprintf(buffer, "%-#*x", width, val);
+    lcd_buf_str(buffer);
+#endif
+}
+#endif
 #endif
 #endif
   

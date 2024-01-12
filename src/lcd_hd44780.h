@@ -53,6 +53,7 @@ extern "C"
     void lcd_update(void);
 
     void lcd_buf_int(int val, uint8_t width, enum alignment alignment);
+    void lcd_buf_hex(int val, uint8_t width, enum alignment alignment);
 #endif
 
 #ifdef __cplusplus
