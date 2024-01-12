@@ -13,17 +13,17 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-struct char_bank_struct
-{
-    const uint8_t *char_0;
-    const uint8_t *char_1;
-    const uint8_t *char_2;
-    const uint8_t *char_3;
-    const uint8_t *char_4;
-    const uint8_t *char_5;
-    const uint8_t *char_6;
-    const uint8_t *char_7;
-};
+    struct char_bank_struct
+    {
+        const uint8_t *char_0;
+        const uint8_t *char_1;
+        const uint8_t *char_2;
+        const uint8_t *char_3;
+        const uint8_t *char_4;
+        const uint8_t *char_5;
+        const uint8_t *char_6;
+        const uint8_t *char_7;
+    };
 
 #if USE_DEF_CHAR_FUNCTION == ON
 #define LCD_CGRAM_BYTES_PER_CHAR 8
@@ -40,7 +40,6 @@ struct char_bank_struct
     static const uint8_t Zn_wody[8] = {0, 0, 0, 6, 9, 2, 4, 15};
     // here add "definition" of new chars
     /**********************USER CHAR DEFINITIONS END********************************/
-
 
     /**********************USER CHAR CGRAM BANKS DEFINITIONS START*******************/
     static const struct char_bank_struct lcd_cgram_bank_1 = {

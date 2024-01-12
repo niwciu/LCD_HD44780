@@ -17,7 +17,6 @@ extern "C"
 #include "lcd_hd44780_interface.h"
 #include "lcd_hd44780_def_char.h"
 
-
     enum alignment
     {
         left,
