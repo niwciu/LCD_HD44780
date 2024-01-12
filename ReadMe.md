@@ -12,15 +12,15 @@
     - [4. lcd\_hd44780.c](#4-lcd_hd44780c)
     - [5. lcd\_hd44780.h](#5-lcd_hd44780h)
   - [Examples](#examples)
-    - [STM32G0](#stm32g0)
+    - [STM32G071RB](#stm32g071rb)
       - [Requirements for compile and run the example](#requirements-for-compile-and-run-the-example)
       - [Hadrware configuration and connections](#hadrware-configuration-and-connections)
       - [How to build and run example](#how-to-build-and-run-example)
-    - [STM32G4](#stm32g4)
+    - [STM32G474](#stm32g474)
       - [Requirements for compile and run the example](#requirements-for-compile-and-run-the-example-1)
       - [Hadrware configuration and connections](#hadrware-configuration-and-connections-1)
       - [How to build and run example](#how-to-build-and-run-example-1)
-    - [AVR](#avr)
+    - [AVR ATmega 328P](#avr-atmega-328p)
       - [Requirements for compile and run the example](#requirements-for-compile-and-run-the-example-2)
       - [Hadrware configuration and connections](#hadrware-configuration-and-connections-2)
       - [How to build and run example](#how-to-build-and-run-example-2)
@@ -92,7 +92,7 @@ Library main C file
 ### 5. lcd_hd44780.h
 Library main header file with available library api.
 ## Examples
-### STM32G0
+### STM32G071RB
 #### Requirements for compile and run the example
   1. CMake installed
   2. Make or Ninja installed
@@ -104,38 +104,41 @@ Library main header file with available library api.
   3. Pin connection between LCD Keypad Shield and Nucleo board
 #### How to build and run example
   1. Clone repository to your preferred localization
-  2. Open in terminal folder where repository was cloned.
+      ```bash
+      git clone https://github.com/niwciu/LCD_HD44780.git
+      ``` 
+  2. Open in terminal folder/location where repository was cloned.
   3. Enter to  LCD_HD44780/hw/STM32G071RB/
-      ```powershell
+      ```bash
       cd .\LCD_HD44780\hw\STM32G071RB\
       ``` 
   4. For make type:
-      ```powershell
+      ```bash
       cmake -S ./ -B Debug -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
       ``` 
       For Ninja type:
-      ```powershell 
+      ```bash 
       cmake -S ./ -B Debug -G"Ninja" -DCMAKE_BUILD_TYPE=Debug
       ```
   5. For make type: 
-      ```powershell 
+      ```bash 
       make -C Debug all
       ```
       For Ninja type 
-      ```powershell
+      ```bash
       ninja -C Debug
       ```
   6. Programm ucontroller using predefined targets:
       For make: 
-      ```powershell 
+      ```bash 
       make -C Debug flash
       ```
       For Ninja
-      ```powershell 
+      ```bash 
       ninja -C Debug flash
       ```
 
-### STM32G4
+### STM32G474
 #### Requirements for compile and run the example
   1. CMake installed
   2. Make or Ninja installed
@@ -146,7 +149,41 @@ Library main header file with available library api.
   2. LCD Keypad Shield for Arduino
   3. Pin connection between LCD Keypad Shield and Nucleo board
 #### How to build and run example
-### AVR
+  1. Clone repository to your preferred localization
+      ```bash
+      git clone https://github.com/niwciu/LCD_HD44780.git
+      ``` 
+  2. Open in terminal folder/location where repository was cloned.
+  3. Enter to  LCD_HD44780/hw/STM32G071RB/
+      ```bash
+      cd .\LCD_HD44780\hw\STM32G071RB\
+      ``` 
+  4. For make type:
+      ```bash
+      cmake -S ./ -B Debug -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
+      ``` 
+      For Ninja type:
+      ```bash 
+      cmake -S ./ -B Debug -G"Ninja" -DCMAKE_BUILD_TYPE=Debug
+      ```
+  5. For make type: 
+      ```bash 
+      make -C Debug all
+      ```
+      For Ninja type 
+      ```bash
+      ninja -C Debug
+      ```
+  6. Programm ucontroller using predefined targets:
+      For make: 
+      ```bash 
+      make -C Debug flash
+      ```
+      For Ninja
+      ```bash 
+      ninja -C Debug flash
+      ```
+### AVR ATmega 328P
 #### Requirements for compile and run the example
   1. CMake installed
   2. Make or Ninja installed
