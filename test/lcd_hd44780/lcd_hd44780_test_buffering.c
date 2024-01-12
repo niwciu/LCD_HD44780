@@ -287,10 +287,19 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_lcd_hex_20_5_ri
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf, lcd_buffer, (LCD_X * LCD_Y));
 }
 
-// TEST(lcd_hd44780_buffering, )
-// {
-//     TEST_FAIL_MESSAGE("Added test")
-// }
+TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_lcd_hex_20_1_right_ThenLcdBufferContainInt0x14AsString)
+{
+    define_expected_buffer_value_for_cls();
+    expected_lcd_buf[LINE_1][C1] = '0';
+    expected_lcd_buf[LINE_1][C2] = 'x';
+    expected_lcd_buf[LINE_1][C3] = '1';
+    expected_lcd_buf[LINE_1][C4] = '4';
+    lcd_buf_str("1234");
+    lcd_buf_locate(LINE_1,C1);
+    lcd_buf_hex(20,1,right);
+    lcd_update();
+    TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf, lcd_buffer, (LCD_X * LCD_Y));
+}
 #endif
 #if USE_LCD_BUF_BIN == ON
 #endif
