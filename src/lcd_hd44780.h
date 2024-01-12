@@ -45,7 +45,6 @@ extern "C"
     void lcd_cursor_off(void);
     void lcd_blinking_cursor_on(void);
 
-#if LCD_BUFFERING == ON
     void lcd_buf_cls(void);
     void lcd_buf_char(const char c);
     void lcd_buf_locate(enum LCD_LINES y, enum LCD_COLUMNS x);
@@ -55,7 +54,6 @@ extern "C"
     void lcd_buf_int(int val, uint8_t width, enum alignment alignment);
     void lcd_buf_hex(int val, uint8_t width, enum alignment alignment);
     void lcd_buf_bin(int val, uint8_t width);
-#endif
 
 #ifdef __cplusplus
 }

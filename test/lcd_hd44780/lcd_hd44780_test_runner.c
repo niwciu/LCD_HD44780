@@ -61,12 +61,11 @@ TEST_GROUP_RUNNER(lcd_hd44780_basic_functions)
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
 }
 
+
 TEST_GROUP_RUNNER(lcd_hd44780_buffering)
 {
-#if LCD_BUFFERING == ON
-
     /* Test cases to run */
-
+#if LCD_BUFFERING == ON
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLcdBufferContainSpaces);
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdBufCharThenBufferEqualToExpected);
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdBufCharAandLcdBufCharBUsedThenBufferEqualToExpected);
@@ -102,7 +101,7 @@ TEST_GROUP_RUNNER(lcd_hd44780_buffering)
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_lcd_bin_5_6_ThenLcdBufferContainInt0b0101AsString);
     RUN_TEST_CASE(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_lcd_bin_5_1_ThenLcdBufferContainInt0b101AsString);
     #endif
+    #endif
 
 }
 
-#endif
