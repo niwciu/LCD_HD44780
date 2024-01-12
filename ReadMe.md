@@ -110,27 +110,33 @@ Library main header file with available library api.
       ``` 
   3. Enter to  LCD_HD44780/hw/STM32G071RB/
       ```bash
-      cd .\LCD_HD44780\hw\STM32G071RB\
+      cd ./LCD_HD44780/hw/STM32G071RB
       ``` 
   4. For make type:
-     ```bash
-     cmake -S ./ -B Debug -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
-     ```
-     ```bash 
-     make -C Debug all
-     ```
-     ```bash 
-     make -C Debug flash
-     ``` 
+      ```bash
+      cmake -S ./ -B Debug -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
+      ```
+      ```bash
+      cd Debug
+      ```
+      ```bash 
+      make all
+      ```
+      ```bash 
+      make flash
+      ``` 
   5. For Ninja type:
       ```bash 
       cmake -S ./ -B Debug -G"Ninja" -DCMAKE_BUILD_TYPE=Debug
       ```
       ```bash
-      ninja -C Debug
+      cd Debug
+      ```
+      ```bash
+      ninja
       ```
       ```bash 
-      ninja -C Debug flash
+      ninja flash
       ```
 
 ### STM32G474
@@ -149,29 +155,35 @@ Library main header file with available library api.
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
       ``` 
-  3. Enter to  LCD_HD44780/hw/STM32G071RB/
+  3. Enter to  LCD_HD44780/hw/STM32G474RB/
       ```bash
-      cd .\LCD_HD44780\hw\STM32G071RB\
+      cd ./LCD_HD44780/hw/STM32G474RB
       ``` 
   4. For make type:
       ```bash
       cmake -S ./ -B Debug -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
       ```
-      ```bash 
-      make -C Debug all
+      ```bash
+      cd Debug
       ```
       ```bash 
-      make -C Debug flash
+      make all
+      ```
+      ```bash 
+      make flash
       ``` 
   5. For Ninja type:
       ```bash 
       cmake -S ./ -B Debug -G"Ninja" -DCMAKE_BUILD_TYPE=Debug
       ```
       ```bash
-      ninja -C Debug
+      cd Debug
+      ```
+      ```bash
+      ninja
       ```
       ```bash 
-      ninja -C Debug flash
+      ninja flash
       ```
 
 ### AVR ATmega 328P
@@ -191,7 +203,7 @@ Library main header file with available library api.
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
       ``` 
-  3. Enter to LCD_HD44780\hw\ATMEGA328P_ARDUINO_UNO_R3 folder
+  3. Enter to LCD_HD44780/hw/ATMEGA328P_ARDUINO_UNO_R3 folder
       ```bash
       cd ./LCD_HD44780/hw/ATMEGA328P_ARDUINO_UNO_R3
       ``` 
