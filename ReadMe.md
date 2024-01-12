@@ -113,27 +113,22 @@ Library main header file with available library api.
       cd .\LCD_HD44780\hw\STM32G071RB\
       ``` 
   4. For make type:
-      ```bash
-      cmake -S ./ -B Debug -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
-      ``` 
-      For Ninja type:
+     ```bash
+     cmake -S ./ -B Debug -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
+     ```
+     ```bash 
+     make -C Debug all
+     ```
+     ```bash 
+     make -C Debug flash
+     ``` 
+  5. For Ninja type:
       ```bash 
       cmake -S ./ -B Debug -G"Ninja" -DCMAKE_BUILD_TYPE=Debug
       ```
-  5. For make type: 
-      ```bash 
-      make -C Debug all
-      ```
-      For Ninja type 
       ```bash
       ninja -C Debug
       ```
-  6. Programm ucontroller using predefined targets:
-      For make: 
-      ```bash 
-      make -C Debug flash
-      ```
-      For Ninja
       ```bash 
       ninja -C Debug flash
       ```
@@ -161,28 +156,24 @@ Library main header file with available library api.
   4. For make type:
       ```bash
       cmake -S ./ -B Debug -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
-      ``` 
-      For Ninja type:
-      ```bash 
-      cmake -S ./ -B Debug -G"Ninja" -DCMAKE_BUILD_TYPE=Debug
       ```
-  5. For make type: 
       ```bash 
       make -C Debug all
       ```
-      For Ninja type 
+      ```bash 
+      make -C Debug flash
+      ``` 
+  5. For Ninja type:
+      ```bash 
+      cmake -S ./ -B Debug -G"Ninja" -DCMAKE_BUILD_TYPE=Debug
+      ```
       ```bash
       ninja -C Debug
       ```
-  6. Programm ucontroller using predefined targets:
-      For make: 
-      ```bash 
-      make -C Debug flash
-      ```
-      For Ninja
       ```bash 
       ninja -C Debug flash
       ```
+
 ### AVR ATmega 328P
 #### Requirements for compile and run the example
   1. CMake installed
