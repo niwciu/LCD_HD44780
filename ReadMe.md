@@ -29,12 +29,12 @@
       - [Hadrware connections](#hadrware-connections)
       - [How to build and run example](#how-to-build-and-run-example-3)
   - [How to use in your Project - simple case withoud user predefined characters](#how-to-use-in-your-project---simple-case-withoud-user-predefined-characters)
-  - [How to use in your Project - simple case with user predefined special characters](#how-to-use-in-your-project---simple-case-with-user-predefined-special-characters)
+  - [How to use in your Project - advanced case](#how-to-use-in-your-project---advanced-case)
   - [How to define custom characters and custom character banks.](#how-to-define-custom-characters-and-custom-character-banks)
     - [Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)](#example-of-correspondence-between-eprom-address-data-and-character-pattern-5--8-dots)
     - [Defining special characters in code.](#defining-special-characters-in-code)
     - [Defining banks for special characters.](#defining-banks-for-special-characters)
-  - [Project main folders file structure - for colaborators](#project-main-folders-file-structure---for-colaborators)
+  - [Project main folders file structure](#project-main-folders-file-structure)
 
 ## Features
 - Works with a connected LCD display in 4-bit mode with or without the LCD RW pin connected
@@ -195,7 +195,7 @@ const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. For more details, please lock in the example folder and search for the LCD_IO_driver.c file for the specific uController that you want to use.
 
 
-## How to use in your Project - simple case with user predefined special characters
+## How to use in your Project - advanced case
 1. Copy LCD library src files (files from src folder) to your project
 2. In lcd_hd44780.config.h 
    - Define specyfic **LCD_TYPE** and usage of **RW Pin**<br>
@@ -332,7 +332,8 @@ Below you can find a simple example of two special characters bank definitions:
     lcd_load_char_bank(&lcd_cgram_bank_2);
     ```
 
-## Project main folders file structure - for colaborators
+
+## Project main folders file structure
 ```bash 
 LCD_HD44780
 ├───.github
