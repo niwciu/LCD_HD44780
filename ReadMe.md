@@ -5,6 +5,12 @@
   - [Hardware configuration](#hardware-configuration)
     - [Requirements](#requirements)
     - [Schematic for possible hardware configurations](#schematic-for-possible-hardware-configurations)
+  - [LCD\_HD44780 library src folders file structure and description](#lcd_hd44780-library-src-folders-file-structure-and-description)
+    - [1. lcd\_hd44780\_config.h](#1-lcd_hd44780_configh)
+    - [2. lcd\_hd44780\_def\_char.h](#2-lcd_hd44780_def_charh)
+    - [3. lcd\_hd44780\_interface.h](#3-lcd_hd44780_interfaceh)
+    - [4. lcd\_hd44780.c](#4-lcd_hd44780c)
+    - [5. lcd\_hd44780.h](#5-lcd_hd44780h)
   - [Examples](#examples)
     - [STM32G0](#stm32g0)
       - [Requirements](#requirements-1)
@@ -18,13 +24,13 @@
       - [Requirements](#requirements-3)
       - [Hadrware connections](#hadrware-connections-2)
       - [How to build and run example](#how-to-build-and-run-example-2)
-  - [How to use in your Project - simple case](#how-to-use-in-your-project---simple-case)
-  - [How to use in your Project - advanced case](#how-to-use-in-your-project---advanced-case)
+  - [How to use in your Project - simple case withoud user predefined characters](#how-to-use-in-your-project---simple-case-withoud-user-predefined-characters)
+  - [How to use in your Project - simple case with user predefined special characters](#how-to-use-in-your-project---simple-case-with-user-predefined-special-characters)
   - [How to define custom characters and custom character banks.](#how-to-define-custom-characters-and-custom-character-banks)
     - [Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)](#example-of-correspondence-between-eprom-address-data-and-character-pattern-5--8-dots)
     - [Defining special characters in code.](#defining-special-characters-in-code)
     - [Defining banks for special characters.](#defining-banks-for-special-characters)
-  - [Project main folders file structure](#project-main-folders-file-structure)
+  - [Project main folders file structure - for colaborators](#project-main-folders-file-structure---for-colaborators)
 
 ## Features
 - Works with a connected LCD display in 4-bit mode with or without the LCD RW pin connected
@@ -33,6 +39,10 @@
 - Allows to display strings/chars directly on LCD
 - Allows to put strings/chars in buffer and refresh LCD periodically with buffer content
 - Allows to define custom chars (more than 8) as well as custom char banks where different combination of custom characters can be easily loaded to LCD CGRAM
+- Contain functions for displayin on LCD int values as:
+  - int, 
+  - hex, 
+  - bin
 - Library has currently predefined LCD types:
   - 2 lines 16 characters (1602)
   - 4 lines 16 characters (1604)
@@ -52,6 +62,31 @@
 - Without using RW pin of the LCD  (set **USE_RW_PIN &nbsp; OFF** in lcd_hd44780_config.h)
 <br><br>
 <img src="./doc/HW%20connection%20no%20RW.png"   height="400"><br> <br>
+## LCD_HD44780 library src folders file structure and description
+```bash 
+LCD_HD44780
+├───src
+│   ├───lcd_hd44780_config.h
+│   ├───lcd_hd44780_def_char.h
+│   ├───lcd_hd44780_interface.h
+│   ├───lcd_hd44780.c
+│   ├───lcd_hd44780.h
+...
+```
+### 1. lcd_hd44780_config.h
+  Header file for configuration of the library. In this file, it's required to configure:
+  - LCD type 
+  - Usage of RW Signal/PIN
+  - Usage of LCD buffer for displaying the content on the LCD
+  - Which functions from LCD_HD44780 lib you would like to compile and use in you project.
+### 2. lcd_hd44780_def_char.h
+Header file for defining user special characters and user special characters banks. Each bank can contain up to 8 characters that are user-defined combinations of characters from defined user-special characters. This allows to creation of different combinations of special characters that can be loaded depending on current code needs.
+### 3. lcd_hd44780_interface.h
+Header file with library interface declaration that needs to be implemented on the drivers' side. Please look at the code examples in the"hw" folder and search for the "LCD_IO_driver.c" file for more details.
+### 4. lcd_hd44780.c
+Library main C file 
+### 5. lcd_hd44780.h
+Library main header file with available library api.
 ## Examples
 ### STM32G0
 #### Requirements
@@ -65,7 +100,7 @@
 #### Requirements
 #### Hadrware connections
 #### How to build and run example
-## How to use in your Project - simple case
+## How to use in your Project - simple case withoud user predefined characters
 1. Copy LCD library src files (files from src folder) to your project
 2. In lcd_hd44780.config.h 
    - Define specific **LCD_TYPE** and usage of **RW Pin**<br>
@@ -101,7 +136,7 @@ const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. For more details, please lock in the example folder and search for the LCD_IO_driver.c file for the specific uController that you want to use.
 
 
-## How to use in your Project - advanced case
+## How to use in your Project - simple case with user predefined special characters
 1. Copy LCD library src files (files from src folder) to your project
 2. In lcd_hd44780.config.h 
    - Define specyfic **LCD_TYPE** and usage of **RW Pin**<br>
@@ -238,8 +273,7 @@ Below you can find a simple example of two special characters bank definitions:
     lcd_load_char_bank(&lcd_cgram_bank_2);
     ```
 
-
-## Project main folders file structure
+## Project main folders file structure - for colaborators
 ```bash 
 LCD_HD44780
 ├───.github
