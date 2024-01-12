@@ -107,9 +107,9 @@ Library main header file with available library api.
   2. Open in terminal folder where repository was cloned.
   3. Enter to  LCD_HD44780/hw/STM32G071RB/
       ```powershell
-      cd LCD_HD44780\hw\STM32G071RB\
+      cd .\LCD_HD44780\hw\STM32G071RB\
       ``` 
-  5. For make type:
+  4. For make type:
       ```powershell
       cmake -S ./ -B Debug -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
       ``` 
@@ -117,7 +117,7 @@ Library main header file with available library api.
       ```powershell 
       cmake -S ./ -B Debug -G"Ninja" -DCMAKE_BUILD_TYPE=Debug
       ```
-  6. For make type: 
+  5. For make type: 
       ```powershell 
       make -C Debug all
       ```
@@ -125,7 +125,7 @@ Library main header file with available library api.
       ```powershell
       ninja -C Debug
       ```
-  7. Programm ucontroller using predefined targets:
+  6. Programm ucontroller using predefined targets:
       For make: 
       ```powershell 
       make -C Debug flash
