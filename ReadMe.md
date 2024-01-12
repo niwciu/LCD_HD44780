@@ -104,32 +104,35 @@ Library main header file with available library api.
   3. Pin connection between LCD Keypad Shield and Nucleo board
 #### How to build and run example
   1. Clone repository to your preferred localization
-  2. Open folder where repository was cloned in terminal.
-  3. Enter to  ./LCD_HD44780/hw/STM32G071RB/
-  4. For make type:
-      ```powershell 
+  2. Open in terminal folder where repository was cloned.
+  3. Enter to  LCD_HD44780/hw/STM32G071RB/
+      ```powershell
+      cd LCD_HD44780\hw\STM32G071RB\
+      ``` 
+  5. For make type:
+      ```powershell
       cmake -S ./ -B Debug -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
       ``` 
       For Ninja type:
       ```powershell 
       cmake -S ./ -B Debug -G"Ninja" -DCMAKE_BUILD_TYPE=Debug
       ```
-  5. For make type: 
+  6. For make type: 
       ```powershell 
-      make -C Debug all VERBOSE=1
+      make -C Debug all
       ```
       For Ninja type 
       ```powershell
-      ninja -C Debug -V 
+      ninja -C Debug
       ```
-  6. Programm ucontroller using predefined targets:
+  7. Programm ucontroller using predefined targets:
       For make: 
       ```powershell 
       make -C Debug flash
       ```
       For Ninja
       ```powershell 
-      Ninja -C Debug flash
+      ninja -C Debug flash
       ```
 
 ### STM32G4
