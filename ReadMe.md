@@ -225,7 +225,7 @@ Library main header file with available library api.
       ninja -C Build
       ```
       ```bash 
-      ninja -C write_fuse
+      ninja -C write_fuses
       ```
       ```bash 
       ninja -C flash
