@@ -4,18 +4,22 @@
 #
 # usage: Edit MCPU-Variable to suit STM32 project requirements.
 #        For debug build using Unix Makefiles:
-#          cmake -S ./ -B Debug -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
-#          make -C Debug all (optional with VERBOSE=1  and -jxx ->xx numnber of cores)
+#          cmake -S ./ -B Build -G"Unix Makefiles"
+#          make -C Build all (optional with VERBOSE=1  and -jxx ->xx numnber of cores)
 #        For debug build using Ninja:
-#          cmake -S ./ -B Debug -G"Ninja" -DCMAKE_BUILD_TYPE=Debug
-#          ninja -C Debug (optional with -V  and -jxx ->xx numnber of cores)
-# 
-#        For release build Unix Makefiles:
-#          cmake -S ./ -B Release -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
-#          make all -C Release VERBOSE=1 -j12 (optional with VERBOSE=1  and -jxx ->xx numnber of cores)
-#        For Release build using Ninja:
-#          cmake -S ./ -B Release -G"Ninja" -DCMAKE_BUILD_TYPE=Release
-#          ninja -C Release (optional -V  and -jxx ->xx numnber of cores)
+#          cmake -S ./ -B Build -G"Ninja" -DCMAKE_BUILD_TYPE=Debug
+#          ninja -C Build (optional with -V  and -jxx ->xx numnber of cores)
+# additional custom targets for this project:
+# 		Erase Atmega chip:
+# 			1. make erase / ninja erase
+# 		Read Fuse Bits:
+# 			1. make write_fuses / ninja write_fuses
+# 		Write Fuse Bits:
+# 			1. make write_fuses / ninja write_fuses
+# 		Read Flash:
+# 			1. make read_flash / ninja read_flash
+# 		Write Flash:
+# 			1. make flash / ninja flash
 #############################################################################################################################
 cmake_minimum_required(VERSION 3.10)
 

@@ -86,7 +86,7 @@ LCD_HD44780
 ### 2. lcd_hd44780_def_char.h
 Header file for defining user special characters and user special characters banks. Each bank can contain up to 8 characters that are user-defined combinations of characters from defined user-special characters. This allows to creation of different combinations of special characters that can be loaded depending on current code needs.
 ### 3. lcd_hd44780_interface.h
-Header file with library interface declaration that needs to be implemented on the drivers' side. Please look at the code examples in the"hw" folder and search for the "LCD_IO_driver.c" file for more details.
+Header file with library interface declaration that needs to be implemented on the drivers' side. Please look at the code examples in the "examples" folder and search for the "LCD_IO_driver.c" file for more details.
 ### 4. lcd_hd44780.c
 Library main C file 
 ### 5. lcd_hd44780.h
@@ -108,9 +108,9 @@ Library main header file with available library api.
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
       ``` 
-  3. Enter to  LCD_HD44780/hw/STM32G071RB/
+  3. Enter to  LCD_HD44780/examples/STM32G071RB/
       ```bash
-      cd ./LCD_HD44780/hw/STM32G071RB
+      cd ./LCD_HD44780/examples/STM32G071RB
       ``` 
   4. For make type:
       ```bash
@@ -155,9 +155,9 @@ Library main header file with available library api.
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
       ``` 
-  3. Enter to  LCD_HD44780/hw/STM32G474RB/
+  3. Enter to  LCD_HD44780/examples/STM32G474RB/
       ```bash
-      cd ./LCD_HD44780/hw/STM32G474RB
+      cd ./LCD_HD44780/examples/STM32G474RB
       ``` 
   4. For make type:
       ```bash
@@ -203,9 +203,9 @@ Library main header file with available library api.
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
       ``` 
-  3. Enter to LCD_HD44780/hw/ATMEGA328P_ARDUINO_UNO_R3 folder
+  3. Enter to LCD_HD44780/examples/ATMEGA328P_ARDUINO_UNO_R3 folder
       ```bash
-      cd ./LCD_HD44780/hw/ATMEGA328P_ARDUINO_UNO_R3
+      cd ./LCD_HD44780/examples/ATMEGA328P_ARDUINO_UNO_R3
       ``` 
   4. For make type:
       ```bash
@@ -423,7 +423,7 @@ LCD_HD44780
 ├───.github
 ├───.vscode
 ├───doc
-├───hw
+├───examples
 │   ├───ATMEGA328P_ARDUINO_UNO_R3
 │   ├───config
 │   ├───STM32F030R8
@@ -445,7 +445,7 @@ Folder description:
 - .github -> Folder with githubactions .yml scripts
 - .vscode -> folder with vscode example settings for luch.json and tasks.json
 - doc -> folder for any documentations needes or created in the project
-- hw -> folder with example hardware implementations contain ready to compile examples for different uC
+- hxamples -> folder with example hardware implementations contain ready to compile examples for different uC
 - test -> folder where all tests are written. Folder contain fallowing subfolders:
   - hw_test -> folder with configurations/setups for specyfic ucontrollers to make integration tests
   - lcd_hd44780 -> folder where all unit tests for lcd_hd44780 module are keept
