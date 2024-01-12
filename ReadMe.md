@@ -210,7 +210,7 @@ Library main header file with available library api.
       ``` 
       For Ninja type:
       ```bash 
-      cmake -S ./ -B Debug -G"Ninja" -DCMAKE_BUILD_TYPE=Debug
+      cmake -S ./ -B Build -G"Ninja"
       ```
   5. For make type: 
       ```bash 
