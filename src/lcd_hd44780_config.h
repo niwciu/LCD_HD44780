@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:38:27
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-08 16:57:42
+ * @Last Modified time: 2024-01-09 21:20:52
  */
 
 #ifndef _LCD_HD44780_CONFIG_H_
@@ -26,8 +26,10 @@ extern "C"
  *               ON - when RW pin is connected
  *               OFF - when RW pin is not connected
  ********************************************************************************************/
-#define LCD_TYPE       2004
+#define LCD_TYPE       1602
 #define USE_RW_PIN     OFF 
+
+#define LCD_BUFFERING  ON
 
 //definitions of Line and collumn labels for lcd_locate 
 enum LCD_LINES
@@ -61,7 +63,42 @@ enum LCD_COLUMNS{
 #define USE_LCD_CURSOR_OFF              ON
 #define USE_LCD_BLINKING_CURSOR_ON      ON
 
+#if LCD_BUFFERING == ON
+#define USE_LCD_BUF_INT                 ON
+#define USE_LCD_BUF_HEX                 ON
+#define USE_LCD_BUF_BIN                 ON
+#endif
 
+
+/********************  definitions of Line addres for different lcd screens ****************/
+//https://web.alfredstate.edu/faculty/weimandn/lcd/lcd_addressing/lcd_addressing_index.html
+
+#if LCD_TYPE ==1604
+#define LCD_Y   4 
+#define LCD_X   16 
+#define LCD_LINE1_ADR   0x00 
+#define LCD_LINE2_ADR   0x40 
+#define LCD_LINE3_ADR   0x10 
+#define LCD_LINE4_ADR   0x50 
+#endif
+
+#if LCD_TYPE==2004
+#define LCD_Y   4 
+#define LCD_X   20 
+#define LCD_LINE1_ADR   0x00 
+#define LCD_LINE2_ADR   0x40 
+#define LCD_LINE3_ADR   0x14 
+#define LCD_LINE4_ADR   0x54 
+#endif
+
+#if LCD_TYPE==1602
+#define LCD_Y   2 
+#define LCD_X   16 
+#define LCD_LINE1_ADR   0x00 
+#define LCD_LINE2_ADR   0x40 
+#endif
+
+    // clang-format on
 
 #ifdef __cplusplus
 }

@@ -13,4 +13,5 @@ static void run_all_tests(void)
 {
     RUN_TEST_GROUP(lcd_hd44780_init);
     RUN_TEST_GROUP(lcd_hd44780_basic_functions);
+    RUN_TEST_GROUP(lcd_hd44780_buffering);
 }

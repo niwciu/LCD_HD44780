@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:40:29
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2023-12-12 18:03:17
+ * @Last Modified time: 2024-01-10 14:00:22
  */
 
 #ifndef _LCD_HD_44780_H_
@@ -12,17 +12,18 @@
 extern "C"
 {
 #endif /* __cplusplus */
+#include <stdbool.h>
 #include "lcd_hd44780_config.h"
 #include "lcd_hd44780_interface.h"
-#if USE_DEF_CHAR_FUNCTION == ON
 #include "lcd_hd44780_def_char.h"
-#endif
 
     enum alignment
     {
         left,
         right
     };
+
+    extern bool LCD_UPDATE_EVENT;
 
     void lcd_init(void);
     void lcd_cls(void);
@@ -42,6 +43,16 @@ extern "C"
     void lcd_cursor_on(void);
     void lcd_cursor_off(void);
     void lcd_blinking_cursor_on(void);
+
+    void lcd_buf_cls(void);
+    void lcd_buf_char(const char c);
+    void lcd_buf_locate(enum LCD_LINES y, enum LCD_COLUMNS x);
+    void lcd_buf_str(const char *str);
+    void lcd_update(void);
+
+    void lcd_buf_int(int val, uint8_t width, enum alignment alignment);
+    void lcd_buf_hex(int val, uint8_t width, enum alignment alignment);
+    void lcd_buf_bin(int val, uint8_t width);
 
 #ifdef __cplusplus
 }

@@ -12,16 +12,16 @@
 # 			2. enter the "out" folder
 #         	3. ninja -C out -o lcd_hd44780.o (optional with -V  and -jxx ->xx numnber of cores)
 # additional custom targets for this project:
-# 		Running unit tests when you are in out folder:
-# 			1. make run
+# 		Running unit tests when you are in "out" folder:
+# 			1. make run / ninja run
 # 		If lizard is installed and you are in the out folder:
-# 			1. make ccm -> code complexity metrix print in console
-# 			2. make ccmr -> code complexity metrics report generation
+# 			1. make ccm / ninja ccm-> code complexity metrix print in console
+# 			2. make ccmr / ninja ccmr-> code complexity metrics report generation
 # 		If cppcheck is installed and you are in the out folder
-# 			1. make cppcheck_src -> static analize  for src folder printed in console
+# 			1. make/ninja cppcheck_src -> static analize  for src folder printed in console
 # 			2. make cppcheck_test-> static analize  for src folder printed in console
 # 		If gcovr is installed and you are in the out folder
-# 			1. make ccr -> code coverage report generation 
+# 			1. make ccr / ninja ccr -> code coverage report generation 
 # 
 #############################################################################################################################
 cmake_minimum_required(VERSION 3.10)
@@ -59,10 +59,12 @@ set(TEST_SRCS
 	mock_LCD_IO_driver.c
 	lcd_hd44780_test_basic_func.c
 	lcd_hd44780_test_common.c
+	lcd_hd44780_test_buffering.c
 	#mock_module.c
 )
 
 set(GLOBAL_DEFINES
+	-DUNIT_TEST
 	# -DAVR
 )
 

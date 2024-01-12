@@ -3,12 +3,13 @@ out_avr/
 Release/
 Debug/
 Build/
-.vscode/settings.json
+.vscode/
 # HW test ingnored files
 .metadata/
 .cproject
 .project
 .settings/
+
 
 
 
