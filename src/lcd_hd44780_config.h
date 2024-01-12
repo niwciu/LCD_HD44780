@@ -26,7 +26,7 @@ extern "C"
  *               ON - when RW pin is connected
  *               OFF - when RW pin is not connected
  ********************************************************************************************/
-#define LCD_TYPE       2004
+#define LCD_TYPE       1602
 #define USE_RW_PIN     OFF 
 
 #define LCD_BUFFERING  ON

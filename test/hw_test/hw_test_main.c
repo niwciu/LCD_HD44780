@@ -7,7 +7,29 @@
 #include "tim_delay.h"
 #endif
 
+#define BASIC_FUNCTIONS_TESTS       OFF
+#define BUFFERING_FUNCTION_TESTS    ON
+
+#if BASIC_FUNCTIONS_TESTS == ON
+static void basic_func_tests(void);
+#endif
+#if BUFFERING_FUNCTION_TESTS == ON
+static void buffering_func_tests(void);
+#endif
+
 void main_hw_test(void)
+{
+    #if BASIC_FUNCTIONS_TESTS == ON
+    basic_func_tests();
+    #endif
+    #if BUFFERING_FUNCTION_TESTS == ON
+    buffering_func_tests();
+    #endif
+    while (1);
+}
+
+#if BASIC_FUNCTIONS_TESTS == ON
+void basic_func_tests(void)
 {
     lcd_init();
     lcd_char('G');
@@ -19,7 +41,6 @@ void main_hw_test(void)
     lcd_char(pol_o);
     lcd_char(zn_wody);
     lcd_char('l');
-
     _delay_ms(1000);
     lcd_cls();
     lcd_cursor_on();
@@ -44,6 +65,11 @@ void main_hw_test(void)
     lcd_locate(LINE_2, C8);
     lcd_bin(5, 8);
     _delay_ms(1000);
+}
+#endif 
+#if BUFFERING_FUNCTION_TESTS == ON
+void buffering_func_tests(void)
+{
     lcd_init();
     lcd_buf_char('G');
     lcd_buf_locate(0,2);
@@ -52,6 +78,13 @@ void main_hw_test(void)
     _delay_ms(1000);
     lcd_locate(0,0);
     lcd_buf_char('a');
+    lcd_update();
+    _delay_ms(1000);
+    lcd_buf_cls();
+    lcd_load_char_bank(&lcd_cgram_bank_1);
+    lcd_buf_char(pol_e);
+    lcd_buf_char(pol_o);
+    lcd_buf_char(zn_wody);
     lcd_update();
     _delay_ms(1000);
     lcd_buf_cls();
@@ -72,6 +105,14 @@ void main_hw_test(void)
     #else
     #endif
     lcd_update();
-    while (1)
-        ;
+    lcd_buf_cls();
+    lcd_buf_hex(24, 6, right);
+    lcd_buf_int(24, 6, right);
+    lcd_buf_locate(LINE_2, C1);
+    lcd_buf_bin(5, 1);
+    lcd_buf_locate(LINE_2, C8);
+    lcd_buf_bin(5, 8);
+    _delay_ms(1000);
+    lcd_update();
 }
+#endif
