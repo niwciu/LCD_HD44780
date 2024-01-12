@@ -208,7 +208,7 @@ Library main header file with available library api.
       ```bash
       cmake -S ./ -B Build -G"Unix Makefiles"
       make -C Build all
-      make -C Build write_fuse
+      make -C Build write_fuses
       make -C Build flash
       ``` 
       For Ninja type:
