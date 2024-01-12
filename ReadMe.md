@@ -217,7 +217,7 @@ Library main header file with available library api.
       ```bash
       make -C Build flash
       ``` 
-     For Ninja type:
+  5. For Ninja type:
       ```bash 
       cmake -S ./ -B Build -G"Ninja"
       ```
