@@ -12,6 +12,19 @@
 extern "C"
 {
 #endif /* __cplusplus */
+
+    struct char_bank_struct
+    {
+        const uint8_t *char_0;
+        const uint8_t *char_1;
+        const uint8_t *char_2;
+        const uint8_t *char_3;
+        const uint8_t *char_4;
+        const uint8_t *char_5;
+        const uint8_t *char_6;
+        const uint8_t *char_7;
+    };
+
 #if USE_DEF_CHAR_FUNCTION == ON
 #define LCD_CGRAM_BYTES_PER_CHAR 8
 #define DEF_CHAR_ADR_MASK 7
@@ -28,17 +41,6 @@ extern "C"
     // here add "definition" of new chars
     /**********************USER CHAR DEFINITIONS END********************************/
 
-    struct char_bank_struct
-    {
-        const uint8_t *char_0;
-        const uint8_t *char_1;
-        const uint8_t *char_2;
-        const uint8_t *char_3;
-        const uint8_t *char_4;
-        const uint8_t *char_5;
-        const uint8_t *char_6;
-        const uint8_t *char_7;
-    };
     /**********************USER CHAR CGRAM BANKS DEFINITIONS START*******************/
     static const struct char_bank_struct lcd_cgram_bank_1 = {
         Pol_e,
