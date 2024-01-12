@@ -193,33 +193,39 @@ Library main header file with available library api.
       ``` 
   3. Enter to LCD_HD44780\hw\ATMEGA328P_ARDUINO_UNO_R3 folder
       ```bash
-      cd .\LCD_HD44780\hw\ATMEGA328P_ARDUINO_UNO_R3
+      cd ./LCD_HD44780/hw/ATMEGA328P_ARDUINO_UNO_R3
       ``` 
   4. For make type:
       ```bash
       cmake -S ./ -B Build -G"Unix Makefiles"
       ``` 
       ```bash
-      make -C Build all
+      cd Build
       ``` 
       ```bash
-      make -C Build write_fuses
+      make all
       ``` 
       ```bash
-      make -C Build flash
+      make write_fuses
+      ``` 
+      ```bash
+      make flash
       ``` 
   5. For Ninja type:
       ```bash 
       cmake -S ./ -B Build -G"Ninja"
       ```
       ```bash
-      ninja -C Build
+      cd Build
+      ```
+      ```bash
+      ninja
       ```
       ```bash 
-      ninja -C Build write_fuses
+      ninja write_fuses
       ```
       ```bash 
-      ninja -C Build flash
+      ninja flash
       ```
 
 ### ESP8266 NONOS SDK
