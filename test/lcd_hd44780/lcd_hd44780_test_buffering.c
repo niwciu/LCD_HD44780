@@ -220,6 +220,8 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_LcdInt_16_4_rig
     expected_lcd_buf[LINE_1][C2] = ' ';
     expected_lcd_buf[LINE_1][C3] = '1';
     expected_lcd_buf[LINE_1][C4] = '6';
+    lcd_buf_str("1234");
+    lcd_buf_locate(LINE_1,C1);
     lcd_buf_int(16,4,right);
     lcd_update();
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf, lcd_buffer, (LCD_X * LCD_Y));
@@ -263,15 +265,27 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_lcd_hex_255_6_r
     expected_lcd_buf[LINE_1][C4] = 'x';
     expected_lcd_buf[LINE_1][C5] = 'f';
     expected_lcd_buf[LINE_1][C6] = 'f';
+    lcd_buf_str("123456");
+    lcd_buf_locate(LINE_1,C1);
     lcd_buf_hex(255,6,right);
     lcd_update();
     TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf, lcd_buffer, (LCD_X * LCD_Y));
 }
 
-// TEST(lcd_hd44780_buffering, )
-// {
-//     TEST_FAIL_MESSAGE("Added test")
-// }
+TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenUse_lcd_hex_20_5_right_ThenLcdBufferContainInt_0x14AsString)
+{
+    define_expected_buffer_value_for_cls();
+    expected_lcd_buf[LINE_1][C1] = ' ';
+    expected_lcd_buf[LINE_1][C2] = '0';
+    expected_lcd_buf[LINE_1][C3] = 'x';
+    expected_lcd_buf[LINE_1][C4] = '1';
+    expected_lcd_buf[LINE_1][C5] = '4';
+    lcd_buf_str("12345");
+    lcd_buf_locate(LINE_1,C1);
+    lcd_buf_hex(20,5,right);
+    lcd_update();
+    TEST_ASSERT_EQUAL_UINT8_ARRAY(expected_lcd_buf, lcd_buffer, (LCD_X * LCD_Y));
+}
 
 // TEST(lcd_hd44780_buffering, )
 // {
