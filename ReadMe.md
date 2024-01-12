@@ -225,10 +225,10 @@ Library main header file with available library api.
       ninja -C Build
       ```
       ```bash 
-      ninja -C write_fuses
+      ninja -C Build write_fuses
       ```
       ```bash 
-      ninja -C flash
+      ninja -C Build flash
       ```
 
 ### ESP8266 NONOS SDK
