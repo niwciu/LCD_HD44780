@@ -212,7 +212,7 @@ Library main header file with available library api.
                 &emsp; &emsp;&emsp; &emsp;OFF - when RW pin is not connected<br>
 
 
-3. Define the LCD IO driver interface in your application. This interface should contain the following implementation defined in lcd_hd44780_interface.h
+3. Declare the LCD IO driver interface in your application on GPIO driver side. This interface should contain the following implementation defined in lcd_hd44780_interface.h
 ```C 
    /************LCD_IO_driver_interface implementation START**************/
 static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
@@ -248,7 +248,7 @@ It's a basic interface that connects the library with your HW driver layer in th
                 &emsp; &emsp;&emsp; &emsp;OFF - when RW pin is not connected<br>
 
     - Specify which procedures from to library you would like to compile and use in your project.<br>
-      To do this, Edit defines in section: <br><br>
+      To do this, Edit defines in section: <br>
     ```C
     /********************************  LCD LIBRARY COMPILATION SETTINGS ************************
     *      Setting USE_(procedure name) to:
@@ -268,9 +268,8 @@ It's a basic interface that connects the library with your HW driver layer in th
     ```
     <br>
 3. If setting USE_DEF_CHAR_FUNCTION &nbsp; ON define special characters and character banks in lcd_hd44780_def_char.h <br> For more details about defining custom char please refer to [How to define custom characters and custom character banks.](#how-to-define-custome-charatcters-and-custom-character-banks)
-4. Define the LCD IO driver interface in your application. <br> 
-   This interface should contain the following implementation defined in lcd_hd44780_interface.h<br>
-   <br><br>
+4. Declare the LCD IO driver interface in your application on GPIO driver side. This interface should contain the following implementation defined in lcd_hd44780_interface.h<br>
+   <br>
     ```C 
    /************LCD_IO_driver_interface implementation START**************/
     static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
@@ -293,7 +292,7 @@ It's a basic interface that connects the library with your HW driver layer in th
     It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. For more details, please lock in the example folder and search for the LCD_IO_driver.c file for the specific uController that you want to use.
 ## How to define custom characters and custom character banks.
 ### Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)
-<img src="./doc/font map.png" height="350"><br> <br>
+<img src="./doc/font map.png" height="350"><br>
 <br>
 ### Defining special characters in code.
 If the letter shown in the picture above should be defined as a special character its definition should look like this:
@@ -317,7 +316,7 @@ Below you can find a simple example of two special characters bank definitions:
     static const uint8_t Pol_z1[8] = {4, 32, 31, 2, 4, 8, 31, 0};
     static const uint8_t Pol_z2[8] = {2, 4, 31, 2, 4, 8, 31, 0};
     ```
-2. Definition of lcd_cgram_bank_1 in lcd_hd44780_def_char.h:
+2. Declaration of lcd_cgram_bank_1 in lcd_hd44780_def_char.h:
     ```C
     static const struct char_bank_struct lcd_cgram_bank_1 = {
         Pol_e,
@@ -340,7 +339,7 @@ Below you can find a simple example of two special characters bank definitions:
         zn_wody,
     };
     ```
-3. Definition of lcd_cgram_bank_2 in lcd_hd44780_def_char.h:
+3. Declaration of lcd_cgram_bank_2 in lcd_hd44780_def_char.h:
     ```C
     static const struct char_bank_struct lcd_cgram_bank_1 = {
         Pol_e,
