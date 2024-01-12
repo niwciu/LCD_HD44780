@@ -15,6 +15,10 @@ TEST_GROUP_RUNNER(lcd_hd44780_init)
     RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSendDisplaySettingsCmdThenLcdPinStateSequenceIsCorrect);
     RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSendDisplayClearScrCmdThenLcdPinStateSequenceIsCorrect);
     RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSendDisplayEntryModeCmdThenLcdPinStateSequenceIsCorrect);
+    // RUN_TEST_CASE(lcd_hd44780_init, WhenLcdInitLcdBackLightPinInit)
+    // RUN_TEST_CASE(lcd_hd44780_init, WhenLcdInitLcdBackLightPinIsLow)
+    // RUN_TEST_CASE(lcd_hd44780_init, GivenLCDInitWhenLcdBackLightOnThenBacklightPinIsHigh)
+    // RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitAndBacklightPinIsHighWhenLcdBacklightOffThenBacklightPinIsLow)
     // RUN_TEST_CASE(lcd_hd44780_init, )
 }
 
