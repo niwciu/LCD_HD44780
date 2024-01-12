@@ -103,11 +103,11 @@ Library main header file with available library api.
   2. LCD Keypad Shield for Arduino
   3. Pin connection between LCD Keypad Shield and Nucleo board
 #### How to build and run example
-  1. Clone repository to your preferred localization
+  1. Open the location in your terminal where you want to clone the repository
+  2. .Clone repository to your preferred localization
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
       ``` 
-  2. Open in terminal folder/location where repository was cloned.
   3. Enter to  LCD_HD44780/hw/STM32G071RB/
       ```bash
       cd .\LCD_HD44780\hw\STM32G071RB\
@@ -149,11 +149,11 @@ Library main header file with available library api.
   2. LCD Keypad Shield for Arduino
   3. Pin connection between LCD Keypad Shield and Nucleo board
 #### How to build and run example
-  1. Clone repository to your preferred localization
+  1. Open the location in your terminal where you want to clone the repository
+  2. .Clone repository to your preferred localization
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
       ``` 
-  2. Open in terminal folder/location where repository was cloned.
   3. Enter to  LCD_HD44780/hw/STM32G071RB/
       ```bash
       cd .\LCD_HD44780\hw\STM32G071RB\
@@ -195,6 +195,40 @@ Library main header file with available library api.
   3. LCD Keypad Shield for Arduino
   4. Pin connection between LCD Keypad Shield and Nucleo board
 #### How to build and run example
+  1. Open the location in your terminal where you want to clone the repository
+  2. .Clone repository to your preferred localization
+      ```bash
+      git clone https://github.com/niwciu/LCD_HD44780.git
+      ``` 
+  3. Enter to LCD_HD44780\hw\ATMEGA328P_ARDUINO_UNO_R3 folder
+      ```bash
+      cd .\LCD_HD44780\hw\ATMEGA328P_ARDUINO_UNO_R3
+      ``` 
+  4. For make type:
+      ```bash
+      cmake -S ./ -B Build -G"Unix Makefiles"
+      ``` 
+      For Ninja type:
+      ```bash 
+      cmake -S ./ -B Debug -G"Ninja" -DCMAKE_BUILD_TYPE=Debug
+      ```
+  5. For make type: 
+      ```bash 
+      make -C Build all
+      ```
+      For Ninja type 
+      ```bash
+      ninja -C Build
+      ```
+  6. Programm ucontroller using predefined targets:
+      For make: 
+      ```bash 
+      make -C Build flash
+      ```
+      For Ninja
+      ```bash 
+      ninja -C Build flash
+      ```
 ### ESP8266 NONOS SDK
 #### Requirements
 #### Hadrware connections
