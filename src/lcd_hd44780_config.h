@@ -65,6 +65,7 @@ enum LCD_COLUMNS{
 
 #if LCD_BUFFERING == ON
 #define USE_LCD_BUF_INT                 ON
+#define USE_LCD_BUF_HEX                 ON
 #endif
 
 
