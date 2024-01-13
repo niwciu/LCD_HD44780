@@ -16,7 +16,7 @@
 // #include "lcd_hd44780_config.h"
 #include "lcd_hd44780_interface.h"
 #include "main.h"
-// #include "tim_delay.h"
+#include "tim_delay.h"
 #include <stdio.h>
 
 LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -29,7 +29,6 @@ static uint8_t get_LCD_DATA_PINS_state(void);
 static void init_LCD_SIGNAL_PINS_as_outputs(void);
 static void LCD_set_SIG(enum lcd_sig LCD_SIG);
 static void LCD_reset_SIG(enum lcd_sig LCD_SIG);
-static void _delay_us(uint32_t delay_ms);
 
 /************LCD_IO_driver_interface implementation START**************/
 static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
@@ -88,7 +87,4 @@ static void LCD_reset_SIG(enum lcd_sig LCD_SIG)
 {
 
 }
-static void _delay_us (uint32_t delay_ms)
-{
 
-}
