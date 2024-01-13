@@ -10,6 +10,7 @@
 
 #include "main.h"
 
+void _delay_ms (uint32_t delay_us);
 void _delay_us (uint32_t delay_us);
 
 

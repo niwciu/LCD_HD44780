@@ -58,6 +58,7 @@ set(C_SRCS
     Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_lpuart.c
     Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_pwr.c
     Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c
+    # Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_tim.c
     Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c
 
     ../../src/lcd_hd44780.c

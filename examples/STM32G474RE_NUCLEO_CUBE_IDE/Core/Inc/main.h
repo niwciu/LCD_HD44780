@@ -82,8 +82,6 @@ void Error_Handler(void);
 #define LD2_GPIO_Port GPIOA
 #define LCD_D6_Pin LL_GPIO_PIN_10
 #define LCD_D6_GPIO_Port GPIOB
-#define LCD_BCKL_Pin LL_GPIO_PIN_11
-#define LCD_BCKL_GPIO_Port GPIOB
 #define LCD_E_Pin LL_GPIO_PIN_7
 #define LCD_E_GPIO_Port GPIOC
 #define LCD_D7_Pin LL_GPIO_PIN_8
@@ -100,6 +98,8 @@ void Error_Handler(void);
 #define LCD_D5_GPIO_Port GPIOB
 #define LCD_D4_Pin LL_GPIO_PIN_5
 #define LCD_D4_GPIO_Port GPIOB
+#define LCD_BCKL_Pin LL_GPIO_PIN_6
+#define LCD_BCKL_GPIO_Port GPIOB
 #ifndef NVIC_PRIORITYGROUP_0
 #define NVIC_PRIORITYGROUP_0         ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority,
                                                                  4 bits for subpriority */

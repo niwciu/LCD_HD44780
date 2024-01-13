@@ -21,7 +21,10 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "lcd_hd44780.h"
+#include "tim_delay.h"
+#include <string.h>
+#include "stm32g474xx.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -31,7 +34,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define SHIFT_DELAY 300
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -42,7 +45,11 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+const char *demo_tekst = {"Congratulation, you have just run LCD demo example on STM32G474-Nucleo."};
+const char *demo_title = {"LCD HD44780 DEMO"};
 
+uint8_t j = 0;
+uint8_t i = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -50,7 +57,8 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_LPUART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
-
+static void lcd_buf_slide_str_in(const char *str, enum LCD_LINES lcd_line, uint16_t speed);
+static void lcd_buf_slide_str_out(const char *str, enum LCD_LINES lcd_line, uint16_t speed);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -96,13 +104,20 @@ int main(void)
   MX_GPIO_Init();
   MX_LPUART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  // LL_GPIO_ResetOutputPin(LCD_BCKL_GPIO_Port,LCD_BCKL_Pin);
+  // _delay_ms(1000);
+  // LL_GPIO_SetOutputPin(LCD_BCKL_GPIO_Port,LCD_BCKL_Pin);
+  lcd_init();
+  lcd_buf_str(demo_title);
+  lcd_update();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    lcd_buf_slide_str_in(demo_tekst, LINE_2, SHIFT_DELAY);
+    lcd_buf_slide_str_out(demo_tekst, LINE_2, SHIFT_DELAY);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -304,14 +319,6 @@ static void MX_GPIO_Init(void)
   LL_GPIO_Init(LCD_D6_GPIO_Port, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = LCD_BCKL_Pin;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-  GPIO_InitStruct.Pull = LL_GPIO_PULL_UP;
-  LL_GPIO_Init(LCD_BCKL_GPIO_Port, &GPIO_InitStruct);
-
-  /**/
   GPIO_InitStruct.Pin = LCD_E_Pin;
   GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
   GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
@@ -351,6 +358,14 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
   LL_GPIO_Init(LCD_D4_GPIO_Port, &GPIO_InitStruct);
 
+  /**/
+  GPIO_InitStruct.Pin = LCD_BCKL_Pin;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+  GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+  LL_GPIO_Init(LCD_BCKL_GPIO_Port, &GPIO_InitStruct);
+
   /* EXTI interrupt init*/
   NVIC_SetPriority(EXTI15_10_IRQn, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),0, 0));
   NVIC_EnableIRQ(EXTI15_10_IRQn);
@@ -360,7 +375,43 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void lcd_buf_slide_str_out(const char *str, enum LCD_LINES lcd_line, uint16_t speed)
+{
+   uint8_t str_end_flag = 0;
+   for (j = 0; j <= strlen(str); j++)
+   {
+       _delay_ms(speed);
+       lcd_buf_locate(lcd_line, C1);
+       for (i = 0; i < LCD_X; i++)
+       {
+           if ((str[j + i] != '\0') && (str_end_flag == 0))
+           {
+               lcd_buf_char(str[j + i]);
+           }
+           else
+           {
+               str_end_flag = 0xFF;
+               lcd_buf_char(' ');
+           }
+       }
+       str_end_flag = 0;
+       lcd_update();
+   }
+}
 
+void lcd_buf_slide_str_in(const char *str, enum LCD_LINES lcd_line, uint16_t speed)
+{
+   for (i = LCD_X - 1; i > C1; i--)
+   {
+       _delay_ms(speed);
+       lcd_buf_locate(lcd_line, i);
+       for (uint8_t j = 0; j < (LCD_X - i); j++)
+       {
+           lcd_buf_char(str[j]);
+       }
+       lcd_update();
+   }
+}
 /* USER CODE END 4 */
 
 /**
