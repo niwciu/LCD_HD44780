@@ -57,15 +57,14 @@
 ## Hardware configuration
 ### Requirements
 - LCD should be connected to uC in 4bit mode 
-- LCD RW Pin can be connected to uC or GND -> user can define specific options in code.
-- LCD data pins from LCD D4-D7 must be connected to the same port on uC side
-- LCD signals pins that are E, RS, and optionally RW must be connected to the same port on the uC side. This port can be different then port for LCD data pins
+- LCD RW Pin can be connected to uC or GND -> user must define specific options in library configuration.
+- LCD data pins D4-D7 and LCD signal pins can be connected to any pins on any ports on uC side.
 ### Schematic for possible hardware configurations
 - Using RW pin of the LCD  (set **USE_RW_PIN &nbsp; ON** in lcd_hd44780_config.h)<br><br>
-<img src="./doc/HW%20connection%20using%20RW.png"   height="400"><br> <br><br>
+<img src="./doc/HW%20connection%20using%20RW.pn"   height="400"><br> <br><br>
 - Without using RW pin of the LCD  (set **USE_RW_PIN &nbsp; OFF** in lcd_hd44780_config.h)
 <br><br>
-<img src="./doc/HW%20connection%20no%20RW.png"   height="400"><br> <br>
+<img src="./doc/HW%20connection%20no%20RW.pn"   height="400"><br> <br>
 ## LCD_HD44780 library src folders file structure and description
 ```bash 
 LCD_HD44780
