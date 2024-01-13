@@ -38,7 +38,7 @@ set(INCLUDE_DIRS
 
 ./Drivers/STM32G4xx_HAL_Driver/Inc
 
-../src
+../../src
 
 .
 )
@@ -49,7 +49,7 @@ set(C_SRCS
     Core/Src/syscalls.c
     Core/Src/sysmem.c
     Core/Src/system_stm32g4xx.c
-    # Core/Src/LCD_IO_driver.c
+    Core/Src/LCD_IO_driver.c
     # Core/Src/tim_delay.c
 
     Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c
