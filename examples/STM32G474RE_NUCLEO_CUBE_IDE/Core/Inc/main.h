@@ -80,12 +80,26 @@ void Error_Handler(void);
 #define LPUART1_RX_GPIO_Port GPIOA
 #define LD2_Pin LL_GPIO_PIN_5
 #define LD2_GPIO_Port GPIOA
+#define LCD_D6_Pin LL_GPIO_PIN_10
+#define LCD_D6_GPIO_Port GPIOB
+#define LCD_BCKL_Pin LL_GPIO_PIN_11
+#define LCD_BCKL_GPIO_Port GPIOB
+#define LCD_E_Pin LL_GPIO_PIN_7
+#define LCD_E_GPIO_Port GPIOC
+#define LCD_D7_Pin LL_GPIO_PIN_8
+#define LCD_D7_GPIO_Port GPIOA
+#define LCD_RS_Pin LL_GPIO_PIN_9
+#define LCD_RS_GPIO_Port GPIOA
 #define T_SWDIO_Pin LL_GPIO_PIN_13
 #define T_SWDIO_GPIO_Port GPIOA
 #define T_SWCLK_Pin LL_GPIO_PIN_14
 #define T_SWCLK_GPIO_Port GPIOA
 #define T_SWO_Pin LL_GPIO_PIN_3
 #define T_SWO_GPIO_Port GPIOB
+#define LCD_D5_Pin LL_GPIO_PIN_4
+#define LCD_D5_GPIO_Port GPIOB
+#define LCD_D4_Pin LL_GPIO_PIN_5
+#define LCD_D4_GPIO_Port GPIOB
 #ifndef NVIC_PRIORITYGROUP_0
 #define NVIC_PRIORITYGROUP_0         ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority,
                                                                  4 bits for subpriority */
