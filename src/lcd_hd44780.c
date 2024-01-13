@@ -801,16 +801,18 @@ void lcd_buf_str(const char *str)
 
 void lcd_update(void)
 {
-    static uint8_t lcd_cursor_position=0;
-    static uint8_t lcd_line=0;
-    static uint8_t missed_char_counter_in_LCD_line=0;
-    // static const lcd_pos_t *prev_lcd_buff_pos_ptr=&prev_lcd_buffer[LINE_1][C1];
+    uint8_t lcd_cursor_position=0;
+    uint8_t lcd_line=0;
+    uint8_t missed_char_counter_in_LCD_line=0;
+    const lcd_pos_t *prev_lcd_buff_pos_ptr=&prev_lcd_buffer[LINE_1][C1];
     
     for(lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1]; lcd_buf_position_ptr<=&lcd_buffer[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE]; lcd_buf_position_ptr++)
     {
-        write_lcd_buf_2_lcd(&lcd_cursor_position,&lcd_line,&missed_char_counter_in_LCD_line,&prev_lcd_buffer[LINE_1][C1]);
+        write_lcd_buf_2_lcd(&lcd_cursor_position,&lcd_line,&missed_char_counter_in_LCD_line,prev_lcd_buff_pos_ptr);
         update_lcd_curosr_possition(&lcd_cursor_position,&lcd_line,&missed_char_counter_in_LCD_line);
+        prev_lcd_buff_pos_ptr++;
     }
+    
     lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1];
     copy_lcd_buf_2_prev_lcd_buf();
     LCD_UPDATE_EVENT=false;

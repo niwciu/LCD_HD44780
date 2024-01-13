@@ -8,7 +8,7 @@
 #define ON 1
 #define OFF 0
 
-#define DEBUG_CONSOLE  ON
+#define DEBUG_CONSOLE  OFF
 
 #ifdef __cplusplus
 }

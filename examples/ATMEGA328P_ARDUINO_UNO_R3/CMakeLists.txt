@@ -51,12 +51,17 @@ set(L_FUSE 0xfd)
 set(LOCK_BIT 0xff)
 
 set(INCLUDE_DIRS
-	./inc	
+	./inc
+	../../src	
 )
 
 set(C_SRCS
 	./src/main.c
 	./src/debug.c
+	./src/LCD_IO_driver.c
+
+	../../src/lcd_hd44780.c
+
 )
 
 set(ASM_SRCS
@@ -65,6 +70,7 @@ set(ASM_SRCS
 
 set(GLOBAL_DEFINES
 -DF_CPU=${F_CPU}
+-DAVR
 # -DBAUD=${BAUD}
 )
 
