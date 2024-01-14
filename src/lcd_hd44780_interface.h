@@ -25,7 +25,7 @@ extern "C"
     typedef void (*set_LCD_data_pins_as_inputs_func_p)(void);
     typedef void (*set_LCD_data_port_func_p)(uint8_t data);
     typedef uint8_t (*get_LCD_data_port_func_p)(void);
-    typedef void (*init_LCD_SIG_func_p)(void);
+    // typedef void (*init_LCD_SIG_func_p)(void);
     typedef void (*set_LCD_SIG_func_p)(enum lcd_sig LCD_SIG);
     typedef void (*reset_LCD_SIG_func_p)(enum lcd_sig LCD_SIG);
     typedef void (*delay_us_func_p)(uint32_t delay_us);
@@ -37,7 +37,7 @@ extern "C"
         set_LCD_data_pins_as_inputs_func_p set_data_pins_as_inputs;
         set_LCD_data_port_func_p write_data;
         get_LCD_data_port_func_p read_data;
-        init_LCD_SIG_func_p init_SIG;
+        // init_LCD_SIG_func_p init_SIG;
         set_LCD_SIG_func_p set_SIG;
         reset_LCD_SIG_func_p reset_SIG;
         delay_us_func_p delay_us;

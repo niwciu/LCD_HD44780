@@ -22,12 +22,12 @@ static void mock_set_LCD_DATA_PORT_as_outputs(void);
 static void mock_set_LCD_DATA_PORT_as_inputs(void);
 static void mock_set_LCD_DATA_PORT_state(uint8_t data);
 static uint8_t mock_get_LCD_DATA_PORT_state(void);
-static void mock_init_LCD_SIGNAL_PINS_as_outputs(void);
 static void mock_LCD_set_SIG(enum lcd_sig LCD_SIG);
 static void mock_LCD_reset_SIG(enum lcd_sig LCD_SIG);
 static uint8_t mock_get_pinmask(const enum lcd_sig *LCD_SIG);
 static void mock_delay_us(uint32_t delay_us);
 static void mock_dump_LCD_SIG_DATA_DELAY_state(uint32_t delay_us);
+static void mock_init_LCD_SIGNAL_PINS_as_outputs(void);
 
 /************LCD_IO_driver_interface implementation START**************/
 static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
@@ -36,7 +36,7 @@ static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
     mock_set_LCD_DATA_PORT_as_inputs,
     mock_set_LCD_DATA_PORT_state,
     mock_get_LCD_DATA_PORT_state,
-    mock_init_LCD_SIGNAL_PINS_as_outputs,
+    // mock_init_LCD_SIGNAL_PINS_as_outputs,
     mock_LCD_set_SIG,
     mock_LCD_reset_SIG,
     mock_delay_us,
@@ -77,16 +77,6 @@ static uint8_t mock_get_LCD_DATA_PORT_state(void)
     mock_LCD_DATA_PORT = 0x00;
     mock_dump_LCD_SIG_DATA_DELAY_state(0);
     return mock_LCD_DATA_PORT;
-}
-
-static void mock_init_LCD_SIGNAL_PINS_as_outputs(void)
-{
-#if USE_RW_PIN == ON
-    mock_LCD_SIG_PORT_DIRECTION = mock_LCD_E | mock_LCD_RS | mock_LCD_RW;
-    ;
-#else
-    mock_LCD_SIG_PORT_DIRECTION = mock_LCD_E | mock_LCD_RS;
-#endif
 }
 
 static void mock_LCD_set_SIG(enum lcd_sig LCD_SIG)
@@ -136,10 +126,21 @@ static void mock_dump_LCD_SIG_DATA_DELAY_state(uint32_t delay_us)
         dump_reg_pointer = 0;
 }
 
+static void mock_init_LCD_SIGNAL_PINS_as_outputs(void)
+{
+#if USE_RW_PIN == ON
+    mock_LCD_SIG_PORT_DIRECTION = mock_LCD_E | mock_LCD_RS | mock_LCD_RW;
+    ;
+#else
+    mock_LCD_SIG_PORT_DIRECTION = mock_LCD_E | mock_LCD_RS;
+#endif
+}
+
 uint8_t mock_get_lcd_init_state(void)
 {
     return (mock_LCD_SIG_PORT_DIRECTION << 4) | (mock_LCD_DATA_PORT_DIRECTION);
 }
+
 void mock_clear_LCD_Port_delay_dump_data(void)
 {
     for (uint16_t i = 0; i < BUF_SIZE; i++)

@@ -5,7 +5,7 @@
  * @Last Modified time: 2023-12-08 10:49:44
  */
 
-// #include "lcd_hd44780_config.h"
+
 #include "lcd_hd44780_interface.h"
 #include "lcd_hd44780_config.h"
 #include <stdio.h>
@@ -41,10 +41,10 @@ static void init_LCD_DATA_PINS_as_outputs(void);
 static void init_LCD_DATA_PINS_as_inputs(void);
 static void set_LCD_DATA_PINS_state(uint8_t data);
 static uint8_t get_LCD_DATA_PINS_state(void);
-static void init_LCD_SIGNAL_PINS_as_outputs(void);
 static void LCD_set_SIG(enum lcd_sig LCD_SIG);
 static void LCD_reset_SIG(enum lcd_sig LCD_SIG);
 static void wraper_delay_us(uint32_t delay_us);
+static void init_LCD_SIGNAL_PINS_as_outputs(void);
 
 /************LCD_IO_driver_interface implementation START**************/
 static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
@@ -53,7 +53,6 @@ static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
     init_LCD_DATA_PINS_as_inputs,
     set_LCD_DATA_PINS_state,
     get_LCD_DATA_PINS_state,
-    init_LCD_SIGNAL_PINS_as_outputs,
     LCD_set_SIG,
     LCD_reset_SIG,
     wraper_delay_us,
@@ -125,16 +124,6 @@ static uint8_t get_LCD_DATA_PINS_state(void)
     return data;
 }
 
-static void init_LCD_SIGNAL_PINS_as_outputs(void)
-{
-#if USE_RW_PIN == ON
-    LCD_SIG_PORT_DIR |= (LCD_PIN_RS | LCD_PIN_RW | LCD_PIN_E);
-
-#else
-    LCD_SIG_PORT_DIR |= (LCD_PIN_RS | LCD_PIN_E);
-#endif
-}
-
 static void LCD_set_SIG(enum lcd_sig LCD_SIG)
 {
     switch (LCD_SIG)
@@ -175,7 +164,17 @@ static void LCD_reset_SIG(enum lcd_sig LCD_SIG)
     }
 }
 
-void wraper_delay_us(uint32_t delay_us)
+static void wraper_delay_us(uint32_t delay_us)
 {
     _delay_us((double)(delay_us));
+}
+
+static void init_LCD_SIGNAL_PINS_as_outputs(void)
+{
+#if USE_RW_PIN == ON
+    LCD_SIG_PORT_DIR |= (LCD_PIN_RS | LCD_PIN_RW | LCD_PIN_E);
+
+#else
+    LCD_SIG_PORT_DIR |= (LCD_PIN_RS | LCD_PIN_E);
+#endif
 }
