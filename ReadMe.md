@@ -107,6 +107,7 @@ Library main header file with available library api.
   2. Make or Ninja installed
   3. ARM GNU Toolchain (gcc-arm-none-eabi) installed
   4. STM32_Programmer_CLI installed
+  5. ST-link (on Nucleo Board) installed
 #### Hardware requirements, configuration and connections
   1. STM32G071 Nucleo-64<br>
      <img src="./examples/doc/STM32G071RB_Nucleo.png"   width="400"><br> <br> 
@@ -115,7 +116,7 @@ Library main header file with available library api.
   3. Pin connection between LCD Keypad Shield and Nucleo board<br>
    <img src="./examples/doc/NucleoSTM32G071_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
 #### How to build and run example
-  1. Open the location in your terminal where you want to clone the repository
+  1. Open the location you want to clone the repository to in your terminal
   2. .Clone repository to your preferred localization
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
@@ -158,6 +159,7 @@ Library main header file with available library api.
   2. Make or Ninja installed
   3. ARM GNU Toolchain (gcc-arm-none-eabi) installed
   4. STM32_Programmer_CLI installed
+  5. ST-link (on Nucleo Board) installed
 #### Hadrware configuration and connections
   1. STM32G474 Nucleo-64<br>
      <img src="./examples/doc/STM32G474RE_Nucleo.png"   width="400"><br> <br> 
@@ -166,7 +168,7 @@ Library main header file with available library api.
   3. Pin connection between LCD Keypad Shield and Nucleo board <br>
    <img src="./examples/doc/NucleoSTM32G474_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
 #### How to build and run example
-  1. Open the location in your terminal where you want to clone the repository
+  1. Open the location you want to clone the repository to in your terminal
   2. .Clone repository to your preferred localization
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
@@ -208,6 +210,7 @@ Library main header file with available library api.
   2. Make or Ninja installed
   3. AVR 8 bit GNU Toolchain 
   4. AVRdude Installed
+  5. USBasp programmer installed and up to date
 #### Hadrware configuration and connections
   1. Arduino UNO R3<br>
      <img src="./examples/doc/ARDUINO_UNO_R3.png"   width="400"><br> <br> 
@@ -218,7 +221,7 @@ Library main header file with available library api.
   4. Pin connection between LCD Keypad Shield and Nucleo board<br>
    <img src="./examples/doc/ARDUINO_UNO_R3_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
 #### How to build and run example
-  1. Open the location in your terminal where you want to clone the repository
+  1. Open the location you want to clone the repository to in your terminal
   2. .Clone repository to your preferred localization
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
