@@ -3,30 +3,30 @@
   - [Features](#features)
   - [Release info](#release-info)
   - [Hardware configuration](#hardware-configuration)
-    - [Requirements](#requirements)
-    - [Schematic for possible hardware configurations](#schematic-for-possible-hardware-configurations)
+    - [1. Requirements](#1-requirements)
+    - [2. Schematic for possible hardware configurations](#2-schematic-for-possible-hardware-configurations)
   - [LCD\_HD44780 library src folders file structure and description](#lcd_hd44780-library-src-folders-file-structure-and-description)
-    - [1. lcd\_driver\_intrface\_example\_implementations](#1-lcd_driver_intrface_example_implementations)
-    - [2. lcd\_hd44780\_config.h](#2-lcd_hd44780_configh)
-    - [3. lcd\_hd44780\_def\_char.h](#3-lcd_hd44780_def_charh)
-    - [4. lcd\_hd44780\_interface.h](#4-lcd_hd44780_interfaceh)
-    - [5. lcd\_hd44780.c](#5-lcd_hd44780c)
-    - [6. lcd\_hd44780.h](#6-lcd_hd44780h)
+      - [1. lcd\_driver\_intrface\_example\_implementations](#1-lcd_driver_intrface_example_implementations)
+      - [2. lcd\_hd44780\_config.h](#2-lcd_hd44780_configh)
+      - [3. lcd\_hd44780\_def\_char.h](#3-lcd_hd44780_def_charh)
+      - [4. lcd\_hd44780\_interface.h](#4-lcd_hd44780_interfaceh)
+      - [5. lcd\_hd44780.c](#5-lcd_hd44780c)
+      - [6. lcd\_hd44780.h](#6-lcd_hd44780h)
   - [Examples](#examples)
-    - [STM32G071RB -bare metal implementation](#stm32g071rb--bare-metal-implementation)
+    - [1. STM32G071RB -bare metal implementation](#1-stm32g071rb--bare-metal-implementation)
       - [Requirements for compile and run the example:](#requirements-for-compile-and-run-the-example)
       - [Hardware requirements, configuration and connections](#hardware-requirements-configuration-and-connections)
       - [How to build and run example](#how-to-build-and-run-example)
-    - [STM32G474](#stm32g474)
+    - [2. STM32G474 - STMCubeIDE project generated with LL drivers](#2-stm32g474---stmcubeide-project-generated-with-ll-drivers)
       - [Requirements for compile and run the example](#requirements-for-compile-and-run-the-example-1)
       - [Hadrware configuration and connections](#hadrware-configuration-and-connections)
       - [How to build and run example](#how-to-build-and-run-example-1)
-    - [AVR ATmega 328P](#avr-atmega-328p)
+    - [3. AVR ATmega 328P](#3-avr-atmega-328p)
       - [Requirements for compile and run the example](#requirements-for-compile-and-run-the-example-2)
       - [Hadrware configuration and connections](#hadrware-configuration-and-connections-1)
       - [How to build and run example](#how-to-build-and-run-example-2)
-    - [ESP8266 NONOS SDK](#esp8266-nonos-sdk)
-      - [Requirements](#requirements-1)
+    - [4. ESP8266 NONOS SDK - TBD](#4-esp8266-nonos-sdk---tbd)
+      - [RequirementsTBD](#requirementstbd)
       - [Hadrware connections](#hadrware-connections)
       - [How to build and run example](#how-to-build-and-run-example-3)
   - [How to use in your Project - simple case withoud user predefined characters](#how-to-use-in-your-project---simple-case-withoud-user-predefined-characters)
@@ -56,11 +56,11 @@
 
 ## Release info
 ## Hardware configuration
-### Requirements
+### 1. Requirements
 - LCD should be connected to uC in 4bit mode 
 - LCD RW Pin can be connected to uC or GND -> user must define specific options in library configuration.
 - LCD data pins D4-D7 and LCD signal pins can be connected to any pins on any ports on uC side.
-### Schematic for possible hardware configurations
+### 2. Schematic for possible hardware configurations
 - Using RW pin of the LCD  (set **USE_RW_PIN &nbsp; ON** in lcd_hd44780_config.h)<br><br>
 <img src="./doc/HW%20connection%20using%20RW.pn"   height="400"><br> <br><br>
 - Without using RW pin of the LCD  (set **USE_RW_PIN &nbsp; OFF** in lcd_hd44780_config.h)
@@ -81,27 +81,27 @@ LCD_HD44780
 │   ├───lcd_hd44780.h
 ...
 ```
-### 1. lcd_driver_intrface_example_implementations
+#### 1. lcd_driver_intrface_example_implementations
   Folder that contain template of lcd_driver_interface implementation and examples of lcd_driver_interface_implementation for different hardware
    - file 1
    - file 2
    - file 3
-### 2. lcd_hd44780_config.h
+#### 2. lcd_hd44780_config.h
   Header file for configuration of the library. In this file, it's required to configure:
   - LCD type 
   - Usage of RW Signal/PIN
   - Usage of LCD buffer for displaying the content on the LCD
   - Which functions from LCD_HD44780 lib you would like to compile and use in you project.
-### 3. lcd_hd44780_def_char.h
+#### 3. lcd_hd44780_def_char.h
 Header file for defining user special characters and user special characters banks. Each bank can contain up to 8 characters that are user-defined combinations of characters from defined user-special characters. This allows to creation of different combinations of special characters that can be loaded depending on current code needs.
-### 4. lcd_hd44780_interface.h
+#### 4. lcd_hd44780_interface.h
 Header file with library interface declaration that needs to be implemented on the drivers' side. Please look at the code examples in the "examples" folder and search for the "LCD_IO_driver.c" file for more details.
-### 5. lcd_hd44780.c
+#### 5. lcd_hd44780.c
 Library main C file 
-### 6. lcd_hd44780.h
+#### 6. lcd_hd44780.h
 Library main header file with available library api.
 ## Examples
-### STM32G071RB -bare metal implementation
+### 1. STM32G071RB -bare metal implementation
 #### Requirements for compile and run the example:
   1. CMake installed
   2. Make or Ninja installed
@@ -152,7 +152,7 @@ Library main header file with available library api.
       ```
    6. In some cases Nucleo board require plugging out and in USB port to run the program.
 
-### STM32G474
+### 2. STM32G474 - STMCubeIDE project generated with LL drivers
 #### Requirements for compile and run the example
   1. CMake installed
   2. Make or Ninja installed
@@ -202,7 +202,7 @@ Library main header file with available library api.
       ninja flash
       ```
 
-### AVR ATmega 328P
+### 3. AVR ATmega 328P
 #### Requirements for compile and run the example
   1. CMake installed
   2. Make or Ninja installed
@@ -260,12 +260,12 @@ Library main header file with available library api.
       ninja flash
       ```
 
-### ESP8266 NONOS SDK
-#### Requirements
+### 4. ESP8266 NONOS SDK - TBD
+#### RequirementsTBD
 #### Hadrware connections
 #### How to build and run example
 ## How to use in your Project - simple case withoud user predefined characters
-1. Copy LCD library src files (files from src folder) to your project
+1. Copy LCD library src files (or files from src folder) to your project.
 2. In lcd_hd44780.config.h 
    - Define specific **LCD_TYPE** and usage of **RW Pin**<br>
     &emsp; &emsp;LCD_TYPE -> set one of the predefined types:<br>
@@ -297,7 +297,7 @@ const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 }
 
 ```
-It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. For more details, please lock in the example folder and search for the LCD_IO_driver.c file for the specific uController that you want to use.
+It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.src/lcd_driver_intrface_example_implementations** folder you can find empty template with declaration of all required interface elements as well as a few files with examples of implementations for different microcontrollers.Additional detail of the implementation in project can be also find in **./examples** folder.
 
 
 ## How to use in your Project - advanced case
@@ -354,7 +354,7 @@ It's a basic interface that connects the library with your HW driver layer in th
     }
     ```
     <br>
-    It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. For more details, please lock in the example folder and search for the LCD_IO_driver.c file for the specific uController that you want to use.
+    It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.src/lcd_driver_intrface_example_implementations** folder you can find empty template with declaration of all required interface elements as well as a few files with examples of implementations for different microcontrollers. Additional detail of the implementation in project can be also find in **./examples** folder.
 ## How to define custom characters and custom character banks.
 ### Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)
 <img src="./doc/font map.png" height="350"><br>
