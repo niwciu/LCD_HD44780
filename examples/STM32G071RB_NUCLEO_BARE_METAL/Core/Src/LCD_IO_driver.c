@@ -78,9 +78,9 @@ static void set_LCD_DATA_PINS_as_outputs(void);
 static void set_LCD_DATA_PINS_as_inputs(void);
 static void set_LCD_DATA_PINS_state(uint8_t data);
 static uint8_t get_LCD_DATA_PINS_state(void);
-static void init_LCD_SIGNAL_PINS_as_outputs(void);
 static void LCD_set_SIG(enum lcd_sig LCD_SIG);
 static void LCD_reset_SIG(enum lcd_sig LCD_SIG);
+static void init_LCD_SIGNAL_PINS_as_outputs(void);
 
 /************LCD_IO_driver_interface implementation START**************/
 static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
@@ -89,7 +89,6 @@ static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
     set_LCD_DATA_PINS_as_inputs,
     set_LCD_DATA_PINS_state,
     get_LCD_DATA_PINS_state,
-    init_LCD_SIGNAL_PINS_as_outputs,
     LCD_set_SIG,
     LCD_reset_SIG,
     _delay_us,
@@ -174,23 +173,6 @@ static uint8_t get_LCD_DATA_PINS_state(void)
     return data;
 }
 
-static void init_LCD_SIGNAL_PINS_as_outputs(void)
-{
-    RCC -> IOPENR |= LCD_RS_PORT_CLK_EN;
-    LCD_RS_PORT->MODER &=(~MODER_LCD_RS_Msk);
-    LCD_RS_PORT->MODER |= MODER_LCD_RS_0;
-
-    RCC -> IOPENR |= LCD_E_PORT_CLK_EN;
-    LCD_E_PORT->MODER &=(~MODER_LCD_E_Msk);
-    LCD_E_PORT->MODER |= MODER_LCD_E_0;
-
-#if USE_RW_PIN == 1
-    RCC -> IOPENR |= LCD_RW_PORT_CLK_EN;
-    LCD_RW_PORT->MODER &=(~MODER_LCD_RW_Msk);
-    LCD_RW_PORT->MODER |= MODER_LCD_RW_0;
-#endif
-}
-
 static void LCD_set_SIG(enum lcd_sig LCD_SIG)
 {
     switch (LCD_SIG)
@@ -229,4 +211,21 @@ static void LCD_reset_SIG(enum lcd_sig LCD_SIG)
     default:
         break;
     }
+}
+
+static void init_LCD_SIGNAL_PINS_as_outputs(void)
+{
+    RCC -> IOPENR |= LCD_RS_PORT_CLK_EN;
+    LCD_RS_PORT->MODER &=(~MODER_LCD_RS_Msk);
+    LCD_RS_PORT->MODER |= MODER_LCD_RS_0;
+
+    RCC -> IOPENR |= LCD_E_PORT_CLK_EN;
+    LCD_E_PORT->MODER &=(~MODER_LCD_E_Msk);
+    LCD_E_PORT->MODER |= MODER_LCD_E_0;
+
+#if USE_RW_PIN == 1
+    RCC -> IOPENR |= LCD_RW_PORT_CLK_EN;
+    LCD_RW_PORT->MODER &=(~MODER_LCD_RW_Msk);
+    LCD_RW_PORT->MODER |= MODER_LCD_RW_0;
+#endif
 }
