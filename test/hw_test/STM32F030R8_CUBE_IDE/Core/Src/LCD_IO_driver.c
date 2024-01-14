@@ -1,6 +1,6 @@
 /*
- * @Author: lukasz.niewelt 
- * @Date: 2023-12-07 15:51:41 
+ * @Author: lukasz.niewelt
+ * @Date: 2023-12-07 15:51:41
  * @Last Modified by: lukasz.niewelt
  * @Last Modified time: 2023-12-08 00:34:48
  */
@@ -18,6 +18,7 @@
 #include "main.h"
 #include "tim_delay.h"
 #include <stdio.h>
+#include "stm32f030x8.h"
 
 LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 
@@ -26,9 +27,9 @@ static void set_LCD_DATA_PINS_as_outputs(void);
 static void set_LCD_DATA_PINS_as_inputs(void);
 static void set_LCD_DATA_PINS_state(uint8_t data);
 static uint8_t get_LCD_DATA_PINS_state(void);
-static void init_LCD_SIGNAL_PINS_as_outputs(void);
 static void LCD_set_SIG(enum lcd_sig LCD_SIG);
 static void LCD_reset_SIG(enum lcd_sig LCD_SIG);
+// static void init_LCD_SIGNAL_PINS_as_outputs(void);
 
 /************LCD_IO_driver_interface implementation START**************/
 static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
@@ -37,7 +38,6 @@ static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
     set_LCD_DATA_PINS_as_inputs,
     set_LCD_DATA_PINS_state,
     get_LCD_DATA_PINS_state,
-    init_LCD_SIGNAL_PINS_as_outputs,
     LCD_set_SIG,
     LCD_reset_SIG,
     _delay_us,
@@ -51,11 +51,11 @@ const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 
 static void init_LCD_data_and_SIG_pins(void)
 {
-    //enable BCKL of the LCD
+    // enable BCKL of the LCD
     LL_GPIO_SetOutputPin(LCD_BCKL_GPIO_Port, LCD_BCKL_Pin);
-    //enable CLK -> for this setup it's done by CUBE_IDE when generatig project files from it
-    //set_LCD_DATA_PINS_as_outputs -> for this setup it's done by CUBE_IDE when generatig project files from it
-    //init_LCD_SIGNAL_PINS_as_outputs -> for this setup it's done by CUBE_IDE when generatig project files from it
+    // enable CLK -> for this setup it's done by CUBE_IDE when generatig project files from it
+    // set_LCD_DATA_PINS_as_outputs -> for this setup it's done by CUBE_IDE when generatig project files from it
+    // init_LCD_SIGNAL_PINS_as_outputs -> for this setup it's done by CUBE_IDE when generatig project files from it
 }
 
 static void set_LCD_DATA_PINS_as_outputs(void)
@@ -111,26 +111,6 @@ static uint8_t get_LCD_DATA_PINS_state(void)
     return data;
 }
 
-static void init_LCD_SIGNAL_PINS_as_outputs(void)
-{
-#if USE_RW_PIN == 1
-    GPIO_InitStruct.Pin = LCD_RS_Pin | LCD_E_Pin | LCD_RW_Pin;
-    GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-    GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-    GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-    LL_GPIO_Init(LCD_SIG_PORT, &GPIO_InitStruct);
-
-#else
-    GPIO_InitStruct.Pin = LCD_RS_Pin | LCD_E_Pin;
-    GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-    GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-    GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-    LL_GPIO_Init(LCD_SIG_PORT, &GPIO_InitStruct);
-#endif
-}
-
 static void LCD_set_SIG(enum lcd_sig LCD_SIG)
 {
     switch (LCD_SIG)
@@ -166,3 +146,23 @@ static void LCD_reset_SIG(enum lcd_sig LCD_SIG)
         break;
     }
 }
+
+// static void init_LCD_SIGNAL_PINS_as_outputs(void)
+// {
+// #if USE_RW_PIN == 1
+//     GPIO_InitStruct.Pin = LCD_RS_Pin | LCD_E_Pin | LCD_RW_Pin;
+//     GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+//     GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+//     GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+//     GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+//     LL_GPIO_Init(LCD_SIG_PORT, &GPIO_InitStruct);
+
+// #else
+//     GPIO_InitStruct.Pin = LCD_RS_Pin | LCD_E_Pin;
+//     GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+//     GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+//     GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+//     GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+//     LL_GPIO_Init(LCD_SIG_PORT, &GPIO_InitStruct);
+// #endif
+// }

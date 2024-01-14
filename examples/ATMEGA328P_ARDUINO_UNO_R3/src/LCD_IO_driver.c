@@ -1,9 +1,10 @@
 /*
- * @Author: lukasz.niewelt
- * @Date: 2023-12-04 20:13:23
+ * @Author: lukasz.niewelt 
+ * @Date: 2023-12-04 20:13:23 
  * @Last Modified by: lukasz.niewelt
  * @Last Modified time: 2023-12-08 10:49:44
  */
+
 
 #include "lcd_hd44780_interface.h"
 #include "lcd_hd44780_config.h"
@@ -65,22 +66,22 @@ const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 
 static void init_LCD_data_and_SIG_pins(void)
 {
-    // set BCKL PIN as output
+    //set BCKL PIN as output
     LCD_BCKL_PORT_DIR |= LCD_BCKL_PIN;
-    // enable Backlight of the LCD
+    //enable Backlight of the LCD
     LCD_BCKL_PORT |= LCD_BCKL_PIN;
     init_LCD_DATA_PINS_as_outputs();
     init_LCD_SIGNAL_PINS_as_outputs();
 }
 static void init_LCD_DATA_PINS_as_outputs(void)
 {
-    // set pins as output
+    //set pins as output
     LCD_DATA_PORT_DIR |= (LCD_PIN_D4 | LCD_PIN_D5 | LCD_PIN_D6 | LCD_PIN_D7);
 }
 static void init_LCD_DATA_PINS_as_inputs(void)
 {
 
-    // set pins as inputs
+    //set pins as inputs
     LCD_DATA_PORT_DIR &= ~(LCD_PIN_D4 | LCD_PIN_D5 | LCD_PIN_D6 | LCD_PIN_D7);
     // enable pull-up on input pins
     LCD_DATA_PORT |= (LCD_PIN_D4 | LCD_PIN_D5 | LCD_PIN_D6 | LCD_PIN_D7);
