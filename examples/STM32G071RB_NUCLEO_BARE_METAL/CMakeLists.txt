@@ -24,7 +24,7 @@ set(CMAKE_TOOLCHAIN_FILE ../config/STM32/Toolchain-arm-gcc.cmake)
 # Allow assembler
 enable_language(ASM)
 
-project(STM32G070RB_TEMPLATE)
+project(STM32G071RB_NUCLEO_BARE_METAL)
 
 set(INCLUDE_DIRS
     ./Core

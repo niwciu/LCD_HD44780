@@ -20,14 +20,17 @@
 #include <string.h>
 
 #include "main.h"
+#include "core_init.h"
+#include "lcd_hd44780.h"
+#include "tim_delay.h"
 
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
-#define SHIFT_DELAY 400
+#define SHIFT_DELAY 350
 
-const char *demo_tekst = {"Congratulation, you have just run LCD demo example."};
+const char *demo_tekst = {"Congratulation, you have just run LCD demo example on STM32G071RB Nucleo eval board."};
 const char *demo_title = {"LCD HD44780 Demo"};
 
 static void lcd_buf_slide_str_in(const char *str, enum LCD_LINES lcd_line, uint16_t speed);
