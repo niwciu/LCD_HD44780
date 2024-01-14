@@ -38,16 +38,17 @@
   - [Project main folders file structure](#project-main-folders-file-structure)
 
 ## Features
-- Works with a connected LCD display in 4-bit mode with or without the LCD RW pin connected
+- Works with LCD display connected in 4-bit mode, 
+- One direction or bi direction communication with LCD (predefined time slots or LCD RW pin usage)
 - Easy to port on different microcontrollers
-- Contain examples of portability to STM32, AVR, ESP8266
+- Contain examples of porting to STM32, AVR, ESP8266
 - Allows to display strings/chars directly on LCD
 - Allows to put strings/chars in buffer and refresh LCD periodically with buffer content
 - Allows to define custom chars (more than 8) as well as custom char banks where different combination of custom characters can be easily loaded to LCD CGRAM
-- Contain functions for displayin on LCD int values as:
-  - int, 
-  - hex, 
-  - bin
+- Contain functions for displayin on LCD int values as string representing:
+  - int format 
+  - hex format 
+  - bin format
 - Library has currently predefined LCD types:
   - 2 lines 16 characters (1602)
   - 4 lines 16 characters (1604)
@@ -210,7 +211,7 @@ Library main header file with available library api.
   2. Make or Ninja installed
   3. AVR 8 bit GNU Toolchain 
   4. AVRdude Installed
-  5. USBasp programmer installed and up to date
+  5. USBasp programmer installed and updated
 #### Hadrware configuration and connections
   1. Arduino UNO R3<br>
      <img src="./examples/doc/ARDUINO_UNO_R3.png"   width="400"><br> <br> 
