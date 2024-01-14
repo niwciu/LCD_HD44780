@@ -118,7 +118,7 @@ Library main header file with available library api.
    <img src="./examples/doc/NucleoSTM32G071_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
 #### How to build and run example
   1. Open the location you want to clone the repository to in your terminal
-  2. .Clone repository to your preferred localization
+  2. Clone repository to your preferred localization
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
       ``` 
@@ -170,7 +170,7 @@ Library main header file with available library api.
    <img src="./examples/doc/NucleoSTM32G474_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
 #### How to build and run example
   1. Open the location you want to clone the repository to in your terminal
-  2. .Clone repository to your preferred localization
+  2. Clone repository to your preferred localization
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
       ``` 
@@ -223,7 +223,7 @@ Library main header file with available library api.
    <img src="./examples/doc/ARDUINO_UNO_R3_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
 #### How to build and run example
   1. Open the location you want to clone the repository to in your terminal
-  2. .Clone repository to your preferred localization
+  2. Clone repository to your preferred localization
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
       ``` 
@@ -301,7 +301,7 @@ const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 }
 
 ```
-It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.src/lcd_driver_intrface_example_implementations** folder you can find empty template with declaration of all required interface elements as well as a few files with examples of implementations for different microcontrollers.Additional detail of the implementation in project can be also find in **./examples** folder.
+It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.src/lcd_driver_intrface_example_implementations** folder you can find template with empty definitions of all required interface elements as well as a few files with examples of implementations for different microcontrollers. Additional details of the implementation in project can be also found in **./examples** folder.
 
 
 ## How to use in your Project - advanced case
@@ -358,7 +358,7 @@ It's a basic interface that connects the library with your HW driver layer in th
     }
     ```
     <br>
-    It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.src/lcd_driver_intrface_example_implementations** folder you can find empty template with declaration of all required interface elements as well as a few files with examples of implementations for different microcontrollers. Additional detail of the implementation in project can be also find in **./examples** folder.
+    It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.src/lcd_driver_intrface_example_implementations** folder you can find template with empty definitions of all required interface elements as well as a few files with examples of implementation for different microcontrollers.  Additional details of the implementation in project can be also found in **./examples** folder.
 ## How to define custom characters and custom character banks.
 ### Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)
 <img src="./doc/font map.png" height="350"><br>
