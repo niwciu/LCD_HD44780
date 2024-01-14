@@ -27,31 +27,33 @@ enable_language(ASM)
 project(STM32G070RB_TEMPLATE)
 
 set(INCLUDE_DIRS
-Core
-Core/Inc
-Core/Startup
+    ./Core
+    ./Core/Inc
+    ./Core/Startup
 
-Drivers
-Drivers/CMSIS
-Drivers/CMSIS/Device
-Drivers/CMSIS/Include
-Drivers/CMSIS/STM32G0_Drivers
+    ./Drivers
+    ./Drivers/CMSIS
+    ./Drivers/CMSIS/Device
+    ./Drivers/CMSIS/Include
+    ./Drivers/CMSIS/STM32G0_Drivers
 
 
-../src
+    ../../src
 
-../lib
+    ../../lib
 
 .
 )
 
 set(C_SRCS
-    Core/Src/main.c
-    Core/Src/syscalls.c
-    Core/Src/sysmem.c
-    Core/Src/core_init.c
+    ./Core/Src/main.c
+    ./Core/Src/syscalls.c
+    ./Core/Src/sysmem.c
+    ./Core/Src/core_init.c
+    ./Core/Src/tim_delay.c
+    ./Core/Src/LCD_IO_driver.c
 
-	
+    ../../src/lcd_hd44780.c
 )
 
 set(ASM_SRCS
