@@ -6,7 +6,7 @@
  */
 
 /**
- *  Example of lcd_hd44780_interface implementation for STM32G071RB using 
+ *  Example of lcd_hd44780_interface implementation for STM32G071RB using
  */
 #include <stdio.h>
 #include "stm32g070xx.h"
@@ -64,8 +64,8 @@
 #define MODER_LCD_D4_Msk    GPIO_MODER_MODE5_Msk
 #define MODER_LCD_RS_0      GPIO_MODER_MODE9_0
 #define MODER_LCD_RS_Msk    GPIO_MODER_MODE9_Msk
-#define MODER_LCD_E_0      GPIO_MODER_MODE7_0
-#define MODER_LCD_E_Msk    GPIO_MODER_MODE7_Msk
+#define MODER_LCD_E_0       GPIO_MODER_MODE7_0
+#define MODER_LCD_E_Msk     GPIO_MODER_MODE7_Msk
 #if USE_RW_PIN == ON
 #define MODER_LCD_RW_0      GPIO_MODER_MODE7_0
 #define MODER_LCD_RW_Msk    GPIO_MODER_MODE7_Msk
@@ -107,38 +107,37 @@ const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 
 static void init_LCD_data_and_SIG_pins(void)
 {
-    RCC -> IOPENR |= LCD_D7_PORT_CLK_EN;
-    RCC -> IOPENR |= LCD_D6_PORT_CLK_EN;
-    RCC -> IOPENR |= LCD_D5_PORT_CLK_EN;
-    RCC -> IOPENR |= LCD_D4_PORT_CLK_EN;
+    RCC->IOPENR |= LCD_D7_PORT_CLK_EN;
+    RCC->IOPENR |= LCD_D6_PORT_CLK_EN;
+    RCC->IOPENR |= LCD_D5_PORT_CLK_EN;
+    RCC->IOPENR |= LCD_D4_PORT_CLK_EN;
     set_LCD_DATA_PINS_as_outputs();
     init_LCD_SIGNAL_PINS_as_outputs();
 }
 
 static void set_LCD_DATA_PINS_as_outputs(void)
 {
-    LCD_D7_PORT->MODER &=(~MODER_LCD_D7_Msk);
+    LCD_D7_PORT->MODER &= (~MODER_LCD_D7_Msk);
     LCD_D7_PORT->MODER |= MODER_LCD_D7_0;
 
-    LCD_D6_PORT->MODER &=(~MODER_LCD_D6_Msk);
+    LCD_D6_PORT->MODER &= (~MODER_LCD_D6_Msk);
     LCD_D6_PORT->MODER |= MODER_LCD_D6_0;
 
-    LCD_D5_PORT->MODER &=(~MODER_LCD_D5_Msk);
+    LCD_D5_PORT->MODER &= (~MODER_LCD_D5_Msk);
     LCD_D5_PORT->MODER |= MODER_LCD_D5_0;
 
-    LCD_D4_PORT->MODER &=(~MODER_LCD_D4_Msk);
+    LCD_D4_PORT->MODER &= (~MODER_LCD_D4_Msk);
     LCD_D4_PORT->MODER |= MODER_LCD_D4_0;
-
 }
 static void set_LCD_DATA_PINS_as_inputs(void)
 {
-    LCD_D7_PORT->MODER &=(~MODER_LCD_D7_Msk);
+    LCD_D7_PORT->MODER &= (~MODER_LCD_D7_Msk);
 
-    LCD_D6_PORT->MODER &=(~MODER_LCD_D6_Msk);
+    LCD_D6_PORT->MODER &= (~MODER_LCD_D6_Msk);
 
-    LCD_D5_PORT->MODER &=(~MODER_LCD_D5_Msk);
+    LCD_D5_PORT->MODER &= (~MODER_LCD_D5_Msk);
 
-    LCD_D4_PORT->MODER &=(~MODER_LCD_D4_Msk);
+    LCD_D4_PORT->MODER &= (~MODER_LCD_D4_Msk);
 }
 
 static void set_LCD_DATA_PINS_state(uint8_t data)
@@ -180,17 +179,17 @@ static uint8_t get_LCD_DATA_PINS_state(void)
 
 static void init_LCD_SIGNAL_PINS_as_outputs(void)
 {
-    RCC -> IOPENR |= LCD_RS_PORT_CLK_EN;
-    LCD_RS_PORT->MODER &=(~MODER_LCD_RS_Msk);
+    RCC->IOPENR |= LCD_RS_PORT_CLK_EN;
+    LCD_RS_PORT->MODER &= (~MODER_LCD_RS_Msk);
     LCD_RS_PORT->MODER |= MODER_LCD_RS_0;
 
-    RCC -> IOPENR |= LCD_E_PORT_CLK_EN;
-    LCD_E_PORT->MODER &=(~MODER_LCD_E_Msk);
+    RCC->IOPENR |= LCD_E_PORT_CLK_EN;
+    LCD_E_PORT->MODER &= (~MODER_LCD_E_Msk);
     LCD_E_PORT->MODER |= MODER_LCD_E_0;
 
 #if USE_RW_PIN == 1
-    RCC -> IOPENR |= LCD_RW_PORT_CLK_EN;
-    LCD_RW_PORT->MODER &=(~MODER_LCD_RW_Msk);
+    RCC->IOPENR |= LCD_RW_PORT_CLK_EN;
+    LCD_RW_PORT->MODER &= (~MODER_LCD_RW_Msk);
     LCD_RW_PORT->MODER |= MODER_LCD_RW_0;
 #endif
 }
