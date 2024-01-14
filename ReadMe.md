@@ -6,23 +6,24 @@
     - [Requirements](#requirements)
     - [Schematic for possible hardware configurations](#schematic-for-possible-hardware-configurations)
   - [LCD\_HD44780 library src folders file structure and description](#lcd_hd44780-library-src-folders-file-structure-and-description)
-    - [1. lcd\_hd44780\_config.h](#1-lcd_hd44780_configh)
-    - [2. lcd\_hd44780\_def\_char.h](#2-lcd_hd44780_def_charh)
-    - [3. lcd\_hd44780\_interface.h](#3-lcd_hd44780_interfaceh)
-    - [4. lcd\_hd44780.c](#4-lcd_hd44780c)
-    - [5. lcd\_hd44780.h](#5-lcd_hd44780h)
+    - [1. lcd\_driver\_intrface\_example\_implementations](#1-lcd_driver_intrface_example_implementations)
+    - [2. lcd\_hd44780\_config.h](#2-lcd_hd44780_configh)
+    - [3. lcd\_hd44780\_def\_char.h](#3-lcd_hd44780_def_charh)
+    - [4. lcd\_hd44780\_interface.h](#4-lcd_hd44780_interfaceh)
+    - [5. lcd\_hd44780.c](#5-lcd_hd44780c)
+    - [6. lcd\_hd44780.h](#6-lcd_hd44780h)
   - [Examples](#examples)
-    - [STM32G071RB](#stm32g071rb)
-      - [Requirements for compile and run the example](#requirements-for-compile-and-run-the-example)
-      - [Hadrware configuration and connections](#hadrware-configuration-and-connections)
+    - [STM32G071RB -bare metal implementation](#stm32g071rb--bare-metal-implementation)
+      - [Requirements for compile and run the example:](#requirements-for-compile-and-run-the-example)
+      - [Hardware requirements, configuration and connections](#hardware-requirements-configuration-and-connections)
       - [How to build and run example](#how-to-build-and-run-example)
     - [STM32G474](#stm32g474)
       - [Requirements for compile and run the example](#requirements-for-compile-and-run-the-example-1)
-      - [Hadrware configuration and connections](#hadrware-configuration-and-connections-1)
+      - [Hadrware configuration and connections](#hadrware-configuration-and-connections)
       - [How to build and run example](#how-to-build-and-run-example-1)
     - [AVR ATmega 328P](#avr-atmega-328p)
       - [Requirements for compile and run the example](#requirements-for-compile-and-run-the-example-2)
-      - [Hadrware configuration and connections](#hadrware-configuration-and-connections-2)
+      - [Hadrware configuration and connections](#hadrware-configuration-and-connections-1)
       - [How to build and run example](#how-to-build-and-run-example-2)
     - [ESP8266 NONOS SDK](#esp8266-nonos-sdk)
       - [Requirements](#requirements-1)
@@ -69,6 +70,10 @@
 ```bash 
 LCD_HD44780
 ├───src
+│   ├───lcd_driver_intrface_example_implementations
+│   │   ├───
+│   │   ├───
+│   │   ├───
 │   ├───lcd_hd44780_config.h
 │   ├───lcd_hd44780_def_char.h
 │   ├───lcd_hd44780_interface.h
@@ -76,31 +81,39 @@ LCD_HD44780
 │   ├───lcd_hd44780.h
 ...
 ```
-### 1. lcd_hd44780_config.h
+### 1. lcd_driver_intrface_example_implementations
+  Folder that contain template of lcd_driver_interface implementation and examples of lcd_driver_interface_implementation for different hardware
+   - file 1
+   - file 2
+   - file 3
+### 2. lcd_hd44780_config.h
   Header file for configuration of the library. In this file, it's required to configure:
   - LCD type 
   - Usage of RW Signal/PIN
   - Usage of LCD buffer for displaying the content on the LCD
   - Which functions from LCD_HD44780 lib you would like to compile and use in you project.
-### 2. lcd_hd44780_def_char.h
+### 3. lcd_hd44780_def_char.h
 Header file for defining user special characters and user special characters banks. Each bank can contain up to 8 characters that are user-defined combinations of characters from defined user-special characters. This allows to creation of different combinations of special characters that can be loaded depending on current code needs.
-### 3. lcd_hd44780_interface.h
+### 4. lcd_hd44780_interface.h
 Header file with library interface declaration that needs to be implemented on the drivers' side. Please look at the code examples in the "examples" folder and search for the "LCD_IO_driver.c" file for more details.
-### 4. lcd_hd44780.c
+### 5. lcd_hd44780.c
 Library main C file 
-### 5. lcd_hd44780.h
+### 6. lcd_hd44780.h
 Library main header file with available library api.
 ## Examples
-### STM32G071RB
-#### Requirements for compile and run the example
+### STM32G071RB -bare metal implementation
+#### Requirements for compile and run the example:
   1. CMake installed
   2. Make or Ninja installed
   3. ARM GNU Toolchain (gcc-arm-none-eabi) installed
   4. STM32_Programmer_CLI installed
-#### Hadrware configuration and connections
-  1. STM32G071 Nucleo-64
-  2. LCD Keypad Shield for Arduino
-  3. Pin connection between LCD Keypad Shield and Nucleo board
+#### Hardware requirements, configuration and connections
+  1. STM32G071 Nucleo-64<br>
+     <img src="./examples/doc/STM32G071RB_Nucleo.png"   width="400"><br> <br> 
+  2. LCD Keypad Shield for Arduino<br>
+   <img src="./examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
+  3. Pin connection between LCD Keypad Shield and Nucleo board<br>
+   <img src="./examples/doc/NucleoSTM32G071_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
 #### How to build and run example
   1. Open the location in your terminal where you want to clone the repository
   2. .Clone repository to your preferred localization
@@ -137,6 +150,7 @@ Library main header file with available library api.
       ```bash 
       ninja flash
       ```
+   6. In some cases Nucleo board require plugging out and in USB port to run the program.
 
 ### STM32G474
 #### Requirements for compile and run the example
@@ -145,9 +159,12 @@ Library main header file with available library api.
   3. ARM GNU Toolchain (gcc-arm-none-eabi) installed
   4. STM32_Programmer_CLI installed
 #### Hadrware configuration and connections
-  1. STM32G474 Nucleo-64
-  2. LCD Keypad Shield for Arduino
-  3. Pin connection between LCD Keypad Shield and Nucleo board
+  1. STM32G474 Nucleo-64<br>
+     <img src="./examples/doc/STM32G474RE_Nucleo.png"   width="400"><br> <br> 
+  2. LCD Keypad Shield for Arduino<br>
+   <img src="./examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
+  3. Pin connection between LCD Keypad Shield and Nucleo board <br>
+   <img src="./examples/doc/NucleoSTM32G474_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
 #### How to build and run example
   1. Open the location in your terminal where you want to clone the repository
   2. .Clone repository to your preferred localization
@@ -192,10 +209,14 @@ Library main header file with available library api.
   3. AVR 8 bit GNU Toolchain 
   4. AVRdude Installed
 #### Hadrware configuration and connections
-  1. Arduino UNO R3
-  2. USBasp programmer
-  3. LCD Keypad Shield for Arduino
-  4. Pin connection between LCD Keypad Shield and Nucleo board
+  1. Arduino UNO R3<br>
+     <img src="./examples/doc/ARDUINO_UNO_R3.png"   width="400"><br> <br> 
+  2. USBasp programmer<br>
+   <img src="./examples/doc/USBasp.png"   width="400"><br> <br>
+  3. LCD Keypad Shield for Arduino<br>
+   <img src="./examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
+  4. Pin connection between LCD Keypad Shield and Nucleo board<br>
+   <img src="./examples/doc/ARDUINO_UNO_R3_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
 #### How to build and run example
   1. Open the location in your terminal where you want to clone the repository
   2. .Clone repository to your preferred localization
