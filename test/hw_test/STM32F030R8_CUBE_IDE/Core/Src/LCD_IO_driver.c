@@ -18,6 +18,7 @@
 #include "main.h"
 #include "tim_delay.h"
 #include <stdio.h>
+#include "stm32f030x8.h"
 
 LL_GPIO_InitTypeDef GPIO_InitStruct = {0};
 

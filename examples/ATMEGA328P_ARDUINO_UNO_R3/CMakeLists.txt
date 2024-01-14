@@ -23,12 +23,12 @@
 #############################################################################################################################
 cmake_minimum_required(VERSION 3.10)
 
-set(CMAKE_TOOLCHAIN_FILE ./config/Toolchain-AVR-gcc.cmake)
+set(CMAKE_TOOLCHAIN_FILE ../config/AVR/Toolchain-AVR-gcc.cmake)
 
 # Allow assembler
 enable_language(ASM)
 
-project(AVR_ATMEGA328P_LCD_HW_TEST)
+project(AVR_ATMEGA328P_TEMPLATE)
 
 ## AVR Chip Configuration
 # Set the CPU Freq coresponding with fusebit settings
@@ -51,9 +51,8 @@ set(L_FUSE 0xfd)
 set(LOCK_BIT 0xff)
 
 set(INCLUDE_DIRS
-	../
-	./inc	
-	../../../src/
+	./inc
+	../../src	
 )
 
 set(C_SRCS
@@ -61,8 +60,8 @@ set(C_SRCS
 	./src/debug.c
 	./src/LCD_IO_driver.c
 
-	../../../src/lcd_hd44780.c
-	../hw_test_main.c
+	../../src/lcd_hd44780.c
+
 )
 
 set(ASM_SRCS
@@ -88,7 +87,7 @@ link_directories(
 include_directories(${INCLUDE_DIRS})
 add_definitions(${GLOBAL_DEFINES})
 
-include(    ./config/AVR_compiler_flags.cmake)
+include(    ../config/AVR/AVR_compiler_flags.cmake)
 add_compile_options(${COMPILE_OPTIONS})
 # generate elf file
 add_AVR_executable(${CMAKE_PROJECT_NAME} ${C_SRCS} ${ASM_SRCS})
