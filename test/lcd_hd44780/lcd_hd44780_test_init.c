@@ -15,15 +15,15 @@ TEST_TEAR_DOWN(lcd_hd44780_init)
 {
     /* Cleanup after every test */
 }
-TEST(lcd_hd44780_init, WhenLcdInitThenLcdDataPinsInit)
+TEST(lcd_hd44780_init, WhenLcdInitThenLcdDataSignalBcklPinsInit)
 {
     uint8_t expected_resoult = 0;
     lcd_init();
 #if USE_RW_PIN == ON
     expected_resoult =
-        ((mock_LCD_RW | mock_LCD_E | mock_LCD_RS) << 4) | (mock_LCD_D4 | mock_LCD_D5 | mock_LCD_D6 | mock_LCD_D7);
+        ((mock_LCD_BCKL | mock_LCD_RW | mock_LCD_E | mock_LCD_RS) << 4) | (mock_LCD_D4 | mock_LCD_D5 | mock_LCD_D6 | mock_LCD_D7);
 #else
-    expected_resoult = ((mock_LCD_E | mock_LCD_RS) << 4) | (mock_LCD_D4 | mock_LCD_D5 | mock_LCD_D6 | mock_LCD_D7);
+    expected_resoult = ((mock_LCD_BCKL | mock_LCD_E | mock_LCD_RS) << 4) | (mock_LCD_D4 | mock_LCD_D5 | mock_LCD_D6 | mock_LCD_D7);
 #endif
     TEST_ASSERT_EQUAL(expected_resoult, mock_get_lcd_init_state());
 }
@@ -144,10 +144,12 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSendDisplayEntryModeCmdThenLcdPinStateSeq
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
-// TEST(lcd_hd44780_init, FirstTest)
-// {
-//     TEST_FAIL_MESSAGE("Implement your test!");
-// }
+TEST(lcd_hd44780_init, WhenLcdInitThenLcdBackLightisOff)
+{
+    lcd_init();
+
+    TEST_ASSERT_EQUAL(LCD_BCKL_OFF, mock_read_LCD_backlight_status());
+}
 
 // TEST(lcd_hd44780_init, FirstTest)
 // {

@@ -533,6 +533,16 @@ void lcd_init(void)
   
 }
 
+void lcd_enable_backlight(void)
+{
+   LCD->set_SIG(LCD_BCKL);
+}
+
+void lcd_disable_backlight(void)
+{
+    LCD->reset_SIG(LCD_BCKL);
+}
+
 /**
  * @brief Function that clears the LCD screen and sets the cursor on the position of the first character in the first line of the LCD
  * screen.

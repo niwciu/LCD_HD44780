@@ -28,7 +28,7 @@
 #define LCD_PIN_RS (1 << PINB0)
 #define LCD_PIN_RW (1 << PINC1)
 #define LCD_PIN_E (1 << PINB1)
-#define LCD_BCKL_PIN (1 << PINB5)
+#define LCD_BCKL_PIN (1 << PINB2)
 
 #define LCD_D4_MASK 0x01
 #define LCD_D5_MASK 0x02
@@ -68,7 +68,7 @@ static void init_LCD_data_and_SIG_pins(void)
     // set BCKL PIN as output
     LCD_BCKL_PORT_DIR |= LCD_BCKL_PIN;
     // enable Backlight of the LCD
-    LCD_BCKL_PORT |= LCD_BCKL_PIN;
+    LCD_BCKL_PORT &= ~LCD_BCKL_PIN;
     init_LCD_DATA_PINS_as_outputs();
     init_LCD_SIGNAL_PINS_as_outputs();
 }
@@ -138,6 +138,9 @@ static void LCD_set_SIG(enum lcd_sig LCD_SIG)
         LCD_SIG_PORT |= LCD_PIN_RW;
         break;
 #endif
+    case LCD_BCKL:
+        LCD_BCKL_PORT |= LCD_BCKL_PIN;
+        break;
     default:
         break;
     }
@@ -158,6 +161,9 @@ static void LCD_reset_SIG(enum lcd_sig LCD_SIG)
         LCD_SIG_PORT &= ~LCD_PIN_RW;
         break;
 #endif
+    case LCD_BCKL:
+        LCD_BCKL_PORT &= ~ LCD_BCKL_PIN;
+        break;
     default:
         break;
     }
