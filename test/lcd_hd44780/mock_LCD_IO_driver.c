@@ -104,6 +104,9 @@ static uint8_t mock_get_pinmask(const enum lcd_sig *LCD_SIG)
     case LCD_RS:
         Pin_Mask = mock_LCD_RS;
         break;
+    case LCD_BCKL:
+        Pin_Mask = mock_LCD_BCKL;
+        break;
     default:
         break;
     }

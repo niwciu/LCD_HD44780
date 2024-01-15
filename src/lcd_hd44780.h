@@ -26,6 +26,7 @@ extern "C"
     extern bool LCD_UPDATE_EVENT;
 
     void lcd_init(void);
+    void lcd_enable_backlight(void);
     void lcd_cls(void);
 
     void lcd_def_char(const uint8_t CGRAM_bank_x_char_adr, const uint8_t *def_char);
