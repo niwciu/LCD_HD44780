@@ -23,7 +23,7 @@ TEST(lcd_hd44780_init, WhenLcdInitThenLcdDataSignalBcklPinsInit)
     expected_resoult =
         ((mock_LCD_BCKL | mock_LCD_RW | mock_LCD_E | mock_LCD_RS) << 4) | (mock_LCD_D4 | mock_LCD_D5 | mock_LCD_D6 | mock_LCD_D7);
 #else
-    expected_resoult = ((mock_LCD_BCKL  | mock_LCD_E | mock_LCD_RS) << 4) | (mock_LCD_D4 | mock_LCD_D5 | mock_LCD_D6 | mock_LCD_D7);
+    expected_resoult = ((mock_LCD_BCKL | mock_LCD_E | mock_LCD_RS) << 4) | (mock_LCD_D4 | mock_LCD_D5 | mock_LCD_D6 | mock_LCD_D7);
 #endif
     TEST_ASSERT_EQUAL(expected_resoult, mock_get_lcd_init_state());
 }
@@ -147,7 +147,7 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSendDisplayEntryModeCmdThenLcdPinStateSeq
 TEST(lcd_hd44780_init, WhenLcdInitThenLcdBackLightisOff)
 {
     lcd_init();
-    
+
     TEST_ASSERT_EQUAL(LCD_BCKL_OFF, mock_read_LCD_backlight_status());
 }
 
