@@ -401,48 +401,52 @@ Below you can find a simple example of two special characters bank definitions:
     ```
 2. Declaration of lcd_cgram_bank_1 in lcd_hd44780_def_char.h:
     ```C
-    static const struct char_bank_struct lcd_cgram_bank_1 = {
-        Pol_e,
-        Pol_o,
-        Pol_s,
-        Pol_l,
-        Pol_c,
-        Pol_a,
-        Pol_n,
-        Zn_wody};
+    static const struct char_bank_struct lcd_cgram_bank_1 = 
+    {
+      Pol_e,
+      Pol_o,
+      Pol_s,
+      Pol_l,
+      Pol_c,
+      Pol_a,
+      Pol_n,
+      Zn_wody
+    };
     enum LCD_CGRAM_BANK_1
     {
-        pol_e,
-        pol_o,
-        pol_s,
-        pol_l,
-        pol_c,
-        pol_a,
-        pol_n,
-        zn_wody,
+      pol_e,
+      pol_o,
+      pol_s,
+      pol_l,
+      pol_c,
+      pol_a,
+      pol_n,
+      zn_wody,
     };
     ```
 3. Declaration of lcd_cgram_bank_2 in lcd_hd44780_def_char.h:
     ```C
-    static const struct char_bank_struct lcd_cgram_bank_1 = {
-        Pol_e,
-        Pol_o,
-        Pol_s,
-        Pol_l,
-        Pol_c,
-        Pol_a,
-        Pol_z1,
-        Pol_z2};
+    static const struct char_bank_struct lcd_cgram_bank_1 = 
+    {
+      Pol_e,
+      Pol_o,
+      Pol_s,
+      Pol_l,
+      Pol_c,
+      Pol_a,
+      Pol_z1,
+      Pol_z2
+    };
     enum LCD_CGRAM_BANK_1
     {
-        pol_e,
-        pol_o,
-        pol_s,
-        pol_l,
-        pol_c,
-        pol_a,
-        pol_z1,
-        pol_z2,
+      pol_e,
+      pol_o,
+      pol_s,
+      pol_l,
+      pol_c,
+      pol_a,
+      pol_z1,
+      pol_z2,
     };
     ```
 4. When special characters from bank_1 are needed to display content on an LCD screen, it's required to call in the code:
