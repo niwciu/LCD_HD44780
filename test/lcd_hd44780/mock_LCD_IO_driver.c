@@ -129,10 +129,10 @@ static void mock_dump_LCD_SIG_DATA_DELAY_state(uint32_t delay_us)
 static void mock_init_LCD_SIGNAL_PINS_as_outputs(void)
 {
 #if USE_RW_PIN == ON
-    mock_LCD_SIG_PORT_DIRECTION = mock_LCD_E | mock_LCD_RS | mock_LCD_RW;
+    mock_LCD_SIG_PORT_DIRECTION = mock_LCD_BCKL |mock_LCD_E | mock_LCD_RS | mock_LCD_RW;
     ;
 #else
-    mock_LCD_SIG_PORT_DIRECTION = mock_LCD_E | mock_LCD_RS;
+    mock_LCD_SIG_PORT_DIRECTION = mock_LCD_BCKL | mock_LCD_E | mock_LCD_RS;
 #endif
 }
 

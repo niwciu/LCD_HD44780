@@ -5,18 +5,21 @@
  * @Last Modified time: 2023-12-07 23:15:32
  */
 #include <stdint.h>
-#define BUF_SIZE 2000
-#define LOG_DATA_AMOUNT 3
-
-#define mock_LCD_D4 1 << 0
-#define mock_LCD_D5 1 << 1
-#define mock_LCD_D6 1 << 2
-#define mock_LCD_D7 1 << 3
-#define mock_LCD_E 1 << 2
-#define mock_LCD_RS 1 << 0
-#define mock_LCD_RW 1 << 1
 
 // clang-format off
+#define BUF_SIZE            2000
+#define LOG_DATA_AMOUNT     3
+
+#define mock_LCD_D4         1 << 0
+#define mock_LCD_D5         1 << 1
+#define mock_LCD_D6         1 << 2
+#define mock_LCD_D7         1 << 3
+
+#define mock_LCD_E          1 << 2
+#define mock_LCD_RS         1 << 0
+#define mock_LCD_RW         1 << 1
+#define mock_LCD_BCKL       1 << 3 
+
 #define LCDC_CLS            0x01
 #define LCDC_HOME           0x02
 /********************************/
