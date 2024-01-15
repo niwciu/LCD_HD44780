@@ -28,13 +28,14 @@
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
-#define SHIFT_DELAY 350
+#define SHIFT_DELAY 300
 
 const char *demo_tekst = {"Congratulation, you have just run LCD demo example on STM32G071RB Nucleo eval board."};
 const char *demo_title = {"LCD HD44780 Demo"};
 
 static void lcd_buf_slide_str_in(const char *str, enum LCD_LINES lcd_line, uint16_t speed);
 static void lcd_buf_slide_str_out(const char *str, enum LCD_LINES lcd_line, uint16_t speed);
+static void blink_backlight(uint8_t blinks_no);
 
 uint8_t j = 0;
 uint8_t i = 0;
@@ -46,6 +47,7 @@ int main(void)
   lcd_init();
   lcd_buf_str(demo_title);
   lcd_update();
+  blink_backlight(3);
 	for(;;)
   {
     lcd_buf_slide_str_in(demo_tekst, LINE_2, SHIFT_DELAY);
@@ -89,5 +91,15 @@ void lcd_buf_slide_str_in(const char *str, enum LCD_LINES lcd_line, uint16_t spe
             lcd_buf_char(str[j]);
         }
         lcd_update();
+    }
+}
+static void blink_backlight(uint8_t blinks_no)
+{
+    for(uint8_t i=0; i<blinks_no; i++)
+    {
+        lcd_disable_backlight();
+        _delay_ms(500);
+        lcd_enable_backlight();
+        _delay_ms(500);
     }
 }

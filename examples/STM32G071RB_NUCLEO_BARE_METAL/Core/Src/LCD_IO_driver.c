@@ -20,19 +20,20 @@
 #define LCD_D4_PORT         GPIOB
 #define LCD_RS_PORT         GPIOA
 #define LCD_E_PORT          GPIOC
+#define LCD_BCKL_PORT       GPIOB
 #if USE_RW_PIN == ON
 #define LCD_RW_PORT          GPIOC
 #endif
 
-
-#define LCD_D7_PORT_CLK_EN  RCC_IOPENR_GPIOAEN
-#define LCD_D6_PORT_CLK_EN  RCC_IOPENR_GPIOBEN
-#define LCD_D5_PORT_CLK_EN  RCC_IOPENR_GPIOBEN
-#define LCD_D4_PORT_CLK_EN  RCC_IOPENR_GPIOBEN
-#define LCD_RS_PORT_CLK_EN  RCC_IOPENR_GPIOAEN
-#define LCD_E_PORT_CLK_EN  RCC_IOPENR_GPIOCEN
+#define LCD_D7_PORT_CLK_EN      RCC_IOPENR_GPIOAEN
+#define LCD_D6_PORT_CLK_EN      RCC_IOPENR_GPIOBEN
+#define LCD_D5_PORT_CLK_EN      RCC_IOPENR_GPIOBEN
+#define LCD_D4_PORT_CLK_EN      RCC_IOPENR_GPIOBEN
+#define LCD_RS_PORT_CLK_EN      RCC_IOPENR_GPIOAEN
+#define LCD_E_PORT_CLK_EN       RCC_IOPENR_GPIOCEN
+#define LCD_BCKL_PORT_CLK_EN    RCC_IOPENR_GPIOBEN
 #if USE_RW_PIN == ON
-#define LCD_RW_PORT_CLK_EN  RCC_IOPENR_GPIOCEN
+#define LCD_RW_PORT_CLK_EN      RCC_IOPENR_GPIOCEN
 #endif
 
 #define LCD_D7_OUT_PIN      GPIO_ODR_OD8
@@ -41,6 +42,7 @@
 #define LCD_D4_OUT_PIN      GPIO_ODR_OD5
 #define LCD_RS_OUT_PIN      GPIO_ODR_OD9
 #define LCD_E_OUT_PIN       GPIO_ODR_OD7
+#define LCD_BCKL_OUT_PIN    GPIO_ODR_OD0
 #if USE_RW_PIN == ON
 #define LCD_E_OUT_PIN       GPIO_ODR_OD7
 #endif
@@ -60,8 +62,10 @@
 #define MODER_LCD_D4_Msk    GPIO_MODER_MODE5_Msk
 #define MODER_LCD_RS_0      GPIO_MODER_MODE9_0
 #define MODER_LCD_RS_Msk    GPIO_MODER_MODE9_Msk
-#define MODER_LCD_E_0      GPIO_MODER_MODE7_0
-#define MODER_LCD_E_Msk    GPIO_MODER_MODE7_Msk
+#define MODER_LCD_E_0       GPIO_MODER_MODE7_0
+#define MODER_LCD_E_Msk     GPIO_MODER_MODE7_Msk
+#define MODER_LCD_BCKL_0    GPIO_MODER_MODE0_0
+#define MODER_LCD_BCKL_Msk  GPIO_MODER_MODE0_Msk
 #if USE_RW_PIN == ON
 #define MODER_LCD_RW_0      GPIO_MODER_MODE7_0
 #define MODER_LCD_RW_Msk    GPIO_MODER_MODE7_Msk
@@ -81,6 +85,7 @@ static uint8_t get_LCD_DATA_PINS_state(void);
 static void LCD_set_SIG(enum lcd_sig LCD_SIG);
 static void LCD_reset_SIG(enum lcd_sig LCD_SIG);
 static void init_LCD_SIGNAL_PINS_as_outputs(void);
+static void init_LCD_BCKL_PIN_as_output(void);
 
 /************LCD_IO_driver_interface implementation START**************/
 static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
@@ -106,8 +111,13 @@ static void init_LCD_data_and_SIG_pins(void)
     RCC -> IOPENR |= LCD_D6_PORT_CLK_EN;
     RCC -> IOPENR |= LCD_D5_PORT_CLK_EN;
     RCC -> IOPENR |= LCD_D4_PORT_CLK_EN;
+    
     set_LCD_DATA_PINS_as_outputs();
     init_LCD_SIGNAL_PINS_as_outputs();
+    init_LCD_BCKL_PIN_as_output();
+    //disable LCD backlight on init
+    LCD_BCKL_PORT->ODR &= ~LCD_BCKL_OUT_PIN;
+
 }
 
 static void set_LCD_DATA_PINS_as_outputs(void)
@@ -188,6 +198,9 @@ static void LCD_set_SIG(enum lcd_sig LCD_SIG)
         LCD_RW_PORT->ODR |= LCD_RW_OUT_PIN;
         break;
 #endif
+    case LCD_BCKL:
+        LCD_BCKL_PORT->ODR |= LCD_BCKL_OUT_PIN;
+        break;
     default:
         break;
     }
@@ -208,6 +221,9 @@ static void LCD_reset_SIG(enum lcd_sig LCD_SIG)
         LCD_RW_PORT->ODR &= ~LCD_Rw_OUT_PIN;
         break;
 #endif
+    case LCD_BCKL:
+        LCD_BCKL_PORT->ODR &= ~LCD_BCKL_OUT_PIN;
+        break;
     default:
         break;
     }
@@ -228,4 +244,11 @@ static void init_LCD_SIGNAL_PINS_as_outputs(void)
     LCD_RW_PORT->MODER &=(~MODER_LCD_RW_Msk);
     LCD_RW_PORT->MODER |= MODER_LCD_RW_0;
 #endif
+}
+
+static void init_LCD_BCKL_PIN_as_output(void)
+{
+    RCC -> IOPENR |= LCD_BCKL_PORT_CLK_EN;
+    LCD_BCKL_PORT->MODER &=(~MODER_LCD_BCKL_Msk);
+    LCD_BCKL_PORT->MODER |= MODER_LCD_BCKL_0;
 }
