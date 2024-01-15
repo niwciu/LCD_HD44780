@@ -273,7 +273,9 @@ TEST(lcd_hd44780_basic_functions, GivenLCDInitWhenUseEnableLcdBackLighThenBackli
 
 TEST(lcd_hd44780_basic_functions, GivenLcdInitAndBacklightPinIsHighWhenLcdBacklightOffThenBacklightPinIsLow)
 {
-    TEST_FAIL_MESSAGE("Implement your test!");
+    lcd_enable_backlight();
+    lcd_disable_backlight();
+    TEST_ASSERT_EQUAL(LCD_BCKL_OFF, mock_read_LCD_backlight_status());
 }
 
 // TEST(lcd_hd44780_basic_functions, )
