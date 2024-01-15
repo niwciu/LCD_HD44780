@@ -18,20 +18,20 @@ extern "C"
 
     // clang-format off
 /************************************  LCD HARDWARE SETTINGS *******************************
- *   LCD_TYPE -> set one of the predefined types:
+ *   LCD_TYPE -> Set one of the predefined types:
  *               2004 -> 4 lines 20 characters per line
  *               1604 -> 4 lines 16 characters per line
  *               1602 -> 2 lines 16 characters per line
  *   USE_RW_PIN -> Defines HW connection between LCD and uC
- *               ON - when RW pin is connected
- *               OFF - when RW pin is not connected
+ *               ON - when the RW pin is connected
+ *               OFF - when the RW pin is not connected
  ********************************************************************************************/
 #define LCD_TYPE       1602
 #define USE_RW_PIN     OFF 
 
 #define LCD_BUFFERING  ON
 
-//definitions of Line and collumn labels for lcd_locate 
+//definitions of Line and column labels for lcd_locate 
 enum LCD_LINES
 {
     LINE_1,
@@ -50,8 +50,8 @@ enum LCD_COLUMNS{
 
 /********************************  LCD LIBRARY COMPILATION SETTINGS ************************
  *      Setting USE_(procedure name) to:
- *          ON  - add specific procedure to complilation
- *          OFF - exclude specific procedure from complitaion
+ *          ON  - add specific procedure to compilation
+ *          OFF - exclude specific procedure from compilation
 ********************************************************************************************/
 #define USE_DEF_CHAR_FUNCTION           ON
 #define USE_LCD_INT                     ON
@@ -70,7 +70,7 @@ enum LCD_COLUMNS{
 #endif
 
 
-/********************  definitions of Line addres for different lcd screens ****************/
+/********************  definitions of Line address for different LCD screens ****************/
 //https://web.alfredstate.edu/faculty/weimandn/lcd/lcd_addressing/lcd_addressing_index.html
 
 #if LCD_TYPE ==1604

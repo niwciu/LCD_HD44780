@@ -1,5 +1,5 @@
-# LCD HD44780 lib - simple cross platform C library
-- [LCD HD44780 lib - simple cross platform C library](#lcd-hd44780-lib---simple-cross-platform-c-library)
+# LCD HD44780 lib - simple cross-platform C library
+- [LCD HD44780 lib - simple cross-platform C library](#lcd-hd44780-lib---simple-cross-platform-c-library)
   - [Features](#features)
   - [Release info](#release-info)
   - [Hardware configuration](#hardware-configuration)
@@ -38,18 +38,18 @@
   - [Project main folders file structure](#project-main-folders-file-structure)
 
 ## Features
-- Works with LCD display connected in 4-bit mode, 
-- One direction or bi direction communication with LCD (predefined time slots or LCD RW pin usage)
+- Works with LCD connected in 4-bit mode, 
+- One-direction or bi-direction communication with LCD (predefined time slots or LCD RW pin usage)
 - Easy to port on different microcontrollers
 - Contain examples of porting to STM32, AVR, ESP8266
 - Allows to display strings/chars directly on LCD
 - Allows to put strings/chars in buffer and refresh LCD periodically with buffer content
-- Allows to define custom chars (more than 8) as well as custom char banks where different combination of custom characters can be easily loaded to LCD CGRAM
-- Contain functions for displayin on LCD int values as string representing:
+- Allows to define custom chars (more than 8) as well as custom char banks where different combinations of custom characters can be easily loaded to LCD CGRAM
+- Contain functions for displaying on LCD int values as a string representing:
   - int format 
   - hex format 
   - bin format
-- Library has currently predefined LCD types:
+- The library has currently predefined LCD types:
   - 2 lines 16 characters (1602)
   - 4 lines 16 characters (1604)
   - 4 lines 20 characters (2004)
@@ -83,7 +83,7 @@ LCD_HD44780
 ...
 ```
 #### 1. lcd_driver_intrface_example_implementations
-  Folder that contain template of lcd_driver_interface implementation and examples of lcd_driver_interface_implementation for different hardware
+  The folder that contains a template of lcd_driver_interface implementation and examples of lcd_driver_interface_implementation for different hardware
    - file 1
    - file 2
    - file 3
@@ -92,7 +92,7 @@ LCD_HD44780
   - LCD type 
   - Usage of RW Signal/PIN
   - Usage of LCD buffer for displaying the content on the LCD
-  - Which functions from LCD_HD44780 lib you would like to compile and use in you project.
+  - Which functions from LCD_HD44780 lib you would like to compile and use in your project.
 #### 3. lcd_hd44780_def_char.h
 Header file for defining user special characters and user special characters banks. Each bank can contain up to 8 characters that are user-defined combinations of characters from defined user-special characters. This allows to creation of different combinations of special characters that can be loaded depending on current code needs.
 #### 4. lcd_hd44780_interface.h
@@ -100,25 +100,25 @@ Header file with library interface declaration that needs to be implemented on t
 #### 5. lcd_hd44780.c
 Library main C file 
 #### 6. lcd_hd44780.h
-Library main header file with available library api.
+Library main header file with available library functions.
 ## Examples
 ### 1. STM32G071RB -bare metal implementation
-#### Requirements for compile and run the example:
+#### Requirements for compiling and running the example:
   1. CMake installed
   2. Make or Ninja installed
   3. ARM GNU Toolchain (gcc-arm-none-eabi) installed
   4. STM32_Programmer_CLI installed
   5. ST-link (on Nucleo Board) installed
-#### Hardware requirements, configuration and connections
+#### Hardware requirements, configuration, and connections
   1. STM32G071 Nucleo-64<br>
      <img src="./examples/doc/STM32G071RB_Nucleo.png"   width="400"><br> <br> 
   2. LCD Keypad Shield for Arduino<br>
    <img src="./examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
   3. Pin connection between LCD Keypad Shield and Nucleo board<br>
    <img src="./examples/doc/NucleoSTM32G071_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
-#### How to build and run example
+#### How to build and run the example
   1. Open the location you want to clone the repository to in your terminal
-  2. .Clone repository to your preferred localization
+  2. Clone the repository to your preferred localization
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
       ``` 
@@ -152,25 +152,25 @@ Library main header file with available library api.
       ```bash 
       ninja flash
       ```
-   6. In some cases Nucleo board require plugging out and in USB port to run the program.
+   6. In some cases Nucleo board requires plugging out and in a USB port to run the program.
 
 ### 2. STM32G474 - STMCubeIDE project generated with LL drivers
-#### Requirements for compile and run the example
+#### Requirements for compiling and running the example
   1. CMake installed
   2. Make or Ninja installed
   3. ARM GNU Toolchain (gcc-arm-none-eabi) installed
   4. STM32_Programmer_CLI installed
   5. ST-link (on Nucleo Board) installed
-#### Hadrware configuration and connections
+#### Hardware configuration and connections
   1. STM32G474 Nucleo-64<br>
      <img src="./examples/doc/STM32G474RE_Nucleo.png"   width="400"><br> <br> 
   2. LCD Keypad Shield for Arduino<br>
    <img src="./examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
   3. Pin connection between LCD Keypad Shield and Nucleo board <br>
    <img src="./examples/doc/NucleoSTM32G474_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
-#### How to build and run example
+#### How to build and run the example
   1. Open the location you want to clone the repository to in your terminal
-  2. .Clone repository to your preferred localization
+  2. Clone the repository to your preferred localization
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
       ``` 
@@ -206,13 +206,13 @@ Library main header file with available library api.
       ```
 
 ### 3. AVR ATmega 328P
-#### Requirements for compile and run the example
+#### Requirements for compiling and running the example
   1. CMake installed
   2. Make or Ninja installed
-  3. AVR 8 bit GNU Toolchain 
+  3. AVR 8-bit GNU Toolchain 
   4. AVRdude Installed
   5. USBasp programmer installed and updated
-#### Hadrware configuration and connections
+#### Hardware configuration and connections
   1. Arduino UNO R3<br>
      <img src="./examples/doc/ARDUINO_UNO_R3.png"   width="400"><br> <br> 
   2. USBasp programmer<br>
@@ -221,9 +221,9 @@ Library main header file with available library api.
    <img src="./examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
   4. Pin connection between LCD Keypad Shield and Nucleo board<br>
    <img src="./examples/doc/ARDUINO_UNO_R3_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
-#### How to build and run example
+#### How to build and run the example
   1. Open the location you want to clone the repository to in your terminal
-  2. .Clone repository to your preferred localization
+  2. Clone the repository to your preferred localization
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
       ``` 
@@ -266,9 +266,9 @@ Library main header file with available library api.
 
 ### 4. ESP8266 NONOS SDK - TBD
 #### RequirementsTBD
-#### Hadrware connections
-#### How to build and run example
-## How to use in your Project - simple case withoud user predefined characters
+#### Hardware connections
+#### How to build and run the example
+## How to use in your Project - simple case without user-predefined characters
 1. Copy LCD library src files (or files from src folder) to your project.
 2. In lcd_hd44780.config.h 
    - Define specific **LCD_TYPE** and usage of **RW Pin**<br>
@@ -281,7 +281,7 @@ Library main header file with available library api.
                 &emsp; &emsp;&emsp; &emsp;OFF - when RW pin is not connected<br>
 
 
-3. Declare the LCD IO driver interface in your application on GPIO driver side. This interface should contain the following implementation defined in lcd_hd44780_interface.h
+3. Declare the LCD IO driver interface in your application on the GPIO driver side. This interface should contain the following implementation defined in lcd_hd44780_interface.h
 ```C 
    /************LCD_IO_driver_interface implementation START**************/
 static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
@@ -301,7 +301,7 @@ const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 }
 
 ```
-It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.src/lcd_driver_intrface_example_implementations** folder you can find empty template with declaration of all required interface elements as well as a few files with examples of implementations for different microcontrollers.Additional detail of the implementation in project can be also find in **./examples** folder.
+It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.src/lcd_driver_intrface_example_implementations** folder you can find a template with empty definitions of all required interface elements as well as a few files with examples of implementations for different microcontrollers. Additional details of the implementation in the project can be also found in **./examples** folder.
 
 
 ## How to use in your Project - advanced case
@@ -321,8 +321,8 @@ It's a basic interface that connects the library with your HW driver layer in th
     ```C
     /********************************  LCD LIBRARY COMPILATION SETTINGS ************************
     *      Setting USE_(procedure name) to:
-    *          ON  - add specific procedure to complilation
-    *          OFF - exclude specific procedure from complitaion
+    *          ON  - add specific procedure to compilation
+    *          OFF - exclude specific procedure from compilation
     ********************************************************************************************/
    #define USE_DEF_CHAR_FUNCTION           ON
     #define USE_LCD_INT                     ON
@@ -337,7 +337,7 @@ It's a basic interface that connects the library with your HW driver layer in th
     ```
     <br>
 3. If setting USE_DEF_CHAR_FUNCTION &nbsp; ON define special characters and character banks in lcd_hd44780_def_char.h <br> For more details about defining custom char please refer to [How to define custom characters and custom character banks.](#how-to-define-custome-charatcters-and-custom-character-banks)
-4. Declare the LCD IO driver interface in your application on GPIO driver side. This interface should contain the following implementation defined in lcd_hd44780_interface.h<br>
+4. Declare the LCD IO driver interface in your application on the GPIO driver side. This interface should contain the following implementation defined in lcd_hd44780_interface.h<br>
    <br>
     ```C 
    /************LCD_IO_driver_interface implementation START**************/
@@ -358,7 +358,7 @@ It's a basic interface that connects the library with your HW driver layer in th
     }
     ```
     <br>
-    It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.src/lcd_driver_intrface_example_implementations** folder you can find empty template with declaration of all required interface elements as well as a few files with examples of implementations for different microcontrollers. Additional detail of the implementation in project can be also find in **./examples** folder.
+    It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.src/lcd_driver_intrface_example_implementations** folder you can find a template with empty definitions of all required interface elements as well as a few files with examples of implementation for different microcontrollers.  Additional details of the implementation in the project can be also found in **./examples** folder.
 ## How to define custom characters and custom character banks.
 ### Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)
 <img src="./doc/font map.png" height="350"><br>
@@ -468,11 +468,11 @@ LCD_HD44780
 Folder description:
 - .github -> Folder with githubactions .yml scripts
 - .vscode -> folder with vscode example settings for luch.json and tasks.json
-- doc -> folder for any documentations needes or created in the project
-- hxamples -> folder with example hardware implementations contain ready to compile examples for different uC
-- test -> folder where all tests are written. Folder contain fallowing subfolders:
-  - hw_test -> folder with configurations/setups for specyfic ucontrollers to make integration tests
-  - lcd_hd44780 -> folder where all unit tests for lcd_hd44780 module are keept
+- doc -> folder for any documentation needed or created in the project
+- examples -> folder with example hardware implementations contain ready to compile examples for different uC
+- test -> folder where all tests are written. The folder contains following subfolders:
+  - hw_test -> folder with configurations/setups for specific ucontrollers to make integration tests
+  - lcd_hd44780 -> folder where all unit tests for lcd_hd44780 module are kept
   - template -> empty setup for uint test (copy, paste, rename, edit for new module unit testing) 
   - unity -> unity framework
 
