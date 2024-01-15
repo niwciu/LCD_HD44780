@@ -29,7 +29,7 @@
       - [Hardware connections](#hardware-connections)
       - [How to build and run the example](#how-to-build-and-run-the-example-3)
   - [How to use in your Project - simple case without user-predefined characters](#how-to-use-in-your-project---simple-case-without-user-predefined-characters)
-  - [How to use in your Project - advanced case](#how-to-use-in-your-project---advanced-case)
+  - [How to use in your Project- simple case with user-predefined characters](#how-to-use-in-your-project--simple-case-with-user-predefined-characters)
   - [How to define custom characters and custom character banks.](#how-to-define-custom-characters-and-custom-character-banks)
     - [Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)](#example-of-correspondence-between-eprom-address-data-and-character-pattern-5--8-dots)
     - [Defining special characters in code.](#defining-special-characters-in-code)
@@ -262,14 +262,23 @@ Library main header file with available library functions.
 ## How to use in your Project - simple case without user-predefined characters
 1. Copy LCD library src files (or files from src folder) to your project.
 2. In lcd_hd44780.config.h 
-   - Define specific **LCD_TYPE** and usage of **RW Pin**<br>
+   - Define specyfic **LCD_TYPE** <br>
     &emsp; &emsp;LCD_TYPE -> set one of the predefined types:<br>
                 &emsp; &emsp;&emsp; &emsp;2004 -> 4 lines 20 characters per line<br>
                 &emsp; &emsp;&emsp; &emsp;1604 -> 4 lines 16 characters per line<br>
                 &emsp; &emsp;&emsp; &emsp;1602 -> 2 lines 16 characters per line<br>
+    - Define usage of **RW Pin**<br>
     &emsp; &emsp;USE_RW_PIN -> Defines HW connection between LCD and uC<br>
                 &emsp; &emsp;&emsp; &emsp;ON - when RW pin is connected<br>
                 &emsp; &emsp;&emsp; &emsp;OFF - when RW pin is not connected<br>
+    - Define HW setup for **LCD_BCKL_PIN** <br>
+    &emsp; &emsp;LCD_BCKL_PIN_EN_STATE -> Defines active state for enabling LCD backlight<br>
+                &emsp; &emsp;&emsp; &emsp;HIGH - when high state on output pin is required to enable LCD backlight<br>
+                &emsp; &emsp;&emsp; &emsp;LOW - when low state on output pin is required to enable LCD backlight<br>
+    - Define usage of LCD buffering functionality **LCD_BUFFERING** <br>
+    &emsp; &emsp;LCD_BUFFERING -> Defines whether you would ike to use LCD buffer or write directly to LCD screen<br>
+                &emsp; &emsp;&emsp; &emsp;ON - when buffering of LCD is planned to be use in project<br>
+                &emsp; &emsp;&emsp; &emsp;OFF - when buffering of LCD is NOT planned to be use in project<br>
 
 
 3. Declare the LCD IO driver interface in your application on the GPIO driver side. This interface should contain the following implementation defined in lcd_hd44780_interface.h
@@ -295,19 +304,28 @@ const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.examples/lcd_driver_intrface_example_implementations** folder you can find a template with empty definitions of all required interface elements as well as a few files with examples of implementations for different microcontrollers. Additional details of the implementation in the project can be also found in ready to compile examples.
 
 
-## How to use in your Project - advanced case
+## How to use in your Project- simple case with user-predefined characters
 1. Copy LCD library src files (files from src folder) to your project
 2. In lcd_hd44780.config.h 
-   - Define specyfic **LCD_TYPE** and usage of **RW Pin**<br>
+   - Define specyfic **LCD_TYPE** <br>
     &emsp; &emsp;LCD_TYPE -> set one of the predefined types:<br>
                 &emsp; &emsp;&emsp; &emsp;2004 -> 4 lines 20 characters per line<br>
                 &emsp; &emsp;&emsp; &emsp;1604 -> 4 lines 16 characters per line<br>
                 &emsp; &emsp;&emsp; &emsp;1602 -> 2 lines 16 characters per line<br>
+    - Define usage of **RW Pin**<br>
     &emsp; &emsp;USE_RW_PIN -> Defines HW connection between LCD and uC<br>
                 &emsp; &emsp;&emsp; &emsp;ON - when RW pin is connected<br>
                 &emsp; &emsp;&emsp; &emsp;OFF - when RW pin is not connected<br>
+    - Define HW setup for **LCD_BCKL_PIN** <br>
+    &emsp; &emsp;LCD_BCKL_PIN_EN_STATE -> Defines active state for enabling LCD backlight<br>
+                &emsp; &emsp;&emsp; &emsp;HIGH - when high state on output pin is required to enable LCD backlight<br>
+                &emsp; &emsp;&emsp; &emsp;LOW - when low state on output pin is required to enable LCD backlight<br>
+    - Define usage of LCD buffering functionality **LCD_BUFFERING** <br>
+    &emsp; &emsp;LCD_BUFFERING -> Defines whether you would ike to use LCD buffer or write directly to LCD screen<br>
+                &emsp; &emsp;&emsp; &emsp;ON - when buffering of LCD is planned to be use in project<br>
+                &emsp; &emsp;&emsp; &emsp;OFF - when buffering of LCD is NOT planned to be use in project<br>
 
-    - Specify which procedures from to library you would like to compile and use in your project.<br>
+3. Specify which procedures from to library you would like to compile and use in your project.<br>
       To do this, Edit defines in section: <br>
     ```C
     /********************************  LCD LIBRARY COMPILATION SETTINGS ************************
@@ -327,8 +345,8 @@ It's a basic interface that connects the library with your HW driver layer in th
     ...
     ```
     <br>
-3. If setting USE_DEF_CHAR_FUNCTION &nbsp; ON define special characters and character banks in lcd_hd44780_def_char.h <br> For more details about defining custom char please refer to [How to define custom characters and custom character banks.](#how-to-define-custome-charatcters-and-custom-character-banks)
-4. Declare the LCD IO driver interface in your application on the GPIO driver side. This interface should contain the following implementation defined in lcd_hd44780_interface.h<br>
+4. If setting USE_DEF_CHAR_FUNCTION &nbsp; ON define special characters and character banks in lcd_hd44780_def_char.h <br> For more details about defining custom char please refer to [How to define custom characters and custom character banks.](#how-to-define-custome-charatcters-and-custom-character-banks)
+5. Declare the LCD IO driver interface in your application on the GPIO driver side. This interface should contain the following implementation defined in lcd_hd44780_interface.h<br>
    <br>
     ```C 
    /************LCD_IO_driver_interface implementation START**************/
