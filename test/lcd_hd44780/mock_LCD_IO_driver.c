@@ -129,7 +129,7 @@ static void mock_dump_LCD_SIG_DATA_DELAY_state(uint32_t delay_us)
 static void mock_init_LCD_SIGNAL_PINS_as_outputs(void)
 {
 #if USE_RW_PIN == ON
-    mock_LCD_SIG_PORT_DIRECTION = mock_LCD_BCKL |mock_LCD_E | mock_LCD_RS | mock_LCD_RW;
+    mock_LCD_SIG_PORT_DIRECTION = mock_LCD_BCKL | mock_LCD_E | mock_LCD_RS | mock_LCD_RW;
     ;
 #else
     mock_LCD_SIG_PORT_DIRECTION = mock_LCD_BCKL | mock_LCD_E | mock_LCD_RS;
@@ -151,4 +151,12 @@ void mock_clear_LCD_Port_delay_dump_data(void)
         }
     }
     dump_reg_pointer = 0;
+}
+
+enum lcd_bckl_status mock_read_LCD_backlight_status(void)
+{
+    if ((mock_LCD_SIG_PORT & mock_LCD_BCKL) == mock_LCD_BCKL)
+        return LCD_BCKL_ON;
+    else
+        return LCD_BCKL_OFF;
 }

@@ -51,6 +51,12 @@
 #define LCDC_SET_DDRAM      0x80
 // clang-format on
 
+enum lcd_bckl_status
+{
+    LCD_BCKL_ON,
+    LCD_BCKL_OFF
+};
+
 extern uint8_t mock_LCD_DATA_PORT;
 extern uint8_t mock_LCD_SIG_PORT;
 extern uint8_t mock_LCD_DATA_PORT_DIRECTION;
@@ -60,3 +66,4 @@ extern uint16_t mock_LCD_Port_delay_dump_data[BUF_SIZE][LOG_DATA_AMOUNT];
 
 uint8_t mock_get_lcd_init_state(void);
 void mock_clear_LCD_Port_delay_dump_data(void);
+enum lcd_bckl_status mock_read_LCD_backlight_status(void);
