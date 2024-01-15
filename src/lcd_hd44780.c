@@ -488,7 +488,7 @@ void write_lcd_buf_2_lcd(const uint8_t * lcd_cursor_position, const uint8_t *lcd
 #endif
 
 /**
- * @brief  Function that initialize LCD in 4-bit mode with or without LCD R/W Pin handling.
+ * @brief  Function that initializes LCD in 4-bit mode with or without LCD R/W Pin handling.
  * @attention LCD R/W handling should be configured in lcd_hd44780_config.h by setting USE_RW_PIN to  1 (Enable R/W Pin
  * handling) or 0 (disable R/W Pin handling).
  */
@@ -497,7 +497,7 @@ void lcd_init(void)
     register_LCD_IO_driver();
     LCD->init_LCD_pins();
     /**************************BASIC LCD INIT - basing on DS init procedure***************************************/
-    // set all LCD signals to High for more than 15ms ->bit different then in DS base on other implementation from internet
+    // set all LCD signals to High for more than 15ms ->bit different than in DS based on other implementations from the internet
     lcd_set_all_SIG();
     LCD->delay_us(15000);
     lcd_reset_all_SIG();
@@ -519,7 +519,7 @@ void lcd_init(void)
     lcd_write_cmd(LCDC_ONOFF | LCDC_CURSOROFF | LCDC_DISPLAYON);
     // LCD clear screen
     lcd_cls();
-    // ENTRY MODe SET do not shift LCD shift cursor right after placing a char
+    // ENTRY MODe SET do not shift the LCD shift cursor right after placing a char
     lcd_write_cmd(LCDC_ENTRY_MODE | LCDC_ENTRYR);
     /*********************************END of BASIC LCD INIT***************************************/
 #if LCD_BUFFERING == ON
@@ -527,14 +527,14 @@ void lcd_init(void)
     lcd_buf_cls();
     //copy lcd_buffer with spaces to prev_lcd_buffer
     copy_lcd_buf_2_prev_lcd_buf();
-    // clear flag due to init procedure that reset lcd screan and buffers
+    // clear flag due to init procedure that reset LCD screen and buffers
     LCD_UPDATE_EVENT=false;
 #endif
   
 }
 
 /**
- * @brief Function that clear the LCD screen and set the cursor on the position of first character in first line of LCD
+ * @brief Function that clears the LCD screen and sets the cursor on the position of the first character in the first line of the LCD
  * screen.
  */
 void lcd_cls(void)
@@ -548,7 +548,7 @@ void lcd_cls(void)
 #if USE_DEF_CHAR_FUNCTION == ON
 /**
  * @brief Function for defining custom user characters in CGRAM of the LCD.
- * @param CGRAM_char_index Position/addres of the character in CGRAM of the LCD where defined char should be written.
+ * @param CGRAM_char_index Position/address of the character in CGRAM of the LCD where defined char should be written.
  * For the predefined example of special characters, taken values are defined in the type enum LCD_CGRAM that is defined
  * in lcd-hd44780.h
  * @param def_char Pointer to the predefined special character.
@@ -579,9 +579,9 @@ void lcd_load_char_bank(const struct char_bank_struct *char_bank)
 #endif
 
 /**
- * @brief Function for print the char on the LCD screen under current position of the LCD cursor.
- * @param C char (for example '1') or it's ASCI code (0x31).
- * @note For user defined char, place CGRAM_char_index (Position/addres of the character in CGRAM of the LCD where
+ * @brief Function for printing the char on the LCD screen under the current position of the LCD cursor.
+ * @param C char (for example '1') or its ASCI code (0x31).
+ * @note For user-defined char, place CGRAM_char_index (Position/address of the character in CGRAM of the LCD where
  * defined char was written).
  */
 void lcd_char(const char C)
@@ -591,8 +591,7 @@ void lcd_char(const char C)
 }
 
 /**
- * @brief Function for printing/writing string on LCD screen. Writing the string on LCD screen start from current LCD
- * cursor position.
+ * @brief Function for printing/writing the string on the LCD screen starting from the current LCD cursor position.
  * @param str string that should be printed/written on the LCD screen
  */
 void lcd_str(const char *str)
@@ -606,12 +605,12 @@ void lcd_str(const char *str)
 
 #if USE_LCD_INT == ON
 /**
- * @brief Function for print the integer value on the LCD screen under current position of the LCD cursor.
+ * @brief Function for printing the integer value on the LCD screen under the current position of the LCD cursor.
  * @param val int type value to print on LCD screen
  * @param width Minimum number of characters to be printed. If the value to be printed is shorter than this number, the
  * result is padded with blank spaces. The value is not truncated even if the result is larger.
- * @param alignment If the value to be printed is shorter than width, this parmaeter will specify aligment of the
- * printed tekst value. This parameter can be set to "left" or "right"
+ * @param alignment If the value to be printed is shorter than the width, this parameter will specify the alignment of the
+ * printed text value. This parameter can be set to "left" or "right"
  * @attention to compile for AVR ucontrollers definition of flag AVR is required.
  */
 void lcd_int(int val, uint8_t width, enum alignment alignment)
@@ -632,14 +631,14 @@ void lcd_int(int val, uint8_t width, enum alignment alignment)
 
 #if USE_LCD_HEX == ON
 /**
- * @brief Function for print the integer value in hexadecimal format on the LCD screen under current position of the LCD
+ * @brief Function for printing the integer value in hexadecimal format on the LCD screen under the current position of the LCD
  * cursor.
  * @param val int type value to print on LCD screen in hexadecimal format
  * @param width Minimum number of characters to be printed. If the value to be printed is shorter than this number, the
- * result is padded with blank spaces. The value is not truncated even if the result is larger. Width should contain
- * additional 2 characters for '0x' at the begining of the printed value.
- * @param alignment If the value to be printed is shorter than width, this parmaeter will specify aligment of the
- * printed tekst value. This parameter can be set to "left" or "right"
+ * result is padded with blank spaces. The value is not truncated even if the result is larger. The width should contain
+ * additional 2 characters for '0x' at the beginning of the printed value.
+ * @param alignment If the value to be printed is shorter than the width, this parameter will specify the alignment of the
+ * printed text value. This parameter can be set to "left" or "right"
  * @attention to compile for AVR ucontrollers definition of flag AVR is required.
  */
 void lcd_hex(int val, uint8_t width, enum alignment alignment)
@@ -660,12 +659,12 @@ void lcd_hex(int val, uint8_t width, enum alignment alignment)
 
 #if USE_LCD_BIN == ON
 /**
- * @brief Function for print the integer value in hexadecimal format on the LCD screen under current position of the LCD
+ * @brief Function for printing the integer value in hexadecimal format on the LCD screen under the current position of the LCD
  * cursor.
  * @param val int type value to print on LCD screen in hexadecimal format
  * @param width Minimum number of characters to be printed. If the value to be printed is shorter than this number, the
- * result is padded with blank spaces. The value is not truncated even if the result is larger. Width should contain
- * additional 2 characters for '0x' at the begining of the printed value.
+ * result is padded with blank spaces. The value is not truncated even if the result is larger. The width should contain
+ * additional 2 characters for '0x' at the beginning of the printed value.
  * @attention to compile for AVR ucontrollers definition of flag AVR is required.
  */
 void lcd_bin(int val, uint8_t width)
@@ -692,7 +691,7 @@ void lcd_bin(int val, uint8_t width)
 #endif
 
 /**
- * @brief Function that move LCD cursor to specific posiotion located under x and y coordinate
+ * @brief Function that moves LCD cursor to a specific position located under the x and y coordinate
  * @param y LCD row/line number. Defined enum value LINE_1, LINE_2,... etc.
  * @param x LCD column number. Defined enum value C1, C2, C3,... etc.
  */
@@ -726,7 +725,7 @@ void lcd_locate(enum LCD_LINES y, enum LCD_COLUMNS x)
 }
 #if USE_LCD_CURSOR_HOME == ON
 /**
- * @brief Function that move lcd cursor to the first posision at first row of LCD screen
+ * @brief Function that moves LCD cursor to the first position at the first row of the LCD screen
  */
 void lcd_home(void)
 {
@@ -767,6 +766,10 @@ void lcd_blinking_cursor_on(void)
 #endif
 
 #if LCD_BUFFERING == ON
+/**
+ * @brief Function that puts spaces(0x32) in the whole LCD buffer and sets the cursor on the position of the first character in the first line of the LCD
+ * buffer.
+ */
 void lcd_buf_cls(void)
 {
     for(lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1]; lcd_buf_position_ptr<=&lcd_buffer[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE]; lcd_buf_position_ptr++)
@@ -777,6 +780,12 @@ void lcd_buf_cls(void)
     LCD_UPDATE_EVENT=true;
 }
 
+/**
+ * @brief Function for adding the char to the LCD buffer under the current position of the LCD buffer.
+ * @param C char (for example '1') or its ASCI code (0x31).
+ * @note For user-defined char, place CGRAM_char_index (Position/address of the character in CGRAM of the LCD where
+ * defined char was written).
+ */
 void lcd_buf_char(const char c)
 {
     *lcd_buf_position_ptr=c;
@@ -784,11 +793,20 @@ void lcd_buf_char(const char c)
     LCD_UPDATE_EVENT=true;
 }
 
+/**
+ * @brief Function that changes the current LCD buffer position pointer to a specific position located under the x and y coordinate
+ * @param y LCD row/line number. Defined enum value LINE_1, LINE_2,... etc.
+ * @param x LCD column number. Defined enum value C1, C2, C3,... etc.
+ */
 void lcd_buf_locate(enum LCD_LINES y, enum LCD_COLUMNS x)
 {
     lcd_buf_position_ptr=&lcd_buffer[y][x];
 }
 
+/**
+ * @brief Function for placing the string in the LCD buffer starts from the current LCD buffer position pointer.
+ * @param str string that should be placed in the LCD buffer
+ */
 void lcd_buf_str(const char *str)
 {
     while (*str)
@@ -799,6 +817,10 @@ void lcd_buf_str(const char *str)
     LCD_UPDATE_EVENT=true;
 }
 
+/**
+ * @brief Function that prints on the LCD screen the content of The LCD buffer. 
+ * The function sets also The LCD buffer position pointer to the First line's first character.
+ */
 void lcd_update(void)
 {
     uint8_t lcd_cursor_position=0;
@@ -820,12 +842,12 @@ void lcd_update(void)
 
 #if USE_LCD_BUF_INT == ON
 /**
- * @brief Function for adding intiger value as string to the LCD buffer under current position of the LCD buffer pointer.
+ * @brief Function for adding integer value as string to the LCD buffer under the current position of the LCD buffer pointer.
  * @param val int type value to add to LCD buffer
  * @param width Minimum number of characters to be added to LCD buffer. If the value to be added to the LCD buffer is shorter than width, the
- * result is padded with blank spaces. The value to be added to buffer as string is not truncated if the string lenght is larger then width value.
- * @param alignment If the value to be added to LCD buffer as string is shorter than width, this parameter will specify alignment of the 
- * tekst represented the value. This parameter can be set to "left" or "right"
+ * result is padded with blank spaces. The value to be added to the buffer as a string is not truncated if the string length is larger than the width value.
+ * @param alignment If the value is to be added to the LCD buffer as a string is shorter than the width, this parameter will specify the alignment of the 
+ * text representing the value. This parameter can be set to "left" or "right"
  * @attention to compile for AVR ucontrollers definition of flag AVR is required.
  */
 void lcd_buf_int(int val, uint8_t width, enum alignment alignment)
@@ -846,13 +868,13 @@ void lcd_buf_int(int val, uint8_t width, enum alignment alignment)
 
 #if USE_LCD_BUF_HEX == ON
 /**
- * @brief  Function for adding intiger value in hexadecimal format as string to the LCD buffer under current position of the LCD buffer pointer.
- * @param val  int type value to add to LCD buffer as string in hexadecimal format
- * @param width Minimum number of characters to be added to lcd buffer. If the value to be added to buffer is shorter than width, the
- * result is padded with blank spaces. The value to be added to buffer as string is not truncated if the string lenght is larger then width value. Width should contain
- * additional 2 characters for "0x" at the begining of the value represented as string. example: 0x01-> width=4
- * @param alignment If the value to be added to LCD buffer as string is shorter than width, this parameter will specify alignment of the 
-* tekst represented the value. This parameter can be set to "left" or "right"
+ * @brief  Function for adding integer value in hexadecimal format as a string to the LCD buffer under the current position of the LCD buffer pointer.
+ * @param val  int type value to add to LCD buffer as a string in hexadecimal format
+ * @param width Minimum number of characters to be added to lcd buffer. If the value to be added to the buffer is shorter than the width, the
+ * result is padded with blank spaces. The value to be added to the buffer as a string is not truncated if the string length is larger than the width value. Width should contain
+ * additional 2 characters for "0x" at the beginning of the value represented as a string. example: 0x01-> width=4
+ * @param alignment If the value to be added to the LCD buffer as a string is shorter than the width, this parameter will specify the alignment of the 
+* text represented the value. This parameter can be set to "left" or "right"
  * @attention to compile for AVR ucontrollers definition of flag AVR is required.
  */
 void lcd_buf_hex(int val, uint8_t width, enum alignment alignment)
@@ -873,11 +895,11 @@ void lcd_buf_hex(int val, uint8_t width, enum alignment alignment)
 
 #if USE_LCD_BUF_BIN == ON
 /**
- * @brief Function for adding to the LCD buffer the integer value in binary format as string under current position of the LCD buffer pointer
- * @param val int type value to be added to the LCD buffer as string in hexadecimal format
- * @param width Minimum number of characters to be added to LCD buffer. If the value to be added to buffer as string lenght is shorter than width, the
- * result is padded with blank spaces. The value to be added to buffer as string is not truncated if the string lenght represented the value i binary format lenght 
- * is larger then width value. Width should contain additional 2 characters for "0b" at the begining of the value represented as string. example: 0b01-> width=4
+ * @brief Function for adding to the LCD buffer the integer value in binary format as a string under the current position of the LCD buffer pointer
+ * @param val int type value to be added to the LCD buffer as a string in hexadecimal format
+ * @param width Minimum number of characters to be added to LCD buffer. If the value to be added to the buffer as string length is shorter than width, the
+ * result is padded with blank spaces. The value to be added to the buffer as a string is not truncated if the string length represents the value in binary format length 
+ * is larger than the width value. The width should contain an additional 2 characters for "0b" at the beginning of the value represented as a string. example: 0b01-> width=4
  * @attention to compile for AVR ucontrollers definition of flag AVR is required.
  */
 void lcd_buf_bin(int val, uint8_t width)
