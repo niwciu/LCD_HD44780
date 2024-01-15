@@ -24,10 +24,10 @@
       - [Requirements for compiling and running the example](#requirements-for-compiling-and-running-the-example-2)
       - [Hardware configuration and connections](#hardware-configuration-and-connections-1)
       - [How to build and run the example](#how-to-build-and-run-the-example-2)
-    - [4. ESP8266 NONOS SDK - TBD](#4-esp8266-nonos-sdk---tbd)
-      - [RequirementsTBD](#requirementstbd)
-      - [Hardware connections](#hardware-connections)
-      - [How to build and run the example](#how-to-build-and-run-the-example-3)
+    - [4. ESP8266 NONOS SDK - TBD ...](#4-esp8266-nonos-sdk---tbd-)
+      - [Requirements ...](#requirements-)
+      - [Hardware connections ...](#hardware-connections-)
+      - [How to build and run the example ...](#how-to-build-and-run-the-example-)
   - [How to use in your Project - simple case without user-predefined characters](#how-to-use-in-your-project---simple-case-without-user-predefined-characters)
   - [How to use in your Project- simple case with user-predefined characters](#how-to-use-in-your-project--simple-case-with-user-predefined-characters)
   - [How to define custom characters and custom character banks.](#how-to-define-custom-characters-and-custom-character-banks)
@@ -255,10 +255,10 @@ Library main header file with available library functions.
       ninja flash
       ```
 
-### 4. ESP8266 NONOS SDK - TBD
-#### RequirementsTBD
-#### Hardware connections
-#### How to build and run the example
+### 4. ESP8266 NONOS SDK - TBD ...
+#### Requirements ...
+#### Hardware connections ...
+#### How to build and run the example ...
 ## How to use in your Project - simple case without user-predefined characters
 1. Copy LCD library src files (or files from src folder) to your project.
 2. In lcd_hd44780.config.h 
