@@ -6,12 +6,11 @@
     - [1. Requirements](#1-requirements)
     - [2. Schematic for possible hardware configurations](#2-schematic-for-possible-hardware-configurations)
   - [LCD\_HD44780 library src folders file structure and description](#lcd_hd44780-library-src-folders-file-structure-and-description)
-      - [1. lcd\_driver\_intrface\_example\_implementations](#1-lcd_driver_intrface_example_implementations)
-      - [2. lcd\_hd44780\_config.h](#2-lcd_hd44780_configh)
-      - [3. lcd\_hd44780\_def\_char.h](#3-lcd_hd44780_def_charh)
-      - [4. lcd\_hd44780\_interface.h](#4-lcd_hd44780_interfaceh)
-      - [5. lcd\_hd44780.c](#5-lcd_hd44780c)
-      - [6. lcd\_hd44780.h](#6-lcd_hd44780h)
+      - [1. lcd\_hd44780\_config.h](#1-lcd_hd44780_configh)
+      - [2. lcd\_hd44780\_def\_char.h](#2-lcd_hd44780_def_charh)
+      - [3. lcd\_hd44780\_interface.h](#3-lcd_hd44780_interfaceh)
+      - [4. lcd\_hd44780.c](#4-lcd_hd44780c)
+      - [5. lcd\_hd44780.h](#5-lcd_hd44780h)
   - [Examples](#examples)
     - [1. STM32G071RB -bare metal implementation](#1-stm32g071rb--bare-metal-implementation)
       - [Requirements for compiling and running the example:](#requirements-for-compiling-and-running-the-example)
@@ -72,10 +71,6 @@
 ```bash 
 LCD_HD44780
 ├───src
-│   ├───lcd_driver_intrface_example_implementations
-│   │   ├───
-│   │   ├───
-│   │   ├───
 │   ├───lcd_hd44780_config.h
 │   ├───lcd_hd44780_def_char.h
 │   ├───lcd_hd44780_interface.h
@@ -83,24 +78,19 @@ LCD_HD44780
 │   ├───lcd_hd44780.h
 ...
 ```
-#### 1. lcd_driver_intrface_example_implementations
-  The folder that contains a template of lcd_driver_interface implementation and examples of lcd_driver_interface_implementation for different hardware
-   - file 1
-   - file 2
-   - file 3
-#### 2. lcd_hd44780_config.h
+#### 1. lcd_hd44780_config.h
   Header file for configuration of the library. In this file, it's required to configure:
   - LCD type 
   - Usage of RW Signal/PIN
   - Usage of LCD buffer for displaying the content on the LCD
   - Which functions from LCD_HD44780 lib you would like to compile and use in your project.
-#### 3. lcd_hd44780_def_char.h
+#### 2. lcd_hd44780_def_char.h
 Header file for defining user special characters and user special characters banks. Each bank can contain up to 8 characters that are user-defined combinations of characters from defined user-special characters. This allows to creation of different combinations of special characters that can be loaded depending on current code needs.
-#### 4. lcd_hd44780_interface.h
+#### 3. lcd_hd44780_interface.h
 Header file with library interface declaration that needs to be implemented on the drivers' side. Please look at the code examples in the "examples" folder and search for the "LCD_IO_driver.c" file for more details.
-#### 5. lcd_hd44780.c
+#### 4. lcd_hd44780.c
 Library main C file 
-#### 6. lcd_hd44780.h
+#### 5. lcd_hd44780.h
 Library main header file with available library functions.
 ## Examples
 ### 1. STM32G071RB -bare metal implementation
@@ -302,7 +292,7 @@ const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 }
 
 ```
-It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.src/lcd_driver_intrface_example_implementations** folder you can find a template with empty definitions of all required interface elements as well as a few files with examples of implementations for different microcontrollers. Additional details of the implementation in the project can be also found in **./examples** folder.
+It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.examples/lcd_driver_intrface_example_implementations** folder you can find a template with empty definitions of all required interface elements as well as a few files with examples of implementations for different microcontrollers. Additional details of the implementation in the project can be also found in ready to compile examples.
 
 
 ## How to use in your Project - advanced case
@@ -359,7 +349,7 @@ It's a basic interface that connects the library with your HW driver layer in th
     }
     ```
     <br>
-    It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.src/lcd_driver_intrface_example_implementations** folder you can find a template with empty definitions of all required interface elements as well as a few files with examples of implementation for different microcontrollers.  Additional details of the implementation in the project can be also found in **./examples** folder.
+    It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.examples/lcd_driver_intrface_example_implementations** folder you can find a template with empty definitions of all required interface elements as well as a few files with examples of implementation for different microcontrollers.  Additional details of the implementation in the project can be also found in ready to compile examples.
 ## How to define custom characters and custom character banks.
 ### Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)
 <img src="./doc/font map.png" height="350"><br>
@@ -451,9 +441,10 @@ LCD_HD44780
 ├───examples
 │   ├───ATMEGA328P_ARDUINO_UNO_R3
 │   ├───config
-│   ├───STM32F030R8
-│   ├───STM32F091RB
-│   └───STM32G070RB
+│   ├───doc
+│   ├───lcd_driver_intrface_example_implementations
+│   └───STM32G071RB_NUCLEO_BARE_METAL
+│   └───STM32G474RE_NUCLEO_CUBE_IDE_LL
 ├───reports
 │   ├───Code_Coverage
 │   └───Cyclomatic_Complexity
@@ -470,7 +461,7 @@ Folder description:
 - .github -> Folder with githubactions .yml scripts
 - .vscode -> folder with vscode example settings for luch.json and tasks.json
 - doc -> folder for any documentation needed or created in the project
-- examples -> folder with example hardware implementations contain ready to compile examples for different uC
+- examples -> folder with example hardware implementations contain ready to compile examples for different uC. In this folder you can find also examples and templates of lcd_driver_interface implementations.
 - test -> folder where all tests are written. The folder contains following subfolders:
   - hw_test -> folder with configurations/setups for specific ucontrollers to make integration tests
   - lcd_hd44780 -> folder where all unit tests for lcd_hd44780 module are kept
