@@ -61,7 +61,7 @@ TEST_GROUP_RUNNER(lcd_hd44780_basic_functions)
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_bin_5_1_ThenSignalSequenceForSendigIsEqualToLcdStrWithValueInHexAsStrig);
 #endif
     RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLCDInitWhenUseEnableLcdBackLighThenBacklightPinIsHigh)
-    // RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitAndBacklightPinIsHighWhenLcdBacklightOffThenBacklightPinIsLow)
+    RUN_TEST_CASE(lcd_hd44780_basic_functions, GivenLcdInitAndBacklightPinIsHighWhenLcdBacklightOffThenBacklightPinIsLow)
     // RUN_TEST_CASE(lcd_hd44780_basic_functions, );
 }
 
