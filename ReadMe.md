@@ -14,22 +14,22 @@
       - [6. lcd\_hd44780.h](#6-lcd_hd44780h)
   - [Examples](#examples)
     - [1. STM32G071RB -bare metal implementation](#1-stm32g071rb--bare-metal-implementation)
-      - [Requirements for compile and run the example:](#requirements-for-compile-and-run-the-example)
-      - [Hardware requirements, configuration and connections](#hardware-requirements-configuration-and-connections)
-      - [How to build and run example](#how-to-build-and-run-example)
+      - [Requirements for compiling and running the example:](#requirements-for-compiling-and-running-the-example)
+      - [Hardware requirements, configuration, and connections](#hardware-requirements-configuration-and-connections)
+      - [How to build and run the example](#how-to-build-and-run-the-example)
     - [2. STM32G474 - STMCubeIDE project generated with LL drivers](#2-stm32g474---stmcubeide-project-generated-with-ll-drivers)
-      - [Requirements for compile and run the example](#requirements-for-compile-and-run-the-example-1)
-      - [Hadrware configuration and connections](#hadrware-configuration-and-connections)
-      - [How to build and run example](#how-to-build-and-run-example-1)
+      - [Requirements for compiling and running the example](#requirements-for-compiling-and-running-the-example-1)
+      - [Hardware configuration and connections](#hardware-configuration-and-connections)
+      - [How to build and run the example](#how-to-build-and-run-the-example-1)
     - [3. AVR ATmega 328P](#3-avr-atmega-328p)
-      - [Requirements for compile and run the example](#requirements-for-compile-and-run-the-example-2)
-      - [Hadrware configuration and connections](#hadrware-configuration-and-connections-1)
-      - [How to build and run example](#how-to-build-and-run-example-2)
+      - [Requirements for compiling and running the example](#requirements-for-compiling-and-running-the-example-2)
+      - [Hardware configuration and connections](#hardware-configuration-and-connections-1)
+      - [How to build and run the example](#how-to-build-and-run-the-example-2)
     - [4. ESP8266 NONOS SDK - TBD](#4-esp8266-nonos-sdk---tbd)
       - [RequirementsTBD](#requirementstbd)
-      - [Hadrware connections](#hadrware-connections)
-      - [How to build and run example](#how-to-build-and-run-example-3)
-  - [How to use in your Project - simple case withoud user predefined characters](#how-to-use-in-your-project---simple-case-withoud-user-predefined-characters)
+      - [Hardware connections](#hardware-connections)
+      - [How to build and run the example](#how-to-build-and-run-the-example-3)
+  - [How to use in your Project - simple case without user-predefined characters](#how-to-use-in-your-project---simple-case-without-user-predefined-characters)
   - [How to use in your Project - advanced case](#how-to-use-in-your-project---advanced-case)
   - [How to define custom characters and custom character banks.](#how-to-define-custom-characters-and-custom-character-banks)
     - [Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)](#example-of-correspondence-between-eprom-address-data-and-character-pattern-5--8-dots)
@@ -54,6 +54,7 @@
   - 4 lines 16 characters (1604)
   - 4 lines 20 characters (2004)
 - Allows to configure and compile only functionality that will be needed in the project
+- Allows to control LCD backlight
 
 ## Release info
 ## Hardware configuration
@@ -63,10 +64,10 @@
 - LCD data pins D4-D7 and LCD signal pins can be connected to any pins on any ports on uC side.
 ### 2. Schematic for possible hardware configurations
 - Using RW pin of the LCD  (set **USE_RW_PIN &nbsp; ON** in lcd_hd44780_config.h)<br><br>
-<img src="./doc/HW%20connection%20using%20RW.pn"   height="400"><br> <br><br>
+<img src="./doc/HW%20connection%20using%20RW.png"   height="400"><br> <br><br>
 - Without using RW pin of the LCD  (set **USE_RW_PIN &nbsp; OFF** in lcd_hd44780_config.h)
 <br><br>
-<img src="./doc/HW%20connection%20no%20RW.pn"   height="400"><br> <br>
+<img src="./doc/HW%20connection%20no%20RW.png"   height="400"><br> <br>
 ## LCD_HD44780 library src folders file structure and description
 ```bash 
 LCD_HD44780
