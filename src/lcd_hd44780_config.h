@@ -12,7 +12,8 @@
 extern "C"
 {
 #endif /* __cplusplus */
-// clang-format off
+
+    // clang-format off
 #define ON      1
 #define OFF     0
 #define HIGH    1
