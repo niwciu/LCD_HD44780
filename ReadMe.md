@@ -333,7 +333,7 @@ It's a basic interface that connects the library with your HW driver layer in th
     *          ON  - add specific procedure to compilation
     *          OFF - exclude specific procedure from compilation
     ********************************************************************************************/
-   #define USE_DEF_CHAR_FUNCTION           ON
+    #define USE_DEF_CHAR_FUNCTION           ON
     #define USE_LCD_INT                     ON
     #define USE_LCD_HEX                     ON
     #define USE_LCD_BIN                     ON
@@ -342,7 +342,12 @@ It's a basic interface that connects the library with your HW driver layer in th
     #define USE_LCD_CURSOR_ON               ON
     #define USE_LCD_CURSOR_OFF              ON
     #define USE_LCD_BLINKING_CURSOR_ON      ON
-    ...
+
+    #if LCD_BUFFERING == ON
+    #define USE_LCD_BUF_INT                 ON
+    #define USE_LCD_BUF_HEX                 ON
+    #define USE_LCD_BUF_BIN                 ON
+    #endif
     ```
     <br>
 4. If setting USE_DEF_CHAR_FUNCTION &nbsp; ON define special characters and character banks in lcd_hd44780_def_char.h <br> For more details about defining custom char please refer to [How to define custom characters and custom character banks.](#how-to-define-custome-charatcters-and-custom-character-banks)
