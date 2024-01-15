@@ -454,7 +454,6 @@ Below you can find a simple example of two special characters bank definitions:
 ```bash 
 LCD_HD44780
 ├───.github
-├───.vscode
 ├───doc
 ├───examples
 │   ├───ATMEGA328P_ARDUINO_UNO_R3
@@ -477,9 +476,15 @@ LCD_HD44780
 ```
 Folder description:
 - .github -> Folder with githubactions .yml scripts
-- .vscode -> folder with vscode example settings for luch.json and tasks.json
 - doc -> folder for any documentation needed or created in the project
-- examples -> folder with example hardware implementations contain ready to compile examples for different uC. In this folder you can find also examples and templates of lcd_driver_interface implementations.
+- examples -> folder with example hardware implementations contain ready to compile examples for different uC and templates of lcd_driver_interface implementations.
+  - ATMEGA328P_ARDUINO_UNO_R3 -> example project
+  - config ->  tollchain files
+  - doc -> documentation of used hardware in examples
+  - lcd_driver_intrface_example_implementations -> as named
+  - STM32G071RB_NUCLEO_BARE_METAL -> example project
+  - STM32G474RE_NUCLEO_CUBE_IDE_LL -> example project
+- src -> library source files
 - test -> folder where all tests are written. The folder contains following subfolders:
   - hw_test -> folder with configurations/setups for specific ucontrollers to make integration tests
   - lcd_hd44780 -> folder where all unit tests for lcd_hd44780 module are kept
