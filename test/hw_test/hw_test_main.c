@@ -9,6 +9,7 @@
 
 #define BASIC_FUNCTIONS_TESTS       OFF
 #define BUFFERING_FUNCTION_TESTS    ON
+#define LCD_BACKLIGHT_TEST          ON
 
 #if BASIC_FUNCTIONS_TESTS == ON
 static void basic_func_tests(void);
@@ -16,15 +17,22 @@ static void basic_func_tests(void);
 #if BUFFERING_FUNCTION_TESTS == ON
 static void buffering_func_tests(void);
 #endif
+#if LCD_BACKLIGHT_TEST == ON
+static void lcd_backlight_test(void);
+#endif
 
 void main_hw_test(void)
 {
+    #if LCD_BACKLIGHT_TEST == ON
+    lcd_backlight_test();
+    #endif
     #if BASIC_FUNCTIONS_TESTS == ON
     basic_func_tests();
     #endif
     #if BUFFERING_FUNCTION_TESTS == ON
     buffering_func_tests();
     #endif
+
     while (1);
 }
 
@@ -32,6 +40,7 @@ void main_hw_test(void)
 void basic_func_tests(void)
 {
     lcd_init();
+    lcd_enable_backlight();
     lcd_char('G');
     _delay_ms(1000);
     lcd_cls();
@@ -71,6 +80,7 @@ void basic_func_tests(void)
 void buffering_func_tests(void)
 {
     lcd_init();
+    lcd_enable_backlight();
     lcd_buf_char('G');
     lcd_buf_locate(0,2);
     lcd_buf_str("Test");
@@ -114,5 +124,21 @@ void buffering_func_tests(void)
     lcd_buf_bin(5, 8);
     _delay_ms(1000);
     lcd_update();
+}
+
+static void lcd_backlight_test(void)
+{
+    lcd_init();
+    lcd_str("LCD Backlight");
+    lcd_locate(LINE_2,C1);
+    lcd_str("TEST");
+    for(uint8_t i=0; i<3; i++)
+    {
+        lcd_enable_backlight();
+        _delay_ms(500);
+        lcd_disable_backlight();
+        _delay_ms(500);
+    }
+
 }
 #endif
