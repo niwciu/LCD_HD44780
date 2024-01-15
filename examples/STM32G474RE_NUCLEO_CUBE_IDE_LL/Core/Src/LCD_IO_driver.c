@@ -32,7 +32,7 @@ static void set_LCD_DATA_PINS_state(uint8_t data);
 static uint8_t get_LCD_DATA_PINS_state(void);
 static void LCD_set_SIG(enum lcd_sig LCD_SIG);
 static void LCD_reset_SIG(enum lcd_sig LCD_SIG);
-static void init_LCD_SIGNAL_PINS_as_outputs(void);
+// static void init_LCD_SIGNAL_PINS_as_outputs(void);
 
 /************LCD_IO_driver_interface implementation START**************/
 static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
@@ -54,8 +54,7 @@ const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 
 static void init_LCD_data_and_SIG_pins(void)
 {
-    // all pins was initialized in CubeIDE code
-    //    LL_GPIO_ResetOutputPin(LCD_BCKL_GPIO_Port,LCD_BCKL_Pin);
+    // all pins are initialized in CubeIDE code
 }
 
 static void set_LCD_DATA_PINS_as_outputs(void)
@@ -139,6 +138,9 @@ static void LCD_set_SIG(enum lcd_sig LCD_SIG)
         LL_GPIO_SetOutputPin(LCD_RW_GPIO_Port, LCD_RW_Pin);
         break;
 #endif
+    case LCD_BCKL:
+        LL_GPIO_SetOutputPin(LCD_BCKL_GPIO_Port, LCD_BCKL_Pin);
+        break;
     default:
         break;
     }
@@ -159,32 +161,36 @@ static void LCD_reset_SIG(enum lcd_sig LCD_SIG)
         LL_GPIO_ResetOutputPin(LCD_RW_GPIO_Port, LCD_RW_Pin);
         break;
 #endif
+    case LCD_BCKL:
+        LL_GPIO_ResetOutputPin(LCD_BCKL_GPIO_Port, LCD_BCKL_Pin);
+        break;
     default:
         break;
     }
 }
 
-static void init_LCD_SIGNAL_PINS_as_outputs(void)
-{
-#if USE_RW_PIN == ON
-    GPIO_InitStruct.Pin = LCD_RW_Pin;
-    GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-    GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-    GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-    LL_GPIO_Init(LCD_RW_GPIO_Port, &GPIO_InitStruct);
-#endif
-    GPIO_InitStruct.Pin = LCD_RS_Pin;
-    GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-    GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-    GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-    LL_GPIO_Init(LCD_RS_GPIO_Port, &GPIO_InitStruct);
+//CUBE IDE initiize all outputs and inputs
+// static void init_LCD_SIGNAL_PINS_as_outputs(void)
+// {
+// #if USE_RW_PIN == ON
+//     GPIO_InitStruct.Pin = LCD_RW_Pin;
+//     GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+//     GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+//     GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+//     GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+//     LL_GPIO_Init(LCD_RW_GPIO_Port, &GPIO_InitStruct);
+// #endif
+//     GPIO_InitStruct.Pin = LCD_RS_Pin;
+//     GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+//     GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+//     GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+//     GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+//     LL_GPIO_Init(LCD_RS_GPIO_Port, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = LCD_E_Pin;
-    GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-    GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-    GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-    LL_GPIO_Init(LCD_E_GPIO_Port, &GPIO_InitStruct);
-}
+//     GPIO_InitStruct.Pin = LCD_E_Pin;
+//     GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+//     GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+//     GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+//     GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+//     LL_GPIO_Init(LCD_E_GPIO_Port, &GPIO_InitStruct);
+// }
