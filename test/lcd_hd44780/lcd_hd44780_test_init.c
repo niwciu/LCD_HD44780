@@ -36,7 +36,7 @@ TEST(lcd_hd44780_init, WhenLcdInitThenLcdDataPinsLowAtFirstLog)
 TEST(lcd_hd44780_init, GivenLcdInitWhenSetLcdBacklightOffThenLcdPinStatIsCorrect)
 {
     expected_buf_lenght = 0;
-    next_log_no=0;
+    next_log_no = 0;
     mock_clear_LCD_Port_delay_dump_data();
     clear_expected_LCD_Port_delay_dump_data();
     next_log_no = define_expected_sequence_for_lcd_backlight_disable(0);
@@ -44,14 +44,13 @@ TEST(lcd_hd44780_init, GivenLcdInitWhenSetLcdBacklightOffThenLcdPinStatIsCorrect
 
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
-
 }
 TEST(lcd_hd44780_init, GivenLcdInitWhenSetAllSignalsFor15msThenLcdPinStatIsCorrect)
 {
     // mock_clear_LCD_Port_delay_dump_data();
     // clear_expected_LCD_Port_delay_dump_data();
     // lcd_init();
-    
+
     next_log_no = define_expected_sequence_for_first_15_ms_delay(next_log_no);
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
 
