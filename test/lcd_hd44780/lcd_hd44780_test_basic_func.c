@@ -265,13 +265,13 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenUse_lcd_bin_5_1_ThenSignalSequ
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 #endif
-TEST(lcd_hd44780_basic_functions, GivenLCDInitWhenUseEnableLcdBackLighThenBacklightPinIsHigh)
+TEST(lcd_hd44780_basic_functions, GivenLCDInitWhenUseEnableLcdBackLighThenBacklightPinIsEnabled)
 {
     lcd_enable_backlight();
     TEST_ASSERT_EQUAL(LCD_BCKL_ON, mock_read_LCD_backlight_status());
 }
 
-TEST(lcd_hd44780_basic_functions, GivenLcdInitAndBacklightPinIsHighWhenLcdBacklightOffThenBacklightPinIsLow)
+TEST(lcd_hd44780_basic_functions, GivenLcdInitAndBacklightPinIsHighWhenLcdBacklightOffThenBacklightPinIsDisabled)
 {
     lcd_enable_backlight();
     lcd_disable_backlight();

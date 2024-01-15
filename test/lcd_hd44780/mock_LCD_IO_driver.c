@@ -158,8 +158,15 @@ void mock_clear_LCD_Port_delay_dump_data(void)
 
 enum lcd_bckl_status mock_read_LCD_backlight_status(void)
 {
+#if LCD_BCKL_PIN_EN_STATE == HIGH
     if ((mock_LCD_SIG_PORT & mock_LCD_BCKL) == mock_LCD_BCKL)
         return LCD_BCKL_ON;
     else
         return LCD_BCKL_OFF;
+#else
+    if ((mock_LCD_SIG_PORT & mock_LCD_BCKL) == mock_LCD_BCKL)
+        return LCD_BCKL_OFF;
+    else
+        return LCD_BCKL_ON;
+#endif
 }

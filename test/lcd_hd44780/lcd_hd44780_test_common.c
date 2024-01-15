@@ -34,51 +34,62 @@ uint8_t read_prev_LCD_SIG_PORT_state(void)
     return mock_LCD_SIG_PORT;
 }
 
-uint16_t define_expected_sequence_for_first_15_ms_delay(void)
+log_no_t define_expected_sequence_for_lcd_backlight_disable(log_no_t start_log_no)
 {
-    log_no_t log_no = 0;
-    // set E
+#if LCD_BCKL_PIN_EN_STATE == HIGH
+    expected_LCD_Port_delay_dump_data[start_log_no][SIG_PORT] &= ~(mock_LCD_BCKL);
+#else
+    expected_LCD_Port_delay_dump_data[start_log_no][SIG_PORT] = (mock_LCD_BCKL);
+#endif
+    expected_LCD_Port_delay_dump_data[start_log_no][DATA_PORT] = 0x00;
+    expected_LCD_Port_delay_dump_data[start_log_no++][DELAY] = 0;
+    return start_log_no;
+}
 
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = mock_LCD_E;
+uint16_t define_expected_sequence_for_first_15_ms_delay(log_no_t log_no)
+{
+    uint8_t lcd_bckl_state = expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT];
+    // set E
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = lcd_bckl_state | mock_LCD_E;
     expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = 0x00;
     expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
     // set RS
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = mock_LCD_E | mock_LCD_RS;
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = lcd_bckl_state | mock_LCD_E | mock_LCD_RS;
     expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
     expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
 #if USE_RW_PIN == ON
     // set RW
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = mock_LCD_E | mock_LCD_RS | mock_LCD_RW;
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = lcd_bckl_state | mock_LCD_E | mock_LCD_RS | mock_LCD_RW;
     expected_LCD_Port_delay_dump_data[log_no][1] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
     expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
 
     // delay
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = mock_LCD_E | mock_LCD_RS | mock_LCD_RW;
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = lcd_bckl_state | mock_LCD_E | mock_LCD_RS | mock_LCD_RW;
     expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
     expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 15000;
 #else
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (mock_LCD_E | mock_LCD_RS);
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (lcd_bckl_state | mock_LCD_E | mock_LCD_RS);
     expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
     expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 15000;
 #endif
 #if USE_RW_PIN == ON
     // reset RW
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = mock_LCD_E | mock_LCD_RS;
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = lcd_bckl_state | mock_LCD_E | mock_LCD_RS;
     expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
     expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
 #endif
     // reset RS
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = mock_LCD_E;
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = (lcd_bckl_state | mock_LCD_E);
     expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
     expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
     // Reset E
-    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = 0x00;
+    expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = lcd_bckl_state;
     expected_LCD_Port_delay_dump_data[log_no][DATA_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][DATA_PORT];
     expected_LCD_Port_delay_dump_data[log_no++][DELAY] = 0;
     return log_no;
 }
 
-uint16_t define_expected_sequence_for_read_write_4_bit_data(log_no_t log_no, uint8_t R_W_data, uint16_t delay)
+log_no_t define_expected_sequence_for_read_write_4_bit_data(log_no_t log_no, uint8_t R_W_data, uint16_t delay)
 {
     // setE
     expected_LCD_Port_delay_dump_data[log_no][SIG_PORT] = expected_LCD_Port_delay_dump_data[log_no - 1][SIG_PORT] | mock_LCD_E;
