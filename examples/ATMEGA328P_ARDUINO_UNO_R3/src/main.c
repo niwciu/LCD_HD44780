@@ -17,7 +17,7 @@ const char *demo_title = {"LCD HD44780 Demo"};
 
 static void lcd_buf_slide_str_in(const char *str, enum LCD_LINES lcd_line, uint16_t speed);
 static void lcd_buf_slide_str_out(const char *str, enum LCD_LINES lcd_line, uint16_t speed);
-static void blick_backlight(uint8_t blinks_no);
+static void blink_backlight(uint8_t blinks_no);
 
 uint8_t j = 0;
 uint8_t i = 0;
@@ -33,7 +33,7 @@ int main(void)
     lcd_enable_backlight();
     lcd_buf_str(demo_title);
     lcd_update();
-    blick_backlight(3);
+    blink_backlight(3);
     while (1)
     {
         lcd_buf_slide_str_in(demo_tekst, LINE_2, SHIFT_DELAY);
@@ -80,7 +80,7 @@ static void lcd_buf_slide_str_in(const char *str, enum LCD_LINES lcd_line, uint1
     }
 }
 
-static void blick_backlight(uint8_t blinks_no)
+static void blink_backlight(uint8_t blinks_no)
 {
     for(uint8_t i=0; i<blinks_no; i++)
     {
