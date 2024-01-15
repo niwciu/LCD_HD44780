@@ -15,7 +15,7 @@ TEST_TEAR_DOWN(lcd_hd44780_init)
 {
     /* Cleanup after every test */
 }
-TEST(lcd_hd44780_init, WhenLcdInitThenLcdDataPinsInit)
+TEST(lcd_hd44780_init, WhenLcdInitThenLcdDataSignalBcklPinsInit)
 {
     uint8_t expected_resoult = 0;
     lcd_init();
