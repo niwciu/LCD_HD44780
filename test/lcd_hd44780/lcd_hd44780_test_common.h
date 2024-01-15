@@ -22,7 +22,8 @@ extern buf_len_t expected_buf_lenght;
 void clear_expected_LCD_Port_delay_dump_data(void);
 uint8_t read_prev_LCD_DATA_PORT_state(void);
 uint8_t read_prev_LCD_SIG_PORT_state(void);
-uint16_t define_expected_sequence_for_first_15_ms_delay(void);
+log_no_t define_expected_sequence_for_lcd_backlight_disable(log_no_t start_log_no);
+log_no_t define_expected_sequence_for_first_15_ms_delay(log_no_t log_no);
 uint16_t define_expected_sequence_for_read_write_4_bit_data(log_no_t log_no, uint8_t R_W_data, uint16_t delay);
 #if USE_RW_PIN == ON
 uint16_t define_expected_sequence_for_send_cmd_to_LCD(log_no_t log_no, uint8_t cmd, uint8_t expected_readed_data);

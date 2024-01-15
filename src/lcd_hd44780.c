@@ -496,6 +496,7 @@ void lcd_init(void)
 {
     register_LCD_IO_driver();
     LCD->init_LCD_pins();
+    lcd_disable_backlight();
     /**************************BASIC LCD INIT - basing on DS init procedure***************************************/
     // set all LCD signals to High for more than 15ms ->bit different than in DS based on other implementations from the internet
     lcd_set_all_SIG();
@@ -535,12 +536,20 @@ void lcd_init(void)
 
 void lcd_enable_backlight(void)
 {
-   LCD->set_SIG(LCD_BCKL);
+#if LCD_BCKL_PIN_EN_STATE == HIGH
+    LCD->set_SIG(LCD_BCKL);
+#else
+    LCD->reset_SIG(LCD_BCKL);
+#endif
 }
 
 void lcd_disable_backlight(void)
 {
+#if LCD_BCKL_PIN_EN_STATE == HIGH
     LCD->reset_SIG(LCD_BCKL);
+#else
+    LCD->set_SIG(LCD_BCKL);
+#endif
 }
 
 /**

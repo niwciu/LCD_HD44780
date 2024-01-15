@@ -12,11 +12,12 @@
 extern "C"
 {
 #endif /* __cplusplus */
+// clang-format off
+#define ON      1
+#define OFF     0
+#define HIGH    1
+#define LOW     0
 
-#define ON 1
-#define OFF 0
-
-    // clang-format off
 /************************************  LCD HARDWARE SETTINGS *******************************
  *   LCD_TYPE -> Set one of the predefined types:
  *               2004 -> 4 lines 20 characters per line
@@ -26,8 +27,10 @@ extern "C"
  *               ON - when the RW pin is connected
  *               OFF - when the RW pin is not connected
  ********************************************************************************************/
-#define LCD_TYPE       1602
-#define USE_RW_PIN     OFF 
+#define LCD_TYPE        1602
+#define USE_RW_PIN      OFF 
+
+#define LCD_BCKL_PIN_EN_STATE HIGH
 
 #define LCD_BUFFERING  ON
 
