@@ -24,12 +24,12 @@
       - [Requirements for compiling and running the example](#requirements-for-compiling-and-running-the-example-2)
       - [Hardware configuration and connections](#hardware-configuration-and-connections-1)
       - [How to build and run the example](#how-to-build-and-run-the-example-2)
-    - [4. ESP8266 NONOS SDK - TBD](#4-esp8266-nonos-sdk---tbd)
-      - [RequirementsTBD](#requirementstbd)
-      - [Hardware connections](#hardware-connections)
-      - [How to build and run the example](#how-to-build-and-run-the-example-3)
+    - [4. ESP8266 NONOS SDK - TBD ...](#4-esp8266-nonos-sdk---tbd-)
+      - [Requirements ...](#requirements-)
+      - [Hardware connections ...](#hardware-connections-)
+      - [How to build and run the example ...](#how-to-build-and-run-the-example-)
   - [How to use in your Project - simple case without user-predefined characters](#how-to-use-in-your-project---simple-case-without-user-predefined-characters)
-  - [How to use in your Project - advanced case](#how-to-use-in-your-project---advanced-case)
+  - [How to use in your Project- simple case with user-predefined characters](#how-to-use-in-your-project--simple-case-with-user-predefined-characters)
   - [How to define custom characters and custom character banks.](#how-to-define-custom-characters-and-custom-character-banks)
     - [Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)](#example-of-correspondence-between-eprom-address-data-and-character-pattern-5--8-dots)
     - [Defining special characters in code.](#defining-special-characters-in-code)
@@ -255,21 +255,30 @@ Library main header file with available library functions.
       ninja flash
       ```
 
-### 4. ESP8266 NONOS SDK - TBD
-#### RequirementsTBD
-#### Hardware connections
-#### How to build and run the example
+### 4. ESP8266 NONOS SDK - TBD ...
+#### Requirements ...
+#### Hardware connections ...
+#### How to build and run the example ...
 ## How to use in your Project - simple case without user-predefined characters
 1. Copy LCD library src files (or files from src folder) to your project.
 2. In lcd_hd44780.config.h 
-   - Define specific **LCD_TYPE** and usage of **RW Pin**<br>
+   - Define specyfic **LCD_TYPE** <br>
     &emsp; &emsp;LCD_TYPE -> set one of the predefined types:<br>
                 &emsp; &emsp;&emsp; &emsp;2004 -> 4 lines 20 characters per line<br>
                 &emsp; &emsp;&emsp; &emsp;1604 -> 4 lines 16 characters per line<br>
                 &emsp; &emsp;&emsp; &emsp;1602 -> 2 lines 16 characters per line<br>
+    - Define usage of **RW Pin**<br>
     &emsp; &emsp;USE_RW_PIN -> Defines HW connection between LCD and uC<br>
                 &emsp; &emsp;&emsp; &emsp;ON - when RW pin is connected<br>
                 &emsp; &emsp;&emsp; &emsp;OFF - when RW pin is not connected<br>
+    - Define HW setup for **LCD_BCKL_PIN** <br>
+    &emsp; &emsp;LCD_BCKL_PIN_EN_STATE -> Defines active state for enabling LCD backlight<br>
+                &emsp; &emsp;&emsp; &emsp;HIGH - when high state on output pin is required to enable LCD backlight<br>
+                &emsp; &emsp;&emsp; &emsp;LOW - when low state on output pin is required to enable LCD backlight<br>
+    - Define usage of LCD buffering functionality **LCD_BUFFERING** <br>
+    &emsp; &emsp;LCD_BUFFERING -> Defines whether you would ike to use LCD buffer or write directly to LCD screen<br>
+                &emsp; &emsp;&emsp; &emsp;ON - when buffering of LCD is planned to be use in project<br>
+                &emsp; &emsp;&emsp; &emsp;OFF - when buffering of LCD is NOT planned to be use in project<br>
 
 
 3. Declare the LCD IO driver interface in your application on the GPIO driver side. This interface should contain the following implementation defined in lcd_hd44780_interface.h
@@ -281,7 +290,6 @@ static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
     set_LCD_DATA_PINS_as_inputs,
     set_LCD_DATA_PINS_state,
     get_LCD_DATA_PINS_state,
-    init_LCD_SIGNAL_PINS_as_outputs,
     LCD_set_SIG,
     LCD_reset_SIG,
     _delay_us,
@@ -295,19 +303,28 @@ const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.examples/lcd_driver_intrface_example_implementations** folder you can find a template with empty definitions of all required interface elements as well as a few files with examples of implementations for different microcontrollers. Additional details of the implementation in the project can be also found in ready to compile examples.
 
 
-## How to use in your Project - advanced case
+## How to use in your Project- simple case with user-predefined characters
 1. Copy LCD library src files (files from src folder) to your project
 2. In lcd_hd44780.config.h 
-   - Define specyfic **LCD_TYPE** and usage of **RW Pin**<br>
+   - Define specyfic **LCD_TYPE** <br>
     &emsp; &emsp;LCD_TYPE -> set one of the predefined types:<br>
                 &emsp; &emsp;&emsp; &emsp;2004 -> 4 lines 20 characters per line<br>
                 &emsp; &emsp;&emsp; &emsp;1604 -> 4 lines 16 characters per line<br>
                 &emsp; &emsp;&emsp; &emsp;1602 -> 2 lines 16 characters per line<br>
+    - Define usage of **RW Pin**<br>
     &emsp; &emsp;USE_RW_PIN -> Defines HW connection between LCD and uC<br>
                 &emsp; &emsp;&emsp; &emsp;ON - when RW pin is connected<br>
                 &emsp; &emsp;&emsp; &emsp;OFF - when RW pin is not connected<br>
+    - Define HW setup for **LCD_BCKL_PIN** <br>
+    &emsp; &emsp;LCD_BCKL_PIN_EN_STATE -> Defines active state for enabling LCD backlight<br>
+                &emsp; &emsp;&emsp; &emsp;HIGH - when high state on output pin is required to enable LCD backlight<br>
+                &emsp; &emsp;&emsp; &emsp;LOW - when low state on output pin is required to enable LCD backlight<br>
+    - Define usage of LCD buffering functionality **LCD_BUFFERING** <br>
+    &emsp; &emsp;LCD_BUFFERING -> Defines whether you would ike to use LCD buffer or write directly to LCD screen<br>
+                &emsp; &emsp;&emsp; &emsp;ON - when buffering of LCD is planned to be use in project<br>
+                &emsp; &emsp;&emsp; &emsp;OFF - when buffering of LCD is NOT planned to be use in project<br>
 
-    - Specify which procedures from to library you would like to compile and use in your project.<br>
+3. Specify which procedures from to library you would like to compile and use in your project.<br>
       To do this, Edit defines in section: <br>
     ```C
     /********************************  LCD LIBRARY COMPILATION SETTINGS ************************
@@ -315,7 +332,7 @@ It's a basic interface that connects the library with your HW driver layer in th
     *          ON  - add specific procedure to compilation
     *          OFF - exclude specific procedure from compilation
     ********************************************************************************************/
-   #define USE_DEF_CHAR_FUNCTION           ON
+    #define USE_DEF_CHAR_FUNCTION           ON
     #define USE_LCD_INT                     ON
     #define USE_LCD_HEX                     ON
     #define USE_LCD_BIN                     ON
@@ -324,11 +341,16 @@ It's a basic interface that connects the library with your HW driver layer in th
     #define USE_LCD_CURSOR_ON               ON
     #define USE_LCD_CURSOR_OFF              ON
     #define USE_LCD_BLINKING_CURSOR_ON      ON
-    ...
+
+    #if LCD_BUFFERING == ON
+    #define USE_LCD_BUF_INT                 ON
+    #define USE_LCD_BUF_HEX                 ON
+    #define USE_LCD_BUF_BIN                 ON
+    #endif
     ```
     <br>
-3. If setting USE_DEF_CHAR_FUNCTION &nbsp; ON define special characters and character banks in lcd_hd44780_def_char.h <br> For more details about defining custom char please refer to [How to define custom characters and custom character banks.](#how-to-define-custome-charatcters-and-custom-character-banks)
-4. Declare the LCD IO driver interface in your application on the GPIO driver side. This interface should contain the following implementation defined in lcd_hd44780_interface.h<br>
+4. If setting USE_DEF_CHAR_FUNCTION &nbsp; ON define special characters and character banks in lcd_hd44780_def_char.h <br> For more details about defining custom char please refer to [How to define custom characters and custom character banks.](#how-to-define-custome-charatcters-and-custom-character-banks)
+5. Declare the LCD IO driver interface in your application on the GPIO driver side. This interface should contain the following implementation defined in lcd_hd44780_interface.h<br>
    <br>
     ```C 
    /************LCD_IO_driver_interface implementation START**************/
@@ -338,7 +360,6 @@ It's a basic interface that connects the library with your HW driver layer in th
         set_LCD_DATA_PINS_as_inputs,
         set_LCD_DATA_PINS_state,
         get_LCD_DATA_PINS_state,
-        init_LCD_SIGNAL_PINS_as_outputs,
         LCD_set_SIG,
         LCD_reset_SIG,
         _delay_us,
@@ -378,48 +399,52 @@ Below you can find a simple example of two special characters bank definitions:
     ```
 2. Declaration of lcd_cgram_bank_1 in lcd_hd44780_def_char.h:
     ```C
-    static const struct char_bank_struct lcd_cgram_bank_1 = {
-        Pol_e,
-        Pol_o,
-        Pol_s,
-        Pol_l,
-        Pol_c,
-        Pol_a,
-        Pol_n,
-        Zn_wody};
+    static const struct char_bank_struct lcd_cgram_bank_1 = 
+    {
+      Pol_e,
+      Pol_o,
+      Pol_s,
+      Pol_l,
+      Pol_c,
+      Pol_a,
+      Pol_n,
+      Zn_wody
+    };
     enum LCD_CGRAM_BANK_1
     {
-        pol_e,
-        pol_o,
-        pol_s,
-        pol_l,
-        pol_c,
-        pol_a,
-        pol_n,
-        zn_wody,
+      pol_e,
+      pol_o,
+      pol_s,
+      pol_l,
+      pol_c,
+      pol_a,
+      pol_n,
+      zn_wody,
     };
     ```
 3. Declaration of lcd_cgram_bank_2 in lcd_hd44780_def_char.h:
     ```C
-    static const struct char_bank_struct lcd_cgram_bank_1 = {
-        Pol_e,
-        Pol_o,
-        Pol_s,
-        Pol_l,
-        Pol_c,
-        Pol_a,
-        Pol_z1,
-        Pol_z2};
+    static const struct char_bank_struct lcd_cgram_bank_1 = 
+    {
+      Pol_e,
+      Pol_o,
+      Pol_s,
+      Pol_l,
+      Pol_c,
+      Pol_a,
+      Pol_z1,
+      Pol_z2
+    };
     enum LCD_CGRAM_BANK_1
     {
-        pol_e,
-        pol_o,
-        pol_s,
-        pol_l,
-        pol_c,
-        pol_a,
-        pol_z1,
-        pol_z2,
+      pol_e,
+      pol_o,
+      pol_s,
+      pol_l,
+      pol_c,
+      pol_a,
+      pol_z1,
+      pol_z2,
     };
     ```
 4. When special characters from bank_1 are needed to display content on an LCD screen, it's required to call in the code:
@@ -436,7 +461,6 @@ Below you can find a simple example of two special characters bank definitions:
 ```bash 
 LCD_HD44780
 ├───.github
-├───.vscode
 ├───doc
 ├───examples
 │   ├───ATMEGA328P_ARDUINO_UNO_R3
@@ -459,9 +483,15 @@ LCD_HD44780
 ```
 Folder description:
 - .github -> Folder with githubactions .yml scripts
-- .vscode -> folder with vscode example settings for luch.json and tasks.json
 - doc -> folder for any documentation needed or created in the project
-- examples -> folder with example hardware implementations contain ready to compile examples for different uC. In this folder you can find also examples and templates of lcd_driver_interface implementations.
+- examples -> folder with example hardware implementations contain ready to compile examples for different uC and templates of lcd_driver_interface implementations.
+  - ATMEGA328P_ARDUINO_UNO_R3 -> example project
+  - config ->  tollchain files
+  - doc -> documentation of used hardware in examples
+  - lcd_driver_intrface_example_implementations -> as named
+  - STM32G071RB_NUCLEO_BARE_METAL -> example project
+  - STM32G474RE_NUCLEO_CUBE_IDE_LL -> example project
+- src -> library source files
 - test -> folder where all tests are written. The folder contains following subfolders:
   - hw_test -> folder with configurations/setups for specific ucontrollers to make integration tests
   - lcd_hd44780 -> folder where all unit tests for lcd_hd44780 module are kept
