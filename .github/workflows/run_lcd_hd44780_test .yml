@@ -1,21 +1,17 @@
 name: Run LCD HD44780 Unit Tests
-# on: [push, pull_request]
-# on: workflow_dispatch
-on: 
+on:
+  workflow_dispatch: 
   push:
     branches: [main, develop]
   pull_request:
     branches: [main, develop]
 jobs:
   LCD_HD44780_test_running_win:
-    name: LCD HD44780 Test RUN
+    name: LCD HD44780 Unit Test RUN on Win
     runs-on: windows-latest 
-    # strategy:
-    #   matrix:
-    #     os: [ubuntu-latest, windows-latest] 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4.0.0
+      uses: actions/checkout@v4.1.1
       with:
         submodules: recursive
         
@@ -29,20 +25,16 @@ jobs:
         cmake -Bout -GNinja
         cmake --build out
 
-    # - name: List files
-    #   working-directory: test/lcd_hd44780/out
-    #   run: dir
-
     - name: Run LCD HD44780 tests
       working-directory: test/lcd_hd44780/out
       run: ./lcd_hd44780_test.exe -v
 
   LCD_HD44780_AVR_test_running_win:
-    name: LCD HD44780 AVR Test RUN
+    name: LCD HD44780 for AVR Unit Test RUN on Win
     runs-on: windows-latest 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4.0.0
+      uses: actions/checkout@v4.1.1
       with:
         submodules: recursive
         
@@ -56,20 +48,16 @@ jobs:
         cmake -S ./avr_code_test -B out_avr -GNinja
         cmake --build out_avr
 
-    # - name: List files
-    #   working-directory: test/lcd_hd44780/out
-    #   run: dir
-
     - name: Run LCD HD44780 tests
       working-directory: test/lcd_hd44780/out_avr
       run: ./lcd_hd44780_test.exe -v
 
   LCD_HD44780_test_running_ubuntu:
-    name: LCD HD44780 Test RUN Ubuntu
+    name:  RUN LCD HD44780 Unit Test on Ubuntu
     runs-on: ubuntu-latest 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4.0.0
+      uses: actions/checkout@v4.1.1
       with:
         submodules: recursive
         
@@ -82,10 +70,6 @@ jobs:
         mkdir out
         cmake -Bout -GNinja
         cmake --build out
-
-    # - name: List files
-    #   working-directory: test/lcd_hd44780/out
-    #   run: dir
 
     - name: Run LCD HD44780 tests
       working-directory: test/lcd_hd44780/out

@@ -96,7 +96,7 @@ add_custom_target( size ALL COMMAND ${CMAKE_SIZE} -C --mcu=${MMCU} --format=avr 
 # check if programmer software is available 
 find_program(AVR_Programmer avrdude)
 if(AVR_Programmer)
-	message(STATUS "AVR_Programmer avrdude was found, you can use defined targets: \r\n\tflash,\r\n\terase,\r\n\twrite_fuse,\r\n\tread_fuse,\r\n\tread_flash,\r\n\treset.")
+	message(STATUS "AVR_Programmer avrdude was found, you can use defined targets: \r\n\tflash,\r\n\terase,\r\n\twrite_fuses,\r\n\tread_fuses,\r\n\tread_flash,\r\n\treset.")
 else()
 	message(STATUS "AVR_Programmer was not found.")    
 endif()

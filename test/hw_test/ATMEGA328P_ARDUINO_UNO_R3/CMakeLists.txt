@@ -9,6 +9,17 @@
 #        For debug build using Ninja:
 #          cmake -S ./ -B Build -G"Ninja" -DCMAKE_BUILD_TYPE=Debug
 #          ninja -C Build (optional with -V  and -jxx ->xx numnber of cores)
+# additional custom targets for this project:
+# 		Erase Atmega chip:
+# 			1. make erase / ninja erase
+# 		Read Fuse Bits:
+# 			1. make write_fuses / ninja write_fuses
+# 		Write Fuse Bits:
+# 			1. make write_fuses / ninja write_fuses
+# 		Read Flash:
+# 			1. make read_flash / ninja read_flash
+# 		Write Flash:
+# 			1. make flash / ninja flash
 #############################################################################################################################
 cmake_minimum_required(VERSION 3.10)
 
