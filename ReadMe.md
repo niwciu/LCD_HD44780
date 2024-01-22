@@ -1,7 +1,6 @@
 # LCD HD44780 lib - simple cross-platform C library
 - [LCD HD44780 lib - simple cross-platform C library](#lcd-hd44780-lib---simple-cross-platform-c-library)
   - [Features](#features)
-  - [Release info](#release-info)
   - [Hardware configuration](#hardware-configuration)
     - [1. Requirements](#1-requirements)
     - [2. Schematic for possible hardware configurations](#2-schematic-for-possible-hardware-configurations)
@@ -15,19 +14,25 @@
     - [1. STM32G071RB -bare metal implementation](#1-stm32g071rb--bare-metal-implementation)
       - [Requirements for compiling and running the example:](#requirements-for-compiling-and-running-the-example)
       - [Hardware requirements, configuration, and connections](#hardware-requirements-configuration-and-connections)
+      - [LCD\_HD44780 library configuration - lcd\_hd44780\_config.h](#lcd_hd44780-library-configuration---lcd_hd44780_configh)
       - [How to build and run the example](#how-to-build-and-run-the-example)
     - [2. STM32G474 - STMCubeIDE project generated with LL drivers](#2-stm32g474---stmcubeide-project-generated-with-ll-drivers)
       - [Requirements for compiling and running the example](#requirements-for-compiling-and-running-the-example-1)
       - [Hardware configuration and connections](#hardware-configuration-and-connections)
+      - [LCD\_HD44780 library configuration - lcd\_hd44780\_config.h](#lcd_hd44780-library-configuration---lcd_hd44780_configh-1)
       - [How to build and run the example](#how-to-build-and-run-the-example-1)
     - [3. AVR ATmega 328P](#3-avr-atmega-328p)
       - [Requirements for compiling and running the example](#requirements-for-compiling-and-running-the-example-2)
       - [Hardware configuration and connections](#hardware-configuration-and-connections-1)
+      - [LCD\_HD44780 library configuration - lcd\_hd44780\_config.h](#lcd_hd44780-library-configuration---lcd_hd44780_configh-2)
       - [How to build and run the example](#how-to-build-and-run-the-example-2)
     - [4. ESP8266 NONOS SDK - TBD ...](#4-esp8266-nonos-sdk---tbd-)
-      - [Requirements ...](#requirements-)
-      - [Hardware connections ...](#hardware-connections-)
-      - [How to build and run the example ...](#how-to-build-and-run-the-example-)
+      - [Requirements](#requirements)
+      - [Hardware connections](#hardware-connections)
+      - [LCD\_HD44780 library configuration - lcd\_hd44780\_config.h](#lcd_hd44780-library-configuration---lcd_hd44780_configh-3)
+      - [How to build and run the example](#how-to-build-and-run-the-example-3)
+        - [Windows](#windows)
+        - [Linux - tbd](#linux---tbd)
   - [How to use in your Project - simple case without user-predefined characters](#how-to-use-in-your-project---simple-case-without-user-predefined-characters)
   - [How to use in your Project- simple case with user-predefined characters](#how-to-use-in-your-project--simple-case-with-user-predefined-characters)
   - [How to define custom characters and custom character banks.](#how-to-define-custom-characters-and-custom-character-banks)
@@ -54,8 +59,6 @@
   - 4 lines 20 characters (2004)
 - Allows to configure and compile only functionality that will be needed in the project
 - Allows to control LCD backlight
-
-## Release info
 ## Hardware configuration
 ### 1. Requirements
 - LCD should be connected to uC in 4bit mode 
@@ -107,6 +110,47 @@ Library main header file with available library functions.
    <img src="./examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
   3. Pin connection between LCD Keypad Shield and Nucleo board<br>
    <img src="./examples/doc/NucleoSTM32G071_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
+#### LCD_HD44780 library configuration - lcd_hd44780_config.h
+  ```C
+    /************************************  LCD HARDWARE SETTINGS *******************************
+     *   LCD_TYPE -> Set one of the predefined types:
+     *               2004 -> 4 lines 20 characters per line
+     *               1604 -> 4 lines 16 characters per line
+     *               1602 -> 2 lines 16 characters per line
+     *   USE_RW_PIN -> Defines HW connection between LCD and uC
+     *               ON - when the RW pin is connected
+     *               OFF - when the RW pin is not connected
+     ********************************************************************************************/
+    #define LCD_TYPE        1602
+    #define USE_RW_PIN      OFF 
+
+    #define LCD_BCKL_PIN_EN_STATE HIGH
+
+    #define LCD_BUFFERING  ON
+  ```
+
+  ```C
+    /********************************  LCD LIBRARY COMPILATION SETTINGS ************************
+     *      Setting USE_(procedure name) to:
+     *          ON  - add specific procedure to compilation
+     *          OFF - exclude specific procedure from compilation
+    ********************************************************************************************/
+    #define USE_DEF_CHAR_FUNCTION           ON
+    #define USE_LCD_INT                     ON
+    #define USE_LCD_HEX                     ON
+    #define USE_LCD_BIN                     ON
+
+    #define USE_LCD_CURSOR_HOME             ON
+    #define USE_LCD_CURSOR_ON               ON
+    #define USE_LCD_CURSOR_OFF              ON
+    #define USE_LCD_BLINKING_CURSOR_ON      ON
+
+    #if LCD_BUFFERING == ON
+    #define USE_LCD_BUF_INT                 ON
+    #define USE_LCD_BUF_HEX                 ON
+    #define USE_LCD_BUF_BIN                 ON
+    #endif
+  ```
 #### How to build and run the example
   1. Open the location you want to clone the repository to in your terminal
   2. Clone the repository to your preferred localization
@@ -159,6 +203,47 @@ Library main header file with available library functions.
    <img src="./examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
   3. Pin connection between LCD Keypad Shield and Nucleo board <br>
    <img src="./examples/doc/NucleoSTM32G474_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
+#### LCD_HD44780 library configuration - lcd_hd44780_config.h
+  ```C
+    /************************************  LCD HARDWARE SETTINGS *******************************
+     *   LCD_TYPE -> Set one of the predefined types:
+     *               2004 -> 4 lines 20 characters per line
+     *               1604 -> 4 lines 16 characters per line
+     *               1602 -> 2 lines 16 characters per line
+     *   USE_RW_PIN -> Defines HW connection between LCD and uC
+     *               ON - when the RW pin is connected
+     *               OFF - when the RW pin is not connected
+     ********************************************************************************************/
+    #define LCD_TYPE        1602
+    #define USE_RW_PIN      OFF 
+
+    #define LCD_BCKL_PIN_EN_STATE HIGH
+
+    #define LCD_BUFFERING  ON
+  ```
+
+  ```C
+    /********************************  LCD LIBRARY COMPILATION SETTINGS ************************
+     *      Setting USE_(procedure name) to:
+     *          ON  - add specific procedure to compilation
+     *          OFF - exclude specific procedure from compilation
+    ********************************************************************************************/
+    #define USE_DEF_CHAR_FUNCTION           ON
+    #define USE_LCD_INT                     ON
+    #define USE_LCD_HEX                     ON
+    #define USE_LCD_BIN                     ON
+
+    #define USE_LCD_CURSOR_HOME             ON
+    #define USE_LCD_CURSOR_ON               ON
+    #define USE_LCD_CURSOR_OFF              ON
+    #define USE_LCD_BLINKING_CURSOR_ON      ON
+
+    #if LCD_BUFFERING == ON
+    #define USE_LCD_BUF_INT                 ON
+    #define USE_LCD_BUF_HEX                 ON
+    #define USE_LCD_BUF_BIN                 ON
+    #endif
+  ```
 #### How to build and run the example
   1. Open the location you want to clone the repository to in your terminal
   2. Clone the repository to your preferred localization
@@ -212,6 +297,47 @@ Library main header file with available library functions.
    <img src="./examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
   4. Pin connection between LCD Keypad Shield and Nucleo board<br>
    <img src="./examples/doc/ARDUINO_UNO_R3_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
+#### LCD_HD44780 library configuration - lcd_hd44780_config.h
+  ```C
+    /************************************  LCD HARDWARE SETTINGS *******************************
+     *   LCD_TYPE -> Set one of the predefined types:
+     *               2004 -> 4 lines 20 characters per line
+     *               1604 -> 4 lines 16 characters per line
+     *               1602 -> 2 lines 16 characters per line
+     *   USE_RW_PIN -> Defines HW connection between LCD and uC
+     *               ON - when the RW pin is connected
+     *               OFF - when the RW pin is not connected
+     ********************************************************************************************/
+    #define LCD_TYPE        1602
+    #define USE_RW_PIN      OFF 
+
+    #define LCD_BCKL_PIN_EN_STATE HIGH
+
+    #define LCD_BUFFERING  ON
+  ```
+
+  ```C
+    /********************************  LCD LIBRARY COMPILATION SETTINGS ************************
+     *      Setting USE_(procedure name) to:
+     *          ON  - add specific procedure to compilation
+     *          OFF - exclude specific procedure from compilation
+    ********************************************************************************************/
+    #define USE_DEF_CHAR_FUNCTION           ON
+    #define USE_LCD_INT                     ON
+    #define USE_LCD_HEX                     ON
+    #define USE_LCD_BIN                     ON
+
+    #define USE_LCD_CURSOR_HOME             ON
+    #define USE_LCD_CURSOR_ON               ON
+    #define USE_LCD_CURSOR_OFF              ON
+    #define USE_LCD_BLINKING_CURSOR_ON      ON
+
+    #if LCD_BUFFERING == ON
+    #define USE_LCD_BUF_INT                 ON
+    #define USE_LCD_BUF_HEX                 ON
+    #define USE_LCD_BUF_BIN                 ON
+    #endif
+  ```
 #### How to build and run the example
   1. Open the location you want to clone the repository to in your terminal
   2. Clone the repository to your preferred localization
@@ -256,9 +382,90 @@ Library main header file with available library functions.
       ```
 
 ### 4. ESP8266 NONOS SDK - TBD ...
-#### Requirements ...
-#### Hardware connections ...
-#### How to build and run the example ...
+#### Requirements
+  1. Make installed
+  2. ESP Toolchain installed according to esspresif doc
+     - For Windows:<br>
+        https://docs.espressif.com/projects/esp8266-rtos-sdk/en/latest/get-started/windows-setup.html
+     -  For Linux: <br>
+        https://docs.espressif.com/projects/esp8266-rtos-sdk/en/latest/get-started/linux-setup.html
+  3. Downloaded Flash Download Tool V3.8.5
+  4. ESP8266 node mcu V3 installed
+#### Hardware connections
+  1. ESP8266 NodeMCU V3<br>
+     <img src="./examples/doc/ESP8266_NodeMCU_V3.png"   width="400"><br> <br> 
+  2. LCD Keypad Shield for Arduino<br>
+   <img src="./examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
+  3. Pin connection between LCD Keypad Shield and ESP8266 NoneMCU board<br>
+   <img src="./examples/doc/ESP8266_NodeMCU_V3_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
+#### LCD_HD44780 library configuration - lcd_hd44780_config.h
+  ```C
+    /************************************  LCD HARDWARE SETTINGS *******************************
+     *   LCD_TYPE -> Set one of the predefined types:
+     *               2004 -> 4 lines 20 characters per line
+     *               1604 -> 4 lines 16 characters per line
+     *               1602 -> 2 lines 16 characters per line
+     *   USE_RW_PIN -> Defines HW connection between LCD and uC
+     *               ON - when the RW pin is connected
+     *               OFF - when the RW pin is not connected
+     ********************************************************************************************/
+    #define LCD_TYPE        1602
+    #define USE_RW_PIN      OFF 
+
+    #define LCD_BCKL_PIN_EN_STATE HIGH
+
+    #define LCD_BUFFERING  ON
+  ```
+
+  ```C
+    /********************************  LCD LIBRARY COMPILATION SETTINGS ************************
+     *      Setting USE_(procedure name) to:
+     *          ON  - add specific procedure to compilation
+     *          OFF - exclude specific procedure from compilation
+    ********************************************************************************************/
+    #define USE_DEF_CHAR_FUNCTION           ON
+    #define USE_LCD_INT                     ON
+    #define USE_LCD_HEX                     ON
+    #define USE_LCD_BIN                     ON
+
+    #define USE_LCD_CURSOR_HOME             ON
+    #define USE_LCD_CURSOR_ON               ON
+    #define USE_LCD_CURSOR_OFF              ON
+    #define USE_LCD_BLINKING_CURSOR_ON      ON
+
+    #if LCD_BUFFERING == ON
+    #define USE_LCD_BUF_INT                 ON
+    #define USE_LCD_BUF_HEX                 ON
+    #define USE_LCD_BUF_BIN                 ON
+    #endif
+  ```
+#### How to build and run the example 
+##### Windows
+  1. Open the location you want to clone the repository to in your terminal
+  2. Clone the repository to your preferred localization
+      ```bash
+      git clone https://github.com/niwciu/LCD_HD44780.git
+      ``` 
+  3. Enter to LCD_HD44780/examples/ESP8266_NONOS_SDK/LCD_HD44780_TEST folder
+      ```bash
+      cd ./LCD_HD44780/examples/ESP8266_NONOS_SDK/LCD_HD44780_TEST
+      ``` 
+  4. Clean the project running clean.bat script
+      ```bash
+      ./clean.bat
+      ``` 
+  5. Build the project running build.bat script
+      ```bash
+      ./build.bat
+      ``` 
+  6. Run flash_download_tool_3.8.5
+  7. Select "Developer Mode" and "ESP8266 DownloadTool" in next window
+  8. Set all fields as it is shown on picture bellow<br>
+     <img src="./examples/doc/ESP_download_tool_setup.png"   width="900"><br> <br> 
+  9. Select COM port on which your NodeMCU board has been installed
+  10. Click START to flash the IC
+  11. After Flash is done pres reset button on your NodeMCU board
+##### Linux - tbd
 ## How to use in your Project - simple case without user-predefined characters
 1. Copy LCD library src files (or files from src folder) to your project.
 2. In lcd_hd44780.config.h 
