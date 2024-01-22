@@ -1,7 +1,6 @@
 # LCD HD44780 lib - simple cross-platform C library
 - [LCD HD44780 lib - simple cross-platform C library](#lcd-hd44780-lib---simple-cross-platform-c-library)
   - [Features](#features)
-  - [Release info](#release-info)
   - [Hardware configuration](#hardware-configuration)
     - [1. Requirements](#1-requirements)
     - [2. Schematic for possible hardware configurations](#2-schematic-for-possible-hardware-configurations)
@@ -60,8 +59,6 @@
   - 4 lines 20 characters (2004)
 - Allows to configure and compile only functionality that will be needed in the project
 - Allows to control LCD backlight
-
-## Release info
 ## Hardware configuration
 ### 1. Requirements
 - LCD should be connected to uC in 4bit mode 
