@@ -400,7 +400,7 @@ Library main header file with available library functions.
   2. LCD Keypad Shield for Arduino<br>
    <img src="./examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
   3. Pin connection between LCD Keypad Shield and ESP8266 NoneMCU board<br>
-   <img src="./examples/doc/ESP8266_NodeMCU_v3_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
+   <img src="./examples/doc/ESP8266_NodeMCU_V3_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
 #### LCD_HD44780 library configuration - lcd_hd44780_config.h
   ```C
     /************************************  LCD HARDWARE SETTINGS *******************************
