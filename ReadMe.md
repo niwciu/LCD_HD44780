@@ -388,9 +388,9 @@ Library main header file with available library functions.
 #### Requirements
   1. Make installed
   2. ESP Toolchain installed according to esspresif doc
-     1. For Windows:<br>
+     - For Windows:<br>
         https://docs.espressif.com/projects/esp8266-rtos-sdk/en/latest/get-started/windows-setup.html
-     2. For Linux: <br>
+     -  For Linux: <br>
         https://docs.espressif.com/projects/esp8266-rtos-sdk/en/latest/get-started/linux-setup.html
   3. Downloaded Flash Download Tool V3.8.5
   4. ESP8266 node mcu V3 installed
