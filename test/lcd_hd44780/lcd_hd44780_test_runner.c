@@ -6,7 +6,7 @@ TEST_GROUP_RUNNER(lcd_hd44780_init)
     /* Test cases to run */
     RUN_TEST_CASE(lcd_hd44780_init, WhenLcdInitThenLcdDataSignalBcklPinsInit);
     RUN_TEST_CASE(lcd_hd44780_init, WhenLcdInitThenLcdDataPinsLowAtFirstLog);
-    RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSetLcdBacklightOffThenLcdPinStatIsCorrect)
+    RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSetLcdBacklightOffThenLcdPinStatIsCorrect);
     RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSetAllSignalsFor15msThenLcdPinStatIsCorrect);
     RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSendFirstCmd0x03ThenLcdPinStateSequenceIsCorrect);
     RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSendSecondCmd0x03ThenLcdPinStateSequenceIsCorrect);
@@ -16,7 +16,7 @@ TEST_GROUP_RUNNER(lcd_hd44780_init)
     RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSendDisplaySettingsCmdThenLcdPinStateSequenceIsCorrect);
     RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSendDisplayClearScrCmdThenLcdPinStateSequenceIsCorrect);
     RUN_TEST_CASE(lcd_hd44780_init, GivenLcdInitWhenSendDisplayEntryModeCmdThenLcdPinStateSequenceIsCorrect);
-    RUN_TEST_CASE(lcd_hd44780_init, WhenLcdInitThenLcdBackLightisOff)
+    RUN_TEST_CASE(lcd_hd44780_init, WhenLcdInitThenLcdBackLightisOff);
 
     // RUN_TEST_CASE(lcd_hd44780_init, )
 }
