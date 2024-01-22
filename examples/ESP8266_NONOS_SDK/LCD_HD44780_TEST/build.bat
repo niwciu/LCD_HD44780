@@ -10,7 +10,7 @@ if not exist user (
 ) else (
     echo folder "user" exist
 )
-copy "..\..\..\..\src\lcd_hd44780.c" "user\"
+copy "..\..\..\src\lcd_hd44780.c" "user\"
 
 if not exist include (
     call mkdir include
@@ -20,10 +20,10 @@ if not exist include (
 )
 
 echo Copy files to include\lcd_hd44780\
-copy "..\..\..\..\src\lcd_hd44780.h" "include\" 
-copy "..\..\..\..\src\lcd_hd44780_interface.h" "include\"
-copy "..\..\..\..\src\lcd_hd44780_def_char.h" "include\"
-copy "..\..\..\..\src\lcd_hd44780_config.h" "include\"
+copy "..\..\..\src\lcd_hd44780.h" "include\" 
+copy "..\..\..\src\lcd_hd44780_interface.h" "include\"
+copy "..\..\..\src\lcd_hd44780_def_char.h" "include\"
+copy "..\..\..\src\lcd_hd44780_config.h" "include\"
 echo =======================================================================
 echo CLEAN AND BUILD PROJECT
 echo =======================================================================
