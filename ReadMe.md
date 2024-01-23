@@ -26,7 +26,7 @@
       - [Hardware configuration and connections](#hardware-configuration-and-connections-1)
       - [LCD\_HD44780 library configuration - lcd\_hd44780\_config.h](#lcd_hd44780-library-configuration---lcd_hd44780_configh-2)
       - [How to build and run the example](#how-to-build-and-run-the-example-2)
-    - [4. ESP8266 NONOS SDK - TBD ...](#4-esp8266-nonos-sdk---tbd-)
+    - [4. ESP8266 NONOS SDK](#4-esp8266-nonos-sdk)
       - [Requirements](#requirements)
       - [Hardware connections](#hardware-connections)
       - [LCD\_HD44780 library configuration - lcd\_hd44780\_config.h](#lcd_hd44780-library-configuration---lcd_hd44780_configh-3)
@@ -53,7 +53,7 @@
   - int format 
   - hex format 
   - bin format
-- The library has currently predefined LCD types:
+- The library has currently predefined following LCD types:
   - 2 lines 16 characters (1602)
   - 4 lines 16 characters (1604)
   - 4 lines 20 characters (2004)
@@ -86,11 +86,12 @@ LCD_HD44780
   - LCD type 
   - Usage of RW Signal/PIN
   - Usage of LCD buffer for displaying the content on the LCD
+  - Backlight enable pin active state
   - Which functions from LCD_HD44780 lib you would like to compile and use in your project.
 #### 2. lcd_hd44780_def_char.h
 Header file for defining user special characters and user special characters banks. Each bank can contain up to 8 characters that are user-defined combinations of characters from defined user-special characters. This allows to creation of different combinations of special characters that can be loaded depending on current code needs.
 #### 3. lcd_hd44780_interface.h
-Header file with library interface declaration that needs to be implemented on the drivers' side. Please look at the code examples in the "examples" folder and search for the "LCD_IO_driver.c" file for more details.
+Header file with library interface declaration that needs to be implemented on the drivers' side. Please look at the code examples in the "examples/lcd_driver_intrface_example_implementations" for more details.
 #### 4. lcd_hd44780.c
 Library main C file 
 #### 5. lcd_hd44780.h
@@ -102,7 +103,7 @@ Library main header file with available library functions.
   2. Make or Ninja installed
   3. ARM GNU Toolchain (gcc-arm-none-eabi) installed
   4. STM32_Programmer_CLI installed
-  5. ST-link (on Nucleo Board) installed
+  5. ST-link (placed on Nucleo Board) installed
 #### Hardware requirements, configuration, and connections
   1. STM32G071 Nucleo-64<br>
      <img src="./examples/doc/STM32G071RB_Nucleo.png"   width="400"><br> <br> 
@@ -161,7 +162,7 @@ Library main header file with available library functions.
       ```bash
       cd ./LCD_HD44780/examples/STM32G071RB
       ``` 
-  4. For make type:
+  4. For Make type:
       ```bash
       cmake -S ./ -B Debug -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
       ```
@@ -195,7 +196,7 @@ Library main header file with available library functions.
   2. Make or Ninja installed
   3. ARM GNU Toolchain (gcc-arm-none-eabi) installed
   4. STM32_Programmer_CLI installed
-  5. ST-link (on Nucleo Board) installed
+  5. ST-link (placed on Nucleo Board) installed
 #### Hardware configuration and connections
   1. STM32G474 Nucleo-64<br>
      <img src="./examples/doc/STM32G474RE_Nucleo.png"   width="400"><br> <br> 
@@ -254,7 +255,7 @@ Library main header file with available library functions.
       ```bash
       cd ./LCD_HD44780/examples/STM32G474RB
       ``` 
-  4. For make type:
+  4. For Make type:
       ```bash
       cmake -S ./ -B Debug -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug
       ```
@@ -348,7 +349,7 @@ Library main header file with available library functions.
       ```bash
       cd ./LCD_HD44780/examples/ATMEGA328P_ARDUINO_UNO_R3
       ``` 
-  4. For make type:
+  4. For Make type:
       ```bash
       cmake -S ./ -B Build -G"Unix Makefiles"
       ``` 
@@ -381,7 +382,7 @@ Library main header file with available library functions.
       ninja flash
       ```
 
-### 4. ESP8266 NONOS SDK - TBD ...
+### 4. ESP8266 NONOS SDK
 #### Requirements
   1. Make installed
   2. ESP Toolchain installed according to esspresif doc
@@ -390,7 +391,7 @@ Library main header file with available library functions.
      -  For Linux: <br>
         https://docs.espressif.com/projects/esp8266-rtos-sdk/en/latest/get-started/linux-setup.html
   3. Downloaded Flash Download Tool V3.8.5
-  4. ESP8266 node mcu V3 installed
+  4. ESP8266 NodeMCU V3 installed
 #### Hardware connections
   1. ESP8266 NodeMCU V3<br>
      <img src="./examples/doc/ESP8266_NodeMCU_V3.png"   width="400"><br> <br> 
@@ -442,7 +443,7 @@ Library main header file with available library functions.
 #### How to build and run the example 
 ##### Windows
   1. Open the location you want to clone the repository to in your terminal
-  2. Clone the repository to your preferred localization
+  2. Clone the repository to your preferred location
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
       ``` 
@@ -450,21 +451,21 @@ Library main header file with available library functions.
       ```bash
       cd ./LCD_HD44780/examples/ESP8266_NONOS_SDK/LCD_HD44780_TEST
       ``` 
-  4. Clean the project running clean.bat script
+  4. Clean the project by running clean.bat script
       ```bash
       ./clean.bat
       ``` 
-  5. Build the project running build.bat script
+  5. Build the project by running build.bat script
       ```bash
       ./build.bat
       ``` 
   6. Run flash_download_tool_3.8.5
-  7. Select "Developer Mode" and "ESP8266 DownloadTool" in next window
+  7. Select "Developer Mode" and "ESP8266 DownloadTool"
   8. Set all fields as it is shown on picture bellow<br>
      <img src="./examples/doc/ESP_download_tool_setup.png"   width="900"><br> <br> 
   9. Select COM port on which your NodeMCU board has been installed
   10. Click START to flash the IC
-  11. After Flash is done pres reset button on your NodeMCU board
+  11. After flash is done pres reset button on your NodeMCU board
 ##### Linux - tbd
 ## How to use in your Project - simple case without user-predefined characters
 1. Copy LCD library src files (or files from src folder) to your project.
@@ -673,6 +674,7 @@ LCD_HD44780
 │   ├───ATMEGA328P_ARDUINO_UNO_R3
 │   ├───config
 │   ├───doc
+│   ├───ESP8266_NONOS_SDK
 │   ├───lcd_driver_intrface_example_implementations
 │   └───STM32G071RB_NUCLEO_BARE_METAL
 │   └───STM32G474RE_NUCLEO_CUBE_IDE_LL
@@ -694,7 +696,8 @@ Folder description:
 - examples -> folder with example hardware implementations contain ready to compile examples for different uC and templates of lcd_driver_interface implementations.
   - ATMEGA328P_ARDUINO_UNO_R3 -> example project
   - config ->  tollchain files
-  - doc -> documentation of used hardware in examples
+  - doc -> files used for examples documentation
+  - ESP8266_NONOS_SDK -> example project
   - lcd_driver_intrface_example_implementations -> as named
   - STM32G071RB_NUCLEO_BARE_METAL -> example project
   - STM32G474RE_NUCLEO_CUBE_IDE_LL -> example project
