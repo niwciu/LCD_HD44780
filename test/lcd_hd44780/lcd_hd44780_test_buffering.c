@@ -16,6 +16,7 @@
 #define LAST_CHAR_IN_LCD_LINE_POSITION (LCD_X - 1)
 #define LAST_LCD_LINE (LCD_Y - 1)
 
+
 extern char lcd_buffer[LCD_Y][LCD_X];
 extern char prev_lcd_buffer[LCD_Y][LCD_X];
 char expected_lcd_buf[LCD_Y][LCD_X];
@@ -119,39 +120,39 @@ TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndSetLcdLocateLastLine
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLCD_UPDATE_EVENTflagIsFALSE)
 {
-    TEST_ASSERT_FALSE(LCD_UPDATE_EVENT);
+    TEST_ASSERT_FALSE(LCD_BUFFER_UPDATE_FLAG);
 }
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLCD_UPDATE_EVENTflagIsTRUEWhenLcdInitThenLCD_UPDATE_EVENTflagIsFalse)
 {
-    LCD_UPDATE_EVENT = true;
+    LCD_BUFFER_UPDATE_FLAG = true;
     lcd_init();
-    TEST_ASSERT_FALSE(LCD_UPDATE_EVENT);
+    TEST_ASSERT_FALSE(LCD_BUFFER_UPDATE_FLAG);
 }
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufCharThenLCD_UPDATE_EVENTflagIsTRUE)
 {
     lcd_buf_char('a');
-    TEST_ASSERT_TRUE(LCD_UPDATE_EVENT);
+    TEST_ASSERT_TRUE(LCD_BUFFER_UPDATE_FLAG);
 }
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufStrThenLCD_UPDATE_EVENTflagIsTRUE)
 {
     lcd_buf_str("TEST");
-    TEST_ASSERT_TRUE(LCD_UPDATE_EVENT);
+    TEST_ASSERT_TRUE(LCD_BUFFER_UPDATE_FLAG);
 }
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitWhenLcdBufClsThenLCD_UPDATE_EVENTflagIsTRUE)
 {
     lcd_buf_cls();
-    TEST_ASSERT_TRUE(LCD_UPDATE_EVENT);
+    TEST_ASSERT_TRUE(LCD_BUFFER_UPDATE_FLAG);
 }
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnAndLcdInitAndLCD_UPDATE_EVENTflagIsTRUEWhenLcdUpdateThenLCD_UPDATE_EVENTflagIsFALSE)
 {
-    LCD_UPDATE_EVENT = true;
+    LCD_BUFFER_UPDATE_FLAG = true;
     lcd_update();
-    TEST_ASSERT_FALSE(LCD_UPDATE_EVENT);
+    TEST_ASSERT_FALSE(LCD_BUFFER_UPDATE_FLAG);
 }
 
 TEST(lcd_hd44780_buffering, GivenLcdBufferingOnWhenLcdInitThenLcdCurrentScreenBufferContainSpaces)

@@ -17,13 +17,13 @@ extern "C"
 #include "lcd_hd44780_interface.h"
 #include "lcd_hd44780_def_char.h"
 
-    enum alignment
+    enum LCD_alignment_e
     {
         left,
         right
     };
 
-    extern bool LCD_UPDATE_EVENT;
+    extern bool LCD_BUFFER_UPDATE_FLAG;
 
     void lcd_init(void);
     void lcd_enable_backlight(void);
@@ -35,11 +35,11 @@ extern "C"
 
     void lcd_char(const char C);
     void lcd_str(const char *str);
-    void lcd_int(int val, uint8_t width, enum alignment alignment);
-    void lcd_hex(int val, uint8_t width, enum alignment alignment);
+    void lcd_int(int val, uint8_t width, enum LCD_alignment_e alignment);
+    void lcd_hex(int val, uint8_t width, enum LCD_alignment_e alignment);
     void lcd_bin(int val, uint8_t width);
 
-    void lcd_locate(enum LCD_LINES y, enum LCD_COLUMNS x);
+    void lcd_locate(enum LCD_LINES_e y, enum LCD_COLUMNS_e x);
 
     void lcd_home(void);
     void lcd_cursor_on(void);
@@ -48,12 +48,12 @@ extern "C"
 
     void lcd_buf_cls(void);
     void lcd_buf_char(const char c);
-    void lcd_buf_locate(enum LCD_LINES y, enum LCD_COLUMNS x);
+    void lcd_buf_locate(enum LCD_LINES_e y, enum LCD_COLUMNS_e x);
     void lcd_buf_str(const char *str);
     void lcd_update(void);
 
-    void lcd_buf_int(int val, uint8_t width, enum alignment alignment);
-    void lcd_buf_hex(int val, uint8_t width, enum alignment alignment);
+    void lcd_buf_int(int val, uint8_t width, enum LCD_alignment_e alignment);
+    void lcd_buf_hex(int val, uint8_t width, enum LCD_alignment_e alignment);
     void lcd_buf_bin(int val, uint8_t width);
 
 #ifdef __cplusplus

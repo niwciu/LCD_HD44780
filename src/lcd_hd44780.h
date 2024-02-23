@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:40:29
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 14:00:22
+ * @Last Modified time: 2024-02-23 18:53:54
  */
 
 #ifndef _LCD_HD_44780_H_
@@ -12,18 +12,32 @@
 extern "C"
 {
 #endif /* __cplusplus */
-#include <stdbool.h>
-#include "lcd_hd44780_config.h"
 #include "lcd_hd44780_interface.h"
 #include "lcd_hd44780_def_char.h"
-
-    enum alignment
+#include <stdbool.h>
+    enum LCD_alignment_e
     {
         left,
         right
     };
+    // definitions of Line and column labels for lcd_locate
+    enum LCD_LINES_e
+    {
+        LINE_1,
+        LINE_2,
+        LINE_3,
+        LINE_4,
+    };
+    // clang-format off
+    enum LCD_COLUMNS_e{
+        C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14,C15,C16,C17,C18,C19,C20
+    };
+    // clang-format on
 
-    extern bool LCD_UPDATE_EVENT;
+    /**
+     * @brief This FLAG is set to true, when least on char was changed in lcd buffer since last LCD update with  buffer content
+     */
+    extern bool LCD_BUFFER_UPDATE_FLAG; 
 
     void lcd_init(void);
     void lcd_enable_backlight(void);
@@ -35,11 +49,11 @@ extern "C"
 
     void lcd_char(const char C);
     void lcd_str(const char *str);
-    void lcd_int(int val, uint8_t width, enum alignment alignment);
-    void lcd_hex(int val, uint8_t width, enum alignment alignment);
+    void lcd_int(int val, uint8_t width, enum LCD_alignment_e alignment);
+    void lcd_hex(int val, uint8_t width, enum LCD_alignment_e alignment);
     void lcd_bin(int val, uint8_t width);
 
-    void lcd_locate(enum LCD_LINES y, enum LCD_COLUMNS x);
+    void lcd_locate(enum LCD_LINES_e y, enum LCD_COLUMNS_e x);
 
     void lcd_home(void);
     void lcd_cursor_on(void);
@@ -48,12 +62,12 @@ extern "C"
 
     void lcd_buf_cls(void);
     void lcd_buf_char(const char c);
-    void lcd_buf_locate(enum LCD_LINES y, enum LCD_COLUMNS x);
+    void lcd_buf_locate(enum LCD_LINES_e y, enum LCD_COLUMNS_e x);
     void lcd_buf_str(const char *str);
     void lcd_update(void);
 
-    void lcd_buf_int(int val, uint8_t width, enum alignment alignment);
-    void lcd_buf_hex(int val, uint8_t width, enum alignment alignment);
+    void lcd_buf_int(int val, uint8_t width, enum LCD_alignment_e alignment);
+    void lcd_buf_hex(int val, uint8_t width, enum LCD_alignment_e alignment);
     void lcd_buf_bin(int val, uint8_t width);
 
 #ifdef __cplusplus
