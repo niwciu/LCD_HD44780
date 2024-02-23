@@ -50,6 +50,7 @@ set(TEST_INCLUDE_DIRS
 
 set(SRCS
 	../../src/lcd_hd44780.c
+	../../src/lcd_hd44780_avr_specific.c
 )
 
 set(TEST_SRCS

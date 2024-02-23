@@ -2,7 +2,7 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-06 21:38:27
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-02-23 19:02:48
+ * @Last Modified time: 2024-02-23 19:04:55
  */
 
 #ifndef _LCD_HD44780_CONFIG_H_
@@ -28,12 +28,12 @@ extern "C"
  *               ON - when the RW pin is connected
  *               OFF - when the RW pin is not connected
  ********************************************************************************************/
-#define LCD_TYPE        1602
-#define USE_RW_PIN      OFF 
+#define LCD_TYPE                1602
+#define USE_RW_PIN              OFF 
 
-#define LCD_BCKL_PIN_EN_STATE HIGH
+#define LCD_BCKL_PIN_EN_STATE   HIGH
 
-#define LCD_BUFFERING  ON
+#define LCD_BUFFERING           ON
 
 /********************************  LCD LIBRARY COMPILATION SETTINGS ************************
  *      Setting USE_(procedure name) to:
