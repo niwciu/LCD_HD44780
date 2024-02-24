@@ -3,7 +3,7 @@
   - [Features](#features)
   - [Hardware configuration](#hardware-configuration)
     - [1. Requirements](#1-requirements)
-    - [2. Schematic for possible hardware configurations](#2-schematic-for-possible-hardware-configurations)
+    - [2. Schematic for possible hardware configurations when using 5V pin tolerant microcontroller](#2-schematic-for-possible-hardware-configurations-when-using-5v-pin-tolerant-microcontroller)
   - [LCD\_HD44780 library src folders file structure and description](#lcd_hd44780-library-src-folders-file-structure-and-description)
       - [1. lcd\_hd44780\_config.h](#1-lcd_hd44780_configh)
       - [2. lcd\_hd44780\_def\_char.h](#2-lcd_hd44780_def_charh)
@@ -64,12 +64,14 @@
 - LCD should be connected to uC in 4bit mode 
 - LCD RW Pin can be connected to uC or GND -> user must define specific options in library configuration.
 - LCD data pins D4-D7 and LCD signal pins can be connected to any pins on any ports on uC side.
-### 2. Schematic for possible hardware configurations
+### 2. Schematic for possible hardware configurations when using 5V pin tolerant microcontroller
 - Using RW pin of the LCD  (set **USE_RW_PIN &nbsp; ON** in lcd_hd44780_config.h)<br><br>
 <img src="./doc/HW%20connection%20using%20RW.png"   height="400"><br> <br><br>
 - Without using RW pin of the LCD  (set **USE_RW_PIN &nbsp; OFF** in lcd_hd44780_config.h)
 <br><br>
-<img src="./doc/HW%20connection%20no%20RW.png"   height="400"><br> <br>
+<img src="./doc/HW%20connection%20no%20RW.png"   height="400"><br> <br><b>
+ATTENTION!<br> 
+When using controller that do not tolerant 5V on their pins, appropriate voltage levels converter should be used for signals: LCD_DB4, LCD_DB5, LCD_DB6, LCD_DB7, LCD_RS, LCD_E,  LCD_RW </b>
 ## LCD_HD44780 library src folders file structure and description
 ```bash 
 LCD_HD44780
@@ -87,7 +89,7 @@ LCD_HD44780
   - Usage of RW Signal/PIN
   - Usage of LCD buffer for displaying the content on the LCD
   - Backlight enable pin active state
-  - Which functions from LCD_HD44780 lib you would like to compile and use in your project.
+  - Which functions from LCD_HD44780 lib you would like to compile and use in your project (by default all functions are added to compilation).
 #### 2. lcd_hd44780_def_char.h
 Header file for defining user special characters and user special characters banks. Each bank can contain up to 8 characters that are user-defined combinations of characters from defined user-special characters. This allows to creation of different combinations of special characters that can be loaded depending on current code needs.
 #### 3. lcd_hd44780_interface.h
@@ -121,6 +123,12 @@ Library main header file with available library functions.
      *   USE_RW_PIN -> Defines HW connection between LCD and uC
      *               ON - when the RW pin is connected
      *               OFF - when the RW pin is not connected
+     *  LCD_BCKL_PIN_EN_STATE -> Defines Active state of the LCD backlight enable pin
+     *               HIGH - when pin active state is high
+     *               LOW - when pin active state is low
+     *  LCD_BUFFERING -> Define whether buffering functionalities of the LCD should be added to compilation
+     *               ON - add buffering functionality to the compilation
+     *               OFF - remove buffering functionality form the compilation
      ********************************************************************************************/
     #define LCD_TYPE        1602
     #define USE_RW_PIN      OFF 
@@ -214,6 +222,12 @@ Library main header file with available library functions.
      *   USE_RW_PIN -> Defines HW connection between LCD and uC
      *               ON - when the RW pin is connected
      *               OFF - when the RW pin is not connected
+     *  LCD_BCKL_PIN_EN_STATE -> Defines Active state of the LCD backlight enable pin
+     *               HIGH - when pin active state is high
+     *               LOW - when pin active state is low
+     *  LCD_BUFFERING -> Define whether buffering functionalities of the LCD should be added to compilation
+     *               ON - add buffering functionality to the compilation
+     *               OFF - remove buffering functionality form the compilation
      ********************************************************************************************/
     #define LCD_TYPE        1602
     #define USE_RW_PIN      OFF 
@@ -468,7 +482,7 @@ Library main header file with available library functions.
   11. After flash is done pres reset button on your NodeMCU board
 ##### Linux - tbd
 ## How to use in your Project - simple case without user-predefined characters
-1. Copy LCD library src files (or files from src folder) to your project.
+1. Copy LCD library src files (or files from src folder) to your project and add copied files in your project configuration, so they can be included in your project. 
 2. In lcd_hd44780.config.h 
    - Define specyfic **LCD_TYPE** <br>
     &emsp; &emsp;LCD_TYPE -> set one of the predefined types:<br>
@@ -512,7 +526,7 @@ It's a basic interface that connects the library with your HW driver layer in th
 
 
 ## How to use in your Project- simple case with user-predefined characters
-1. Copy LCD library src files (files from src folder) to your project
+1. Copy LCD library src files (or files from src folder) to your project and add copied files in your project configuration, so they can be included in your project.
 2. In lcd_hd44780.config.h 
    - Define specyfic **LCD_TYPE** <br>
     &emsp; &emsp;LCD_TYPE -> set one of the predefined types:<br>
