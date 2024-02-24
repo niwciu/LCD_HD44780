@@ -482,7 +482,7 @@ Library main header file with available library functions.
   11. After flash is done pres reset button on your NodeMCU board
 ##### Linux - tbd
 ## How to use in your Project - simple case without user-predefined characters
-1. Copy LCD library src files (or files from src folder) to your project.
+1. Copy LCD library src files (or files from src folder) to your project and add copied files in your project configuration, so they can be included in your project. 
 2. In lcd_hd44780.config.h 
    - Define specyfic **LCD_TYPE** <br>
     &emsp; &emsp;LCD_TYPE -> set one of the predefined types:<br>
@@ -526,7 +526,7 @@ It's a basic interface that connects the library with your HW driver layer in th
 
 
 ## How to use in your Project- simple case with user-predefined characters
-1. Copy LCD library src files (files from src folder) to your project
+1. Copy LCD library src files (or files from src folder) to your project and add copied files in your project configuration, so they can be included in your project.
 2. In lcd_hd44780.config.h 
    - Define specyfic **LCD_TYPE** <br>
     &emsp; &emsp;LCD_TYPE -> set one of the predefined types:<br>
