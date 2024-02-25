@@ -166,9 +166,9 @@ Library main header file with available library functions.
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
       ``` 
-  3. Enter to  LCD_HD44780/examples/STM32G071RB/
+  3. Enter to  LCD_HD44780/examples/STM32G071RB_NUCLEO_BARE_METAL
       ```bash
-      cd ./LCD_HD44780/examples/STM32G071RB
+      cd ./LCD_HD44780/examples/STM32G071RB_NUCLEO_BARE_METAL
       ``` 
   4. For Make type:
       ```bash
@@ -265,9 +265,9 @@ Library main header file with available library functions.
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
       ``` 
-  3. Enter to  LCD_HD44780/examples/STM32G474RB/
+  3. Enter to  LCD_HD44780/examples/STM32G474RE_NUCLEO_CUBE_IDE_LL/
       ```bash
-      cd ./LCD_HD44780/examples/STM32G474RB
+      cd ./LCD_HD44780/examples/STM32G474RE_NUCLEO_CUBE_IDE_LL
       ``` 
   4. For Make type:
       ```bash
