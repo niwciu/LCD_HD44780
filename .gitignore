@@ -3,6 +3,7 @@ out_avr/
 Release/
 Debug/
 Build/
+LCD_HD44780_lib_doc/
 .vscode/
 # HW test ingnored files
 .metadata/

@@ -1,3 +1,4 @@
+
 # LCD HD44780 lib - simple cross-platform C library
 - [LCD HD44780 lib - simple cross-platform C library](#lcd-hd44780-lib---simple-cross-platform-c-library)
   - [Features](#features)
@@ -66,7 +67,8 @@
 - LCD data pins D4-D7 and LCD signal pins can be connected to any pins on any ports on uC side.
 ### 2. Schematic for possible hardware configurations when using 5V pin tolerant microcontroller
 - Using RW pin of the LCD  (set **USE_RW_PIN &nbsp; ON** in lcd_hd44780_config.h)<br><br>
-<img src="./doc/HW%20connection%20using%20RW.png"   height="400"><br> <br><br>
+<img src="./doc/HW%20connection%20using%20RW.png"   height="400"><br> 
+<br><br>
 - Without using RW pin of the LCD  (set **USE_RW_PIN &nbsp; OFF** in lcd_hd44780_config.h)
 <br><br>
 <img src="./doc/HW%20connection%20no%20RW.png"   height="400"><br> <br><b>

@@ -1,8 +1,13 @@
-/*
- * @Author: lukasz.niewelt
- * @Date: 2023-12-06 21:38:27
- * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-02-23 19:04:55
+/**
+ * @file lcd_hd44780_config.h
+ * @author niwciu (niwciu@gmail.com)
+ * @brief 
+ * @version 1.0.2
+ * @date 2024-02-25
+ * 
+ * @copyright Copyright (c) 2024
+ * @addtogroup LCD_HD44780_lib_API
+ * 
  */
 
 #ifndef _LCD_HD44780_CONFIG_H_

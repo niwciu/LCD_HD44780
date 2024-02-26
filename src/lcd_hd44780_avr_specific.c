@@ -1,13 +1,16 @@
-/*
- * @Author: lukasz.niewelt 
- * @Date: 2024-02-23 19:21:04 
- * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-02-23 20:10:49
+/**
+ * @file lcd_hd44780_avr_specific.c
+ * @author niwciu (niwciu@gmail.com)
+ * @brief 
+ * @version 1.0.2
+ * @date 2024-02-25
+ * 
+ * @copyright Copyright (c) 2024
  */
 
-#include "lcd_hd44780_config.h"
+// #include "lcd_hd44780_config.h"
 #include "lcd_hd44780.h"
-#include "lcd_hd44780_avr_specific.h"
+// #include "lcd_hd44780_avr_specific.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -75,7 +78,7 @@ void lcd_hex_AVR(int val, uint8_t width, enum LCD_alignment_e alignment)
     char buffer[17];
     buffer[0] = '\0';
     itoa(val, buffer, 16);
-    static const char *prefix = {"0x"};
+    static char *prefix = {"0x"};
     if (width <= (strlen(buffer) + VAL_PREFIX_LENGHT))
     {
         lcd_str(prefix);
@@ -104,7 +107,7 @@ void lcd_hex_AVR(int val, uint8_t width, enum LCD_alignment_e alignment)
 void lcd_bin_AVR(int val, uint8_t width)
 {
     char buffer[35]; // 0b 0000 0000 0000 0000 0000 0000 0000 0000
-    static const char *prefix = {"0b"};
+    static char *prefix = {"0b"};
     buffer[0] = '\0';
 
     itoa(val, buffer, 2);

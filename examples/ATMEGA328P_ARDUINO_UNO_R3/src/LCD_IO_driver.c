@@ -41,8 +41,8 @@ static void init_LCD_DATA_PINS_as_outputs(void);
 static void init_LCD_DATA_PINS_as_inputs(void);
 static void set_LCD_DATA_PINS_state(uint8_t data);
 static uint8_t get_LCD_DATA_PINS_state(void);
-static void LCD_set_SIG(enum lcd_sig LCD_SIG);
-static void LCD_reset_SIG(enum lcd_sig LCD_SIG);
+static void LCD_set_SIG(enum lcd_sig_e LCD_SIG);
+static void LCD_reset_SIG(enum lcd_sig_e LCD_SIG);
 static void wraper_delay_us(uint32_t delay_us);
 static void init_LCD_SIGNAL_PINS_as_outputs(void);
 
@@ -124,7 +124,7 @@ static uint8_t get_LCD_DATA_PINS_state(void)
     return data;
 }
 
-static void LCD_set_SIG(enum lcd_sig LCD_SIG)
+static void LCD_set_SIG(enum lcd_sig_e LCD_SIG)
 {
     switch (LCD_SIG)
     {
@@ -147,7 +147,7 @@ static void LCD_set_SIG(enum lcd_sig LCD_SIG)
     }
 }
 
-static void LCD_reset_SIG(enum lcd_sig LCD_SIG)
+static void LCD_reset_SIG(enum lcd_sig_e LCD_SIG)
 {
     switch (LCD_SIG)
     {

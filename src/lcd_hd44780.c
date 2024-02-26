@@ -1,10 +1,13 @@
-/*
- * @Author: lukasz.niewelt
- * @Date: 2023-12-06 21:39:30
- * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-02-23 20:26:48
- */
+/**
+ * @file lcd_hd44780.c
+ * @author niwciu (niwciu@gmail.com)
+ * @brief 
+ * @version 1.0.2
+ * @date 2024-02-25
+ * 
+ * @copyright Copyright (c) 2024
 
+*/
 #include "lcd_hd44780.h"
 #include "lcd_hd44780_config.h"
 #include "lcd_hd44780_driver_commands.h"
@@ -19,7 +22,7 @@
 #define BUSY_FLAG           1 << 7
 #define VAL_PREFIX_LENGHT   2U
 
-#ifndef UNIT_TEST
+#ifndef UNIT_TEST 
 #define PRIVATE static
 #else
 #define PRIVATE
@@ -29,6 +32,7 @@
 #define LAST_CHAR_IN_LCD_LINE (LCD_X - 1)
 #define LAST_LCD_LINE (LCD_Y - 1)
 
+
 typedef char lcd_pos_t;
 static lcd_pos_t *lcd_buf_position_ptr;
 PRIVATE char lcd_buffer[LCD_Y][LCD_X];
@@ -36,6 +40,7 @@ PRIVATE char prev_lcd_buffer[LCD_Y][LCD_X];
 #endif
 
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
+
 bool LCD_BUFFER_UPDATE_FLAG = false;
 
 static void register_LCD_IO_driver(void);
@@ -243,12 +248,7 @@ static void write_lcd_buf_2_lcd(const uint8_t *lcd_cursor_position, const uint8_
 
 #endif
 
-/**
- * @brief  Function that initializes LCD in 4-bit mode with or without LCD R/W Pin handling.
- * 
- * @attention LCD R/W handling should be configured in lcd_hd44780_config.h by setting USE_RW_PIN to  1 (Enable R/W Pin
- * handling) or 0 (disable R/W Pin handling).
- */
+
 void lcd_init(void)
 {
     register_LCD_IO_driver();
@@ -289,7 +289,9 @@ void lcd_init(void)
     LCD_BUFFER_UPDATE_FLAG = false;
 #endif
 }
-
+/**
+ * @brief Function for disabling backlight od the LCD
+ */
 void lcd_enable_backlight(void)
 {
 #if LCD_BCKL_PIN_EN_STATE == HIGH
@@ -299,6 +301,9 @@ void lcd_enable_backlight(void)
 #endif
 }
 
+/**
+ * @brief Function for enabling backlight od the LCD
+ */
 void lcd_disable_backlight(void)
 {
 #if LCD_BCKL_PIN_EN_STATE == HIGH
@@ -325,13 +330,13 @@ void lcd_cls(void)
  * @brief Function for defining custom user characters in CGRAM of the LCD.
  * 
  * @param CGRAM_char_index Position/address of the character in CGRAM of the LCD where defined char should be written.
- * For the predefined example of special characters, taken values are defined in the type enum LCD_CGRAM that is defined
+ * For the predefined example of special characters, taken values are defined in the type enum LCD_CGRAM_BANK_1_e that is declared
  * in lcd-hd44780.h
  * 
  * @param def_char Pointer to the predefined special character.
  * 
  * @note CGRAM_char_index - This Parameter can take values from 0 to 7. For the predefined example of special
- * characters, taken values are defined in the type enum LCD_CGRAM that is defined in lcd-hd44780.h
+ * characters, taken values are defined in the type enum LCD_CGRAM that is defined in lcd_hd44780_def_char.h
  */
 void lcd_def_char(const uint8_t CGRAM_bank_x_char_adr, const uint8_t *def_char)
 {
@@ -343,6 +348,11 @@ void lcd_def_char(const uint8_t CGRAM_bank_x_char_adr, const uint8_t *def_char)
     lcd_write_cmd(LCDC_SET_DDRAM);
 }
 
+/**
+ * @brief Function that loads to LCD_CGRAM predefined characters form specific user char_bank
+ * 
+ * @param char_bank - pointer to selected user char bank that function should load to LCD_CGRAM. Char banks are defined in lcd_hd44780_def_char.h 
+ */
 void lcd_load_char_bank(const struct char_bank_struct *char_bank)
 {
     lcd_def_char(0, char_bank->char_0);
@@ -372,12 +382,12 @@ void lcd_char(const char C)
  * @brief Function for printing/writing the string on the LCD screen starting from the current LCD cursor position.
  * @param str string that should be printed/written on the LCD screen
  */
-void lcd_str(const char *str)
+void lcd_str(char *str)
 {
-    register char znak;
-    while ((znak = *(str++)))
+    while ((*str)!='\0')
     {
-        lcd_write_data((uint8_t)(znak));
+        lcd_char(*str);
+        str++;
     }
 }
 
@@ -387,8 +397,8 @@ void lcd_str(const char *str)
  * @param val int type value to print on LCD screen
  * @param width Minimum number of characters to be printed. If the value to be printed is shorter than this number, the
  * result is padded with blank spaces. The value is not truncated even if the result is larger.
- * @param alignment If the value to be printed is shorter than the width, this parameter will specify the alignment of the
- * printed text value. This parameter can be set to "left" or "right"
+ * @param alignment This parameter can only accept values defined in ::LCD_alignment_e. If the value to be printed is shorter than the width, this parameter will specify the alignment of the
+ * printed text value.
  * @attention to compile for AVR ucontrollers definition of flag AVR is required.
  */
 void lcd_int(int val, uint8_t width, enum LCD_alignment_e alignment)
@@ -415,8 +425,8 @@ void lcd_int(int val, uint8_t width, enum LCD_alignment_e alignment)
  * @param width Minimum number of characters to be printed. If the value to be printed is shorter than this number, the
  * result is padded with blank spaces. The value is not truncated even if the result is larger. The width should contain
  * additional 2 characters for '0x' at the beginning of the printed value.
- * @param alignment If the value to be printed is shorter than the width, this parameter will specify the alignment of the
- * printed text value. This parameter can be set to "left" or "right"
+ * @param alignment This parameter can only accept values defined in ::LCD_alignment_e. If the value to be printed is shorter than the width, this parameter will specify the alignment of the
+ * printed text value.
  * @attention to compile for AVR ucontrollers definition of flag AVR is required.
  */
 void lcd_hex(int val, uint8_t width, enum LCD_alignment_e alignment)
@@ -470,8 +480,8 @@ void lcd_bin(int val, uint8_t width)
 
 /**
  * @brief Function that moves LCD cursor to a specific position located under the x and y coordinate
- * @param y LCD row/line number. Defined enum value LINE_1, LINE_2,... etc.
- * @param x LCD column number. Defined enum value C1, C2, C3,... etc.
+ * @param y LCD row/line number. This parameter can only accept values defined in ::LCD_LINES_e.
+ * @param x LCD column number. This parameter can only accept values defined in ::LCD_COLUMNS_e.
  */
 void lcd_locate(enum LCD_LINES_e y, enum LCD_COLUMNS_e x)
 {
@@ -561,7 +571,7 @@ void lcd_buf_cls(void)
 /**
  * @brief Function for adding the char to the LCD buffer under the current position of the LCD buffer.
  * @param C char (for example '1') or its ASCI code (0x31).
- * @note For user-defined char, place CGRAM_char_index (Position/address of the character in CGRAM of the LCD where
+ * @note For user-defined char, place LCD_CGRAM_BANK_x_e (Position/address of the character in CGRAM of the LCD where
  * defined char was written).
  */
 void lcd_buf_char(const char c)
@@ -573,8 +583,8 @@ void lcd_buf_char(const char c)
 
 /**
  * @brief Function that changes the current LCD buffer position pointer to a specific position located under the x and y coordinate
- * @param y LCD row/line number. Defined enum value LINE_1, LINE_2,... etc.
- * @param x LCD column number. Defined enum value C1, C2, C3,... etc.
+ * @param y LCD row/line number. This parameter can only accept values defined in ::LCD_LINES_e.
+ * @param x LCD column number. This parameter can only accept values defined in ::LCD_COLUMNS_e.
  */
 void lcd_buf_locate(enum LCD_LINES_e y, enum LCD_COLUMNS_e x)
 {
@@ -627,8 +637,8 @@ void lcd_update(void)
  * @param val int type value to add to LCD buffer
  * @param width Minimum number of characters to be added to LCD buffer. If the value to be added to the LCD buffer is shorter than width, the
  * result is padded with blank spaces. The value to be added to the buffer as a string is not truncated if the string length is larger than the width value.
- * @param alignment If the value is to be added to the LCD buffer as a string is shorter than the width, this parameter will specify the alignment of the
- * text representing the value. This parameter can be set to "left" or "right"
+ * @param alignment This parameter can only accept values defined in ::LCD_alignment_e. If the value to be printed is shorter than the width, this parameter will specify the alignment of the
+ * printed text value.
  * @attention to compile for AVR ucontrollers, definition of flag AVR is required.
  */
 void lcd_buf_int(int val, uint8_t width, enum LCD_alignment_e alignment)
@@ -654,8 +664,8 @@ void lcd_buf_int(int val, uint8_t width, enum LCD_alignment_e alignment)
  * @param width Minimum number of characters to be added to lcd buffer. If the value to be added to the buffer is shorter than the width, the
  * result is padded with blank spaces. The value to be added to the buffer as a string is not truncated if the string length is larger than the width value. Width should contain
  * additional 2 characters for "0x" at the beginning of the value represented as a string. example: 0x01-> width=4
- * @param alignment If the value to be added to the LCD buffer as a string is shorter than the width, this parameter will specify the alignment of the
- * text represented the value. This parameter can be set to "left" or "right"
+ * @param alignment This parameter can only accept values defined in ::LCD_alignment_e. If the value to be printed is shorter than the width, this parameter will specify the alignment of the
+ * printed text value.
  * @attention to compile for AVR ucontrollers, definition of flag AVR is required.
  */
 void lcd_buf_hex(int val, uint8_t width, enum LCD_alignment_e alignment)
