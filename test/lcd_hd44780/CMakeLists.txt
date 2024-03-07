@@ -50,7 +50,6 @@ set(TEST_INCLUDE_DIRS
 
 set(SRCS
 	../../src/lcd_hd44780.c
-	../../src/lcd_hd44780_avr_specific.c
 )
 
 set(TEST_SRCS
@@ -66,7 +65,6 @@ set(TEST_SRCS
 
 set(GLOBAL_DEFINES
 	-DUNIT_TEST
-	# -DAVR
 )
 
 include(${CUSTOM_TARGETS_FILE_DIR})
