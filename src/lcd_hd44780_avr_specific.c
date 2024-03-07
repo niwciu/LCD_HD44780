@@ -8,9 +8,8 @@
  * @copyright Copyright (c) 2024
  */
 
-// #include "lcd_hd44780_config.h"
 #include "lcd_hd44780.h"
-// #include "lcd_hd44780_avr_specific.h"
+#include "lcd_hd44780_avr_specific.h"
 #include <stdlib.h>
 #include <string.h>
 
