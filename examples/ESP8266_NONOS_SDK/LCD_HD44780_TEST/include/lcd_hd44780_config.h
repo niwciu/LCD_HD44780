@@ -36,7 +36,7 @@ extern "C"
 #define LCD_BUFFERING  ON
 
 //definitions of Line and column labels for lcd_locate 
-enum LCD_LINES
+enum LCD_LINES_e
 {
     LINE_1,
     LINE_2,
@@ -45,7 +45,7 @@ enum LCD_LINES
     LINE_4,
 #endif
 };
-enum LCD_COLUMNS{
+enum LCD_COLUMNS_e{
     C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14,C15,C16,
 #if LCD_TYPE==2004
     C17,C18,C19,C20

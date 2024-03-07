@@ -1,51 +1,25 @@
-/*
- * @Author: lukasz.niewelt
- * @Date: 2023-12-06 21:39:30
- * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 18:04:17
- */
+/**
+ * @file lcd_hd44780.c
+ * @author niwciu (niwciu@gmail.com)
+ * @brief
+ * @version 1.0.2
+ * @date 2024-02-25
+ *
+ * @copyright Copyright (c) 2024
 
+*/
 #include "lcd_hd44780.h"
+#include "lcd_hd44780_config.h"
+#include "lcd_hd44780_driver_commands.h"
+#ifdef AVR
+#include "lcd_hd44780_avr_specific.h"
+#endif
 #include <stddef.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-typedef char lcd_pos_t;
-// clang-format off
-#define BUSY_FLAG           1 << 7
-#define VAL_PREFIX_LENGHT   2U
-
-// LCD driver commands
-#define LCDC_CLS            0x01
-#define LCDC_HOME           0x02
-/********************************/
-#define LCDC_ENTRY_MODE     0x04
-    #define LCDC_ENTRYR     0x02
-    #define LCDC_ENTRYL     0x00
-    #define LCDC_MOVE       0x01
-/********************************/
-#define LCDC_ONOFF          0x08
-    #define LCDC_DISPLAYON  0x04
-    #define LCDC_CURSORON   0x02
-    #define LCDC_CURSOROFF  0x00
-    #define LCDC_BLINKON    0x01
-/********************************/
-#define LCDC_SHIFT          0x10
-    #define LCDC_SHIFTDISP  0x08
-    #define LCDC_SHIFTR     0x04
-    #define LCDC_SHIFTL     0x00
-/********************************/
-#define LCDC_FUNC           0x20
-    #define LCDC_FUNC8B     0x10
-    #define LCDC_FUNC4B     0x00
-    #define LCDC_FUNC2L     0x08
-    #define LCDC_FUNC1L     0x00
-    #define LCDC_FUNC5x10   0x04
-    #define LCDC_FUNC5x7    0x00
-/********************************/
-#define LCDC_SET_CGRAM      0x40
-#define LCDC_SET_DDRAM      0x80
+#define BUSY_FLAG 1 << 7
+#define VAL_PREFIX_LENGHT 2U
 
 #ifndef UNIT_TEST
 #define PRIVATE static
@@ -54,18 +28,18 @@ typedef char lcd_pos_t;
 #endif
 
 #if LCD_BUFFERING == ON
+#define LAST_CHAR_IN_LCD_LINE (LCD_X - 1)
+#define LAST_LCD_LINE (LCD_Y - 1)
 
-#define LAST_CHAR_IN_LCD_LINE   (LCD_X-1)
-#define LAST_LCD_LINE   (LCD_Y-1)
-
+typedef char lcd_pos_t;
+static lcd_pos_t *lcd_buf_position_ptr;
 PRIVATE char lcd_buffer[LCD_Y][LCD_X];
 PRIVATE char prev_lcd_buffer[LCD_Y][LCD_X];
-
-static lcd_pos_t *lcd_buf_position_ptr;
 #endif
 
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
-bool LCD_UPDATE_EVENT = false;
+
+bool LCD_BUFFER_UPDATE_FLAG = false;
 
 static void register_LCD_IO_driver(void);
 static void lcd_set_all_SIG(void);
@@ -79,44 +53,19 @@ static void lcd_write_byte(uint8_t byte);
 static uint8_t lcd_read_byte(void);
 static uint8_t lcd_read_4bit_data(void);
 #endif
-#ifdef AVR
-#if ((USE_LCD_INT == ON) || (USE_LCD_HEX == ON))
-static void lcd_put_spaces(uint8_t empty_spaces);
-#endif
-#if USE_LCD_INT == ON
-static void lcd_int_AVR(int val, uint8_t width, enum alignment alignment);
-#endif
-#if USE_LCD_HEX == ON
-static void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment);
-#endif
-#if USE_LCD_BIN == ON
-static void lcd_bin_AVR(int val, uint8_t width);
-#endif
-#if LCD_BUFFERING == ON
-#if ((USE_LCD_BUF_INT == ON) || (USE_LCD_BUF_HEX == ON))
-static void lcd_buf_put_spaces(uint8_t empty_spaces);
-#endif
-#if USE_LCD_BUF_INT == ON
-static void lcd_buf_int_AVR(int val, uint8_t width, enum alignment alignment);
-#endif
-#if USE_LCD_BUF_HEX == ON
-static void lcd_buf_hex_AVR(int val, uint8_t width, enum alignment alignment);
-#endif
-#if USE_LCD_BUF_BIN == ON
-static void lcd_buf_bin_AVR(int val, uint8_t width);
-#endif
-#endif
-#else
+
+#ifndef AVR
 #if (USE_LCD_BIN == ON || ((LCD_BUFFERING == ON) && (LCD_USE_BUF_BIN == ON)))
 static void fill_bin_value_buffer(int val, char *bin_val_buffer);
 static void fill_zeros_buffer(const char *buffer, uint8_t width, char *zeros_buf);
 #endif
 #endif
-#if LCD_BUFFERING==ON
+
+#if LCD_BUFFERING == ON
 static void check_lcd_buf_possition_ptr_overflow(void);
 static void copy_lcd_buf_2_prev_lcd_buf(void);
-static void update_lcd_curosr_possition(uint8_t *lcd_cursor_position,uint8_t *lcd_line, uint8_t *missed_char_counter_in_LCD_line);
-static void write_lcd_buf_2_lcd(const uint8_t *lcd_cursor_position,const uint8_t *lcd_line,uint8_t * missed_char_counter_in_LCD_line, const lcd_pos_t *prev_lcd_buff_pos_ptr);
+static void update_lcd_curosr_possition(uint8_t *lcd_cursor_position, uint8_t *lcd_line, uint8_t *missed_char_counter_in_LCD_line);
+static void write_lcd_buf_2_lcd(const uint8_t *lcd_cursor_position, const uint8_t *lcd_line, uint8_t *missed_char_counter_in_LCD_line, const lcd_pos_t *prev_lcd_buff_pos_ptr);
 #endif
 
 static void register_LCD_IO_driver(void)
@@ -205,200 +154,7 @@ uint8_t lcd_read_4bit_data(void)
     return data;
 }
 #endif
-#ifdef AVR
-#if ((USE_LCD_INT == ON) || (USE_LCD_HEX == ON))
-static void lcd_put_spaces(uint8_t empty_spaces)
-{
-    for (uint8_t i = 0; i < empty_spaces; i++)
-    {
-        lcd_char(' ');
-    }
-}
-#endif
-#if USE_LCD_INT == ON
-static void lcd_int_AVR(int val, uint8_t width, enum alignment alignment)
-{
-    uint8_t buf_lenght = 0;
-    char buffer[20]; // 19chars for 64 bit int + end char '\0'
-    buffer[0] = '\0';
-    itoa(val, buffer, 10);
-    buf_lenght = strlen(buffer);
-    if (buf_lenght >= (width))
-    {
-        lcd_str(buffer);
-    }
-    else
-    {
-        uint8_t empty_spaces_qty = width - buf_lenght;
-        if (alignment == right)
-        {
-            lcd_put_spaces(empty_spaces_qty);
-            lcd_str(buffer);
-        }
-        else
-        {
-            lcd_str(buffer);
-            lcd_put_spaces(empty_spaces_qty);
-        }
-    }
-}
-#endif
-#if USE_LCD_HEX == ON
-static void lcd_hex_AVR(int val, uint8_t width, enum alignment alignment)
-{
-    char buffer[17];
-    buffer[0] = '\0';
-    itoa(val, buffer, 16);
-    static const char *prefix = {"0x"};
-    if (width <= (strlen(buffer) + VAL_PREFIX_LENGHT))
-    {
-        lcd_str(prefix);
-        lcd_str(buffer);
-    }
-    else
-    {
-        uint8_t empty_spaces_qty = width - (VAL_PREFIX_LENGHT + strlen(buffer));
-
-        if (alignment == right)
-        {
-            lcd_put_spaces(empty_spaces_qty);
-            lcd_str(prefix);
-            lcd_str(buffer);
-        }
-        else
-        {
-            lcd_str(prefix);
-            lcd_str(buffer);
-            lcd_put_spaces(empty_spaces_qty);
-        }
-    }
-}
-#endif
-#if USE_LCD_BIN == ON
-static void lcd_bin_AVR(int val, uint8_t width)
-{
-    char buffer[35]; // 0b 0000 0000 0000 0000 0000 0000 0000 0000
-    static const char *prefix = {"0b"};
-    buffer[0] = '\0';
-
-    itoa(val, buffer, 2);
-    // if (buf_lenght < (width - VAL_PREFIX_LENGHT))
-    if (width <= (strlen(buffer) + VAL_PREFIX_LENGHT))
-    {
-        lcd_str(prefix);
-        lcd_str(buffer);
-    }
-    else
-    {
-        uint8_t zeros_qty = (width - (VAL_PREFIX_LENGHT + strlen(buffer)));
-        lcd_str(prefix);
-        for (uint8_t i = 0; i < zeros_qty; i++)
-        {
-            lcd_char('0');
-        }
-        lcd_str(buffer);
-    }
-}
-#endif
-
-#if LCD_BUFFERING== ON
-#if ((USE_LCD_BUF_INT == ON) || (USE_LCD_BUF_HEX == ON))
-static void lcd_buf_put_spaces(uint8_t empty_spaces)
-{
-    for (uint8_t i = 0; i < empty_spaces; i++)
-    {
-        lcd_buf_char(' ');
-    }
-}
-#endif
-#if USE_LCD_BUF_INT == ON
-static void lcd_buf_int_AVR(int val, uint8_t width, enum alignment alignment)
-{
-    uint8_t buf_lenght = 0;
-    char buffer[20]; // 19chars for 64 bit int + end char '\0'
-    buffer[0] = '\0';
-    itoa(val, buffer, 10);
-    buf_lenght = strlen(buffer);
-    if (buf_lenght >= (width))
-    {
-        lcd_buf_str(buffer);
-    }
-    else
-    {
-        uint8_t empty_spaces_qty = width - buf_lenght;
-        if (alignment == right)
-        {
-            lcd_buf_put_spaces(empty_spaces_qty);
-            lcd_buf_str(buffer);
-        }
-        else
-        {
-            lcd_buf_str(buffer);
-            lcd_buf_put_spaces(empty_spaces_qty);
-        }
-    }
-}
-#endif
-
-#if USE_LCD_BUF_HEX == ON
-void lcd_buf_hex_AVR(int val, uint8_t width, enum alignment alignment)
-{
-    char buffer[17];
-    buffer[0] = '\0';
-    itoa(val, buffer, 16);
-    static const char *prefix = {"0x"};
-    if (width <= (strlen(buffer) + VAL_PREFIX_LENGHT))
-    {
-        lcd_buf_str(prefix);
-        lcd_buf_str(buffer);
-    }
-    else
-    {
-        uint8_t empty_spaces_qty = width - (VAL_PREFIX_LENGHT + strlen(buffer));
-
-        if (alignment == right)
-        {
-            lcd_buf_put_spaces(empty_spaces_qty);
-            lcd_buf_str(prefix);
-            lcd_buf_str(buffer);
-        }
-        else
-        {
-            lcd_buf_str(prefix);
-            lcd_buf_str(buffer);
-            lcd_buf_put_spaces(empty_spaces_qty);
-        }
-    }
-}
-#endif
-#if USE_LCD_BUF_BIN == ON
-static void lcd_buf_bin_AVR(int val, uint8_t width)
-{
-    char buffer[35]; // 0b 0000 0000 0000 0000 0000 0000 0000 0000
-    static const char *prefix = {"0b"};
-    buffer[0] = '\0';
-
-    itoa(val, buffer, 2);
-    // if (buf_lenght < (width - VAL_PREFIX_LENGHT))
-    if (width <= (strlen(buffer) + VAL_PREFIX_LENGHT))
-    {
-        lcd_buf_str(prefix);
-        lcd_buf_str(buffer);
-    }
-    else
-    {
-        uint8_t zeros_qty = (width - (VAL_PREFIX_LENGHT + strlen(buffer)));
-        lcd_buf_str(prefix);
-        for (uint8_t i = 0; i < zeros_qty; i++)
-        {
-            lcd_buf_char('0');
-        }
-        lcd_buf_str(buffer);
-    }
-}
-#endif
-#endif
-#else
+#ifndef AVR
 #if USE_LCD_BIN == ON
 static void fill_bin_value_buffer(int val, char *bin_val_buffer)
 {
@@ -422,10 +178,12 @@ static void fill_bin_value_buffer(int val, char *bin_val_buffer)
 
 static void fill_zeros_buffer(const char *buffer, uint8_t width, char *zeros_buf)
 {
-    if (strlen(buffer) < (width + VAL_PREFIX_LENGHT))
+    uint8_t buf_len = strlen(buffer);
+    uint8_t total_str_width = width + VAL_PREFIX_LENGHT;
+    if (buf_len < (total_str_width))
     {
         uint8_t zeros_qty = width - ((strlen(buffer) + VAL_PREFIX_LENGHT));
-        for (uint8_t t = 0; t < zeros_qty; t++)
+        for (uint8_t j = 0; j < zeros_qty; j++)
         {
             strcat(zeros_buf, "0");
         }
@@ -434,48 +192,49 @@ static void fill_zeros_buffer(const char *buffer, uint8_t width, char *zeros_buf
 #endif
 #endif
 
-#if LCD_BUFFERING==ON
+#if LCD_BUFFERING == ON
 static void check_lcd_buf_possition_ptr_overflow(void)
 {
-    if(++lcd_buf_position_ptr>&lcd_buffer[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE])
+    lcd_buf_position_ptr++;
+    if (lcd_buf_position_ptr > &lcd_buffer[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE])
     {
-        lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1];
+        lcd_buf_position_ptr = &lcd_buffer[LINE_1][C1];
     }
 }
 static void copy_lcd_buf_2_prev_lcd_buf(void)
 {
-    for(uint8_t y=0;y<LCD_Y;y++)
+    for (uint8_t y = 0; y < LCD_Y; y++)
     {
-        for(uint8_t x=0;x<LCD_X;x++)
+        for (uint8_t x = 0; x < LCD_X; x++)
         {
-            prev_lcd_buffer[y][x]=lcd_buffer[y][x];
+            prev_lcd_buffer[y][x] = lcd_buffer[y][x];
         }
     }
 }
-static void update_lcd_curosr_possition(uint8_t *lcd_cursor_position,uint8_t *lcd_line, uint8_t *missed_char_counter_in_LCD_line)
+static void update_lcd_curosr_possition(uint8_t *lcd_cursor_position, uint8_t *lcd_line, uint8_t *missed_char_counter_in_LCD_line)
 {
-    if((++(*lcd_cursor_position))>=LCD_X)
+    (*lcd_cursor_position)++;
+    if ((*lcd_cursor_position) >= LCD_X)
     {
-        *lcd_cursor_position=0;
+        *lcd_cursor_position = 0;
         (*lcd_line)++;
-        *missed_char_counter_in_LCD_line=0;
-        if(*lcd_line==LCD_Y)
+        *missed_char_counter_in_LCD_line = 0;
+        if (*lcd_line == LCD_Y)
         {
-            *lcd_line=LINE_1;
-        } 
-        lcd_locate(*lcd_line,*lcd_cursor_position);
-        
+            *lcd_line = LINE_1;
+        }
+        lcd_locate(*lcd_line, *lcd_cursor_position);
     }
 }
 
-void write_lcd_buf_2_lcd(const uint8_t * lcd_cursor_position, const uint8_t *lcd_line, uint8_t * missed_char_counter_in_LCD_line, const lcd_pos_t *prev_lcd_buff_pos_ptr)
+static void write_lcd_buf_2_lcd(const uint8_t *lcd_cursor_position, const uint8_t *lcd_line, uint8_t *missed_char_counter_in_LCD_line, const lcd_pos_t *prev_lcd_buff_pos_ptr)
 {
-    if(*lcd_buf_position_ptr!=*prev_lcd_buff_pos_ptr)
+    if ((*lcd_buf_position_ptr) != (*prev_lcd_buff_pos_ptr))
     {
-        if (*missed_char_counter_in_LCD_line!=0)
+        if (*missed_char_counter_in_LCD_line != 0)
         {
-            lcd_locate(*lcd_line,*lcd_cursor_position);
-            *missed_char_counter_in_LCD_line=0;
+            lcd_locate(*lcd_line, *lcd_cursor_position);
+            *missed_char_counter_in_LCD_line = 0;
         }
         lcd_char(*lcd_buf_position_ptr);
     }
@@ -487,11 +246,6 @@ void write_lcd_buf_2_lcd(const uint8_t * lcd_cursor_position, const uint8_t *lcd
 
 #endif
 
-/**
- * @brief  Function that initializes LCD in 4-bit mode with or without LCD R/W Pin handling.
- * @attention LCD R/W handling should be configured in lcd_hd44780_config.h by setting USE_RW_PIN to  1 (Enable R/W Pin
- * handling) or 0 (disable R/W Pin handling).
- */
 void lcd_init(void)
 {
     register_LCD_IO_driver();
@@ -524,16 +278,17 @@ void lcd_init(void)
     lcd_write_cmd(LCDC_ENTRY_MODE | LCDC_ENTRYR);
     /*********************************END of BASIC LCD INIT***************************************/
 #if LCD_BUFFERING == ON
-    //clear lcd_buffer by putting spaces inside of the buffer
+    // clear lcd_buffer by putting spaces inside of the buffer
     lcd_buf_cls();
-    //copy lcd_buffer with spaces to prev_lcd_buffer
+    // copy lcd_buffer with spaces to prev_lcd_buffer
     copy_lcd_buf_2_prev_lcd_buf();
     // clear flag due to init procedure that reset LCD screen and buffers
-    LCD_UPDATE_EVENT=false;
+    LCD_BUFFER_UPDATE_FLAG = false;
 #endif
-  
 }
-
+/**
+ * @brief Function for disabling backlight od the LCD
+ */
 void lcd_enable_backlight(void)
 {
 #if LCD_BCKL_PIN_EN_STATE == HIGH
@@ -543,6 +298,9 @@ void lcd_enable_backlight(void)
 #endif
 }
 
+/**
+ * @brief Function for enabling backlight od the LCD
+ */
 void lcd_disable_backlight(void)
 {
 #if LCD_BCKL_PIN_EN_STATE == HIGH
@@ -567,12 +325,15 @@ void lcd_cls(void)
 #if USE_DEF_CHAR_FUNCTION == ON
 /**
  * @brief Function for defining custom user characters in CGRAM of the LCD.
+ *
  * @param CGRAM_char_index Position/address of the character in CGRAM of the LCD where defined char should be written.
- * For the predefined example of special characters, taken values are defined in the type enum LCD_CGRAM that is defined
+ * For the predefined example of special characters, taken values are defined in the type enum LCD_CGRAM_BANK_1_e that is declared
  * in lcd-hd44780.h
+ *
  * @param def_char Pointer to the predefined special character.
+ *
  * @note CGRAM_char_index - This Parameter can take values from 0 to 7. For the predefined example of special
- * characters, taken values are defined in the type enum LCD_CGRAM that is defined in lcd-hd44780.h
+ * characters, taken values are defined in the type enum LCD_CGRAM that is defined in lcd_hd44780_def_char.h
  */
 void lcd_def_char(const uint8_t CGRAM_bank_x_char_adr, const uint8_t *def_char)
 {
@@ -584,6 +345,11 @@ void lcd_def_char(const uint8_t CGRAM_bank_x_char_adr, const uint8_t *def_char)
     lcd_write_cmd(LCDC_SET_DDRAM);
 }
 
+/**
+ * @brief Function that loads to LCD_CGRAM predefined characters form specific user char_bank
+ *
+ * @param char_bank - pointer to selected user char bank that function should load to LCD_CGRAM. Char banks are defined in lcd_hd44780_def_char.h
+ */
 void lcd_load_char_bank(const struct char_bank_struct *char_bank)
 {
     lcd_def_char(0, char_bank->char_0);
@@ -613,12 +379,12 @@ void lcd_char(const char C)
  * @brief Function for printing/writing the string on the LCD screen starting from the current LCD cursor position.
  * @param str string that should be printed/written on the LCD screen
  */
-void lcd_str(const char *str)
+void lcd_str(char *str)
 {
-    register char znak;
-    while ((znak = *(str++)))
+    while ((*str) != '\0')
     {
-        lcd_write_data((uint8_t)(znak));
+        lcd_char(*str);
+        str++;
     }
 }
 
@@ -628,11 +394,11 @@ void lcd_str(const char *str)
  * @param val int type value to print on LCD screen
  * @param width Minimum number of characters to be printed. If the value to be printed is shorter than this number, the
  * result is padded with blank spaces. The value is not truncated even if the result is larger.
- * @param alignment If the value to be printed is shorter than the width, this parameter will specify the alignment of the
- * printed text value. This parameter can be set to "left" or "right"
+ * @param alignment This parameter can only accept values defined in ::LCD_alignment_e. If the value to be printed is shorter than the width, this parameter will specify the alignment of the
+ * printed text value.
  * @attention to compile for AVR ucontrollers definition of flag AVR is required.
  */
-void lcd_int(int val, uint8_t width, enum alignment alignment)
+void lcd_int(int val, uint8_t width, enum LCD_alignment_e alignment)
 {
 #ifdef AVR
     lcd_int_AVR(val, width, alignment);
@@ -656,11 +422,11 @@ void lcd_int(int val, uint8_t width, enum alignment alignment)
  * @param width Minimum number of characters to be printed. If the value to be printed is shorter than this number, the
  * result is padded with blank spaces. The value is not truncated even if the result is larger. The width should contain
  * additional 2 characters for '0x' at the beginning of the printed value.
- * @param alignment If the value to be printed is shorter than the width, this parameter will specify the alignment of the
- * printed text value. This parameter can be set to "left" or "right"
+ * @param alignment This parameter can only accept values defined in ::LCD_alignment_e. If the value to be printed is shorter than the width, this parameter will specify the alignment of the
+ * printed text value.
  * @attention to compile for AVR ucontrollers definition of flag AVR is required.
  */
-void lcd_hex(int val, uint8_t width, enum alignment alignment)
+void lcd_hex(int val, uint8_t width, enum LCD_alignment_e alignment)
 {
 #ifdef AVR
     lcd_hex_AVR(val, width, alignment);
@@ -711,10 +477,10 @@ void lcd_bin(int val, uint8_t width)
 
 /**
  * @brief Function that moves LCD cursor to a specific position located under the x and y coordinate
- * @param y LCD row/line number. Defined enum value LINE_1, LINE_2,... etc.
- * @param x LCD column number. Defined enum value C1, C2, C3,... etc.
+ * @param y LCD row/line number. This parameter can only accept values defined in ::LCD_LINES_e.
+ * @param x LCD column number. This parameter can only accept values defined in ::LCD_COLUMNS_e.
  */
-void lcd_locate(enum LCD_LINES y, enum LCD_COLUMNS x)
+void lcd_locate(enum LCD_LINES_e y, enum LCD_COLUMNS_e x)
 {
     switch (y)
     {
@@ -791,35 +557,35 @@ void lcd_blinking_cursor_on(void)
  */
 void lcd_buf_cls(void)
 {
-    for(lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1]; lcd_buf_position_ptr<=&lcd_buffer[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE]; lcd_buf_position_ptr++)
+    for (lcd_buf_position_ptr = &lcd_buffer[LINE_1][C1]; lcd_buf_position_ptr <= &lcd_buffer[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE]; lcd_buf_position_ptr++)
     {
-            *lcd_buf_position_ptr=' ';
+        *lcd_buf_position_ptr = ' ';
     }
-    lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1];
-    LCD_UPDATE_EVENT=true;
+    lcd_buf_position_ptr = &lcd_buffer[LINE_1][C1];
+    LCD_BUFFER_UPDATE_FLAG = true;
 }
 
 /**
  * @brief Function for adding the char to the LCD buffer under the current position of the LCD buffer.
  * @param C char (for example '1') or its ASCI code (0x31).
- * @note For user-defined char, place CGRAM_char_index (Position/address of the character in CGRAM of the LCD where
+ * @note For user-defined char, place LCD_CGRAM_BANK_x_e (Position/address of the character in CGRAM of the LCD where
  * defined char was written).
  */
 void lcd_buf_char(const char c)
 {
-    *lcd_buf_position_ptr=c;
+    *lcd_buf_position_ptr = c;
     check_lcd_buf_possition_ptr_overflow();
-    LCD_UPDATE_EVENT=true;
+    LCD_BUFFER_UPDATE_FLAG = true;
 }
 
 /**
  * @brief Function that changes the current LCD buffer position pointer to a specific position located under the x and y coordinate
- * @param y LCD row/line number. Defined enum value LINE_1, LINE_2,... etc.
- * @param x LCD column number. Defined enum value C1, C2, C3,... etc.
+ * @param y LCD row/line number. This parameter can only accept values defined in ::LCD_LINES_e.
+ * @param x LCD column number. This parameter can only accept values defined in ::LCD_COLUMNS_e.
  */
-void lcd_buf_locate(enum LCD_LINES y, enum LCD_COLUMNS x)
+void lcd_buf_locate(enum LCD_LINES_e y, enum LCD_COLUMNS_e x)
 {
-    lcd_buf_position_ptr=&lcd_buffer[y][x];
+    lcd_buf_position_ptr = &lcd_buffer[y][x];
 }
 
 /**
@@ -830,33 +596,36 @@ void lcd_buf_str(const char *str)
 {
     while (*str)
     {
-        *(lcd_buf_position_ptr)=*(str++);
+        *(lcd_buf_position_ptr) = *(str++);
         check_lcd_buf_possition_ptr_overflow();
     }
-    LCD_UPDATE_EVENT=true;
+    LCD_BUFFER_UPDATE_FLAG = true;
 }
 
 /**
- * @brief Function that prints on the LCD screen the content of The LCD buffer. 
+ * @brief Function that prints on the LCD screen the content of The LCD buffer.
  * The function sets also The LCD buffer position pointer to the First line's first character.
  */
 void lcd_update(void)
 {
-    uint8_t lcd_cursor_position=0;
-    uint8_t lcd_line=0;
-    uint8_t missed_char_counter_in_LCD_line=0;
-    const lcd_pos_t *prev_lcd_buff_pos_ptr=&prev_lcd_buffer[LINE_1][C1];
-    
-    for(lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1]; lcd_buf_position_ptr<=&lcd_buffer[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE]; lcd_buf_position_ptr++)
+    if (LCD_BUFFER_UPDATE_FLAG == true)
     {
-        write_lcd_buf_2_lcd(&lcd_cursor_position,&lcd_line,&missed_char_counter_in_LCD_line,prev_lcd_buff_pos_ptr);
-        update_lcd_curosr_possition(&lcd_cursor_position,&lcd_line,&missed_char_counter_in_LCD_line);
-        prev_lcd_buff_pos_ptr++;
+        uint8_t lcd_cursor_position = 0;
+        uint8_t lcd_line = 0;
+        uint8_t missed_char_counter_in_LCD_line = 0;
+        const lcd_pos_t *prev_lcd_buff_pos_ptr = &prev_lcd_buffer[LINE_1][C1];
+
+        for (lcd_buf_position_ptr = &lcd_buffer[LINE_1][C1]; lcd_buf_position_ptr <= &lcd_buffer[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE]; lcd_buf_position_ptr++)
+        {
+            write_lcd_buf_2_lcd(&lcd_cursor_position, &lcd_line, &missed_char_counter_in_LCD_line, prev_lcd_buff_pos_ptr);
+            update_lcd_curosr_possition(&lcd_cursor_position, &lcd_line, &missed_char_counter_in_LCD_line);
+            prev_lcd_buff_pos_ptr++;
+        }
+
+        lcd_buf_position_ptr = &lcd_buffer[LINE_1][C1];
+        copy_lcd_buf_2_prev_lcd_buf();
+        LCD_BUFFER_UPDATE_FLAG = false;
     }
-    
-    lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1];
-    copy_lcd_buf_2_prev_lcd_buf();
-    LCD_UPDATE_EVENT=false;
 }
 
 #if USE_LCD_BUF_INT == ON
@@ -865,11 +634,11 @@ void lcd_update(void)
  * @param val int type value to add to LCD buffer
  * @param width Minimum number of characters to be added to LCD buffer. If the value to be added to the LCD buffer is shorter than width, the
  * result is padded with blank spaces. The value to be added to the buffer as a string is not truncated if the string length is larger than the width value.
- * @param alignment If the value is to be added to the LCD buffer as a string is shorter than the width, this parameter will specify the alignment of the 
- * text representing the value. This parameter can be set to "left" or "right"
- * @attention to compile for AVR ucontrollers definition of flag AVR is required.
+ * @param alignment This parameter can only accept values defined in ::LCD_alignment_e. If the value to be printed is shorter than the width, this parameter will specify the alignment of the
+ * printed text value.
+ * @attention to compile for AVR ucontrollers, definition of flag AVR is required.
  */
-void lcd_buf_int(int val, uint8_t width, enum alignment alignment)
+void lcd_buf_int(int val, uint8_t width, enum LCD_alignment_e alignment)
 {
 #ifdef AVR
     lcd_buf_int_AVR(val, width, alignment);
@@ -892,11 +661,11 @@ void lcd_buf_int(int val, uint8_t width, enum alignment alignment)
  * @param width Minimum number of characters to be added to lcd buffer. If the value to be added to the buffer is shorter than the width, the
  * result is padded with blank spaces. The value to be added to the buffer as a string is not truncated if the string length is larger than the width value. Width should contain
  * additional 2 characters for "0x" at the beginning of the value represented as a string. example: 0x01-> width=4
- * @param alignment If the value to be added to the LCD buffer as a string is shorter than the width, this parameter will specify the alignment of the 
-* text represented the value. This parameter can be set to "left" or "right"
- * @attention to compile for AVR ucontrollers definition of flag AVR is required.
+ * @param alignment This parameter can only accept values defined in ::LCD_alignment_e. If the value to be printed is shorter than the width, this parameter will specify the alignment of the
+ * printed text value.
+ * @attention to compile for AVR ucontrollers, definition of flag AVR is required.
  */
-void lcd_buf_hex(int val, uint8_t width, enum alignment alignment)
+void lcd_buf_hex(int val, uint8_t width, enum LCD_alignment_e alignment)
 {
 #ifdef AVR
     lcd_buf_hex_AVR(val, width, alignment);
@@ -917,9 +686,9 @@ void lcd_buf_hex(int val, uint8_t width, enum alignment alignment)
  * @brief Function for adding to the LCD buffer the integer value in binary format as a string under the current position of the LCD buffer pointer
  * @param val int type value to be added to the LCD buffer as a string in hexadecimal format
  * @param width Minimum number of characters to be added to LCD buffer. If the value to be added to the buffer as string length is shorter than width, the
- * result is padded with blank spaces. The value to be added to the buffer as a string is not truncated if the string length represents the value in binary format length 
+ * result is padded with blank spaces. The value to be added to the buffer as a string is not truncated if the string length represents the value in binary format length
  * is larger than the width value. The width should contain an additional 2 characters for "0b" at the beginning of the value represented as a string. example: 0b01-> width=4
- * @attention to compile for AVR ucontrollers definition of flag AVR is required.
+ * @attention to compile for AVR ucontrollers, definition of flag AVR is required.
  */
 void lcd_buf_bin(int val, uint8_t width)
 {
@@ -944,4 +713,3 @@ void lcd_buf_bin(int val, uint8_t width)
 
 #endif
 #endif
-  

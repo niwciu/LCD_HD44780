@@ -1,3 +1,4 @@
+
 # LCD HD44780 lib - simple cross-platform C library
 - [LCD HD44780 lib - simple cross-platform C library](#lcd-hd44780-lib---simple-cross-platform-c-library)
   - [Features](#features)
@@ -66,7 +67,8 @@
 - LCD data pins D4-D7 and LCD signal pins can be connected to any pins on any ports on uC side.
 ### 2. Schematic for possible hardware configurations when using 5V pin tolerant microcontroller
 - Using RW pin of the LCD  (set **USE_RW_PIN &nbsp; ON** in lcd_hd44780_config.h)<br><br>
-<img src="./doc/HW%20connection%20using%20RW.png"   height="400"><br> <br><br>
+<img src="./doc/HW%20connection%20using%20RW.png"   height="400"><br> 
+<br><br>
 - Without using RW pin of the LCD  (set **USE_RW_PIN &nbsp; OFF** in lcd_hd44780_config.h)
 <br><br>
 <img src="./doc/HW%20connection%20no%20RW.png"   height="400"><br> <br><b>
@@ -166,9 +168,9 @@ Library main header file with available library functions.
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
       ``` 
-  3. Enter to  LCD_HD44780/examples/STM32G071RB/
+  3. Enter to  LCD_HD44780/examples/STM32G071RB_NUCLEO_BARE_METAL
       ```bash
-      cd ./LCD_HD44780/examples/STM32G071RB
+      cd ./LCD_HD44780/examples/STM32G071RB_NUCLEO_BARE_METAL
       ``` 
   4. For Make type:
       ```bash
@@ -265,9 +267,9 @@ Library main header file with available library functions.
       ```bash
       git clone https://github.com/niwciu/LCD_HD44780.git
       ``` 
-  3. Enter to  LCD_HD44780/examples/STM32G474RB/
+  3. Enter to  LCD_HD44780/examples/STM32G474RE_NUCLEO_CUBE_IDE_LL/
       ```bash
-      cd ./LCD_HD44780/examples/STM32G474RB
+      cd ./LCD_HD44780/examples/STM32G474RE_NUCLEO_CUBE_IDE_LL
       ``` 
   4. For Make type:
       ```bash

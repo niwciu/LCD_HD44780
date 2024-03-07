@@ -2,11 +2,10 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-07 16:59:56
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 10:13:21
+ * @Last Modified time: 2024-02-23 18:40:44
  */
 
 #include "lcd_hd44780_test_common.h"
-#include "lcd_hd44780_config.h"
 #include "stdio.h"
 
 uint16_t next_log_no;

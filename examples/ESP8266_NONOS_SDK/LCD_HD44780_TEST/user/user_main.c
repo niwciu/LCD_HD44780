@@ -39,8 +39,8 @@ const char *demo_tekst = {"Congratulation, you have just run LCD demo example on
 // const char *demo_tekst = {"Congratulation, you hav SDK\0"};
 const char *demo_title = {"LCD HD44780 Demo\0"};
 
-static void lcd_buf_slide_str_in(const char *str, enum LCD_LINES lcd_line);
-static void lcd_buf_slide_str_out(const char *str, enum LCD_LINES lcd_line);
+static void lcd_buf_slide_str_in(const char *str, enum LCD_LINES_e lcd_line);
+static void lcd_buf_slide_str_out(const char *str, enum LCD_LINES_e lcd_line);
 static void blink_backlight(uint8_t blinks_no);
 
 uint8_t j = 0;
@@ -109,7 +109,7 @@ void ICACHE_FLASH_ATTR user_init(void)
     os_timer_arm(&lcd_shift_timer,500,1);
 }
 
-static void lcd_buf_slide_str_out(const char *str, enum LCD_LINES lcd_line)
+static void lcd_buf_slide_str_out(const char *str, enum LCD_LINES_e lcd_line)
 {
     
         uint8_t str_end_flag = 0;
@@ -131,7 +131,7 @@ static void lcd_buf_slide_str_out(const char *str, enum LCD_LINES lcd_line)
         j++;
 }
 
-static void lcd_buf_slide_str_in(const char *str, enum LCD_LINES lcd_line)
+static void lcd_buf_slide_str_in(const char *str, enum LCD_LINES_e lcd_line)
 {
         
         lcd_buf_locate(lcd_line, i);

@@ -65,7 +65,7 @@ static lcd_pos_t *lcd_buf_position_ptr;
 #endif
 
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
-bool LCD_UPDATE_EVENT = false;
+bool LCD_BUFFER_UPDATE_FLAG = false;
 
 static void register_LCD_IO_driver(void);
 static void lcd_set_all_SIG(void);
@@ -529,7 +529,7 @@ void lcd_init(void)
     //copy lcd_buffer with spaces to prev_lcd_buffer
     copy_lcd_buf_2_prev_lcd_buf();
     // clear flag due to init procedure that reset LCD screen and buffers
-    LCD_UPDATE_EVENT=false;
+    LCD_BUFFER_UPDATE_FLAG=false;
 #endif
   
 }
@@ -632,7 +632,7 @@ void lcd_str(const char *str)
  * printed text value. This parameter can be set to "left" or "right"
  * @attention to compile for AVR ucontrollers definition of flag AVR is required.
  */
-void lcd_int(int val, uint8_t width, enum alignment alignment)
+void lcd_int(int val, uint8_t width, enum LCD_alignment_e alignment)
 {
 #ifdef AVR
     lcd_int_AVR(val, width, alignment);
@@ -660,7 +660,7 @@ void lcd_int(int val, uint8_t width, enum alignment alignment)
  * printed text value. This parameter can be set to "left" or "right"
  * @attention to compile for AVR ucontrollers definition of flag AVR is required.
  */
-void lcd_hex(int val, uint8_t width, enum alignment alignment)
+void lcd_hex(int val, uint8_t width, enum LCD_alignment_e alignment)
 {
 #ifdef AVR
     lcd_hex_AVR(val, width, alignment);
@@ -714,7 +714,7 @@ void lcd_bin(int val, uint8_t width)
  * @param y LCD row/line number. Defined enum value LINE_1, LINE_2,... etc.
  * @param x LCD column number. Defined enum value C1, C2, C3,... etc.
  */
-void lcd_locate(enum LCD_LINES y, enum LCD_COLUMNS x)
+void lcd_locate(enum LCD_LINES_e y, enum LCD_COLUMNS_e x)
 {
     switch (y)
     {
@@ -796,7 +796,7 @@ void lcd_buf_cls(void)
             *lcd_buf_position_ptr=' ';
     }
     lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1];
-    LCD_UPDATE_EVENT=true;
+    LCD_BUFFER_UPDATE_FLAG=true;
 }
 
 /**
@@ -809,7 +809,7 @@ void lcd_buf_char(const char c)
 {
     *lcd_buf_position_ptr=c;
     check_lcd_buf_possition_ptr_overflow();
-    LCD_UPDATE_EVENT=true;
+    LCD_BUFFER_UPDATE_FLAG=true;
 }
 
 /**
@@ -817,7 +817,7 @@ void lcd_buf_char(const char c)
  * @param y LCD row/line number. Defined enum value LINE_1, LINE_2,... etc.
  * @param x LCD column number. Defined enum value C1, C2, C3,... etc.
  */
-void lcd_buf_locate(enum LCD_LINES y, enum LCD_COLUMNS x)
+void lcd_buf_locate(enum LCD_LINES_e y, enum LCD_COLUMNS_e x)
 {
     lcd_buf_position_ptr=&lcd_buffer[y][x];
 }
@@ -833,7 +833,7 @@ void lcd_buf_str(const char *str)
         *(lcd_buf_position_ptr)=*(str++);
         check_lcd_buf_possition_ptr_overflow();
     }
-    LCD_UPDATE_EVENT=true;
+    LCD_BUFFER_UPDATE_FLAG=true;
 }
 
 /**
@@ -856,7 +856,7 @@ void lcd_update(void)
     
     lcd_buf_position_ptr=&lcd_buffer[LINE_1][C1];
     copy_lcd_buf_2_prev_lcd_buf();
-    LCD_UPDATE_EVENT=false;
+    LCD_BUFFER_UPDATE_FLAG=false;
 }
 
 #if USE_LCD_BUF_INT == ON
@@ -869,7 +869,7 @@ void lcd_update(void)
  * text representing the value. This parameter can be set to "left" or "right"
  * @attention to compile for AVR ucontrollers definition of flag AVR is required.
  */
-void lcd_buf_int(int val, uint8_t width, enum alignment alignment)
+void lcd_buf_int(int val, uint8_t width, enum LCD_alignment_e alignment)
 {
 #ifdef AVR
     lcd_buf_int_AVR(val, width, alignment);
@@ -896,7 +896,7 @@ void lcd_buf_int(int val, uint8_t width, enum alignment alignment)
 * text represented the value. This parameter can be set to "left" or "right"
  * @attention to compile for AVR ucontrollers definition of flag AVR is required.
  */
-void lcd_buf_hex(int val, uint8_t width, enum alignment alignment)
+void lcd_buf_hex(int val, uint8_t width, enum LCD_alignment_e alignment)
 {
 #ifdef AVR
     lcd_buf_hex_AVR(val, width, alignment);

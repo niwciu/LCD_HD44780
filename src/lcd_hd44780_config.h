@@ -1,8 +1,13 @@
-/*
- * @Author: lukasz.niewelt
- * @Date: 2023-12-06 21:38:27
- * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-09 21:20:52
+/**
+ * @file lcd_hd44780_config.h
+ * @author niwciu (niwciu@gmail.com)
+ * @brief
+ * @version 1.0.2
+ * @date 2024-02-25
+ *
+ * @copyright Copyright (c) 2024
+ * @addtogroup LCD_HD44780_lib_API
+ *
  */
 
 #ifndef _LCD_HD44780_CONFIG_H_
@@ -28,29 +33,12 @@ extern "C"
  *               ON - when the RW pin is connected
  *               OFF - when the RW pin is not connected
  ********************************************************************************************/
-#define LCD_TYPE        1602
-#define USE_RW_PIN      OFF 
+#define LCD_TYPE                1602
+#define USE_RW_PIN              OFF 
 
-#define LCD_BCKL_PIN_EN_STATE HIGH
+#define LCD_BCKL_PIN_EN_STATE   HIGH
 
-#define LCD_BUFFERING  ON
-
-//definitions of Line and column labels for lcd_locate 
-enum LCD_LINES
-{
-    LINE_1,
-    LINE_2,
- #if ((LCD_TYPE==2004) ||(LCD_TYPE ==1604))
-    LINE_3,
-    LINE_4,
-#endif
-};
-enum LCD_COLUMNS{
-    C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14,C15,C16,
-#if LCD_TYPE==2004
-    C17,C18,C19,C20
-#endif
-};
+#define LCD_BUFFERING           ON
 
 /********************************  LCD LIBRARY COMPILATION SETTINGS ************************
  *      Setting USE_(procedure name) to:
