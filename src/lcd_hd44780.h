@@ -48,26 +48,26 @@ extern "C"
      */
     enum LCD_COLUMNS_e
     {
-        C1,     /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 1'st char/collumn of LCD */
-        C2,     /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 2'nd char/collumn of LCD */
-        C3,     /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 3'th char/collumn of LCD */
-        C4,     /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 4'th char/collumn of LCD */
-        C5,     /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 5'th char/collumn of LCD */
-        C6,     /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 6'th char/collumn of LCD */
-        C7,     /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 7'th char/collumn of LCD */
-        C8,     /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 8'th char/collumn of LCD */
-        C9,     /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 9'th char/collumn of LCD */
-        C10,    /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 10'th char/collumn of LCD */
-        C11,    /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 11'th char/collumn of LCD */
-        C12,    /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 12'th char/collumn of LCD */
-        C13,    /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 13'th char/collumn of LCD */
-        C14,    /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 14'th char/collumn of LCD */
-        C15,    /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 15'th char/collumn of LCD */  
-        C16,    /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 16'th char/collumn of LCD */
-        C17,    /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 17'th char/collumn of LCD */
-        C18,    /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 18'th char/collumn of LCD */
-        C19,    /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 19'th char/collumn of LCD */
-        C20     /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 20'th char/collumn of LCD */
+        C1,  /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 1'st char/collumn of LCD */
+        C2,  /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 2'nd char/collumn of LCD */
+        C3,  /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 3'th char/collumn of LCD */
+        C4,  /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 4'th char/collumn of LCD */
+        C5,  /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 5'th char/collumn of LCD */
+        C6,  /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 6'th char/collumn of LCD */
+        C7,  /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 7'th char/collumn of LCD */
+        C8,  /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 8'th char/collumn of LCD */
+        C9,  /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 9'th char/collumn of LCD */
+        C10, /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 10'th char/collumn of LCD */
+        C11, /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 11'th char/collumn of LCD */
+        C12, /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 12'th char/collumn of LCD */
+        C13, /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 13'th char/collumn of LCD */
+        C14, /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 14'th char/collumn of LCD */
+        C15, /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 15'th char/collumn of LCD */
+        C16, /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 16'th char/collumn of LCD */
+        C17, /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 17'th char/collumn of LCD */
+        C18, /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 18'th char/collumn of LCD */
+        C19, /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 19'th char/collumn of LCD */
+        C20  /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 20'th char/collumn of LCD */
     };
 
     extern bool LCD_BUFFER_UPDATE_FLAG;

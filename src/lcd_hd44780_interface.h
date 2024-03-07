@@ -5,7 +5,7 @@
  * This instance eliminates dependencies between the LCD library and the specific microcontroller driver layer.
  * @version 1.0.2
  * @date 2024-02-25
- * 
+ *
  * @copyright Copyright (c) 2024
  * @defgroup LCD_HD44780_driver_interface
  * @{
@@ -24,10 +24,10 @@ extern "C"
      */
     enum lcd_sig_e
     {
-        LCD_RS,     
-        LCD_RW,     
-        LCD_E,      
-        LCD_BCKL,   
+        LCD_RS,
+        LCD_RW,
+        LCD_E,
+        LCD_BCKL,
     };
 
     typedef uint8_t LCD_data_port_t;
@@ -39,12 +39,12 @@ extern "C"
     typedef void (*set_LCD_SIG_func_p)(enum lcd_sig_e LCD_SIG);
     typedef void (*reset_LCD_SIG_func_p)(enum lcd_sig_e LCD_SIG);
     typedef void (*delay_us_func_p)(uint32_t delay_us);
-    
+
     /**
      * @struct LCD_IO_driver_interface_struct
-     * @brief LCD I/O driver interface definition. 
+     * @brief LCD I/O driver interface definition.
      * @attention This interface declaration need to be defined on driver layer side and "full fill the contract" of the defined LCD_IO_driver_interface_struct
-     * 
+     *
      */
     struct LCD_IO_driver_interface_struct
     {

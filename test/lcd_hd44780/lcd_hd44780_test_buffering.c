@@ -16,7 +16,6 @@
 #define LAST_CHAR_IN_LCD_LINE_POSITION (LCD_X - 1)
 #define LAST_LCD_LINE (LCD_Y - 1)
 
-
 extern char lcd_buffer[LCD_Y][LCD_X];
 extern char prev_lcd_buffer[LCD_Y][LCD_X];
 char expected_lcd_buf[LCD_Y][LCD_X];

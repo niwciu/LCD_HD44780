@@ -1,10 +1,10 @@
 /**
  * @file lcd_hd44780_avr_specific.c
  * @author niwciu (niwciu@gmail.com)
- * @brief 
+ * @brief
  * @version 1.0.2
  * @date 2024-02-25
- * 
+ *
  * @copyright Copyright (c) 2024
  */
 
@@ -19,7 +19,7 @@
 #if ((USE_LCD_INT == ON) || (USE_LCD_HEX == ON))
 static void lcd_put_spaces(uint8_t empty_spaces);
 #endif
-#if ((LCD_BUFFERING == ON)&&((USE_LCD_BUF_INT == ON) || (USE_LCD_BUF_HEX == ON)))
+#if ((LCD_BUFFERING == ON) && ((USE_LCD_BUF_INT == ON) || (USE_LCD_BUF_HEX == ON)))
 static void lcd_buf_put_spaces(uint8_t empty_spaces);
 #endif
 

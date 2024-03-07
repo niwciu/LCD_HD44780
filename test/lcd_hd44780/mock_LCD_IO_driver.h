@@ -19,7 +19,7 @@
 #define mock_LCD_E          1 << 2
 #define mock_LCD_RS         1 << 0
 #define mock_LCD_RW         1 << 1
-#define mock_LCD_BCKL       1 << 3 
+#define mock_LCD_BCKL       1 << 3
 
 // clang-format on
 

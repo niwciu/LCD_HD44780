@@ -1,10 +1,10 @@
 /**
  * @file lcd_hd44780.c
  * @author niwciu (niwciu@gmail.com)
- * @brief 
+ * @brief
  * @version 1.0.2
  * @date 2024-02-25
- * 
+ *
  * @copyright Copyright (c) 2024
 
 */
@@ -18,11 +18,10 @@
 #include <stdio.h>
 #include <string.h>
 
+#define BUSY_FLAG 1 << 7
+#define VAL_PREFIX_LENGHT 2U
 
-#define BUSY_FLAG           1 << 7
-#define VAL_PREFIX_LENGHT   2U
-
-#ifndef UNIT_TEST 
+#ifndef UNIT_TEST
 #define PRIVATE static
 #else
 #define PRIVATE
@@ -31,7 +30,6 @@
 #if LCD_BUFFERING == ON
 #define LAST_CHAR_IN_LCD_LINE (LCD_X - 1)
 #define LAST_LCD_LINE (LCD_Y - 1)
-
 
 typedef char lcd_pos_t;
 static lcd_pos_t *lcd_buf_position_ptr;
@@ -248,7 +246,6 @@ static void write_lcd_buf_2_lcd(const uint8_t *lcd_cursor_position, const uint8_
 
 #endif
 
-
 void lcd_init(void)
 {
     register_LCD_IO_driver();
@@ -328,13 +325,13 @@ void lcd_cls(void)
 #if USE_DEF_CHAR_FUNCTION == ON
 /**
  * @brief Function for defining custom user characters in CGRAM of the LCD.
- * 
+ *
  * @param CGRAM_char_index Position/address of the character in CGRAM of the LCD where defined char should be written.
  * For the predefined example of special characters, taken values are defined in the type enum LCD_CGRAM_BANK_1_e that is declared
  * in lcd-hd44780.h
- * 
+ *
  * @param def_char Pointer to the predefined special character.
- * 
+ *
  * @note CGRAM_char_index - This Parameter can take values from 0 to 7. For the predefined example of special
  * characters, taken values are defined in the type enum LCD_CGRAM that is defined in lcd_hd44780_def_char.h
  */
@@ -350,8 +347,8 @@ void lcd_def_char(const uint8_t CGRAM_bank_x_char_adr, const uint8_t *def_char)
 
 /**
  * @brief Function that loads to LCD_CGRAM predefined characters form specific user char_bank
- * 
- * @param char_bank - pointer to selected user char bank that function should load to LCD_CGRAM. Char banks are defined in lcd_hd44780_def_char.h 
+ *
+ * @param char_bank - pointer to selected user char bank that function should load to LCD_CGRAM. Char banks are defined in lcd_hd44780_def_char.h
  */
 void lcd_load_char_bank(const struct char_bank_struct *char_bank)
 {
@@ -384,7 +381,7 @@ void lcd_char(const char C)
  */
 void lcd_str(char *str)
 {
-    while ((*str)!='\0')
+    while ((*str) != '\0')
     {
         lcd_char(*str);
         str++;
@@ -611,7 +608,7 @@ void lcd_buf_str(const char *str)
  */
 void lcd_update(void)
 {
-    if(LCD_BUFFER_UPDATE_FLAG==true)
+    if (LCD_BUFFER_UPDATE_FLAG == true)
     {
         uint8_t lcd_cursor_position = 0;
         uint8_t lcd_line = 0;

@@ -1,12 +1,12 @@
 /**
  * @file lcd_hd44780_driver_commands.h
  * @author niwciu (niwciu@gmail.com)
- * @brief 
+ * @brief
  * @version 1.0.2
  * @date 2024-02-25
- * 
+ *
  * @copyright Copyright (c) 2024
- * 
+ *
  */
 // clang-format off
 

@@ -1,13 +1,13 @@
 /**
  * @file lcd_hd44780_config.h
  * @author niwciu (niwciu@gmail.com)
- * @brief 
+ * @brief
  * @version 1.0.2
  * @date 2024-02-25
- * 
+ *
  * @copyright Copyright (c) 2024
  * @addtogroup LCD_HD44780_lib_API
- * 
+ *
  */
 
 #ifndef _LCD_HD44780_CONFIG_H_
@@ -90,7 +90,7 @@ extern "C"
 #define LCD_LINE2_ADR   0x40 
 #endif
 
-// clang-format on
+    // clang-format on
 
 #ifdef __cplusplus
 }
