@@ -17,7 +17,6 @@
 extern "C"
 {
 #endif /* __cplusplus */
-#include "lcd_hd44780_interface.h"
 #include "lcd_hd44780_def_char.h"
 #include <stdbool.h>
     /**

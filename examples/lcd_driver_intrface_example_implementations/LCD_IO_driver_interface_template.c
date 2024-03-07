@@ -30,9 +30,15 @@ static void set_LCD_DATA_PINS_as_outputs(void);
 static void set_LCD_DATA_PINS_as_inputs(void);
 static void set_LCD_DATA_PINS_state(uint8_t data);
 static uint8_t get_LCD_DATA_PINS_state(void);
-static void LCD_set_SIG(enum lcd_sig_e LCD_SIG);
-static void LCD_reset_SIG(enum lcd_sig_e LCD_SIG);
 static void _delay_us(uint32_t delay_us);
+static void set_LCD_E(void);
+static void reset_LCD_E(void);
+static void set_LCD_RS(void);
+static void reset_LCD_RS(void);
+static void set_LCD_RW(void);
+static void reset_LCD_RW(void);
+static void set_LCD_BCKL(void);
+static void reset_LCD_BCKL(void);
 static void init_LCD_SIGNAL_PINS_as_outputs(void);
 static void init_LCD_BCKL_PIN_as_output(void);
 
@@ -43,9 +49,15 @@ static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
     set_LCD_DATA_PINS_as_inputs,
     set_LCD_DATA_PINS_state,
     get_LCD_DATA_PINS_state,
-    LCD_set_SIG,
-    LCD_reset_SIG,
     _delay_us,
+    set_LCD_E,
+    reset_LCD_E,
+    set_LCD_RS,
+    reset_LCD_RS,
+    set_LCD_RW,
+    reset_LCD_RW,
+    set_LCD_BCKL,
+    reset_LCD_BCKL,
 };
 const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 {
@@ -108,55 +120,42 @@ static uint8_t get_LCD_DATA_PINS_state(void)
     return data;
 }
 
-static void LCD_set_SIG(enum lcd_sig_e LCD_SIG)
+static void set_LCD_E(void)
 {
-    switch (LCD_SIG)
-    {
-    case LCD_RS:
-        // Set LCD_RS to High
-        break;
-    case LCD_E:
-        // Set LCD_E to High
-        break;
-#if USE_RW_PIN == ON
-    case LCD_RW:
-        // Set LCD_RW to High
-        break;
-#endif
-    case LCD_BCKL:
-        // Set LCD_BCKL to High
-        break;
-    default:
-        break;
-    }
+   //ToDo set GPIO PIN
+}
+static void reset_LCD_E(void)
+{
+   //ToDo reset GPIO PIN
+}
+static void set_LCD_RS(void)
+{
+   //ToDo set GPIO PIN
+}
+static void reset_LCD_RS(void)
+{
+    //ToDo reset GPIO PIN
+}
+static void set_LCD_RW(void)
+{
+    //ToDo set GPIO PIN
+}
+static void reset_LCD_RW(void)
+{
+   //ToDo reset GPIO PIN
+}
+static void set_LCD_BCKL(void)
+{
+    //ToDo set GPIO PIN
+}
+static void reset_LCD_BCKL(void)
+{
+   //ToDo reset GPIO PIN
 }
 
-static void LCD_reset_SIG(enum lcd_sig_e LCD_SIG)
+static void _delay_us(uint32_t delay_us)
 {
-    switch (LCD_SIG)
-    {
-    case LCD_RS:
-        // Set LCD_RS to LOW
-        break;
-    case LCD_E:
-       // Set LCD_E to LOW
-        break;
-#if USE_RW_PIN == 1
-    case LCD_RW:
-        // Set LCD_RW to LOW
-        break;
-#endif
-    case LCD_BCKL:
-        // Set LCD_BCKL to LOW
-        break;
-    default:
-        break;
-    }
-}
-
-static void wraper_delay_us(uint32_t delay_us)
-{
-    // ToDo update wraper
+    // ToDo update or create wraper
 }
 
 static void init_LCD_SIGNAL_PINS_as_outputs(void)

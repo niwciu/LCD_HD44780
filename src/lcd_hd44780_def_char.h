@@ -16,6 +16,8 @@
 extern "C"
 {
 #endif /* __cplusplus */
+    #include<stdint.h>
+    #include "lcd_hd44780_config.h"
        /**
         * @struct char_bank_struct
         * @brief Structure that contain pointers to 8 user predefined characters. Structure is used to define user character banks.
