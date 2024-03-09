@@ -8,8 +8,8 @@
  * @copyright Copyright (c) 2024
 
 */
+#include "lcd_hd44780_GPIO_interface.h"
 #include "lcd_hd44780.h"
-#include "lcd_hd44780_config.h"
 #include "lcd_hd44780_driver_commands.h"
 #ifdef AVR
 #include "lcd_hd44780_avr_specific.h"
@@ -75,58 +75,66 @@ static void register_LCD_IO_driver(void)
 
 static void lcd_set_all_SIG(void)
 {
-    LCD->set_SIG(LCD_E);
-    LCD->set_SIG(LCD_RS);
+    LCD->set_LCD_E();
+    LCD->set_LCD_RS();
 #if USE_RW_PIN == ON
-    LCD->set_SIG(LCD_RW);
+    LCD->set_LCD_RW();
 #endif
 }
 
 static void lcd_reset_all_SIG(void)
 {
 #if USE_RW_PIN == ON
-    LCD->reset_SIG(LCD_RW);
+    LCD->reset_LCD_RW();
 #endif
-    LCD->reset_SIG(LCD_RS);
-    LCD->reset_SIG(LCD_E);
+    LCD->reset_LCD_RS();
+    LCD->reset_LCD_E();
 }
 
 void lcd_write_4bit_data(uint8_t data)
 {
-    LCD->set_SIG(LCD_E);
+    LCD->set_LCD_E();
+    ;
     data &= 0x0F;
     LCD->write_data(data);
-    LCD->reset_SIG(LCD_E);
+    LCD->reset_LCD_E();
+    ;
 }
 
 static void lcd_write_cmd(uint8_t cmd)
 {
-    LCD->reset_SIG(LCD_RS);
+    LCD->reset_LCD_RS();
+    ;
     lcd_write_byte(cmd);
 }
 
 void lcd_write_data(uint8_t data)
 {
-    LCD->set_SIG(LCD_RS);
+    LCD->set_LCD_RS();
+    ;
     lcd_write_byte(data);
 }
 
 void lcd_write_byte(uint8_t byte)
 {
 #if USE_RW_PIN == ON
-    LCD->reset_SIG(LCD_RW);
+    LCD->reset_LCD_RW();
+    ;
 #endif
     lcd_write_4bit_data((byte) >> 4);
     lcd_write_4bit_data((byte) & 0x0F);
 #if USE_RW_PIN == ON
     // check_BUSSY_FALG
     LCD->set_data_pins_as_inputs();
-    LCD->reset_SIG(LCD_RS);
-    LCD->set_SIG(LCD_RW);
+    LCD->reset_LCD_RS();
+    ;
+    LCD->set_LCD_RW();
+    ;
     while (lcd_read_byte() & BUSY_FLAG)
     {
     }
-    LCD->reset_SIG(LCD_RW);
+    LCD->reset_LCD_RW();
+    ;
     LCD->set_data_pins_as_outputs();
 
 #else
@@ -148,9 +156,11 @@ uint8_t lcd_read_byte(void)
 uint8_t lcd_read_4bit_data(void)
 {
     uint8_t data;
-    LCD->set_SIG(LCD_E);
+    LCD->set_LCD_E();
+    ;
     data = LCD->read_data();
-    LCD->reset_SIG(LCD_E);
+    LCD->reset_LCD_E();
+    ;
     return data;
 }
 #endif
@@ -292,9 +302,9 @@ void lcd_init(void)
 void lcd_enable_backlight(void)
 {
 #if LCD_BCKL_PIN_EN_STATE == HIGH
-    LCD->set_SIG(LCD_BCKL);
+    LCD->set_LCD_BCKL();
 #else
-    LCD->reset_SIG(LCD_BCKL);
+    LCD->reset_LCD_BCKL();
 #endif
 }
 
@@ -304,9 +314,9 @@ void lcd_enable_backlight(void)
 void lcd_disable_backlight(void)
 {
 #if LCD_BCKL_PIN_EN_STATE == HIGH
-    LCD->reset_SIG(LCD_BCKL);
+    LCD->reset_LCD_BCKL();
 #else
-    LCD->set_SIG(LCD_BCKL);
+    LCD->set_LCD_BCKL();
 #endif
 }
 

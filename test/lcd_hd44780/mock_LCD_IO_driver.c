@@ -7,7 +7,7 @@
 
 #include "mock_LCD_IO_driver.h"
 #include "lcd_hd44780_config.h"
-#include "lcd_hd44780_interface.h"
+#include "lcd_hd44780_GPIO_interface.h"
 
 uint8_t mock_LCD_DATA_PORT = 0;
 uint8_t mock_LCD_SIG_PORT = 0;
@@ -22,10 +22,16 @@ static void mock_set_LCD_DATA_PORT_as_outputs(void);
 static void mock_set_LCD_DATA_PORT_as_inputs(void);
 static void mock_set_LCD_DATA_PORT_state(uint8_t data);
 static uint8_t mock_get_LCD_DATA_PORT_state(void);
-static void mock_LCD_set_SIG(enum lcd_sig_e LCD_SIG);
-static void mock_LCD_reset_SIG(enum lcd_sig_e LCD_SIG);
-static uint8_t mock_get_pinmask(const enum lcd_sig_e *LCD_SIG);
 static void mock_delay_us(uint32_t delay_us);
+static void mock_set_LCD_E(void);
+static void mock_reset_LCD_E(void);
+static void mock_set_LCD_RS(void);
+static void mock_reset_LCD_RS(void);
+static void mock_set_LCD_RW(void);
+static void mock_reset_LCD_RW(void);
+static void mock_set_LCD_BCKL(void);
+static void mock_reset_LCD_BCKL(void);
+
 static void mock_dump_LCD_SIG_DATA_DELAY_state(uint32_t delay_us);
 static void mock_init_LCD_SIGNAL_PINS_as_outputs(void);
 
@@ -36,10 +42,16 @@ static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
     mock_set_LCD_DATA_PORT_as_inputs,
     mock_set_LCD_DATA_PORT_state,
     mock_get_LCD_DATA_PORT_state,
-    // mock_init_LCD_SIGNAL_PINS_as_outputs,
-    mock_LCD_set_SIG,
-    mock_LCD_reset_SIG,
     mock_delay_us,
+    mock_set_LCD_E,
+    mock_reset_LCD_E,
+    mock_set_LCD_RS,
+    mock_reset_LCD_RS,
+    mock_set_LCD_RW,
+    mock_reset_LCD_RW,
+    mock_set_LCD_BCKL,
+    mock_reset_LCD_BCKL,
+
 };
 const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 {
@@ -79,45 +91,51 @@ static uint8_t mock_get_LCD_DATA_PORT_state(void)
     return mock_LCD_DATA_PORT;
 }
 
-static void mock_LCD_set_SIG(enum lcd_sig_e LCD_SIG)
-{
-    mock_LCD_SIG_PORT |= mock_get_pinmask(&LCD_SIG);
-    mock_dump_LCD_SIG_DATA_DELAY_state(0);
-}
-
-static void mock_LCD_reset_SIG(enum lcd_sig_e LCD_SIG)
-{
-    mock_LCD_SIG_PORT &= ~(mock_get_pinmask(&LCD_SIG));
-    mock_dump_LCD_SIG_DATA_DELAY_state(0);
-}
-static uint8_t mock_get_pinmask(const enum lcd_sig_e *LCD_SIG)
-{
-    uint8_t Pin_Mask = 0;
-    switch (*LCD_SIG)
-    {
-    case LCD_E:
-        Pin_Mask = mock_LCD_E;
-        break;
-    case LCD_RW:
-        Pin_Mask = mock_LCD_RW;
-        break;
-    case LCD_RS:
-        Pin_Mask = mock_LCD_RS;
-        break;
-    case LCD_BCKL:
-        Pin_Mask = mock_LCD_BCKL;
-        break;
-    default:
-        break;
-    }
-    return Pin_Mask;
-}
-
 static void mock_delay_us(uint32_t delay_us)
 {
     mock_dump_LCD_SIG_DATA_DELAY_state(delay_us);
     while (delay_us--)
         ;
+}
+static void mock_set_LCD_E(void)
+{
+    mock_LCD_SIG_PORT |= mock_LCD_E;
+    mock_dump_LCD_SIG_DATA_DELAY_state(0);
+}
+static void mock_reset_LCD_E(void)
+{
+    mock_LCD_SIG_PORT &= ~(mock_LCD_E);
+    mock_dump_LCD_SIG_DATA_DELAY_state(0);
+}
+static void mock_set_LCD_RS(void)
+{
+    mock_LCD_SIG_PORT |= mock_LCD_RS;
+    mock_dump_LCD_SIG_DATA_DELAY_state(0);
+}
+static void mock_reset_LCD_RS(void)
+{
+    mock_LCD_SIG_PORT &= ~(mock_LCD_RS);
+    mock_dump_LCD_SIG_DATA_DELAY_state(0);
+}
+static void mock_set_LCD_RW(void)
+{
+    mock_LCD_SIG_PORT |= mock_LCD_RW;
+    mock_dump_LCD_SIG_DATA_DELAY_state(0);
+}
+static void mock_reset_LCD_RW(void)
+{
+    mock_LCD_SIG_PORT &= ~(mock_LCD_RW);
+    mock_dump_LCD_SIG_DATA_DELAY_state(0);
+}
+static void mock_set_LCD_BCKL(void)
+{
+    mock_LCD_SIG_PORT |= mock_LCD_BCKL;
+    mock_dump_LCD_SIG_DATA_DELAY_state(0);
+}
+static void mock_reset_LCD_BCKL(void)
+{
+    mock_LCD_SIG_PORT &= ~(mock_LCD_BCKL);
+    mock_dump_LCD_SIG_DATA_DELAY_state(0);
 }
 
 static void mock_dump_LCD_SIG_DATA_DELAY_state(uint32_t delay_us)

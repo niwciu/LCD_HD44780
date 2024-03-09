@@ -16,12 +16,14 @@
 extern "C"
 {
 #endif /* __cplusplus */
-       /**
-        * @struct char_bank_struct
-        * @brief Structure that contain pointers to 8 user predefined characters. Structure is used to define user character banks.
-        * Each bank can contain combinatio of maksimum 8 user special cahracters.
-        *
-        */
+#include <stdint.h>
+#include "lcd_hd44780_config.h"
+    /**
+     * @struct char_bank_struct
+     * @brief Structure that contain pointers to 8 user predefined characters. Structure is used to define user character banks.
+     * Each bank can contain combinatio of maksimum 8 user special cahracters.
+     *
+     */
     struct char_bank_struct
     {
         const uint8_t *char_0;

@@ -18,26 +18,12 @@ extern "C"
 {
 #endif /* __cplusplus */
 #include <stdint.h>
-    /**
-     * @enum lcd_sig_e
-     * @brief LCD Signal labels used as argument when calling functions LCD->set_SIG, LCD->reset_SIG from defined LCD_IO_driver_interface_struct
-     */
-    enum lcd_sig_e
-    {
-        LCD_RS,
-        LCD_RW,
-        LCD_E,
-        LCD_BCKL,
-    };
 
     typedef uint8_t LCD_data_port_t;
-    typedef void (*init_LCD_data_and_SIG_pins_func_p)(void);
-    typedef void (*set_LCD_data_pins_as_outputs_func_p)(void);
-    typedef void (*set_LCD_data_pins_as_inputs_func_p)(void);
+
+    typedef void (*LCD_interface_func_p)(void);
     typedef void (*set_LCD_data_port_func_p)(uint8_t data);
     typedef LCD_data_port_t (*get_LCD_data_port_func_p)(void);
-    typedef void (*set_LCD_SIG_func_p)(enum lcd_sig_e LCD_SIG);
-    typedef void (*reset_LCD_SIG_func_p)(enum lcd_sig_e LCD_SIG);
     typedef void (*delay_us_func_p)(uint32_t delay_us);
 
     /**
@@ -48,14 +34,20 @@ extern "C"
      */
     struct LCD_IO_driver_interface_struct
     {
-        init_LCD_data_and_SIG_pins_func_p init_LCD_pins;
-        set_LCD_data_pins_as_outputs_func_p set_data_pins_as_outputs;
-        set_LCD_data_pins_as_inputs_func_p set_data_pins_as_inputs;
+        LCD_interface_func_p init_LCD_pins;
+        LCD_interface_func_p set_data_pins_as_outputs;
+        LCD_interface_func_p set_data_pins_as_inputs;
         set_LCD_data_port_func_p write_data;
         get_LCD_data_port_func_p read_data;
-        set_LCD_SIG_func_p set_SIG;
-        reset_LCD_SIG_func_p reset_SIG;
         delay_us_func_p delay_us;
+        LCD_interface_func_p set_LCD_E;
+        LCD_interface_func_p reset_LCD_E;
+        LCD_interface_func_p set_LCD_RS;
+        LCD_interface_func_p reset_LCD_RS;
+        LCD_interface_func_p set_LCD_RW;
+        LCD_interface_func_p reset_LCD_RW;
+        LCD_interface_func_p set_LCD_BCKL;
+        LCD_interface_func_p reset_LCD_BCKL;
     };
     // clang-format off
     /**
