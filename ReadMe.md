@@ -632,7 +632,8 @@ static const uint8_t leter_b[8] = {16, 16, 22, 25, 17, 17, 30, 0};
 HD44780 allows the user to define a maximum of 8 user characters. Therefore on character bank can contain only up to 8 characters. Nevertheless, it's possible to define a couple of special character banks with different combinations of special characters. Depending on needs one of the banks can be loaded to the CGRAM and switched to another if the information presented on the LCD requires different special characters
 
 Below you can find a simple example of two special characters bank definitions:
-1.  Definition of special characters in lcd_hd44780_def_char.h:
+1. Definition of special characters in lcd_hd44780_def_char.h:
+   
     ```C
     static const uint8_t Pol_e[8] = {0, 0, 14, 17, 31, 16, 14, 3};
     static const uint8_t Pol_o[8] = {2, 4, 14, 17, 17, 17, 14, 0};
