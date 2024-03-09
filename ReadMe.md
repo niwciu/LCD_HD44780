@@ -6,11 +6,13 @@
     - [1. Requirements](#1-requirements)
     - [2. Schematic for possible hardware configurations when using 5V pin tolerant microcontroller](#2-schematic-for-possible-hardware-configurations-when-using-5v-pin-tolerant-microcontroller)
   - [LCD\_HD44780 library src folders file structure and description](#lcd_hd44780-library-src-folders-file-structure-and-description)
-      - [1. lcd\_hd44780\_config.h](#1-lcd_hd44780_configh)
-      - [2. lcd\_hd44780\_def\_char.h](#2-lcd_hd44780_def_charh)
-      - [3. lcd\_hd44780\_interface.h](#3-lcd_hd44780_interfaceh)
-      - [4. lcd\_hd44780.c](#4-lcd_hd44780c)
-      - [5. lcd\_hd44780.h](#5-lcd_hd44780h)
+      - [1. lcd\_hd44780\_avr\_specific.c and lcd\_hd44780\_avr\_specific.h](#1-lcd_hd44780_avr_specificc-and-lcd_hd44780_avr_specifich)
+      - [2. lcd\_hd44780\_config.h](#2-lcd_hd44780_configh)
+      - [3. lcd\_hd44780\_def\_char.h](#3-lcd_hd44780_def_charh)
+      - [4. lcd\_hd44780\_driver\_commands.h](#4-lcd_hd44780_driver_commandsh)
+      - [5. lcd\_hd44780\_GPIO\_interface.h](#5-lcd_hd44780_gpio_interfaceh)
+      - [6. lcd\_hd44780.c](#6-lcd_hd44780c)
+      - [7. lcd\_hd44780.h](#7-lcd_hd44780h)
   - [Examples](#examples)
     - [1. STM32G071RB -bare metal implementation](#1-stm32g071rb--bare-metal-implementation)
       - [Requirements for compiling and running the example:](#requirements-for-compiling-and-running-the-example)
@@ -67,38 +69,46 @@
 - LCD data pins D4-D7 and LCD signal pins can be connected to any pins on any ports on uC side.
 ### 2. Schematic for possible hardware configurations when using 5V pin tolerant microcontroller
 - Using RW pin of the LCD  (set **USE_RW_PIN &nbsp; ON** in lcd_hd44780_config.h)<br><br>
-<img src="./doc/HW%20connection%20using%20RW.png"   height="400"><br> 
+<img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/doc/HW%20connection%20using%20RW.png"   height="400"><br> 
 <br><br>
 - Without using RW pin of the LCD  (set **USE_RW_PIN &nbsp; OFF** in lcd_hd44780_config.h)
 <br><br>
-<img src="./doc/HW%20connection%20no%20RW.png"   height="400"><br> <br><b>
+<img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/doc/HW%20connection%20no%20RW.png"   height="400"><br> <br><b>
 ATTENTION!<br> 
 When using controller that do not tolerant 5V on their pins, appropriate voltage levels converter should be used for signals: LCD_DB4, LCD_DB5, LCD_DB6, LCD_DB7, LCD_RS, LCD_E,  LCD_RW </b>
 ## LCD_HD44780 library src folders file structure and description
 ```bash 
 LCD_HD44780
 ├───src
+│   ├───lcd_hd44780_avr_specific.c
+│   ├───lcd_hd44780_avr_specific.h
 │   ├───lcd_hd44780_config.h
 │   ├───lcd_hd44780_def_char.h
-│   ├───lcd_hd44780_interface.h
+│   ├───lcd_hd44780_driver_commands.h
+│   ├───lcd_hd44780_GPIO_interface.h
 │   ├───lcd_hd44780.c
 │   ├───lcd_hd44780.h
 ...
 ```
-#### 1. lcd_hd44780_config.h
+#### 1. lcd_hd44780_avr_specific.c and lcd_hd44780_avr_specific.h
+C and header file with functions specific to AVR microcontrollers. 
+When compiling library for AVR microcontroller, those files need to bee added to the project. (look at the CMakeLists.txt files in examples) 
+#### 2. lcd_hd44780_config.h
   Header file for configuration of the library. In this file, it's required to configure:
   - LCD type 
   - Usage of RW Signal/PIN
   - Usage of LCD buffer for displaying the content on the LCD
   - Backlight enable pin active state
   - Which functions from LCD_HD44780 lib you would like to compile and use in your project (by default all functions are added to compilation).
-#### 2. lcd_hd44780_def_char.h
+#### 3. lcd_hd44780_def_char.h
 Header file for defining user special characters and user special characters banks. Each bank can contain up to 8 characters that are user-defined combinations of characters from defined user-special characters. This allows to creation of different combinations of special characters that can be loaded depending on current code needs.
-#### 3. lcd_hd44780_interface.h
+#### 4. lcd_hd44780_driver_commands.h
+Header file with defined commands for HD44780 driver.
+#### 5. lcd_hd44780_GPIO_interface.h
 Header file with library interface declaration that needs to be implemented on the drivers' side. Please look at the code examples in the "examples/lcd_driver_intrface_example_implementations" for more details.
-#### 4. lcd_hd44780.c
+#### 6. lcd_hd44780.c
 Library main C file 
-#### 5. lcd_hd44780.h
+#### 7. lcd_hd44780.h
 Library main header file with available library functions.
 ## Examples
 ### 1. STM32G071RB -bare metal implementation
@@ -110,11 +120,11 @@ Library main header file with available library functions.
   5. ST-link (placed on Nucleo Board) installed
 #### Hardware requirements, configuration, and connections
   1. STM32G071 Nucleo-64<br>
-     <img src="./examples/doc/STM32G071RB_Nucleo.png"   width="400"><br> <br> 
+     <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/STM32G071RB_Nucleo.png"   width="400"><br> <br> 
   2. LCD Keypad Shield for Arduino<br>
-   <img src="./examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
+   <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
   3. Pin connection between LCD Keypad Shield and Nucleo board<br>
-   <img src="./examples/doc/NucleoSTM32G071_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
+   <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/NucleoSTM32G071_lcd_keypad%20shield_HW_connection.png"   width="800"><br> <br>
 #### LCD_HD44780 library configuration - lcd_hd44780_config.h
   ```C
     /************************************  LCD HARDWARE SETTINGS *******************************
@@ -209,11 +219,11 @@ Library main header file with available library functions.
   5. ST-link (placed on Nucleo Board) installed
 #### Hardware configuration and connections
   1. STM32G474 Nucleo-64<br>
-     <img src="./examples/doc/STM32G474RE_Nucleo.png"   width="400"><br> <br> 
+     <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/STM32G474RE_Nucleo.png"   width="400"><br> <br> 
   2. LCD Keypad Shield for Arduino<br>
-   <img src="./examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
+   <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
   3. Pin connection between LCD Keypad Shield and Nucleo board <br>
-   <img src="./examples/doc/NucleoSTM32G474_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
+   <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/NucleoSTM32G474_lcd_keypad%20shield_HW_connection.png"   width="800"><br> <br>
 #### LCD_HD44780 library configuration - lcd_hd44780_config.h
   ```C
     /************************************  LCD HARDWARE SETTINGS *******************************
@@ -307,13 +317,13 @@ Library main header file with available library functions.
   5. USBasp programmer installed and updated
 #### Hardware configuration and connections
   1. Arduino UNO R3<br>
-     <img src="./examples/doc/ARDUINO_UNO_R3.png"   width="400"><br> <br> 
+     <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main//examples/doc/ARDUINO_UNO_R3.png"   width="400"><br> <br> 
   2. USBasp programmer<br>
-   <img src="./examples/doc/USBasp.png"   width="400"><br> <br>
+   <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main//examples/doc/USBasp.png"   width="400"><br> <br>
   3. LCD Keypad Shield for Arduino<br>
-   <img src="./examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
+   <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
   4. Pin connection between LCD Keypad Shield and Nucleo board<br>
-   <img src="./examples/doc/ARDUINO_UNO_R3_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
+   <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main//examples/doc/ARDUINO_UNO_R3_lcd_keypad%20shield_HW_connection.png"   width="800"><br> <br>
 #### LCD_HD44780 library configuration - lcd_hd44780_config.h
   ```C
     /************************************  LCD HARDWARE SETTINGS *******************************
@@ -410,11 +420,11 @@ Library main header file with available library functions.
   4. ESP8266 NodeMCU V3 installed
 #### Hardware connections
   1. ESP8266 NodeMCU V3<br>
-     <img src="./examples/doc/ESP8266_NodeMCU_V3.png"   width="400"><br> <br> 
+     <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main//examples/doc/ESP8266_NodeMCU_V3.png"   width="400"><br> <br> 
   2. LCD Keypad Shield for Arduino<br>
-   <img src="./examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
+   <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
   3. Pin connection between LCD Keypad Shield and ESP8266 NoneMCU board<br>
-   <img src="./examples/doc/ESP8266_NodeMCU_V3_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
+   <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/ESP8266_NodeMCU_V3_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
 #### LCD_HD44780 library configuration - lcd_hd44780_config.h
   ```C
     /************************************  LCD HARDWARE SETTINGS *******************************
@@ -478,7 +488,7 @@ Library main header file with available library functions.
   6. Run flash_download_tool_3.8.5
   7. Select "Developer Mode" and "ESP8266 DownloadTool"
   8. Set all fields as it is shown on picture bellow<br>
-     <img src="./examples/doc/ESP_download_tool_setup.png"   width="900"><br> <br> 
+     <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/ESP_download_tool_setup.png"   width="900"><br> <br> 
   9. Select COM port on which your NodeMCU board has been installed
   10. Click START to flash the IC
   11. After flash is done pres reset button on your NodeMCU board
@@ -505,19 +515,26 @@ Library main header file with available library functions.
                 &emsp; &emsp;&emsp; &emsp;OFF - when buffering of LCD is NOT planned to be use in project<br>
 
 
-3. Declare the LCD IO driver interface in your application on the GPIO driver side. This interface should contain the following implementation defined in lcd_hd44780_interface.h
+3. Declare the LCD GPIO driver interface in your application on the GPIO driver side. This interface should contain the following implementation defined in lcd_hd44780_GPIO_interface.h
 ```C 
    /************LCD_IO_driver_interface implementation START**************/
-static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
-    init_LCD_data_and_SIG_pins,
-    set_LCD_DATA_PINS_as_outputs,
-    set_LCD_DATA_PINS_as_inputs,
-    set_LCD_DATA_PINS_state,
-    get_LCD_DATA_PINS_state,
-    LCD_set_SIG,
-    LCD_reset_SIG,
-    _delay_us,
-};
+    struct LCD_IO_driver_interface_struct
+    {
+        LCD_interface_func_p init_LCD_pins;
+        LCD_interface_func_p set_data_pins_as_outputs;
+        LCD_interface_func_p set_data_pins_as_inputs;
+        set_LCD_data_port_func_p write_data;
+        get_LCD_data_port_func_p read_data;
+        delay_us_func_p delay_us;
+        LCD_interface_func_p set_LCD_E;
+        LCD_interface_func_p reset_LCD_E;
+        LCD_interface_func_p set_LCD_RS;
+        LCD_interface_func_p reset_LCD_RS;
+        LCD_interface_func_p set_LCD_RW;
+        LCD_interface_func_p reset_LCD_RW;
+        LCD_interface_func_p set_LCD_BCKL;
+        LCD_interface_func_p reset_LCD_BCKL;
+    };
 const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 {
     return &LCD_IO_driver;
@@ -578,15 +595,22 @@ It's a basic interface that connects the library with your HW driver layer in th
    <br>
     ```C 
    /************LCD_IO_driver_interface implementation START**************/
-    static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
-        init_LCD_data_and_SIG_pins,
-        set_LCD_DATA_PINS_as_outputs,
-        set_LCD_DATA_PINS_as_inputs,
-        set_LCD_DATA_PINS_state,
-        get_LCD_DATA_PINS_state,
-        LCD_set_SIG,
-        LCD_reset_SIG,
-        _delay_us,
+    struct LCD_IO_driver_interface_struct
+    {
+        LCD_interface_func_p init_LCD_pins;
+        LCD_interface_func_p set_data_pins_as_outputs;
+        LCD_interface_func_p set_data_pins_as_inputs;
+        set_LCD_data_port_func_p write_data;
+        get_LCD_data_port_func_p read_data;
+        delay_us_func_p delay_us;
+        LCD_interface_func_p set_LCD_E;
+        LCD_interface_func_p reset_LCD_E;
+        LCD_interface_func_p set_LCD_RS;
+        LCD_interface_func_p reset_LCD_RS;
+        LCD_interface_func_p set_LCD_RW;
+        LCD_interface_func_p reset_LCD_RW;
+        LCD_interface_func_p set_LCD_BCKL;
+        LCD_interface_func_p reset_LCD_BCKL;
     };
     const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
     {
@@ -597,7 +621,7 @@ It's a basic interface that connects the library with your HW driver layer in th
     It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.examples/lcd_driver_intrface_example_implementations** folder you can find a template with empty definitions of all required interface elements as well as a few files with examples of implementation for different microcontrollers.  Additional details of the implementation in the project can be also found in ready to compile examples.
 ## How to define custom characters and custom character banks.
 ### Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)
-<img src="./doc/font map.png" height="350"><br>
+<img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main//doc/font map.png" height="350"><br>
 <br>
 ### Defining special characters in code.
 If the letter shown in the picture above should be defined as a special character its definition should look like this:
