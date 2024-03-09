@@ -93,40 +93,48 @@ static void lcd_reset_all_SIG(void)
 
 void lcd_write_4bit_data(uint8_t data)
 {
-    LCD->set_LCD_E();;
+    LCD->set_LCD_E();
+    ;
     data &= 0x0F;
     LCD->write_data(data);
-    LCD->reset_LCD_E();;
+    LCD->reset_LCD_E();
+    ;
 }
 
 static void lcd_write_cmd(uint8_t cmd)
 {
-    LCD->reset_LCD_RS();;
+    LCD->reset_LCD_RS();
+    ;
     lcd_write_byte(cmd);
 }
 
 void lcd_write_data(uint8_t data)
 {
-    LCD->set_LCD_RS();;
+    LCD->set_LCD_RS();
+    ;
     lcd_write_byte(data);
 }
 
 void lcd_write_byte(uint8_t byte)
 {
 #if USE_RW_PIN == ON
-    LCD->reset_LCD_RW();;
+    LCD->reset_LCD_RW();
+    ;
 #endif
     lcd_write_4bit_data((byte) >> 4);
     lcd_write_4bit_data((byte) & 0x0F);
 #if USE_RW_PIN == ON
     // check_BUSSY_FALG
     LCD->set_data_pins_as_inputs();
-    LCD->reset_LCD_RS();;
-    LCD->set_LCD_RW();;
+    LCD->reset_LCD_RS();
+    ;
+    LCD->set_LCD_RW();
+    ;
     while (lcd_read_byte() & BUSY_FLAG)
     {
     }
-    LCD->reset_LCD_RW();;
+    LCD->reset_LCD_RW();
+    ;
     LCD->set_data_pins_as_outputs();
 
 #else
@@ -148,9 +156,11 @@ uint8_t lcd_read_byte(void)
 uint8_t lcd_read_4bit_data(void)
 {
     uint8_t data;
-    LCD->set_LCD_E();;
+    LCD->set_LCD_E();
+    ;
     data = LCD->read_data();
-    LCD->reset_LCD_E();;
+    LCD->reset_LCD_E();
+    ;
     return data;
 }
 #endif

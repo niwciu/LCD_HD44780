@@ -94,11 +94,12 @@ static uint8_t mock_get_LCD_DATA_PORT_state(void)
 static void mock_delay_us(uint32_t delay_us)
 {
     mock_dump_LCD_SIG_DATA_DELAY_state(delay_us);
-    while (delay_us--);
+    while (delay_us--)
+        ;
 }
 static void mock_set_LCD_E(void)
 {
-    mock_LCD_SIG_PORT|=mock_LCD_E;
+    mock_LCD_SIG_PORT |= mock_LCD_E;
     mock_dump_LCD_SIG_DATA_DELAY_state(0);
 }
 static void mock_reset_LCD_E(void)
@@ -108,7 +109,7 @@ static void mock_reset_LCD_E(void)
 }
 static void mock_set_LCD_RS(void)
 {
-    mock_LCD_SIG_PORT|=mock_LCD_RS;
+    mock_LCD_SIG_PORT |= mock_LCD_RS;
     mock_dump_LCD_SIG_DATA_DELAY_state(0);
 }
 static void mock_reset_LCD_RS(void)
@@ -118,7 +119,7 @@ static void mock_reset_LCD_RS(void)
 }
 static void mock_set_LCD_RW(void)
 {
-    mock_LCD_SIG_PORT|=mock_LCD_RW;
+    mock_LCD_SIG_PORT |= mock_LCD_RW;
     mock_dump_LCD_SIG_DATA_DELAY_state(0);
 }
 static void mock_reset_LCD_RW(void)
@@ -135,7 +136,6 @@ static void mock_reset_LCD_BCKL(void)
 {
     mock_LCD_SIG_PORT &= ~(mock_LCD_BCKL);
     mock_dump_LCD_SIG_DATA_DELAY_state(0);
-
 }
 
 static void mock_dump_LCD_SIG_DATA_DELAY_state(uint32_t delay_us)
@@ -188,4 +188,3 @@ enum lcd_bckl_status mock_read_LCD_backlight_status(void)
         return LCD_BCKL_ON;
 #endif
 }
-
