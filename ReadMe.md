@@ -75,7 +75,15 @@
 <br><br>
 <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/doc/HW%20connection%20no%20RW.png"   height="400"><br> <br><b>
 ATTENTION!<br> 
-When using controller that do not tolerant 5V on their pins, appropriate voltage levels converter should be used for signals: LCD_DB4, LCD_DB5, LCD_DB6, LCD_DB7, LCD_RS, LCD_E,  LCD_RW </b>
+When using controller that is not 5V pin tolerant, appropriate voltage levels converter should be used for signals: 
+  - LCD_DB4, 
+  - LCD_DB5, 
+  - LCD_DB6, 
+  - LCD_DB7, 
+  - LCD_RS, 
+  - LCD_E,  
+  - LCD_RW,
+  - LCD_BCKL </b>
 ## LCD_HD44780 library src folders file structure and description
 ```bash 
 LCD_HD44780
@@ -424,7 +432,7 @@ Library main header file with available library functions.
   2. LCD Keypad Shield for Arduino<br>
    <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
   3. Pin connection between LCD Keypad Shield and ESP8266 NoneMCU board<br>
-   <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/ESP8266_NodeMCU_V3_lcd_keypad shield_HW_connection.png"   width="800"><br> <br>
+   <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/feature/ReadMe_file_update/examples/doc/ESP8266_NodeMCU_V3_lcd_keypad%20shield_HW_connection.png"   width="800"><br> <br>
 #### LCD_HD44780 library configuration - lcd_hd44780_config.h
   ```C
     /************************************  LCD HARDWARE SETTINGS *******************************
@@ -470,21 +478,21 @@ Library main header file with available library functions.
 ##### Windows
   1. Open the location you want to clone the repository to in your terminal
   2. Clone the repository to your preferred location
-      ```bash
-      git clone https://github.com/niwciu/LCD_HD44780.git
-      ``` 
+  ```bash
+  git clone https://github.com/niwciu/LCD_HD44780.git
+  ```
   3. Enter to LCD_HD44780/examples/ESP8266_NONOS_SDK/LCD_HD44780_TEST folder
-      ```bash
-      cd ./LCD_HD44780/examples/ESP8266_NONOS_SDK/LCD_HD44780_TEST
-      ``` 
+  ```bash
+  cd ./LCD_HD44780/examples/ESP8266_NONOS_SDK/LCD_HD44780_TEST
+  ``` 
   4. Clean the project by running clean.bat script
-      ```bash
-      ./clean.bat
-      ``` 
+  ```bash
+  ./clean.bat
+  ``` 
   5. Build the project by running build.bat script
-      ```bash
-      ./build.bat
-      ``` 
+  ```bash
+  ./build.bat
+  ``` 
   6. Run flash_download_tool_3.8.5
   7. Select "Developer Mode" and "ESP8266 DownloadTool"
   8. Set all fields as it is shown on picture bellow<br>
@@ -732,7 +740,7 @@ LCD_HD44780
     └───unity
 ```
 Folder description:
-- .github -> Folder with githubactions .yml scripts
+- .github -> folder with githubactions .yml scripts for tunning Github Actions
 - doc -> folder for any documentation needed or created in the project
 - examples -> folder with example hardware implementations contain ready to compile examples for different uC and templates of lcd_driver_interface implementations.
   - ATMEGA328P_ARDUINO_UNO_R3 -> example project
@@ -742,6 +750,9 @@ Folder description:
   - lcd_driver_intrface_example_implementations -> as named
   - STM32G071RB_NUCLEO_BARE_METAL -> example project
   - STM32G474RE_NUCLEO_CUBE_IDE_LL -> example project
+- reports -> folder with generated reports from cmake ccmr target and cmake ccr target are stored.  
+  - CCR -> GCOVR output report
+  - CCMR -> Lizard Code Complexity Metrix output report. 
 - src -> library source files
 - test -> folder where all tests are written. The folder contains following subfolders:
   - hw_test -> folder with configurations/setups for specific ucontrollers to make integration tests
