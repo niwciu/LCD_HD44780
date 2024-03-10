@@ -1,7 +1,4 @@
 #include "unity/fixture/unity_fixture.h"
-
-#include "lcd_hd44780.h"
-// #include "mock_LCD_IO_driver.h"
 #include "lcd_hd44780_test_common.h"
 
 TEST_GROUP(lcd_hd44780_init);

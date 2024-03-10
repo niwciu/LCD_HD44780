@@ -62,6 +62,7 @@ set(C_SRCS
 	./src/LCD_IO_driver.c
 
 	../../../src/lcd_hd44780.c
+	../../../src/lcd_hd44780_avr_specific.c
 	../hw_test_main.c
 )
 

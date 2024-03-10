@@ -15,8 +15,8 @@
 const char *demo_tekst = {"Congratulation, you have just run LCD demo example."};
 const char *demo_title = {"LCD HD44780 Demo"};
 
-static void lcd_buf_slide_str_in(const char *str, enum LCD_LINES lcd_line, uint16_t speed);
-static void lcd_buf_slide_str_out(const char *str, enum LCD_LINES lcd_line, uint16_t speed);
+static void lcd_buf_slide_str_in(const char *str, enum LCD_LINES_e lcd_line, uint16_t speed);
+static void lcd_buf_slide_str_out(const char *str, enum LCD_LINES_e lcd_line, uint16_t speed);
 static void blink_backlight(uint8_t blinks_no);
 
 uint8_t j = 0;
@@ -42,7 +42,7 @@ int main(void)
     return 0;
 }
 
-static void lcd_buf_slide_str_out(const char *str, enum LCD_LINES lcd_line, uint16_t speed)
+static void lcd_buf_slide_str_out(const char *str, enum LCD_LINES_e lcd_line, uint16_t speed)
 {
     uint8_t str_end_flag = 0;
     for (j = 0; j <= strlen(str); j++)
@@ -66,7 +66,7 @@ static void lcd_buf_slide_str_out(const char *str, enum LCD_LINES lcd_line, uint
     }
 }
 
-static void lcd_buf_slide_str_in(const char *str, enum LCD_LINES lcd_line, uint16_t speed)
+static void lcd_buf_slide_str_in(const char *str, enum LCD_LINES_e lcd_line, uint16_t speed)
 {
     for (i = LCD_X - 1; i > C1; i--)
     {

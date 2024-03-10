@@ -33,8 +33,8 @@
 const char *demo_tekst = {"Congratulation, you have just run LCD demo example on STM32G071RB Nucleo eval board."};
 const char *demo_title = {"LCD HD44780 Demo"};
 
-static void lcd_buf_slide_str_in(const char *str, enum LCD_LINES lcd_line, uint16_t speed);
-static void lcd_buf_slide_str_out(const char *str, enum LCD_LINES lcd_line, uint16_t speed);
+static void lcd_buf_slide_str_in(const char *str, enum LCD_LINES_e lcd_line, uint16_t speed);
+static void lcd_buf_slide_str_out(const char *str, enum LCD_LINES_e lcd_line, uint16_t speed);
 static void blink_backlight(uint8_t blinks_no);
 
 uint8_t j = 0;
@@ -56,7 +56,7 @@ int main(void)
 }
 
 
-void lcd_buf_slide_str_out(const char *str, enum LCD_LINES lcd_line, uint16_t speed)
+void lcd_buf_slide_str_out(const char *str, enum LCD_LINES_e lcd_line, uint16_t speed)
 {
     uint8_t str_end_flag = 0;
     for (j = 0; j <= strlen(str); j++)
@@ -80,7 +80,7 @@ void lcd_buf_slide_str_out(const char *str, enum LCD_LINES lcd_line, uint16_t sp
     }
 }
 
-void lcd_buf_slide_str_in(const char *str, enum LCD_LINES lcd_line, uint16_t speed)
+void lcd_buf_slide_str_in(const char *str, enum LCD_LINES_e lcd_line, uint16_t speed)
 {
     for (i = LCD_X - 1; i > C1; i--)
     {

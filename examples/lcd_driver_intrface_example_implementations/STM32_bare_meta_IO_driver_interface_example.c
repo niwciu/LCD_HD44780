@@ -83,9 +83,15 @@ static void set_LCD_DATA_PINS_as_outputs(void);
 static void set_LCD_DATA_PINS_as_inputs(void);
 static void set_LCD_DATA_PINS_state(uint8_t data);
 static uint8_t get_LCD_DATA_PINS_state(void);
-static void LCD_set_SIG(enum lcd_sig LCD_SIG);
-static void LCD_reset_SIG(enum lcd_sig LCD_SIG);
 static void wraper_delay_us(uint32_t delay_us);
+static void set_LCD_E(void);
+static void reset_LCD_E(void);
+static void set_LCD_RS(void);
+static void reset_LCD_RS(void);
+static void set_LCD_RW(void);
+static void reset_LCD_RW(void);
+static void set_LCD_BCKL(void);
+static void reset_LCD_BCKL(void);
 static void init_LCD_SIGNAL_PINS_as_outputs(void);
 static void init_LCD_BCKL_PIN_as_output(void);
 
@@ -96,9 +102,15 @@ static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
     set_LCD_DATA_PINS_as_inputs,
     set_LCD_DATA_PINS_state,
     get_LCD_DATA_PINS_state,
-    LCD_set_SIG,
-    LCD_reset_SIG,
     wraper_delay_us,
+    set_LCD_E,
+    reset_LCD_E,
+    set_LCD_RS,
+    reset_LCD_RS,
+    set_LCD_RW,
+    reset_LCD_RW,
+    set_LCD_BCKL,
+    reset_LCD_BCKL,
 };
 const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 {
@@ -185,55 +197,42 @@ static uint8_t get_LCD_DATA_PINS_state(void)
     return data;
 }
 
-static void LCD_set_SIG(enum lcd_sig LCD_SIG)
-{
-    switch (LCD_SIG)
-    {
-    case LCD_RS:
-        LCD_RS_PORT->ODR |= LCD_RS_OUT_PIN;
-        break;
-    case LCD_E:
-        LCD_E_PORT->ODR |= LCD_E_OUT_PIN;
-        break;
-#if USE_RW_PIN == ON
-    case LCD_RW:
-        LCD_RW_PORT->ODR |= LCD_RW_OUT_PIN;
-        break;
-#endif
-    case LCD_BCKL:
-        LCD_BCKL_PORT->ODR |= LCD_BCKL_OUT_PIN;
-        break;
-    default:
-        break;
-    }
-}
-
-static void LCD_reset_SIG(enum lcd_sig LCD_SIG)
-{
-    switch (LCD_SIG)
-    {
-    case LCD_RS:
-        LCD_RS_PORT->ODR &= ~LCD_RS_OUT_PIN;
-        break;
-    case LCD_E:
-        LCD_E_PORT->ODR &= ~LCD_E_OUT_PIN;
-        break;
-#if USE_RW_PIN == 1
-    case LCD_RW:
-        LCD_RW_PORT->ODR &= ~LCD_Rw_OUT_PIN;
-        break;
-#endif
-    case LCD_BCKL:
-        LCD_BCKL_PORT->ODR &= ~LCD_BCKL_OUT_PIN;
-        break;
-    default:
-        break;
-    }
-}
-
 static void wraper_delay_us(uint32_t delay_us)
 {
     // ToDo update wraper
+}
+
+static void set_LCD_E(void)
+{
+    LCD_E_PORT->ODR |= LCD_E_OUT_PIN;
+}
+static void reset_LCD_E(void)
+{
+    LCD_E_PORT->ODR &= ~LCD_E_OUT_PIN;
+}
+static void set_LCD_RS(void)
+{
+    LCD_RS_PORT->ODR |= LCD_RS_OUT_PIN;
+}
+static void reset_LCD_RS(void)
+{
+    LCD_RS_PORT->ODR &= ~LCD_RS_OUT_PIN;
+}
+static void set_LCD_RW(void)
+{
+    // LCD_RW_PORT->ODR |= LCD_RW_OUT_PIN;
+}
+static void reset_LCD_RW(void)
+{
+    // LCD_RW_PORT->ODR &= ~LCD_RW_OUT_PIN;
+}
+static void set_LCD_BCKL(void)
+{
+    LCD_BCKL_PORT->ODR |= LCD_BCKL_OUT_PIN;
+}
+static void reset_LCD_BCKL(void)
+{
+    LCD_BCKL_PORT->ODR &= ~LCD_BCKL_OUT_PIN;
 }
 
 static void init_LCD_SIGNAL_PINS_as_outputs(void)

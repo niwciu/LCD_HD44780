@@ -13,7 +13,6 @@
 #define LCD_D6_MASK 0x04
 #define LCD_D7_MASK 0x08
 
-// #include "lcd_hd44780_config.h"
 #include "lcd_hd44780_interface.h"
 #include "main.h"
 #include "tim_delay.h"
@@ -27,9 +26,14 @@ static void set_LCD_DATA_PINS_as_outputs(void);
 static void set_LCD_DATA_PINS_as_inputs(void);
 static void set_LCD_DATA_PINS_state(uint8_t data);
 static uint8_t get_LCD_DATA_PINS_state(void);
-static void LCD_set_SIG(enum lcd_sig LCD_SIG);
-static void LCD_reset_SIG(enum lcd_sig LCD_SIG);
-// static void init_LCD_SIGNAL_PINS_as_outputs(void);
+static void mock_set_LCD_E(void);
+static void mock_reset_LCD_E(void);
+static void mock_set_LCD_RS(void);
+static void mock_reset_LCD_RS(void);
+static void mock_set_LCD_RW(void);
+static void mock_reset_LCD_RW(void);
+static void mock_set_LCD_BCKL(void);
+static void mock_reset_LCD_BCKL(void);
 
 /************LCD_IO_driver_interface implementation START**************/
 static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
@@ -38,9 +42,15 @@ static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
     set_LCD_DATA_PINS_as_inputs,
     set_LCD_DATA_PINS_state,
     get_LCD_DATA_PINS_state,
-    LCD_set_SIG,
-    LCD_reset_SIG,
     _delay_us,
+    mock_set_LCD_E,
+    mock_reset_LCD_E,
+    mock_set_LCD_RS,
+    mock_reset_LCD_RS,
+    mock_set_LCD_RW,
+    mock_reset_LCD_RW,
+    mock_set_LCD_BCKL,
+    mock_reset_LCD_BCKL,
 };
 const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 {
@@ -111,58 +121,37 @@ static uint8_t get_LCD_DATA_PINS_state(void)
     return data;
 }
 
-static void LCD_set_SIG(enum lcd_sig LCD_SIG)
+static void mock_set_LCD_E(void)
 {
-    switch (LCD_SIG)
-    {
-    case LCD_RS:
-        LL_GPIO_SetOutputPin(LCD_SIG_PORT, LCD_RS_Pin);
-        break;
-    case LCD_E:
-        LL_GPIO_SetOutputPin(LCD_SIG_PORT, LCD_E_Pin);
-        break;
-    case LCD_RW:
-        LL_GPIO_SetOutputPin(LCD_SIG_PORT, LCD_RW_Pin);
-        break;
-    default:
-        break;
-    }
+    LL_GPIO_SetOutputPin(LCD_SIG_PORT, LCD_E_Pin);
+}
+static void mock_reset_LCD_E(void)
+{
+    LL_GPIO_ResetOutputPin(LCD_SIG_PORT, LCD_E_Pin);
+}
+static void mock_set_LCD_RS(void)
+{
+    LL_GPIO_SetOutputPin(LCD_SIG_PORT, LCD_RS_Pin);
+}
+static void mock_reset_LCD_RS(void)
+{
+    LL_GPIO_ResetOutputPin(LCD_SIG_PORT, LCD_RS_Pin);
+}
+static void mock_set_LCD_RW(void)
+{
+    LL_GPIO_SetOutputPin(LCD_SIG_PORT, LCD_RW_Pin);
+}
+static void mock_reset_LCD_RW(void)
+{
+    LL_GPIO_ResetOutputPin(LCD_SIG_PORT, LCD_RW_Pin);
+}
+static void mock_set_LCD_BCKL(void)
+{
+    LL_GPIO_SetOutputPin(LCD_BCKL_GPIO_Port, LCD_BCKL_Pin);
+}
+static void mock_reset_LCD_BCKL(void)
+{
+    LL_GPIO_ResetOutputPin(LCD_BCKL_GPIO_Port, LCD_BCKL_Pin);
 }
 
-static void LCD_reset_SIG(enum lcd_sig LCD_SIG)
-{
-    switch (LCD_SIG)
-    {
-    case LCD_RS:
-        LL_GPIO_ResetOutputPin(LCD_SIG_PORT, LCD_RS_Pin);
-        break;
-    case LCD_E:
-        LL_GPIO_ResetOutputPin(LCD_SIG_PORT, LCD_E_Pin);
-        break;
-    case LCD_RW:
-        LL_GPIO_ResetOutputPin(LCD_SIG_PORT, LCD_RW_Pin);
-        break;
-    default:
-        break;
-    }
-}
 
-// static void init_LCD_SIGNAL_PINS_as_outputs(void)
-// {
-// #if USE_RW_PIN == 1
-//     GPIO_InitStruct.Pin = LCD_RS_Pin | LCD_E_Pin | LCD_RW_Pin;
-//     GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-//     GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-//     GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-//     GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-//     LL_GPIO_Init(LCD_SIG_PORT, &GPIO_InitStruct);
-
-// #else
-//     GPIO_InitStruct.Pin = LCD_RS_Pin | LCD_E_Pin;
-//     GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-//     GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-//     GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-//     GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-//     LL_GPIO_Init(LCD_SIG_PORT, &GPIO_InitStruct);
-// #endif
-// }

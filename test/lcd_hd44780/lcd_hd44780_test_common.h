@@ -2,11 +2,12 @@
  * @Author: lukasz.niewelt
  * @Date: 2023-12-07 16:59:53
  * @Last Modified by: lukasz.niewelt
- * @Last Modified time: 2024-01-10 13:10:56
+ * @Last Modified time: 2024-02-23 18:41:07
  */
 #include <stdint.h>
 #include "mock_LCD_IO_driver.h"
 #include "lcd_hd44780.h"
+#include "lcd_hd44780_config.h"
 
 #define SIG_PORT 0
 #define DATA_PORT 1

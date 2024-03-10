@@ -30,8 +30,14 @@ static void set_LCD_DATA_PINS_as_outputs(void);
 static void set_LCD_DATA_PINS_as_inputs(void);
 static void set_LCD_DATA_PINS_state(uint8_t data);
 static uint8_t get_LCD_DATA_PINS_state(void);
-static void LCD_set_SIG(enum lcd_sig LCD_SIG);
-static void LCD_reset_SIG(enum lcd_sig LCD_SIG);
+static void set_LCD_E(void);
+static void reset_LCD_E(void);
+static void set_LCD_RS(void);
+static void reset_LCD_RS(void);
+static void set_LCD_RW(void);
+static void reset_LCD_RW(void);
+static void set_LCD_BCKL(void);
+static void reset_LCD_BCKL(void);
 // static void init_LCD_SIGNAL_PINS_as_outputs(void);
 
 /************LCD_IO_driver_interface implementation START**************/
@@ -41,9 +47,15 @@ static const struct LCD_IO_driver_interface_struct LCD_IO_driver = {
     set_LCD_DATA_PINS_as_inputs,
     set_LCD_DATA_PINS_state,
     get_LCD_DATA_PINS_state,
-    LCD_set_SIG,
-    LCD_reset_SIG,
     _delay_us,
+    set_LCD_E,
+    reset_LCD_E,
+    set_LCD_RS,
+    reset_LCD_RS,
+    set_LCD_RW,
+    reset_LCD_RW,
+    set_LCD_BCKL,
+    reset_LCD_BCKL,
 };
 const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 {
@@ -123,50 +135,37 @@ static uint8_t get_LCD_DATA_PINS_state(void)
     return data;
 }
 
-static void LCD_set_SIG(enum lcd_sig LCD_SIG)
+static void set_LCD_E(void)
 {
-    switch (LCD_SIG)
-    {
-    case LCD_RS:
-        LL_GPIO_SetOutputPin(LCD_RS_GPIO_Port, LCD_RS_Pin);
-        break;
-    case LCD_E:
-        LL_GPIO_SetOutputPin(LCD_E_GPIO_Port, LCD_E_Pin);
-        break;
-#if USE_RW_PIN == ON
-    case LCD_RW:
-        LL_GPIO_SetOutputPin(LCD_RW_GPIO_Port, LCD_RW_Pin);
-        break;
-#endif
-    case LCD_BCKL:
-        LL_GPIO_SetOutputPin(LCD_BCKL_GPIO_Port, LCD_BCKL_Pin);
-        break;
-    default:
-        break;
-    }
+    LL_GPIO_SetOutputPin(LCD_E_GPIO_Port, LCD_E_Pin);
 }
-
-static void LCD_reset_SIG(enum lcd_sig LCD_SIG)
+static void reset_LCD_E(void)
 {
-    switch (LCD_SIG)
-    {
-    case LCD_RS:
-        LL_GPIO_ResetOutputPin(LCD_RS_GPIO_Port, LCD_RS_Pin);
-        break;
-    case LCD_E:
-        LL_GPIO_ResetOutputPin(LCD_E_GPIO_Port, LCD_E_Pin);
-        break;
-#if USE_RW_PIN == ON
-    case LCD_RW:
-        LL_GPIO_ResetOutputPin(LCD_RW_GPIO_Port, LCD_RW_Pin);
-        break;
-#endif
-    case LCD_BCKL:
-        LL_GPIO_ResetOutputPin(LCD_BCKL_GPIO_Port, LCD_BCKL_Pin);
-        break;
-    default:
-        break;
-    }
+    LL_GPIO_ResetOutputPin(LCD_E_GPIO_Port, LCD_E_Pin);
+}
+static void set_LCD_RS(void)
+{
+    LL_GPIO_SetOutputPin(LCD_RS_GPIO_Port, LCD_RS_Pin);
+}
+static void reset_LCD_RS(void)
+{
+    LL_GPIO_ResetOutputPin(LCD_RS_GPIO_Port, LCD_RS_Pin);
+}
+static void set_LCD_RW(void)
+{
+    // LL_GPIO_SetOutputPin(LCD_RW_GPIO_Port, LCD_RW_Pin);
+}
+static void reset_LCD_RW(void)
+{
+    // LL_GPIO_ResetOutputPin(LCD_RW_GPIO_Port, LCD_RW_Pin);
+}
+static void set_LCD_BCKL(void)
+{
+    LL_GPIO_SetOutputPin(LCD_BCKL_GPIO_Port, LCD_BCKL_Pin);
+}
+static void reset_LCD_BCKL(void)
+{
+    LL_GPIO_ResetOutputPin(LCD_BCKL_GPIO_Port, LCD_BCKL_Pin);
 }
 
 //CUBE IDE initiize all outputs and inputs
