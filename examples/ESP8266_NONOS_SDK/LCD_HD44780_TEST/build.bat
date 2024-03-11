@@ -10,7 +10,7 @@ if not exist user (
 ) else (
     echo folder "user" exist
 )
-@REM copy "..\..\..\src\lcd_hd44780.c" "user\"
+copy "..\..\..\src\lcd_hd44780.c" "user\"
 
 if not exist include (
     call mkdir include
@@ -20,15 +20,11 @@ if not exist include (
 )
 
 echo Copy files to include\lcd_hd44780\
-@REM copy "..\..\..\src\lcd_hd44780.h" "include\" 
-@REM copy "..\..\..\src\lcd_hd44780_GPIO_interface.h" "include\"
-@REM copy "..\..\..\src\lcd_hd44780_def_char.h" "include\"
-@REM copy "..\..\..\src\lcd_hd44780_config.h" "include\"
-@REM copy "..\..\..\src\lcd_hd44780_driver_commands.h" "include\"
-echo =======================================================================
-echo CLEAN PROJECT
-echo =======================================================================
-call make clean
+copy "..\..\..\src\lcd_hd44780.h" "include\" 
+copy "..\..\..\src\lcd_hd44780_GPIO_interface.h" "include\"
+copy "..\..\..\src\lcd_hd44780_def_char.h" "include\"
+copy "..\..\..\src\lcd_hd44780_config.h" "include\"
+copy "..\..\..\src\lcd_hd44780_driver_commands.h" "include\"
 echo =======================================================================
 echo BUILD PROJECT
 echo =======================================================================
