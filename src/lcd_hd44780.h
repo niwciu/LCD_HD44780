@@ -80,7 +80,7 @@ extern "C"
     void lcd_load_char_bank(const struct char_bank_struct *char_bank);
 
     void lcd_char(const char C);
-    void lcd_str(char *str);
+    void lcd_str(const char *str);
     void lcd_int(int val, uint8_t width, enum LCD_alignment_e alignment);
     void lcd_hex(int val, uint8_t width, enum LCD_alignment_e alignment);
     void lcd_bin(int val, uint8_t width);

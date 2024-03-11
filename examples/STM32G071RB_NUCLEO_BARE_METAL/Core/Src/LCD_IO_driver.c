@@ -6,7 +6,7 @@
  */
 #include <stdio.h>
 #include "stm32g070xx.h"
-#include "lcd_hd44780_interface.h"
+#include "lcd_hd44780_GPIO_interface.h"
 #include "main.h"
 #include "tim_delay.h"
 

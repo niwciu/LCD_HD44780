@@ -389,7 +389,7 @@ void lcd_char(const char C)
  * @brief Function for printing/writing the string on the LCD screen starting from the current LCD cursor position.
  * @param str string that should be printed/written on the LCD screen
  */
-void lcd_str(char *str)
+void lcd_str(const char *str)
 {
     while ((*str) != '\0')
     {
