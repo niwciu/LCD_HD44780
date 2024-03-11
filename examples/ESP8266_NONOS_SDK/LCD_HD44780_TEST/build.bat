@@ -21,9 +21,10 @@ if not exist include (
 
 echo Copy files to include\lcd_hd44780\
 copy "..\..\..\src\lcd_hd44780.h" "include\" 
-copy "..\..\..\src\lcd_hd44780_interface.h" "include\"
+copy "..\..\..\src\lcd_hd44780_GPIO_interface.h" "include\"
 copy "..\..\..\src\lcd_hd44780_def_char.h" "include\"
 copy "..\..\..\src\lcd_hd44780_config.h" "include\"
+copy "..\..\..\src\lcd_hd44780_driver_commands.h" "include\"
 echo =======================================================================
 echo BUILD PROJECT
 echo =======================================================================

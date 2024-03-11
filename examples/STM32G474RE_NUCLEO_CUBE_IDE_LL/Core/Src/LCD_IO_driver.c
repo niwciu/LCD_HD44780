@@ -17,7 +17,7 @@
 #define OFF 0
 
 // #include "lcd_hd44780_config.h"
-#include "lcd_hd44780_interface.h"
+#include "lcd_hd44780_GPIO_interface.h"
 #include "main.h"
 #include "tim_delay.h"
 #include "stm32g474xx.h"
