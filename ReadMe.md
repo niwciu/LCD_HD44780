@@ -362,6 +362,8 @@ Library main header file with available library functions.
    <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
   4. Pin connection between LCD Keypad Shield and Nucleo board<br>
    <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main//examples/doc/ARDUINO_UNO_R3_lcd_keypad%20shield_HW_connection.png"   width="800"><br> <br>
+
+
 #### LCD_HD44780 library configuration - lcd_hd44780_config.h
 
   ```C
@@ -465,6 +467,8 @@ Library main header file with available library functions.
    <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
   3. Pin connection between LCD Keypad Shield and ESP8266 NoneMCU board<br>
    <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/feature/ReadMe_file_update/examples/doc/ESP8266_NodeMCU_V3_lcd_keypad%20shield_HW_connection.png"   width="800"><br> <br>
+
+
 #### LCD_HD44780 library configuration - lcd_hd44780_config.h
 
   ```C
@@ -507,7 +511,9 @@ Library main header file with available library functions.
     #define USE_LCD_BUF_BIN                 ON
     #endif
   ```
+
 #### How to build and run the example 
+
 ##### Windows
   1. Open the location you want to clone the repository to in your terminal
   2. Clone the repository to your preferred location
@@ -535,6 +541,7 @@ Library main header file with available library functions.
   11. After flash is done pres reset button on your NodeMCU board
 
 ##### Linux - tbd
+
 
 ## How to use in your Project - simple case without user-predefined characters
 1. Copy LCD library src files (or files from src folder) to your project and add copied files in your project configuration, so they can be included in your project. 
@@ -679,6 +686,8 @@ If the letter shown in the picture above should be defined as a special characte
 ```C
 static const uint8_t leter_b[8] = {16, 16, 22, 25, 17, 17, 30, 0};
 ```
+
+
 ### Defining banks for special characters.
 HD44780 allows the user to define a maximum of 8 user characters. Therefore on character bank can contain only up to 8 characters. Nevertheless, it's possible to define a couple of special character banks with different combinations of special characters. Depending on needs one of the banks can be loaded to the CGRAM and switched to another if the information presented on the LCD requires different special characters
 
