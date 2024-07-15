@@ -149,6 +149,7 @@ Library main header file with available library functions.
    <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/NucleoSTM32G071_lcd_keypad%20shield_HW_connection.png"   width="800"><br> <br>
    
 
+
 #### LCD_HD44780 library configuration - lcd_hd44780_config.h
 
   ```C
@@ -257,6 +258,7 @@ Library main header file with available library functions.
   3. Pin connection between LCD Keypad Shield and Nucleo board <br>
    <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/NucleoSTM32G474_lcd_keypad%20shield_HW_connection.png"   width="800"><br> <br>
 
+
 #### LCD_HD44780 library configuration - lcd_hd44780_config.h
 
   ```C
@@ -305,6 +307,7 @@ Library main header file with available library functions.
     #define USE_LCD_BUF_BIN                 ON
     #endif
   ```
+
 #### How to build and run the example
   1. Open the location you want to clone the repository to in your terminal
   2. Clone the repository to your preferred localization
