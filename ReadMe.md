@@ -675,7 +675,11 @@ It's a basic interface that connects the library with your HW driver layer in th
 
     
     It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.examples/lcd_driver_intrface_example_implementations** folder you can find a template with empty definitions of all required interface elements as well as a few files with examples of implementation for different microcontrollers.  Additional details of the implementation in the project can be also found in ready to compile examples.
+
+
 ## How to define custom characters and custom character banks.
+
+
 ### Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)
 <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main//doc/font map.png" height="350"><br>
 
