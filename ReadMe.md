@@ -135,7 +135,6 @@ Library main header file with available library functions.
    <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/NucleoSTM32G071_lcd_keypad%20shield_HW_connection.png"   width="800"><br> <br>
 #### LCD_HD44780 library configuration - lcd_hd44780_config.h
 
-
   ```C
     /************************************  LCD HARDWARE SETTINGS *******************************
      *   LCD_TYPE -> Set one of the predefined types:
@@ -438,6 +437,7 @@ Library main header file with available library functions.
   3. Pin connection between LCD Keypad Shield and ESP8266 NoneMCU board<br>
    <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/feature/ReadMe_file_update/examples/doc/ESP8266_NodeMCU_V3_lcd_keypad%20shield_HW_connection.png"   width="800"><br> <br>
 #### LCD_HD44780 library configuration - lcd_hd44780_config.h
+
   ```C
     /************************************  LCD HARDWARE SETTINGS *******************************
      *   LCD_TYPE -> Set one of the predefined types:
@@ -504,7 +504,9 @@ Library main header file with available library functions.
   9. Select COM port on which your NodeMCU board has been installed
   10. Click START to flash the IC
   11. After flash is done pres reset button on your NodeMCU board
+
 ##### Linux - tbd
+
 ## How to use in your Project - simple case without user-predefined characters
 1. Copy LCD library src files (or files from src folder) to your project and add copied files in your project configuration, so they can be included in your project. 
 2. In lcd_hd44780.config.h 
@@ -528,6 +530,7 @@ Library main header file with available library functions.
 
 
 3. Declare the LCD GPIO driver interface in your application on the GPIO driver side. This interface should contain the following implementation defined in lcd_hd44780_GPIO_interface.h
+   
 ```C 
    /************LCD_IO_driver_interface implementation START**************/
     struct LCD_IO_driver_interface_struct
@@ -553,6 +556,7 @@ const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 }
 
 ```
+
 It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.examples/lcd_driver_intrface_example_implementations** folder you can find a template with empty definitions of all required interface elements as well as a few files with examples of implementations for different microcontrollers. Additional details of the implementation in the project can be also found in ready to compile examples.
 
 
@@ -577,8 +581,10 @@ It's a basic interface that connects the library with your HW driver layer in th
                 &emsp; &emsp;&emsp; &emsp;ON - when buffering of LCD is planned to be use in project<br>
                 &emsp; &emsp;&emsp; &emsp;OFF - when buffering of LCD is NOT planned to be use in project<br>
 
-3. Specify which procedures from to library you would like to compile and use in your project.<br>
-      To do this, Edit defines in section: <br>
+3. Specify which procedures from to library you would like to compile and use in your project.
+
+      To do this, Edit defines in section:
+   
     ```C
     /********************************  LCD LIBRARY COMPILATION SETTINGS ************************
     *      Setting USE_(procedure name) to:
@@ -602,9 +608,10 @@ It's a basic interface that connects the library with your HW driver layer in th
     #endif
     ```
     <br>
-4. If setting USE_DEF_CHAR_FUNCTION &nbsp; ON define special characters and character banks in lcd_hd44780_def_char.h <br> For more details about defining custom char please refer to [How to define custom characters and custom character banks.](#how-to-define-custome-charatcters-and-custom-character-banks)
-5. Declare the LCD IO driver interface in your application on the GPIO driver side. This interface should contain the following implementation defined in lcd_hd44780_interface.h<br>
-   <br>
+5. If setting USE_DEF_CHAR_FUNCTION &nbsp; ON define special characters and character banks in lcd_hd44780_def_char.h <br> For more details about defining custom char please refer to [How to define custom characters and custom character banks.](#how-to-define-custome-charatcters-and-custom-character-banks)
+6. Declare the LCD IO driver interface in your application on the GPIO driver side. This interface should contain the following implementation defined in lcd_hd44780_interface.h
+
+
     ```C 
    /************LCD_IO_driver_interface implementation START**************/
     struct LCD_IO_driver_interface_struct
@@ -629,14 +636,17 @@ It's a basic interface that connects the library with your HW driver layer in th
         return &LCD_IO_driver;
     }
     ```
-    <br>
+
+    
     It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.examples/lcd_driver_intrface_example_implementations** folder you can find a template with empty definitions of all required interface elements as well as a few files with examples of implementation for different microcontrollers.  Additional details of the implementation in the project can be also found in ready to compile examples.
 ## How to define custom characters and custom character banks.
 ### Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)
 <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main//doc/font map.png" height="350"><br>
-<br>
+
+
 ### Defining special characters in code.
 If the letter shown in the picture above should be defined as a special character its definition should look like this:
+
 ```C
 static const uint8_t leter_b[8] = {16, 16, 22, 25, 17, 17, 30, 0};
 ```
