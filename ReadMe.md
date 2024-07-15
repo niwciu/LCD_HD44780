@@ -69,7 +69,6 @@
 - LCD RW Pin can be connected to uC or GND -> user must define specific options in library configuration.
 - LCD data pins D4-D7 and LCD signal pins can be connected to any pins on any ports on uC side.
 
-
 ### 2. Schematic for possible hardware configurations when using 5V pin tolerant microcontroller
 - Using RW pin of the LCD  (set **USE_RW_PIN &nbsp; ON** in lcd_hd44780_config.h)<br><br>
 <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/doc/HW%20connection%20using%20RW.png"   height="400"><br> 
@@ -87,7 +86,6 @@ When using controller that is not 5V pin tolerant, appropriate voltage levels co
   - LCD_E,  
   - LCD_RW,
   - LCD_BCKL
-
 
 ## LCD_HD44780 library src folders file structure and description
 ```bash 
@@ -113,16 +111,22 @@ When compiling library for AVR microcontroller, those files need to bee added to
   - Usage of LCD buffer for displaying the content on the LCD
   - Backlight enable pin active state
   - Which functions from LCD_HD44780 lib you would like to compile and use in your project (by default all functions are added to compilation).
+
 #### 3. lcd_hd44780_def_char.h
 Header file for defining user special characters and user special characters banks. Each bank can contain up to 8 characters that are user-defined combinations of characters from defined user-special characters. This allows to creation of different combinations of special characters that can be loaded depending on current code needs.
+
 #### 4. lcd_hd44780_driver_commands.h
 Header file with defined commands for HD44780 driver.
+
 #### 5. lcd_hd44780_GPIO_interface.h
 Header file with library interface declaration that needs to be implemented on the drivers' side. Please look at the code examples in the "examples/lcd_driver_intrface_example_implementations" for more details.
+
 #### 6. lcd_hd44780.c
 Library main C file 
+
 #### 7. lcd_hd44780.h
 Library main header file with available library functions.
+
 ## Examples
 ### 1. STM32G071RB -bare metal implementation
 #### Requirements for compiling and running the example:
