@@ -62,6 +62,7 @@
   - 4 lines 20 characters (2004)
 - Allows to configure and compile only functionality that will be needed in the project
 - Allows to control LCD backlight
+
 ## Hardware configuration
 ### 1. Requirements
 - LCD should be connected to uC in 4bit mode 
