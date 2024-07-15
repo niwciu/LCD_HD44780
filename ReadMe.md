@@ -69,6 +69,7 @@
 - LCD RW Pin can be connected to uC or GND -> user must define specific options in library configuration.
 - LCD data pins D4-D7 and LCD signal pins can be connected to any pins on any ports on uC side.
 
+
 ### 2. Schematic for possible hardware configurations when using 5V pin tolerant microcontroller
 - Using RW pin of the LCD  (set **USE_RW_PIN &nbsp; ON** in lcd_hd44780_config.h)<br><br>
 <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/doc/HW%20connection%20using%20RW.png"   height="400"><br> 
