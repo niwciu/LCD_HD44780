@@ -136,8 +136,6 @@ Library main header file with available library functions.
 #### LCD_HD44780 library configuration - lcd_hd44780_config.h
 
 
-
-
   ```C
     /************************************  LCD HARDWARE SETTINGS *******************************
      *   LCD_TYPE -> Set one of the predefined types:
