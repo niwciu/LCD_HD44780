@@ -590,13 +590,13 @@ const struct LCD_IO_driver_interface_struct *LCD_IO_driver_interface_get(void)
 {
     return &LCD_IO_driver;
 }
-
 ```
 
 It's a basic interface that connects the library with your HW driver layer in the application without making any dependencies between them. <br>In **.examples/lcd_driver_intrface_example_implementations** folder you can find a template with empty definitions of all required interface elements as well as a few files with examples of implementations for different microcontrollers. Additional details of the implementation in the project can be also found in ready to compile examples.
 
 
 ## How to use in your Project- simple case with user-predefined characters
+
 1. Copy LCD library src files (or files from src folder) to your project and add copied files in your project configuration, so they can be included in your project.
 2. In lcd_hd44780.config.h 
    - Define specyfic **LCD_TYPE** <br>
@@ -643,7 +643,7 @@ It's a basic interface that connects the library with your HW driver layer in th
     #define USE_LCD_BUF_BIN                 ON
     #endif
     ```
-    <br>
+    
 5. If setting USE_DEF_CHAR_FUNCTION &nbsp; ON define special characters and character banks in lcd_hd44780_def_char.h <br> For more details about defining custom char please refer to [How to define custom characters and custom character banks.](#how-to-define-custome-charatcters-and-custom-character-banks)
 6. Declare the LCD IO driver interface in your application on the GPIO driver side. This interface should contain the following implementation defined in lcd_hd44780_interface.h
 
@@ -678,7 +678,6 @@ It's a basic interface that connects the library with your HW driver layer in th
 
 
 ## How to define custom characters and custom character banks.
-
 
 ### Example of Correspondence between EPROM Address Data and Character Pattern (5 × 8 Dots)
 <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main//doc/font map.png" height="350"><br>
