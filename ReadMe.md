@@ -139,6 +139,7 @@ Library main header file with available library functions.
   4. STM32_Programmer_CLI installed
   5. ST-link (placed on Nucleo Board) installed
 
+
 #### Hardware requirements, configuration, and connections
   1. STM32G071 Nucleo-64<br>
      <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/STM32G071RB_Nucleo.png"   width="400"><br> <br> 
@@ -146,6 +147,8 @@ Library main header file with available library functions.
    <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
   3. Pin connection between LCD Keypad Shield and Nucleo board<br>
    <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/NucleoSTM32G071_lcd_keypad%20shield_HW_connection.png"   width="800"><br> <br>
+   
+
 #### LCD_HD44780 library configuration - lcd_hd44780_config.h
 
   ```C
@@ -194,6 +197,8 @@ Library main header file with available library functions.
     #define USE_LCD_BUF_BIN                 ON
     #endif
   ```
+
+
 #### How to build and run the example
   1. Open the location you want to clone the repository to in your termina
   3. Clone the repository to your preferred localization
@@ -232,13 +237,17 @@ Library main header file with available library functions.
       ```
    7. In some cases Nucleo board requires plugging out and in a USB port to run the program.
 
+
+
 ### 2. STM32G474 - STMCubeIDE project generated with LL drivers
+
 #### Requirements for compiling and running the example
   1. CMake installed
   2. Make or Ninja installed
   3. ARM GNU Toolchain (gcc-arm-none-eabi) installed
   4. STM32_Programmer_CLI installed
   5. ST-link (placed on Nucleo Board) installed
+
 
 #### Hardware configuration and connections
   1. STM32G474 Nucleo-64<br>
@@ -247,6 +256,7 @@ Library main header file with available library functions.
    <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/lcd_keypad_shield.png"   width="400"><br> <br> 
   3. Pin connection between LCD Keypad Shield and Nucleo board <br>
    <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/NucleoSTM32G474_lcd_keypad%20shield_HW_connection.png"   width="800"><br> <br>
+
 #### LCD_HD44780 library configuration - lcd_hd44780_config.h
 
   ```C
