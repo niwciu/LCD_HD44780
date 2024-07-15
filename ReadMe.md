@@ -236,7 +236,6 @@ Library main header file with available library functions.
    <img src="https://raw.githubusercontent.com/niwciu/LCD_HD44780/main/examples/doc/NucleoSTM32G474_lcd_keypad%20shield_HW_connection.png"   width="800"><br> <br>
 #### LCD_HD44780 library configuration - lcd_hd44780_config.h
 
-
   ```C
     /************************************  LCD HARDWARE SETTINGS *******************************
      *   LCD_TYPE -> Set one of the predefined types:
