@@ -84,7 +84,8 @@ When using controller that is not 5V pin tolerant, appropriate voltage levels co
   - LCD_RS, 
   - LCD_E,  
   - LCD_RW,
-  - LCD_BCKL </b>
+  - LCD_BCKL
+
 ## LCD_HD44780 library src folders file structure and description
 ```bash 
 LCD_HD44780
