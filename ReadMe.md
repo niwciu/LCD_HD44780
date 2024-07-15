@@ -129,7 +129,9 @@ Library main C file
 #### 7. lcd_hd44780.h
 Library main header file with available library functions.
 
+
 ## Examples
+
 ### 1. STM32G071RB -bare metal implementation
 #### Requirements for compiling and running the example:
   1. CMake installed
