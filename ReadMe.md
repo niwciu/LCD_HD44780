@@ -112,6 +112,7 @@ When compiling library for AVR microcontroller, those files need to bee added to
   - Backlight enable pin active state
   - Which functions from LCD_HD44780 lib you would like to compile and use in your project (by default all functions are added to compilation).
 
+
 #### 3. lcd_hd44780_def_char.h
 Header file for defining user special characters and user special characters banks. Each bank can contain up to 8 characters that are user-defined combinations of characters from defined user-special characters. This allows to creation of different combinations of special characters that can be loaded depending on current code needs.
 
