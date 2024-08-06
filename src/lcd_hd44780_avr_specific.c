@@ -77,7 +77,7 @@ void lcd_hex_AVR(int val, uint8_t width, enum LCD_alignment_e alignment)
     char buffer[17];
     buffer[0] = '\0';
     itoa(val, buffer, 16);
-    static char *prefix = {"0x"};
+    static const char *prefix = {"0x"};
     if (width <= (strlen(buffer) + VAL_PREFIX_LENGHT))
     {
         lcd_str(prefix);
@@ -106,7 +106,7 @@ void lcd_hex_AVR(int val, uint8_t width, enum LCD_alignment_e alignment)
 void lcd_bin_AVR(int val, uint8_t width)
 {
     char buffer[35]; // 0b 0000 0000 0000 0000 0000 0000 0000 0000
-    static char *prefix = {"0b"};
+    static char const *prefix = {"0b"};
     buffer[0] = '\0';
 
     itoa(val, buffer, 2);
