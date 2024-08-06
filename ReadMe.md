@@ -1,5 +1,5 @@
 
-![IMG_20240806_184040](https://github.com/user-attachments/assets/4847304c-ddfd-496f-a561-22ca4e5b8fab)
+![IMG_20240806_184040](https://github.com/user-attachments/assets/e4d0a212-e7fc-4d60-82d5-acb44ff15912)
 
 # LCD HD44780 lib - simple cross-platform C library
 ![GitHub License](https://img.shields.io/github/license/niwciu/LCD_HD44780)  
@@ -47,4 +47,7 @@ For information such:
 
 please refer to [LCD_HD44780 wiki](https://github.com/niwciu/LCD_HD44780/wiki)
 
+***
+
 ![myEmbeddedWayBanerWhiteSmaller](https://github.com/user-attachments/assets/f4825882-e285-4e02-a75c-68fc86ff5716)
+***
