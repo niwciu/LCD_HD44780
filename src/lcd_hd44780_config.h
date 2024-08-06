@@ -25,14 +25,21 @@ extern "C"
 #define LOW     0
 
 /************************************  LCD HARDWARE SETTINGS *******************************
- *   LCD_TYPE -> Set one of the predefined types:
- *               2004 -> 4 lines 20 characters per line
- *               1604 -> 4 lines 16 characters per line
- *               1602 -> 2 lines 16 characters per line
- *   USE_RW_PIN -> Defines HW connection between LCD and uC
- *               ON - when the RW pin is connected
- *               OFF - when the RW pin is not connected
- ********************************************************************************************/
+*   LCD_TYPE -> Set one of the predefined types:
+*               2004 -> 4 lines 20 characters per line
+*               1604 -> 4 lines 16 characters per line
+*               1602 -> 2 lines 16 characters per line
+*   USE_RW_PIN -> Defines HW connection between LCD and uC
+*               ON - when the RW pin is connected
+*               OFF - when the RW pin is not connected
+*   LCD_BCKL_PIN_EN_STATE -> Defines active state for enabling LCD backlight
+*               HIGH - a high state on the output pin is required to enable the LCD backlight
+*               LOW - a low state on the output pin is required to enable the LCD backlight
+*   LCD_BUFFERING -> Defines whether you would like to use LCD buffer or only use functions to print directly on LCD screen
+*               ON - when buffering of LCD is planned to be used in the project
+*               OFF - when buffering of LCD is NOT planned to be used in the project
+********************************************************************************************/
+
 #define LCD_TYPE                1602
 #define USE_RW_PIN              OFF 
 
