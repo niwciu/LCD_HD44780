@@ -12,6 +12,7 @@
 ![code complexity](https://github.com/niwciu/LCD_HD44780/actions/workflows/run_lizard_lib_check.yml/badge.svg) 
 
 ## Features
+
 - Works with LCD connected in 4-bit mode, 
 - One-direction or bi-direction communication with LCD (predefined time slots or LCD RW pin usage)
 - Easy to port on different microcontrollers
