@@ -10,8 +10,17 @@
 ![cppCheck](https://github.com/niwciu/LCD_HD44780/actions/workflows/run_cppcheck.yml/badge.svg)
 ![clang-format](https://github.com/niwciu/LCD_HD44780/actions/workflows/clang-format_check.yml/badge.svg)
 ![code complexity](https://github.com/niwciu/LCD_HD44780/actions/workflows/run_lizard_lib_check.yml/badge.svg) 
+![GitHub License](https://img.shields.io/github/license/niwciu/LCD_HD44780)  
+![GitHub top language](https://img.shields.io/github/languages/top/niwciu/LCD_HD44780)
+![GitHub Release](https://img.shields.io/github/v/release/niwciu/LCD_HD44780)  
+![GitHub branch check runs](https://img.shields.io/github/check-runs/niwciu/LCD_HD44780/main)  
+![Unit Tests](https://github.com/niwciu/LCD_HD44780/actions/workflows/run_lcd_hd44780_test.yml/badge.svg)
+![cppCheck](https://github.com/niwciu/LCD_HD44780/actions/workflows/run_cppcheck.yml/badge.svg)
+![clang-format](https://github.com/niwciu/LCD_HD44780/actions/workflows/clang-format_check.yml/badge.svg)
+![code complexity](https://github.com/niwciu/LCD_HD44780/actions/workflows/run_lizard_lib_check.yml/badge.svg) 
 
 ## Features
+
 
 - Works with LCD connected in 4-bit mode, 
 - One-direction or bi-direction communication with LCD (predefined time slots or LCD RW pin usage)
