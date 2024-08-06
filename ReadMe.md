@@ -1,5 +1,5 @@
 
-![IMG_20240806_184040](https://github.com/user-attachments/assets/4847304c-ddfd-496f-a561-22ca4e5b8fab)
+![IMG_20240806_184040](https://github.com/user-attachments/assets/e4d0a212-e7fc-4d60-82d5-acb44ff15912)
 
 # LCD HD44780 lib - simple cross-platform C library
 ![GitHub License](https://img.shields.io/github/license/niwciu/LCD_HD44780)  
@@ -10,8 +10,17 @@
 ![cppCheck](https://github.com/niwciu/LCD_HD44780/actions/workflows/run_cppcheck.yml/badge.svg)
 ![clang-format](https://github.com/niwciu/LCD_HD44780/actions/workflows/clang-format_check.yml/badge.svg)
 ![code complexity](https://github.com/niwciu/LCD_HD44780/actions/workflows/run_lizard_lib_check.yml/badge.svg) 
+![GitHub License](https://img.shields.io/github/license/niwciu/LCD_HD44780)  
+![GitHub top language](https://img.shields.io/github/languages/top/niwciu/LCD_HD44780)
+![GitHub Release](https://img.shields.io/github/v/release/niwciu/LCD_HD44780)  
+![GitHub branch check runs](https://img.shields.io/github/check-runs/niwciu/LCD_HD44780/main)  
+![Unit Tests](https://github.com/niwciu/LCD_HD44780/actions/workflows/run_lcd_hd44780_test.yml/badge.svg)
+![cppCheck](https://github.com/niwciu/LCD_HD44780/actions/workflows/run_cppcheck.yml/badge.svg)
+![clang-format](https://github.com/niwciu/LCD_HD44780/actions/workflows/clang-format_check.yml/badge.svg)
+![code complexity](https://github.com/niwciu/LCD_HD44780/actions/workflows/run_lizard_lib_check.yml/badge.svg) 
 
 ## Features
+
 
 - Works with LCD connected in 4-bit mode, 
 - One-direction or bi-direction communication with LCD (predefined time slots or LCD RW pin usage)
@@ -47,4 +56,7 @@ For information such:
 
 please refer to [LCD_HD44780 wiki](https://github.com/niwciu/LCD_HD44780/wiki)
 
+***
+
 ![myEmbeddedWayBanerWhiteSmaller](https://github.com/user-attachments/assets/f4825882-e285-4e02-a75c-68fc86ff5716)
+***
