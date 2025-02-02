@@ -7,36 +7,57 @@ from PyQt6.QtWidgets import QMessageBox
 from PyQt6.QtWidgets import QFileDialog
 import json
 
+from PyQt6.QtGui import QSyntaxHighlighter, QTextCharFormat, QFont, QColor
+from PyQt6.QtCore import QRegularExpression
+
 class CCodeHighlighter(QSyntaxHighlighter):
     def __init__(self, parent):
         super().__init__(parent)
         self.formats = {
-            "keyword": self.create_format(Qt.GlobalColor.cyan, True),
-            "number": self.create_format(Qt.GlobalColor.yellow, True),
-            "variable": self.create_format(Qt.GlobalColor.green, False),
-            "brackets": self.create_format(Qt.GlobalColor.red, True)
+            "keyword": self.create_format(QColor("#569CD6"), True),  # Niebieski (static, const)
+            "type": self.create_format(QColor("#4EC9B0"), False),  # Zielony (typy danych)
+            "function": self.create_format(QColor("#DCDCAA"), False),  # Żółty (nazwy funkcji)
+            "macro": self.create_format(QColor("#C586C0"), True),  # Różowy (dyrektywy preprocesora)
+            "number": self.create_format(QColor("#B5CEA8"), False),  # Oliwkowy (liczby)
+            "operator": self.create_format(QColor("#D16969"), True)  # Czerwony (nawiasy, operatory)
         }
-    
+
     def create_format(self, color, bold):
         fmt = QTextCharFormat()
         fmt.setForeground(color)
         if bold:
             fmt.setFontWeight(QFont.Weight.Bold)
         return fmt
-    
+
     def highlightBlock(self, text):
         patterns = {
-            "keyword": QRegularExpression(r"\buint8_t\b"),
-            "number": QRegularExpression(r"0x[0-9A-Fa-f]+"),
-            "variable": QRegularExpression(r"\b[a-zA-Z_][a-zA-Z0-9_]*\b"),
-            "brackets": QRegularExpression(r"[{}]"),
+            "keyword": QRegularExpression(
+                r"\b(auto|break|case|char|const|continue|default|do|double|else|enum|extern|float|for|goto|if|inline|int|long|register|restrict|return|short|signed|sizeof|static|struct|switch|typedef|union|unsigned|void|volatile|while)\b"
+            ),
+            "type": QRegularExpression(
+                r"\b(uint8_t|uint16_t|uint32_t|uint64_t|int8_t|int16_t|int32_t|int64_t|size_t|ptrdiff_t)\b"
+            ),
+            "function": QRegularExpression(
+                r"\b[a-zA-Z_][a-zA-Z0-9_]*(?=\()"
+            ),
+            "macro": QRegularExpression(
+                r"#\s*(define|include|ifdef|ifndef|endif|pragma|error|warning)"
+            ),
+            "number": QRegularExpression(
+                r"\b(0x[0-9A-Fa-f]+|\d+)\b"
+            ),
+            "operator": QRegularExpression(
+                r"[\[\]{}=,;]"
+            ),
         }
-        
+
         for fmt_key, pattern in patterns.items():
             it = pattern.globalMatch(text)
             while it.hasNext():
                 match = it.next()
                 self.setFormat(match.capturedStart(), match.capturedLength(), self.formats[fmt_key])
+
+
 
 class Char:
     def __init__(self, name, matrix):
@@ -53,7 +74,7 @@ class Char:
         for row in self.matrix:
             byte_value = int("".join(map(str, row)), 2)
             byte_array.append(f"0x{byte_value:02X}")
-        return f"uint8_t {self.name}[{len(self.matrix)}] = {{ " + ", ".join(byte_array) + " };"
+        return f"static const uint8_t {self.name}[{len(self.matrix)}] = {{ " + ", ".join(byte_array) + " };"
 
     def update_pixel_matrix(self, new_matrix):
         # Uaktualnianie macierzy pikseli
@@ -202,10 +223,6 @@ class LCDCharDesigner(QWidget):
 
         if 0 <= y < self.grid_size[0] and 0 <= x < self.grid_size[1]:
             self.pixel_matrix[y, x] ^= 1
-            # char = next((char for char in self.characters if char.name == self.current_char_name), None)
-            # if char:
-            #     char.update_pixel_matrix(self.pixel_matrix)
-            # self.update_c_code()
 
 
     def update_c_code(self):
