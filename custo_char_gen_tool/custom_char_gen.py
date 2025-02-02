@@ -4,6 +4,8 @@ from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QLa
 from PyQt6.QtGui import QPainter, QColor, QFont, QSyntaxHighlighter, QTextCharFormat
 from PyQt6.QtCore import Qt, QRegularExpression
 from PyQt6.QtWidgets import QMessageBox
+from PyQt6.QtWidgets import QFileDialog
+import json
 
 class CCodeHighlighter(QSyntaxHighlighter):
     def __init__(self, parent):
@@ -73,7 +75,6 @@ class LCDCharDesigner(QWidget):
 
         # Tworzymy widżet, który będzie zawierał left_layout
         left_widget = QWidget()
-
         left_layout = QVBoxLayout()
         
         # Dodajemy zawartość do left_layout
@@ -101,8 +102,9 @@ class LCDCharDesigner(QWidget):
         button_layout = QHBoxLayout()
         self.clear_button = QPushButton("Clear")
         self.clear_button.clicked.connect(self.clear_grid)
-        self.save_button = QPushButton("Save")
+        self.save_button = QPushButton("Add to List")
         self.save_button.clicked.connect(self.save_char)
+
         button_layout.addWidget(self.clear_button)
         button_layout.addWidget(self.save_button)
         left_layout.addLayout(button_layout)
@@ -117,7 +119,7 @@ class LCDCharDesigner(QWidget):
         self.code_view.setFont(QFont("Courier", 12, QFont.Weight.Bold))
         self.code_view.setReadOnly(True)
         self.code_view.setStyleSheet("background-color: #282c34; color: #abb2bf; padding: 5px;")
-        self.code_view.setMinimumWidth(350)  # Minimalna szerokość dla okna z kodem
+        self.code_view.setMinimumWidth(750)  # Minimalna szerokość dla okna z kodem
         self.code_view.setMinimumHeight(100)  # Minimalna wysokość
         self.highlighter = CCodeHighlighter(self.code_view.document())
         
@@ -125,7 +127,7 @@ class LCDCharDesigner(QWidget):
         left_widget.setLayout(left_layout)
 
         # Ustawiamy stałą szerokość dla left_widget
-        left_widget.setFixedWidth(250)
+        left_widget.setFixedWidth(280)
 
         right_layout = QVBoxLayout()
         right_layout.addWidget(QLabel("Generated C Code:"))
@@ -137,6 +139,36 @@ class LCDCharDesigner(QWidget):
         main_layout.addLayout(right_layout, stretch=2)
         self.setLayout(main_layout)
         self.update_c_code()
+
+        # Przycisk operacji na liscie
+        button_layout3 = QHBoxLayout();
+        self.delete_button = QPushButton("Remove Selected from List")
+        self.delete_button.clicked.connect(self.delete_selected_char)
+
+        button_layout3.addWidget(self.delete_button)
+
+        # Dodajemy do głównego layoutu
+        left_layout.addLayout(button_layout3)
+
+        # Przyciski pod listą
+        button_layout2 = QHBoxLayout()
+
+        self.save_list_button = QPushButton("Save List")
+        self.save_list_button.clicked.connect(self.save_list_to_file)
+
+        self.load_list_button = QPushButton("Load List")
+        self.load_list_button.clicked.connect(self.load_list_from_file)
+
+        self.clear_list_button = QPushButton("Delete list")
+        self.clear_list_button.clicked.connect(self.clear_all_chars)
+
+        button_layout2.addWidget(self.save_list_button)
+        button_layout2.addWidget(self.load_list_button)
+        button_layout2.addWidget(self.clear_list_button)
+
+        # Dodajemy do głównego layoutu
+        left_layout.addLayout(button_layout2)
+
 
     def update_grid_size(self):
         if len(self.characters) > 0:
@@ -181,6 +213,7 @@ class LCDCharDesigner(QWidget):
         c_code = self.generate_c_code()
         self.code_view.setText(c_code)
         self.adjust_code_view_width()
+        self.adjustSize()
 
     def generate_c_code(self):
         c_code = ""
@@ -198,15 +231,16 @@ class LCDCharDesigner(QWidget):
     
     def adjust_code_view_width(self):
         text_length = self.max_code_width
-        min_width = 350
+        min_width = 750
         calculated_width = 10 * text_length + 50
         new_width = max(min_width, calculated_width)
+        
         self.code_view.setFixedWidth(new_width)
+
     
     def clear_grid(self):
         self.pixel_matrix = np.zeros(self.grid_size, dtype=int)
         self.pixel_grid.update()
-        self.update_c_code()
     
     def save_char(self):
         char_name = self.char_name_input.text().strip()
@@ -236,8 +270,6 @@ class LCDCharDesigner(QWidget):
                 self.char_list.addItem(char.name)
             
             self.update_c_code()  # Zaktualizuj kod po zapisaniu
-
-
         
     def load_selected_char(self, item):
         char_name = item.text()
@@ -251,6 +283,82 @@ class LCDCharDesigner(QWidget):
             self.pixel_grid.update()
             self.char_name_input.setText(self.current_char_name)
             self.update_c_code()
+
+    def save_list_to_file(self):
+        # Otwórz okno dialogowe, aby wybrać lokalizację zapisu
+        filename, _ = QFileDialog.getSaveFileName(self, "Save Character List", "", "JSON Files (*.json);;All Files (*)")
+        
+        if filename:
+            # Jeśli użytkownik nie podał rozszerzenia .json, dodaj je automatycznie
+            if not filename.lower().endswith(".json"):
+                filename += ".json"
+            
+            with open(filename, 'w') as f:
+                # Przygotowujemy dane do zapisania (nazwy i macierze)
+                data = [{"name": char.name, "matrix": char.matrix.tolist()} for char in self.characters]
+                json.dump(data, f, indent=4)
+            
+            self.show_message(f"List of characters saved to {filename}")
+        else:
+            self.show_message("Save operation was canceled.")
+
+
+    def load_list_from_file(self):
+        # Otwórz okno dialogowe, aby wybrać plik do wczytania
+        filename, _ = QFileDialog.getOpenFileName(self, "Open Character List", "", "JSON Files (*.json);;All Files (*)")
+        
+        if filename:
+            try:
+                with open(filename, 'r') as f:
+                    data = json.load(f)
+                    
+                    # Wczytanie danych z pliku i tworzenie obiektów Char
+                    self.characters = []
+                    for item in data:
+                        name = item['name']
+                        matrix = np.array(item['matrix'])
+                        self.characters.append(Char(name, matrix))
+                    
+                    # Zaktualizuj listę na UI
+                    self.char_list.clear()
+                    for char in self.characters:
+                        self.char_list.addItem(char.name)
+                    
+                    self.update_c_code()
+                    self.show_message(f"List of characters loaded from {filename}")
+            
+            except json.JSONDecodeError:
+                self.show_message(f"Error reading {filename}. The file may not be in the correct format.")
+            except Exception as e:
+                self.show_message(f"Error loading file: {e}")
+        else:
+            self.show_message("Open operation was canceled.")
+
+
+    def delete_selected_char(self):
+        # Pobieramy zaznaczony element z listy
+        selected_item = self.char_list.currentItem()
+        if selected_item:
+            char_name = selected_item.text()
+            
+            # Szukamy obiektu Char w bazie
+            char = next((char for char in self.characters if char.name == char_name), None)
+            
+            if char:
+                # Usuwamy obiekt z listy
+                self.characters.remove(char)
+                # Usuwamy item z listy w UI
+                self.char_list.takeItem(self.char_list.row(selected_item))
+                self.update_c_code()
+                # self.show_message(f"Character '{char_name}' deleted.")
+
+    def clear_all_chars(self):
+        # Usuwamy wszystkie elementy z listy
+        self.characters.clear()
+        # Wyczyść także widok na liście
+        self.char_list.clear()
+        # Zaktualizuj kod, ponieważ lista znaków została opróżniona
+        self.update_c_code()
 
 
 class PixelGrid(QWidget):
