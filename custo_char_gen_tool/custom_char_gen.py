@@ -210,6 +210,12 @@ class LCDCharDesigner(QWidget):
     
     def save_char(self):
         char_name = self.char_name_input.text().strip()
+        
+        # Sprawdzamy, czy nazwa zaczyna się od cyfry
+        if char_name and char_name[0].isdigit():
+            self.show_message("Character name cannot start with a digit.")
+            return  # Zatrzymaj dalsze wykonywanie, jeśli nazwa zaczyna się od cyfry
+        
         if char_name:
             self.current_char_name = char_name
 
@@ -230,6 +236,7 @@ class LCDCharDesigner(QWidget):
                 self.char_list.addItem(char.name)
             
             self.update_c_code()  # Zaktualizuj kod po zapisaniu
+
 
         
     def load_selected_char(self, item):
