@@ -35,16 +35,37 @@ class CCodeHighlighter(QSyntaxHighlighter):
                 match = it.next()
                 self.setFormat(match.capturedStart(), match.capturedLength(), self.formats[fmt_key])
 
+class Char:
+    def __init__(self, name, matrix):
+        self.name = name
+        self.matrix = matrix.copy()  # Zrobienie kopii macierzy
+
+
+    def copy(self):
+        # Tworzymy kopię macierzy i zwracamy nowy obiekt Char
+        return Char(self.name, self.matrix.copy())
+
+    def get_c_code(self):
+        byte_array = []
+        for row in self.matrix:
+            byte_value = int("".join(map(str, row)), 2)
+            byte_array.append(f"0x{byte_value:02X}")
+        return f"uint8_t {self.name}[{len(self.matrix)}] = {{ " + ", ".join(byte_array) + " };"
+
+    def update_pixel_matrix(self, new_matrix):
+        # Uaktualnianie macierzy pikseli
+        self.matrix = new_matrix
+
 class LCDCharDesigner(QWidget):
     def __init__(self):
         super().__init__()
         self.standard_sizes = [(8, 5), (8, 6), (8, 7), (8, 8)]  # Standard sizes
         self.grid_size = (8, 5)  # Default size
         self.pixel_matrix = np.zeros(self.grid_size, dtype=int)
-        self.characters = {}  # Zmienna do przechowywania wielu znaków
+        self.characters = []  # Lista do przechowywania obiektów Char
         self.current_char_name = "char_data"  # Domyślny znak
         self.initUI()
-    
+
     def initUI(self):
         self.setWindowTitle("LCD Character Designer")
         main_layout = QHBoxLayout()
@@ -117,17 +138,35 @@ class LCDCharDesigner(QWidget):
         self.update_c_code()
 
     def update_grid_size(self):
-        index = self.size_selector.currentIndex()
-        self.grid_size = self.standard_sizes[index]
-        self.pixel_matrix = np.zeros(self.grid_size, dtype=int)
-        self.pixel_grid.update_grid_size()  # Aktualizujemy rozmiar grida
-        self.update_c_code()
+        if len(self.characters) > 0:
+            # Jeśli lista zawiera elementy, zablokuj zmianę rozmiaru
+            self.size_selector.setEnabled(False)
+            # Możesz dodać jakiś komunikat, jeśli chcesz informować użytkownika
+            print("You cannot change the grid size once a character is defined.")
+            return
+        else:
+            # Jeśli lista jest pusta, umożliwiamy zmianę rozmiaru
+            self.size_selector.setEnabled(True)
+            index = self.size_selector.currentIndex()
+            self.grid_size = self.standard_sizes[index]
+            self.pixel_matrix = np.zeros(self.grid_size, dtype=int)
+            self.pixel_grid.update_grid_size()  # Aktualizujemy rozmiar grida
+            self.update_c_code()
+
 
     def toggle_pixel(self, x, y):
+        # Konwertujemy x i y na liczby całkowite, aby zapobiec błędowi typu
+        x = int(x)
+        y = int(y)
+
         if 0 <= y < self.grid_size[0] and 0 <= x < self.grid_size[1]:
             self.pixel_matrix[y, x] ^= 1
-            self.update_c_code()
-    
+            # char = next((char for char in self.characters if char.name == self.current_char_name), None)
+            # if char:
+            #     char.update_pixel_matrix(self.pixel_matrix)
+            # self.update_c_code()
+
+
     def update_c_code(self):
         # Tylko zdefiniowane znaki w characters
         c_code = self.generate_c_code()
@@ -138,17 +177,11 @@ class LCDCharDesigner(QWidget):
         c_code = ""
         max_line_length = 0  # Zmienna do określania długości najdłuższej definicji
 
-        for idx, (name, matrix) in enumerate(self.characters.items()):
-            byte_array = []
-            for row in matrix:
-                byte_value = int("".join(map(str, row)), 2)
-                byte_array.append(f"0x{byte_value:02X}")
-            char_code = f"uint8_t {name}[{self.grid_size[0]}] = {{ " + ", ".join(byte_array) + " };"
-            if idx < len(self.characters) - 1:
-                c_code += char_code + "\n"
-            else:
-                c_code += char_code
-
+        # Iterujemy po elementach w liście self.characters
+        for char in self.characters:
+            char_code = char.get_c_code()
+            c_code += char_code + "\n"
+            
             max_line_length = max(max_line_length, len(char_code))
 
         self.max_code_width = max_line_length  # Ustawiamy szerokość kodu na najdłuższą linię
@@ -170,17 +203,39 @@ class LCDCharDesigner(QWidget):
         char_name = self.char_name_input.text().strip()
         if char_name:
             self.current_char_name = char_name
-            self.characters[self.current_char_name] = self.pixel_matrix
-            self.char_list.addItem(char_name)  # Dodajemy do listy nazw
+
+            # Sprawdzamy, czy taki znak już istnieje w bazie
+            existing_char = next((char for char in self.characters if char.name == char_name), None)
+            
+            if existing_char:
+                # Jeśli znak już istnieje, zaktualizuj go
+                existing_char.matrix = self.pixel_matrix
+            else:
+                # Jeśli znak nie istnieje, stwórz nowy obiekt Char i dodaj go do listy
+                new_char = Char(self.current_char_name, self.pixel_matrix)
+                self.characters.append(new_char)
+            
+            # Aktualizujemy listę na UI
+            self.char_list.clear()
+            for char in self.characters:
+                self.char_list.addItem(char.name)
+            
             self.update_c_code()  # Zaktualizuj kod po zapisaniu
-    
+
+        
     def load_selected_char(self, item):
-        # Ładujemy wybrany znak
-        self.current_char_name = item.text()
-        self.pixel_matrix = self.characters.get(self.current_char_name, np.zeros(self.grid_size, dtype=int))
-        self.pixel_grid.update()
-        self.char_name_input.setText(self.current_char_name)
-        self.update_c_code()
+        char_name = item.text()
+        
+        # Szukamy obiektu Char w bazie po nazwie
+        char = next((char for char in self.characters if char.name == char_name), None)
+        
+        if char:
+            self.current_char_name = char.name
+            self.pixel_matrix = char.matrix  # Ładujemy macierz znaku
+            self.pixel_grid.update()
+            self.char_name_input.setText(self.current_char_name)
+            self.update_c_code()
+
 
 class PixelGrid(QWidget):
     def __init__(self, parent):
@@ -209,17 +264,17 @@ class PixelGrid(QWidget):
                 painter.fillRect(rect_x, rect_y, cell_width - 2, cell_height - 2, color)
 
     def mousePressEvent(self, event):
-        grid_width = self.parent.grid_size[1]
-        grid_height = self.parent.grid_size[0]
-        cell_width = self.pixel_width
-        cell_height = self.pixel_height
-        x, y = event.pos().x() // cell_width, event.pos().y() // cell_height
-        if 0 <= x < grid_width and 0 <= y < grid_height:
+        x = int(event.position().x()) // self.pixel_width
+        y = int(event.position().y()) // self.pixel_height
+        
+        # Upewnijmy się, że x i y są w zakresie
+        if 0 <= x < self.parent.grid_size[1] and 0 <= y < self.parent.grid_size[0]:
             self.parent.toggle_pixel(x, y)
             self.update()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app = QApplication(sys.argv)
-    designer = LCDCharDesigner()
-    designer.show()
+    window = LCDCharDesigner()
+    window.show()
     sys.exit(app.exec())
