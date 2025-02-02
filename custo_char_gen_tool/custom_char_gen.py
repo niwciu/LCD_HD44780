@@ -3,6 +3,7 @@ import numpy as np
 from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QLabel, QComboBox, QLineEdit, QTextEdit, QPushButton, QListWidget
 from PyQt6.QtGui import QPainter, QColor, QFont, QSyntaxHighlighter, QTextCharFormat
 from PyQt6.QtCore import Qt, QRegularExpression
+from PyQt6.QtWidgets import QMessageBox
 
 class CCodeHighlighter(QSyntaxHighlighter):
     def __init__(self, parent):
@@ -142,7 +143,7 @@ class LCDCharDesigner(QWidget):
             # Jeśli lista zawiera elementy, zablokuj zmianę rozmiaru
             self.size_selector.setEnabled(False)
             # Możesz dodać jakiś komunikat, jeśli chcesz informować użytkownika
-            print("You cannot change the grid size once a character is defined.")
+            self.show_message("You cannot change the grid size once a character is defined.")
             return
         else:
             # Jeśli lista jest pusta, umożliwiamy zmianę rozmiaru
@@ -153,6 +154,14 @@ class LCDCharDesigner(QWidget):
             self.pixel_grid.update_grid_size()  # Aktualizujemy rozmiar grida
             self.update_c_code()
 
+
+    def show_message(self, message):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Icon.Information)  # Typ okna dialogowego (informacyjne)
+        msg.setText(message)  # Ustawienie tekstu komunikatu
+        msg.setWindowTitle("Information")  # Tytuł okna
+        msg.setStandardButtons(QMessageBox.StandardButton.Ok)  # Przycisk OK
+        msg.exec()  # Wywołanie okna komunikatu
 
     def toggle_pixel(self, x, y):
         # Konwertujemy x i y na liczby całkowite, aby zapobiec błędowi typu
