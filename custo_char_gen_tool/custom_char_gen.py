@@ -5,6 +5,7 @@ from PyQt6.QtGui import QPainter, QColor, QFont, QSyntaxHighlighter, QTextCharFo
 from PyQt6.QtCore import Qt, QRegularExpression
 from PyQt6.QtWidgets import QMessageBox
 from PyQt6.QtWidgets import QFileDialog
+from PyQt6.QtWidgets import QInputDialog
 import json
 
 from PyQt6.QtGui import QSyntaxHighlighter, QTextCharFormat, QFont, QColor
@@ -88,11 +89,38 @@ class LCDCharDesigner(QWidget):
         self.pixel_matrix = np.zeros(self.grid_size, dtype=int)
         self.characters = []  # Lista do przechowywania obiektów Char
         self.current_char_name = "char_data"  # Domyślny znak
+        self.banks = {}  # Słownik {nazwa_banku: lista znaków}
         self.initUI()
 
     def initUI(self):
         self.setWindowTitle("LCD Character Designer")
         main_layout = QHBoxLayout()
+
+         # ======= SEKCJA BANKÓW ========
+        banks_layout = QVBoxLayout()
+        self.bank_list = QListWidget()
+        self.bank_list.itemClicked.connect(self.load_bank_chars)
+        banks_layout.addWidget(QLabel("Character Banks:"))
+        banks_layout.addWidget(self.bank_list)
+
+        self.bank_chars_list = QListWidget()
+        banks_layout.addWidget(QLabel("Characters in Bank:"))
+        banks_layout.addWidget(self.bank_chars_list)
+
+        btn_layout = QHBoxLayout()
+        self.add_bank_button = QPushButton("Add Bank")
+        self.add_bank_button.clicked.connect(self.add_bank)
+        self.delete_bank_button = QPushButton("Delete Bank")
+        self.delete_bank_button.clicked.connect(self.delete_bank)
+        btn_layout.addWidget(self.add_bank_button)
+        btn_layout.addWidget(self.delete_bank_button)
+        banks_layout.addLayout(btn_layout)
+
+        self.add_char_to_bank_button = QPushButton("Add Selected Char to Bank")
+        self.add_char_to_bank_button.clicked.connect(self.add_char_to_bank)
+        banks_layout.addWidget(self.add_char_to_bank_button)
+
+        main_layout.addLayout(banks_layout)  # Dodanie sekcji banków do GUI
 
         # Tworzymy widżet, który będzie zawierał left_layout
         left_widget = QWidget()
@@ -123,7 +151,7 @@ class LCDCharDesigner(QWidget):
         button_layout = QHBoxLayout()
         self.clear_button = QPushButton("Clear")
         self.clear_button.clicked.connect(self.clear_grid)
-        self.save_button = QPushButton("Add to List")
+        self.save_button = QPushButton("Add to Def Char")
         self.save_button.clicked.connect(self.save_char)
 
         button_layout.addWidget(self.clear_button)
@@ -163,7 +191,7 @@ class LCDCharDesigner(QWidget):
 
         # Przycisk operacji na liscie
         button_layout3 = QHBoxLayout();
-        self.delete_button = QPushButton("Remove Selected from List")
+        self.delete_button = QPushButton("Remove Selected Char from List")
         self.delete_button.clicked.connect(self.delete_selected_char)
 
         button_layout3.addWidget(self.delete_button)
@@ -223,6 +251,7 @@ class LCDCharDesigner(QWidget):
 
         if 0 <= y < self.grid_size[0] and 0 <= x < self.grid_size[1]:
             self.pixel_matrix[y, x] ^= 1
+        self.save_char()
 
 
     def update_c_code(self):
@@ -366,16 +395,89 @@ class LCDCharDesigner(QWidget):
                 self.characters.remove(char)
                 # Usuwamy item z listy w UI
                 self.char_list.takeItem(self.char_list.row(selected_item))
+                
+                # Usuwamy znak z banków
+                self.remove_char_from_banks(char_name)
+                
+                self.update_bank_view()
+
                 self.update_c_code()
                 # self.show_message(f"Character '{char_name}' deleted.")
 
+
     def clear_all_chars(self):
-        # Usuwamy wszystkie elementy z listy
+        # Usuwamy tylko znaki z banków
+        for bank in self.banks.values():
+            bank.clear()
+        # Wyczyszczenie widoku znaków w banku
+        self.update_bank_view()
+        
+        # Usuwamy wszystkie elementy z listy znaków
         self.characters.clear()
+
         # Wyczyść także widok na liście
         self.char_list.clear()
+        
         # Zaktualizuj kod, ponieważ lista znaków została opróżniona
         self.update_c_code()
+        self.show_message("All characters deleted from  char list and banks.")
+
+
+
+    def add_bank(self):
+        bank_name, ok = QInputDialog.getText(self, "New Bank", "Enter bank name:")
+        if ok and bank_name.strip():
+            if bank_name in self.banks:
+                self.show_message("Bank already exists!")
+            else:
+                self.banks[bank_name] = []
+                self.bank_list.addItem(bank_name)
+
+    def delete_bank(self):
+        selected_item = self.bank_list.currentItem()
+        if selected_item:
+            bank_name = selected_item.text()
+            del self.banks[bank_name]
+            self.bank_list.takeItem(self.bank_list.row(selected_item))
+            self.bank_chars_list.clear()
+
+    def add_char_to_bank(self):
+        selected_char_item = self.char_list.currentItem()
+        selected_bank_item = self.bank_list.currentItem()
+        if selected_char_item and selected_bank_item:
+            char_name = selected_char_item.text()
+            bank_name = selected_bank_item.text()
+            if char_name not in self.banks[bank_name]:
+                if len(self.banks[bank_name]) < 8:
+                    self.banks[bank_name].append(char_name)
+                    self.bank_chars_list.addItem(char_name)
+                else:
+                    self.show_message("Bank is full (max 8 characters).")
+
+    def remove_char_from_banks(self, char_name):
+        for bank_name, chars in self.banks.items():
+            if char_name in chars:
+                self.banks[bank_name].remove(char_name)
+
+
+    def load_bank_chars(self, item):
+        bank_name = item.text()
+        self.bank_chars_list.clear()
+        for char in self.banks[bank_name]:
+            self.bank_chars_list.addItem(char)
+    
+    def update_bank_view(self):
+        # Zaktualizuj widok dla każdego banku
+        selected_bank_item = self.bank_list.currentItem()
+        
+        if selected_bank_item:
+            bank_name = selected_bank_item.text()
+            # Wyczyść listę znaków w banku
+            self.bank_chars_list.clear()
+            
+            # Dodaj znaki do listy banku
+            for char_name in self.banks.get(bank_name, []):
+                self.bank_chars_list.addItem(char_name)
 
 
 class PixelGrid(QWidget):
