@@ -11,6 +11,8 @@ LCD_HD44780_lib_doc/
 .project
 .settings/
 
+.myVenv/
+__pycache__
 
 
 

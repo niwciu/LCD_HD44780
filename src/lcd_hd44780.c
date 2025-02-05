@@ -36,6 +36,9 @@ static lcd_pos_t *lcd_buf_position_ptr;
 PRIVATE char lcd_buffer[LCD_Y][LCD_X];
 PRIVATE char prev_lcd_buffer[LCD_Y][LCD_X];
 #endif
+#if  USE_DEF_CHAR_FUNCTION == ON
+static const LCD_char_mapping_struct_t *char_bank_translator = NULL;
+#endif
 
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
 
@@ -66,6 +69,9 @@ static void check_lcd_buf_possition_ptr_overflow(void);
 static void copy_lcd_buf_2_prev_lcd_buf(void);
 static void update_lcd_curosr_possition(uint8_t *lcd_cursor_position, uint8_t *lcd_line, uint8_t *missed_char_counter_in_LCD_line);
 static void write_lcd_buf_2_lcd(const uint8_t *lcd_cursor_position, const uint8_t *lcd_line, uint8_t *missed_char_counter_in_LCD_line, const lcd_pos_t *prev_lcd_buff_pos_ptr);
+#endif
+#if USE_DEF_CHAR_FUNCTION == ON
+char lcd_translate_char(char c); 
 #endif
 
 static void register_LCD_IO_driver(void)
@@ -205,7 +211,6 @@ static void fill_zeros_buffer(const char *buffer, uint8_t width, char *zeros_buf
 #if LCD_BUFFERING == ON
 static void check_lcd_buf_possition_ptr_overflow(void)
 {
-    lcd_buf_position_ptr++;
     if (lcd_buf_position_ptr > &lcd_buffer[LAST_LCD_LINE][LAST_CHAR_IN_LCD_LINE])
     {
         lcd_buf_position_ptr = &lcd_buffer[LINE_1][C1];
@@ -253,6 +258,21 @@ static void write_lcd_buf_2_lcd(const uint8_t *lcd_cursor_position, const uint8_
         (*missed_char_counter_in_LCD_line)++;
     }
 }
+
+#endif
+
+#if USE_DEF_CHAR_FUNCTION == ON
+char lcd_translate_char(char c) {
+    int i = 0;
+    while (lcd_bank_1_special_chars_map[i].ascii_char != '\0') {  // Iteracja przez mapowanie
+        if (lcd_bank_1_special_chars_map[i].ascii_char == c) {
+            return lcd_bank_1_special_chars_map[i].lcd_def_char;  // Zwrócenie odpowiednika LCD
+        }
+        i++;
+    }
+    return c;  // Jeśli brak mapowania, zwróć oryginalny znak
+}
+
 
 #endif
 
@@ -360,7 +380,7 @@ void lcd_def_char(const uint8_t CGRAM_bank_x_char_adr, const uint8_t *def_char)
  *
  * @param char_bank - pointer to selected user char bank that function should load to LCD_CGRAM. Char banks are defined in lcd_hd44780_def_char.h
  */
-void lcd_load_char_bank(const struct char_bank_struct *char_bank)
+void lcd_load_char_bank(const char_bank_struct_t *char_bank, const LCD_char_mapping_struct_t *char_bank_translation_tab)
 {
     lcd_def_char(0, char_bank->char_0);
     lcd_def_char(1, char_bank->char_1);
@@ -370,6 +390,7 @@ void lcd_load_char_bank(const struct char_bank_struct *char_bank)
     lcd_def_char(5, char_bank->char_5);
     lcd_def_char(6, char_bank->char_6);
     lcd_def_char(7, char_bank->char_7);
+    char_bank_translator = char_bank_translation_tab;
 }
 #endif
 
@@ -381,7 +402,7 @@ void lcd_load_char_bank(const struct char_bank_struct *char_bank)
  */
 void lcd_char(const char C)
 {
-    uint8_t data = (uint8_t)(C);
+    uint8_t data = (uint8_t)(lcd_translate_char(C));
     lcd_write_data(data);
 }
 
@@ -584,6 +605,7 @@ void lcd_buf_cls(void)
 void lcd_buf_char(const char c)
 {
     *lcd_buf_position_ptr = c;
+    lcd_buf_position_ptr++;
     check_lcd_buf_possition_ptr_overflow();
     LCD_BUFFER_UPDATE_FLAG = true;
 }
@@ -606,7 +628,7 @@ void lcd_buf_str(const char *str)
 {
     while (*str)
     {
-        *(lcd_buf_position_ptr) = *(str++);
+        *(lcd_buf_position_ptr++) = *(str++);
         check_lcd_buf_possition_ptr_overflow();
     }
     LCD_BUFFER_UPDATE_FLAG = true;
