@@ -11,6 +11,9 @@ LCD_HD44780_lib_doc/
 .project
 .settings/
 
+custom_char_gen_tool/
+myVenv/
+
 
 
 
