@@ -91,6 +91,7 @@ class LCDCharDesigner(QWidget):
         self.current_char_name = "char_data"  # Domyślny znak
         self.banks = {}  # Słownik {nazwa_banku: lista znaków}
         self.initUI()
+        self.clear_grid()
 
     def initUI(self):
         self.setWindowTitle("LCD Character Designer")
@@ -251,7 +252,7 @@ class LCDCharDesigner(QWidget):
 
         if 0 <= y < self.grid_size[0] and 0 <= x < self.grid_size[1]:
             self.pixel_matrix[y, x] ^= 1
-        self.save_char()
+            self.save_char()  
 
 
     def update_c_code(self):
@@ -303,12 +304,12 @@ class LCDCharDesigner(QWidget):
             existing_char = next((char for char in self.characters if char.name == char_name), None)
             
             if existing_char:
-                # Jeśli znak już istnieje, zaktualizuj go
-                existing_char.matrix = self.pixel_matrix
+                # Jeśli znak już istnieje, zaktualizuj go - wykonując kopię macierzy
+                existing_char.matrix = self.pixel_matrix.copy()
             else:
-                # Jeśli znak nie istnieje, stwórz nowy obiekt Char i dodaj go do listy
                 new_char = Char(self.current_char_name, self.pixel_matrix)
                 self.characters.append(new_char)
+
             
             # Aktualizujemy listę na UI
             self.char_list.clear()
@@ -316,6 +317,34 @@ class LCDCharDesigner(QWidget):
                 self.char_list.addItem(char.name)
             
             self.update_c_code()  # Zaktualizuj kod po zapisaniu
+   
+    def update_existing_char(self):
+        char_name = self.char_name_input.text().strip()
+        
+        # Sprawdzamy, czy nazwa zaczyna się od cyfry
+        if char_name and char_name[0].isdigit():
+            self.show_message("Character name cannot start with a digit.")
+            return  # Zatrzymaj dalsze wykonywanie, jeśli nazwa zaczyna się od cyfry
+        
+        if char_name:
+            self.current_char_name = char_name
+
+            # Sprawdzamy, czy taki znak już istnieje w bazie
+            existing_char = next((char for char in self.characters if char.name == char_name), None)
+            
+            if existing_char:
+                # Jeśli znak już istnieje, zaktualizuj go
+                existing_char.matrix = self.pixel_matrix
+            else:
+                self.show_message("Add new character to list")
+            
+            # Aktualizujemy listę na UI
+            self.char_list.clear()
+            for char in self.characters:
+                self.char_list.addItem(char.name)
+            
+            self.update_c_code()  # Zaktualizuj kod po zapisaniu
+   
         
     def load_selected_char(self, item):
         char_name = item.text()
@@ -339,18 +368,25 @@ class LCDCharDesigner(QWidget):
             if not filename.lower().endswith(".json"):
                 filename += ".json"
             
-            with open(filename, 'w') as f:
-                # Przygotowujemy dane do zapisania (nazwy i macierze)
-                data = [{"name": char.name, "matrix": char.matrix.tolist()} for char in self.characters]
-                json.dump(data, f, indent=4)
-            
-            self.show_message(f"List of characters saved to {filename}")
+            try:
+                with open(filename, 'w') as f:
+                    # Przygotowujemy dane do zapisania (nazwy i macierze)
+                    data = {
+                        "characters": [{"name": char.name, "matrix": char.matrix.tolist()} for char in self.characters],
+                        "banks": {bank_name: bank_chars for bank_name, bank_chars in self.banks.items()}
+                    }
+                    # Zapisujemy dane do pliku JSON
+                    json.dump(data, f, indent=4)
+                
+                self.show_message(f"List of characters and banks saved to {filename}")
+            except Exception as e:
+                self.show_message(f"Error saving file: {e}")
         else:
             self.show_message("Save operation was canceled.")
 
 
+
     def load_list_from_file(self):
-        # Otwórz okno dialogowe, aby wybrać plik do wczytania
         filename, _ = QFileDialog.getOpenFileName(self, "Open Character List", "", "JSON Files (*.json);;All Files (*)")
         
         if filename:
@@ -358,21 +394,29 @@ class LCDCharDesigner(QWidget):
                 with open(filename, 'r') as f:
                     data = json.load(f)
                     
-                    # Wczytanie danych z pliku i tworzenie obiektów Char
+                    # Wczytanie znaków
                     self.characters = []
-                    for item in data:
+                    for item in data.get("characters", []):
                         name = item['name']
                         matrix = np.array(item['matrix'])
                         self.characters.append(Char(name, matrix))
+                        
+                    # Wczytanie banków
+                    self.banks = {}
+                    for bank_name, bank_chars in data.get("banks", {}).items():
+                        self.banks[bank_name] = bank_chars
                     
-                    # Zaktualizuj listę na UI
+                    # Aktualizujemy widok listy znaków
                     self.char_list.clear()
                     for char in self.characters:
                         self.char_list.addItem(char.name)
                     
-                    self.update_c_code()
-                    self.show_message(f"List of characters loaded from {filename}")
-            
+                    # Aktualizujemy widok listy banków
+                    self.update_banks_list()  # Nowa metoda, która uzupełnia self.bank_list
+                    self.update_bank_view()   # Aktualizuje widok znaków w zaznaczonym banku
+                    
+                    self.update_c_code()  
+                    self.show_message(f"List of characters and banks loaded from {filename}")
             except json.JSONDecodeError:
                 self.show_message(f"Error reading {filename}. The file may not be in the correct format.")
             except Exception as e:
@@ -466,18 +510,23 @@ class LCDCharDesigner(QWidget):
         for char in self.banks[bank_name]:
             self.bank_chars_list.addItem(char)
     
-    def update_bank_view(self):
-        # Zaktualizuj widok dla każdego banku
-        selected_bank_item = self.bank_list.currentItem()
+    def update_banks_list(self):
+        self.bank_list.clear()  # Wyczyszczenie widoku listy banków
+        for bank_name in self.banks.keys():
+            self.bank_list.addItem(bank_name)
+
         
+    def update_bank_view(self):
+        selected_bank_item = self.bank_list.currentItem()
         if selected_bank_item:
             bank_name = selected_bank_item.text()
-            # Wyczyść listę znaków w banku
             self.bank_chars_list.clear()
-            
-            # Dodaj znaki do listy banku
             for char_name in self.banks.get(bank_name, []):
                 self.bank_chars_list.addItem(char_name)
+        else:
+            # Jeśli żaden bank nie jest zaznaczony, wyczyść widok znaków w banku
+            self.bank_chars_list.clear()
+
 
 
 class PixelGrid(QWidget):
