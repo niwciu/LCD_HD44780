@@ -30,8 +30,8 @@ extern "C"
      */
     typedef struct
     {
-        char ascii_char;        /**< The ASCII character to be mapped. */
-        char lcd_def_char;      /**< The corresponding representation in LCD memory (e.g., address or enum). */
+        char ascii_char;   /**< The ASCII character to be mapped. */
+        char lcd_def_char; /**< The corresponding representation in LCD memory (e.g., address or enum). */
     } LCD_char_mapping_struct_t;
 
     /**
@@ -103,22 +103,22 @@ extern "C"
      * @brief Mapping between extended ASCII characters and their corresponding custom character addresses.
      *
      * This array maps specific extended ASCII characters (which are typically 1 byte in modern encodings like UTF-8)
-     * to the custom character addresses defined in the `lcd_cgram_bank_1`. 
+     * to the custom character addresses defined in the `lcd_cgram_bank_1`.
      * This allows the usage of custom characters based on their extended ASCII representation.
-     * 
+     *
      * @warning It is required that this file and all files containing strings with Polish characters
      *          (e.g., 'ê', 'ó', 'œ', etc.) be saved with Windows-1250 encoding to ensure proper
      *          translation of Polish characters to the corresponding LCD-defined characters.
      */
     static const LCD_char_mapping_struct_t lcd_bank_1_special_chars_map[] = {
-        {'ê', pol_o},   /**< Extended ASCII 'ê' mapped to the custom character 'ó' (address 0x01) */
-        {'ó', pol_a},   /**< Extended ASCII 'ó' mapped to the custom character '¹' (address 0x05) */
-        {'œ', pol_s},   /**< Extended ASCII 'œ' mapped to the custom character 'œ' (address 0x02) */
-        {'³', pol_l},   /**< Extended ASCII '³' mapped to the custom character '³' (address 0x03) */
-        {'æ', pol_c},   /**< Extended ASCII 'æ' mapped to the custom character 'æ' (address 0x04) */
-        {'¹', pol_a},   /**< Extended ASCII '¹' mapped to the custom character '¹' (address 0x05) */
-        {'ñ', pol_n},   /**< Extended ASCII 'ñ' mapped to the custom character 'ñ' (address 0x06) */
-        {'\0', 0}       /**< Null terminator to mark the end of the mapping table */
+        {'ê', pol_o}, /**< Extended ASCII 'ê' mapped to the custom character 'ó' (address 0x01) */
+        {'ó', pol_a}, /**< Extended ASCII 'ó' mapped to the custom character '¹' (address 0x05) */
+        {'œ', pol_s}, /**< Extended ASCII 'œ' mapped to the custom character 'œ' (address 0x02) */
+        {'³', pol_l}, /**< Extended ASCII '³' mapped to the custom character '³' (address 0x03) */
+        {'æ', pol_c}, /**< Extended ASCII 'æ' mapped to the custom character 'æ' (address 0x04) */
+        {'¹', pol_a}, /**< Extended ASCII '¹' mapped to the custom character '¹' (address 0x05) */
+        {'ñ', pol_n}, /**< Extended ASCII 'ñ' mapped to the custom character 'ñ' (address 0x06) */
+        {'\0', 0}     /**< Null terminator to mark the end of the mapping table */
     };
 
     /**********************USER CHAR CGRAM BANKS DEFINITIONS END*********************/
