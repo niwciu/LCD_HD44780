@@ -216,83 +216,86 @@ jobs:
                 verbose: ${{env.verbose}}
 
           
-    # generate_code_coverage_report:
-    #     name: Generate Code Coverage Report
-    #     runs-on: ubuntu-latest
-    #     needs: 
-    #         - run_clang-format_check
-    #         - run_unit_tests
-    #         - run_code_coverage_check
-    #         - run_cppcheck
-    #         - run_code_complexity_check
-    #     steps:
-    #         - name: checkout
-    #           uses: actions/checkout@v4
+    generate_code_coverage_report:
+        name: Generate Code Coverage Report
+        runs-on: ubuntu-latest
+        needs: 
+            - run_clang-format_check
+            - run_unit_tests
+            - run_code_coverage_check
+            - run_cppcheck
+            - run_code_complexity_check
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
 
-    #         - name: Download Unit Tests Build Artifacts
-    #           uses: actions/download-artifact@v4
-    #           with:
-    #             name: lcd_hd44780_unit_tests_app
-    #             path: test/lcd_hd44780/out
+            - name: Download Unit Tests Build Artifacts
+              uses: actions/download-artifact@v4
+              with:
+                name: lcd_hd44780_unit_tests_app
+                path: test/lcd_hd44780/out
 
-    #         - name: Run Unit Tests
-    #           continue-on-error: true
-    #           working-directory: test/lcd_hd44780/out
-    #           run: |
-    #             chmod +x lcd_hd44780_test
-    #             ./lcd_hd44780_test -v
+            - name: Run Unit Tests
+              continue-on-error: true
+              working-directory: test/lcd_hd44780/out
+              run: |
+                chmod +x lcd_hd44780_test
+                ./lcd_hd44780_test -v
             
-    #         - name: Create GCOVR Report Folder
-    #           run: mkdir gcovr_report
+            - name: Create GCOVR Report Folder
+              run: mkdir -p ./reports/CCR/JSON_ALL/HTML_OUT
 
-    #         - name: Generate Code Coverage Report
-    #           uses: threeal/gcovr-action@v1.1.0
-    #           with:
-    #             excludes: test
-    #             html-out: ./gcovr_report/lcd_hd44780_gcovr_report.html
-    #             html-details: true
-    #             html-title: Modbus Library Test Coverage Report
-    #             html-theme: github.dark-green
+            - name: Generate Code Coverage Report
+              uses: threeal/gcovr-action@v1.1.0
+              with:
+                excludes: test
+                html-out: ./reports/CCR/JSON_ALL/HTML_OUT/coverage_report.html
+                html-details: true
+                html-title: LCD HD44780 Test Coverage Report
+                html-theme: github.dark-green
 
-    #         - name: Save Code Coverage Report
-    #           uses: actions/upload-artifact@v4
-    #           with:
-    #               name: Code_Coverage_Report
-    #               path: ./gcovr_report  # need to save all files in folder
-    #               if-no-files-found: warn
-    #               retention-days: 5
-    #               overwrite: true
+            - name: Save Code Coverage Report
+              uses: actions/upload-artifact@v4
+              with:
+                  name: Code_Coverage_Report
+                  path: ./reports  # need to save all files in folder
+                  if-no-files-found: warn
+                  retention-days: 5
+                  overwrite: true
 
-    # generate_code_complexity_report:
-    #     name: Generate Code Complexity Report
-    #     runs-on: ubuntu-latest
-    #     needs: 
-    #         - run_clang-format_check
-    #         - run_unit_tests
-    #         - run_code_coverage_check
-    #         - run_cppcheck
-    #         - run_code_complexity_check
-    #     steps:
-    #         - name: checkout
-    #           uses: actions/checkout@v4
+    generate_code_complexity_report:
+        name: Generate Code Complexity Report
+        runs-on: ubuntu-latest
+        needs: 
+            - run_clang-format_check
+            - run_unit_tests
+            - run_code_coverage_check
+            - run_cppcheck
+            - run_code_complexity_check
+        steps:
+            - name: checkout
+              uses: actions/checkout@v4
 
-    #         - name: Lizard Runner
-    #           uses: niwciu/Lizard-Runner@develop
-    #           with: 
-    #             path: ${{env.path}}
-    #             CCN: ${{env.CCN}}
-    #             Threshold: ${{env.Threshold}}
-    #             arguments: ${{env.arguments}}
-    #             language: ${{env.language}}
-    #             verbose: ${{env.verbose}}
-    #             output_file: ./code_complexity_report.html
+            - name: Create Report Folder
+              run: mkdir -p ./reports/CCM
 
-    #         - name: Save code complexity report
-    #           uses: actions/upload-artifact@v4
-    #           with:
-    #               name: Code_Complexity_Report
-    #               path: ./code_complexity_report.html
-    #               if-no-files-found: warn
-    #               retention-days: 5
-    #               overwrite: true
+            - name: Lizard Runner
+              uses: niwciu/Lizard-Runner@develop
+              with: 
+                path: ${{env.path}}
+                CCN: ${{env.CCN}}
+                Threshold: ${{env.Threshold}}
+                arguments: ${{env.arguments}}
+                language: ${{env.language}}
+                verbose: ${{env.verbose}}
+                output_file: ./reports/CCM/code_complexity_report.html
+
+            - name: Save code complexity report
+              uses: actions/upload-artifact@v4
+              with:
+                  name: Code_Complexity_Report
+                  path: ./reports
+                  if-no-files-found: warn
+                  retention-days: 5
+                  overwrite: true
         
