@@ -107,17 +107,17 @@ extern "C"
      * This allows the usage of custom characters based on their extended ASCII representation.
      *
      * @warning It is required that this file and all files containing strings with Polish characters
-     *          (e.g., 'ê', 'ó', 'œ', etc.) be saved with Windows-1250 encoding to ensure proper
+     *          (e.g., 'Ãª', 'Ã³', 'Å“', etc.) be saved with Windows-1250 encoding to ensure proper
      *          translation of Polish characters to the corresponding LCD-defined characters.
      */
     static const LCD_char_mapping_struct_t lcd_bank_1_special_chars_map[] = {
-        {'ê', pol_o}, /**< Extended ASCII 'ê' mapped to the custom character 'ó' (address 0x01) */
-        {'ó', pol_a}, /**< Extended ASCII 'ó' mapped to the custom character '¹' (address 0x05) */
-        {'œ', pol_s}, /**< Extended ASCII 'œ' mapped to the custom character 'œ' (address 0x02) */
-        {'³', pol_l}, /**< Extended ASCII '³' mapped to the custom character '³' (address 0x03) */
-        {'æ', pol_c}, /**< Extended ASCII 'æ' mapped to the custom character 'æ' (address 0x04) */
-        {'¹', pol_a}, /**< Extended ASCII '¹' mapped to the custom character '¹' (address 0x05) */
-        {'ñ', pol_n}, /**< Extended ASCII 'ñ' mapped to the custom character 'ñ' (address 0x06) */
+        {'Ãª', pol_o}, /**< Extended ASCII 'Ãª' mapped to the custom character 'Ã³' (address 0x01) */
+        {'Ã³', pol_a}, /**< Extended ASCII 'Ã³' mapped to the custom character 'Â¹' (address 0x05) */
+        {'Å“', pol_s}, /**< Extended ASCII 'Å“' mapped to the custom character 'Å“' (address 0x02) */
+        {'Â³', pol_l}, /**< Extended ASCII 'Â³' mapped to the custom character 'Â³' (address 0x03) */
+        {'Ã¦', pol_c}, /**< Extended ASCII 'Ã¦' mapped to the custom character 'Ã¦' (address 0x04) */
+        {'Â¹', pol_a}, /**< Extended ASCII 'Â¹' mapped to the custom character 'Â¹' (address 0x05) */
+        {'Ã±', pol_n}, /**< Extended ASCII 'Ã±' mapped to the custom character 'Ã±' (address 0x06) */
         {'\0', 0}     /**< Null terminator to mark the end of the mapping table */
     };
 

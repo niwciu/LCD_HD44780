@@ -36,7 +36,9 @@ static lcd_pos_t *lcd_buf_position_ptr;
 PRIVATE char lcd_buffer[LCD_Y][LCD_X];
 PRIVATE char prev_lcd_buffer[LCD_Y][LCD_X];
 #endif
+
 #if USE_DEF_CHAR_FUNCTION == ON
+
 static const LCD_char_mapping_struct_t *char_bank_translator = NULL;
 #endif
 
@@ -71,7 +73,9 @@ static void update_lcd_curosr_possition(uint8_t *lcd_cursor_position, uint8_t *l
 static void write_lcd_buf_2_lcd(const uint8_t *lcd_cursor_position, const uint8_t *lcd_line, uint8_t *missed_char_counter_in_LCD_line, const lcd_pos_t *prev_lcd_buff_pos_ptr);
 #endif
 #if USE_DEF_CHAR_FUNCTION == ON
+
 char lcd_translate_char(char c);
+
 #endif
 
 static void register_LCD_IO_driver(void)
@@ -262,6 +266,7 @@ static void write_lcd_buf_2_lcd(const uint8_t *lcd_cursor_position, const uint8_
 #endif
 
 #if USE_DEF_CHAR_FUNCTION == ON
+
 char lcd_translate_char(char c)
 {
     int i = 0;
