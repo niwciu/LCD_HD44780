@@ -77,7 +77,7 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenDefineSepcialCharactersFromBan
     next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, pol_n, Pol_n);
     next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, zn_wody, Zn_wody);
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
-    lcd_load_char_bank(&lcd_cgram_bank_1);
+    lcd_load_char_bank(&lcd_cgram_bank_1,lcd_bank_1_special_chars_map);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 #endif

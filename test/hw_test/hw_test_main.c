@@ -83,7 +83,7 @@ void buffering_func_tests(void)
     lcd_enable_backlight();
     lcd_buf_char('G');
     lcd_buf_locate(0,2);
-    lcd_buf_str("Test");
+    lcd_buf_str("Testł");
     lcd_update();
     _delay_ms(1000);
     lcd_locate(0,0);
@@ -91,7 +91,7 @@ void buffering_func_tests(void)
     lcd_update();
     _delay_ms(1000);
     lcd_buf_cls();
-    lcd_load_char_bank(&lcd_cgram_bank_1);
+    lcd_load_char_bank(&lcd_cgram_bank_1,lcd_bank_1_special_chars_map);
     lcd_buf_char(pol_e);
     lcd_buf_char(pol_o);
     lcd_buf_char(zn_wody);

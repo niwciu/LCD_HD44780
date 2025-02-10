@@ -77,7 +77,7 @@ extern "C"
     void lcd_cls(void);
 
     void lcd_def_char(const uint8_t CGRAM_bank_x_char_adr, const uint8_t *def_char);
-    void lcd_load_char_bank(const struct char_bank_struct *char_bank);
+    void lcd_load_char_bank(const char_bank_struct_t *char_bank, const LCD_char_mapping_struct_t *char_bank_translation_tab);
 
     void lcd_char(const char C);
     void lcd_str(const char *str);

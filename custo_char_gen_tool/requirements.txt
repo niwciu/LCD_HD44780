@@ -1,0 +1,2 @@
+nump
+PyQt6
