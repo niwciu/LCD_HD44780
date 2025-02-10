@@ -1,11 +1,14 @@
 name: CI Pipeline
 on:
-    workflow_dispatch: 
-    # push:
-    # pull_request: 
-    #   branches: 
-    #     - main
-    #     - develop
+  workflow_dispatch: 
+  push:
+    branches-ignore: 
+      - main
+      - develop # those branches are protected and require a PR to add update them
+  pull_request: 
+    branches: 
+      - main
+      - develop
 env:
   path: ./src
   CCN: 12
