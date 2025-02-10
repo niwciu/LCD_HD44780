@@ -29,33 +29,38 @@ add_custom_target(ccm lizard
 						-V 
 						-i 1)
 # Create CCM report in reports/Cylcomatic_Complexity/
+# Tworzenie katalogu przed uruchomieniem lizard
 add_custom_command(
     OUTPUT ../../../reports/CCM/
     COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCM/
-    COMMENT "Tworzenie katalogów raportów Code Coverage"
+    COMMENT "Tworzenie katalogu raportów"
 )
-add_custom_target(ccmr 
-	COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCM/
-	COMMAND lizard 
-				../../../src/ 
-				--CCN 12 
-				-Tnloc=30 
-				-a 4 
-				--languages cpp 
-				-V 
-				-o ../../../reports/CCM/lcd_hd44780.html
+# Uruchomienie lizard po utworzeniu katalogu
+add_custom_target(ccmr
+    COMMAND ${CMAKE_COMMAND} -E make_directory ../../../reports/CCM/
+    COMMAND lizard 
+        ../../../src/ 
+        --CCN 12 
+        -Tnloc=30 
+        -a 4 
+        --languages cpp 
+        -V 
+        -o ../../../reports/CCM/lcd_hd44780.html
+    DEPENDS ../../../reports/CCM/
+    COMMENT "Analiza kodu narzędziem Lizard"
 )
 
 # TARGET FOR MAKING STATIC ANALYSIS OF THE SOURCE CODE AND UNIT TEST CODE
 # check if cppchec software is available 
 find_program(cppcheck_program cppcheck)
 if(cppcheck_program)
-	message(STATUS "CppCheck was found, you can use predefined targets for static analize : \r\n\tcppcheck,")
+	message(STATUS "CppCheck was found, you can use predefined targets for static analize : \r\n\tcppcheck")
 else()
 	message(STATUS "CppCheck was not found. \r\n\tInstall CppCheck to get predefined targets for static analize")
 endif()
+# # Prints static analize output for src folder in the console
 add_custom_target(cppcheck cppcheck
-					../../../src/
+					../../../src
 					../../../test/lcd_hd44780
 					-i../../../test/lcd_hd44780/out
 					--enable=all
@@ -67,8 +72,9 @@ add_custom_target(cppcheck cppcheck
 					--suppress=missingIncludeSystem 
 					--suppress=missingInclude
 					# --suppress=unusedFunction:../../../test/lcd_hd44780/lcd_hd44780_test_runner.c:3
-					# --checkers-report=cppcheck_checkers_report.txt
+					--checkers-report=cppcheck_checkers_report.txt
 					)
+
 # TARGET FOR CREATING CODE COVERAGE REPORTS
 # check if python 3 and gcovr are available 
 find_program(GCOVR gcovr)

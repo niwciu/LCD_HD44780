@@ -12,10 +12,11 @@ reports/
 .project
 .settings/
 
-
 custom_char_gen_tool/
 myVenv/
-
+.venv/
+venv/
+__pycache__
 
 
 

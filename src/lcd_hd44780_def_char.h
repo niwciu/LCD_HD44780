@@ -1,7 +1,7 @@
 /**
  * @file lcd_hd44780_def_char.h
  * @author niwciu (niwciu@gmail.com)
- * @brief
+ * @brief Header file for defining custom characters for the HD44780 LCD.
  * @version 1.0.2
  * @date 2024-02-25
  * @addtogroup LCD_HD44780_lib_API
@@ -18,31 +18,43 @@ extern "C"
 #endif /* __cplusplus */
 #include <stdint.h>
 #include "lcd_hd44780_config.h"
-    /**
-     * @struct char_bank_struct
-     * @brief Structure that contain pointers to 8 user predefined characters. Structure is used to define user character banks.
-     * Each bank can contain combinatio of maksimum 8 user special cahracters.
-     *
-     */
-    struct char_bank_struct
-    {
-        const uint8_t *char_0;
-        const uint8_t *char_1;
-        const uint8_t *char_2;
-        const uint8_t *char_3;
-        const uint8_t *char_4;
-        const uint8_t *char_5;
-        const uint8_t *char_6;
-        const uint8_t *char_7;
-    };
 
-#if USE_DEF_CHAR_FUNCTION == ON
 #define LCD_CGRAM_BYTES_PER_CHAR 8
 #define DEF_CHAR_ADR_MASK 7
+
+    /**
+     * @brief Structure for mapping ASCII characters to LCD memory equivalents.
+     *
+     * This structure defines a mapping between an ASCII character and its corresponding
+     * representation in the LCD memory, which could be an address or an enum value.
+     */
+    typedef struct
+    {
+        char ascii_char;        /**< The ASCII character to be mapped. */
+        char lcd_def_char;      /**< The corresponding representation in LCD memory (e.g., address or enum). */
+    } LCD_char_mapping_struct_t;
+
+    /**
+     * @struct char_bank_struct
+     * @brief Structure that contains pointers to 8 user predefined characters. Structure is used to define user character banks.
+     * Each bank can contain a combination of a maximum of 8 user special characters.
+     */
+    typedef struct
+    {
+        const uint8_t *char_0; /**< Pointer to the first custom character. */
+        const uint8_t *char_1; /**< Pointer to the second custom character. */
+        const uint8_t *char_2; /**< Pointer to the third custom character. */
+        const uint8_t *char_3; /**< Pointer to the fourth custom character. */
+        const uint8_t *char_4; /**< Pointer to the fifth custom character. */
+        const uint8_t *char_5; /**< Pointer to the sixth custom character. */
+        const uint8_t *char_6; /**< Pointer to the seventh custom character. */
+        const uint8_t *char_7; /**< Pointer to the eighth custom character. */
+    } char_bank_struct_t;
+
     /**********************USER CHAR DECLARATION SECTION*******************************/
     /**
      * @note To save flash when using defchar comment char definitions that are unused
-     * */
+     */
     static const uint8_t Pol_e[8] = {32, 32, 14, 17, 31, 16, 14, 3};
     static const uint8_t Pol_o[8] = {2, 4, 14, 17, 17, 17, 14, 0};
     static const uint8_t Pol_s[8] = {2, 4, 14, 16, 14, 1, 30, 32};
@@ -51,10 +63,15 @@ extern "C"
     static const uint8_t Pol_a[8] = {32, 32, 14, 1, 15, 17, 15, 3};
     static const uint8_t Pol_n[8] = {2, 4, 22, 25, 17, 17, 17, 0};
     static const uint8_t Zn_wody[8] = {0, 0, 0, 6, 9, 2, 4, 15};
-    // here add "definition" of new chars
+    // Add additional custom characters definitions here
 
-    /**********************USER CHAR CGRAM BANKS DECALRATION SECTION*******************/
-    static const struct char_bank_struct lcd_cgram_bank_1 = {
+    /**********************USER CHAR CGRAM BANKS DECLARATION SECTION*******************/
+    /**
+     * @struct char_bank_struct_t
+     * @brief Structure that contains pointers to 8 user predefined characters. Structure is used to define user character banks.
+     * Each bank can contain a combination of a maximum of 8 user special characters.
+     */
+    static const char_bank_struct_t lcd_cgram_bank_1 = {
         Pol_e,
         Pol_o,
         Pol_s,
@@ -67,45 +84,45 @@ extern "C"
     /**
      * @enum LCD_CGRAM_BANK_1_e
      * @brief Labels representing specific user defined chars collected in lcd_cgram_bank_1.
-     * Labels value are equal to adress in lcd_cgram_bank_1 and addres of LCD_CGRAM where all chars from lcd_cgram_bank_1 will be written when using
-     * lcd_load_char_bank() or lcd_def_char() when defining single char in LCD_CGRAM
+     * Label values are equal to addresses in lcd_cgram_bank_1 and the address of LCD_CGRAM where all chars from lcd_cgram_bank_1 will be written
+     * when using lcd_load_char_bank() or lcd_def_char() for defining single characters in LCD_CGRAM.
      */
     enum LCD_CGRAM_BANK_1_e
     {
-        pol_e,   /**< @brief label with vlaue 0 created for custom Char Piol_e placed under adress 0x00 in lcd_cgram_bank_1 and LCD_CGRAM*/
-        pol_o,   /**< @brief label with vlaue 1 created for custom Char Piol_o placed under adress 0x01 in lcd_cgram_bank_1 and LCD_CGRAM*/
-        pol_s,   /**< @brief label with vlaue 2 created for custom Char Piol_s placed under adress 0x02 in lcd_cgram_bank_1 and LCD_CGRAM*/
-        pol_l,   /**< @brief label with vlaue 3 created for custom Char Piol_l placed under adress 0x03 in lcd_cgram_bank_1 and LCD_CGRAM*/
-        pol_c,   /**< @brief label with vlaue 4 created for custom Char Piol_c placed under adress 0x03 in lcd_cgram_bank_1 and LCD_CGRAM*/
-        pol_a,   /**< @brief label with vlaue 5 created for custom Char Piol_a placed under adress 0x03 in lcd_cgram_bank_1 and LCD_CGRAM*/
-        pol_n,   /**< @brief label with vlaue 6 created for custom Char Piol_n placed under adress 0x03 in lcd_cgram_bank_1 and LCD_CGRAM*/
-        zn_wody, /**< @brief label with vlaue 7 created for custom Char Zn_wody placed under adress 0x03 in lcd_cgram_bank_1 and LCD_CGRAM*/
+        pol_e,   /**< @brief Label with value 0 for custom character 'Pol_e' at address 0x00 in lcd_cgram_bank_1 and LCD_CGRAM. */
+        pol_o,   /**< @brief Label with value 1 for custom character 'Pol_o' at address 0x01 in lcd_cgram_bank_1 and LCD_CGRAM. */
+        pol_s,   /**< @brief Label with value 2 for custom character 'Pol_s' at address 0x02 in lcd_cgram_bank_1 and LCD_CGRAM. */
+        pol_l,   /**< @brief Label with value 3 for custom character 'Pol_l' at address 0x03 in lcd_cgram_bank_1 and LCD_CGRAM. */
+        pol_c,   /**< @brief Label with value 4 for custom character 'Pol_c' at address 0x04 in lcd_cgram_bank_1 and LCD_CGRAM. */
+        pol_a,   /**< @brief Label with value 5 for custom character 'Pol_a' at address 0x05 in lcd_cgram_bank_1 and LCD_CGRAM. */
+        pol_n,   /**< @brief Label with value 6 for custom character 'Pol_n' at address 0x06 in lcd_cgram_bank_1 and LCD_CGRAM. */
+        zn_wody, /**< @brief Label with value 7 for custom character 'Zn_wody' at address 0x07 in lcd_cgram_bank_1 and LCD_CGRAM. */
     };
-    // //here define new bank with adreses for chars that you want load to this specifci bank
-    // static const struct char_bank_struct lcd_cgram_bank_x = {
-    //     Pol_e,
-    //     Pol_o,
-    //     Pol_s,
-    //     Pol_l,
-    //     Pol_c,
-    //     Pol_a,
-    //     Pol_n,
-    //     Zn_wody};
-    // // here define labels for lcd_cgram_bank_x
-    // enum LCD_CGRAM_BANK_x_e
-    // {
-    //     pol_e_bank_x,
-    //     pol_o_bank_x,
-    //     pol_s_bank_x,
-    //     pol_l_bank_x,
-    //     pol_c_bank_x,
-    //     pol_a_bank_x,
-    //     pol_n_bank_x,
-    //     zn_wody_bank_x,
-    // };
+
+    /**
+     * @brief Mapping between extended ASCII characters and their corresponding custom character addresses.
+     *
+     * This array maps specific extended ASCII characters (which are typically 1 byte in modern encodings like UTF-8)
+     * to the custom character addresses defined in the `lcd_cgram_bank_1`. 
+     * This allows the usage of custom characters based on their extended ASCII representation.
+     * 
+     * @warning It is required that this file and all files containing strings with Polish characters
+     *          (e.g., 'ê', 'ó', 'œ', etc.) be saved with Windows-1250 encoding to ensure proper
+     *          translation of Polish characters to the corresponding LCD-defined characters.
+     */
+    static const LCD_char_mapping_struct_t lcd_bank_1_special_chars_map[] = {
+        {'ê', pol_o},   /**< Extended ASCII 'ê' mapped to the custom character 'ó' (address 0x01) */
+        {'ó', pol_a},   /**< Extended ASCII 'ó' mapped to the custom character '¹' (address 0x05) */
+        {'œ', pol_s},   /**< Extended ASCII 'œ' mapped to the custom character 'œ' (address 0x02) */
+        {'³', pol_l},   /**< Extended ASCII '³' mapped to the custom character '³' (address 0x03) */
+        {'æ', pol_c},   /**< Extended ASCII 'æ' mapped to the custom character 'æ' (address 0x04) */
+        {'¹', pol_a},   /**< Extended ASCII '¹' mapped to the custom character '¹' (address 0x05) */
+        {'ñ', pol_n},   /**< Extended ASCII 'ñ' mapped to the custom character 'ñ' (address 0x06) */
+        {'\0', 0}       /**< Null terminator to mark the end of the mapping table */
+    };
+
     /**********************USER CHAR CGRAM BANKS DEFINITIONS END*********************/
 
-#endif // USE_DEF_CHAR_FUNC
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
