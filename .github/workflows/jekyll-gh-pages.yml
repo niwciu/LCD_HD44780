@@ -1,0 +1,92 @@
+# Sample workflow for building and deploying a Jekyll site to GitHub Pages
+name: Project page and reports deploy
+on:
+  
+  pull_request: 
+    types:
+      - closed
+    branches:
+      - main
+    
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create Reports Folder
+        run: mkdir reports
+      
+      - name: Download CCR artifact
+        id: download-ccr-artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          name: Code_Coverage_Report
+          repo: ${{ github.repository }}
+          workflow: CI_Pipeline.yml
+          path: ./reports/
+          search_artifacts: true
+
+           
+      - name: Download CCM artifact
+        id: download-ccm-artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          name: Code_Complexity_Report
+          repo: ${{ github.repository }}
+          workflow: CI_Pipeline.yml
+          path: ./reports/
+          search_artifacts: true
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+  cleanup:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    permissions: write-all
+    steps:
+      - name: 🗑 Delete deployment
+        uses: strumwolf/delete-deployment-environment@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          environment: github-pages
+          onlyRemoveDeployments: true
+
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    needs: [build, cleanup]
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

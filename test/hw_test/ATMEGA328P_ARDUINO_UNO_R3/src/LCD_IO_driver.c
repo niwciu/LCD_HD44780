@@ -5,7 +5,7 @@
  * @Last Modified time: 2023-12-08 10:49:44
  */
 
-#include "lcd_hd44780_interface.h"
+#include "lcd_hd44780_GPIO_interface.h"
 #include "lcd_hd44780_config.h"
 #include <stdio.h>
 #include <avr/io.h>

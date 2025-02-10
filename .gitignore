@@ -5,12 +5,18 @@ Debug/
 Build/
 LCD_HD44780_lib_doc/
 .vscode/
+reports/
 # HW test ingnored files
 .metadata/
 .cproject
 .project
 .settings/
 
+# custom_char_gen_tool/
+myVenv/
+.venv/
+venv/
+__pycache__
 
 
 

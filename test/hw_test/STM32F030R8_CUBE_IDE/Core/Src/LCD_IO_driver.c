@@ -13,7 +13,7 @@
 #define LCD_D6_MASK 0x04
 #define LCD_D7_MASK 0x08
 
-#include "lcd_hd44780_interface.h"
+#include "lcd_hd44780_GPIO_interface.h"
 #include "main.h"
 #include "tim_delay.h"
 #include <stdio.h>
