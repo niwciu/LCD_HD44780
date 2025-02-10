@@ -243,13 +243,13 @@ jobs:
                 ./lcd_hd44780_test -v
             
             - name: Create GCOVR Report Folder
-              run: mkdir -p ./reports/CCR/JSON_ALL/HTML_OUT
+              run: mkdir -p ./reports/CCR
 
             - name: Generate Code Coverage Report
               uses: threeal/gcovr-action@v1.1.0
               with:
                 excludes: test
-                html-out: ./reports/CCR/JSON_ALL/HTML_OUT/coverage_report.html
+                html-out: ./reports/CCR/lcd_hd44780_report.html
                 html-details: true
                 html-title: LCD HD44780 Test Coverage Report
                 html-theme: github.dark-green
@@ -288,7 +288,7 @@ jobs:
                 arguments: ${{env.arguments}}
                 language: ${{env.language}}
                 verbose: ${{env.verbose}}
-                output_file: ./reports/CCM/code_complexity_report.html
+                output_file: ./reports/CCM/lcd_hd44780.html
 
             - name: Save code complexity report
               uses: actions/upload-artifact@v4

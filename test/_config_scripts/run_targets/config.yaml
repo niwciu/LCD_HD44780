@@ -1,0 +1,17 @@
+modules:
+  - name: lcd_hd44780
+    targets:
+      - clean
+      - all
+      - run
+      - cppcheck
+      - ccmr
+      - ccr
+ 
+
+# # Lista raportów, które mają zostać otwarte dodatkowo
+reports_to_show:
+  - "CCM"
+  - "CCR"
+  # - "../reports/CCR/JSON_ALL/html_out/coverage.html"
+

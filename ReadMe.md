@@ -10,8 +10,8 @@
 
 ![CI Pipeline](https://github.com/niwciu/LCD_HD44780/actions/workflows/CI_Pipeline.yml/badge.svg)
 
-<b><a href='https://niwciu.github.io/LCD_HD44780/reports/CCR/JSON_ALL/HTML_OUT/coverage_report.html'>Library GCOVR Report</a></b>  
-<b><a href='https://niwciu.github.io/LCD_HD44780/reports/CCM/code_complexity_report.html'>Library Code Complexity Report</a></b>  
+<b><a href='https://niwciu.github.io/LCD_HD44780/reports/CCR/lcd_hd44780_report.html'>Library GCOVR Report</a></b>  
+<b><a href='https://niwciu.github.io/LCD_HD44780/reports/CCM/lcd_hd44780.html'>Library Code Complexity Report</a></b>  
 
 
 ## Features
