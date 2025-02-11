@@ -31,15 +31,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     stlink-tools && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Create a new non-root user
-ARG USERNAME=developer
-ARG USER_HOME=/home/${USERNAME}
-
-RUN groupadd -r ${USERNAME} && useradd -m -r -g ${USERNAME} -s /bin/bash ${USERNAME}
-
-# Set working directory
-WORKDIR ${USER_HOME}/workspace
-
 # Ensure pipx installs globally and is available for all users
 ENV PIPX_BIN_DIR=/usr/local/bin
 ENV PIPX_HOME=/usr/local/pipx
@@ -49,9 +40,12 @@ RUN pipx install --system-site-packages lizard && \
     pipx install --system-site-packages gcovr && \
     pipx runpip lizard install jinja2
 
+# Ensure all users can access installed tools
+RUN chmod -R a+rx /usr/local/bin /usr/local/pipx
+
 # Set tools directory
 ARG TOOLS_DIRECTORY=/opt/tools
-RUN mkdir -p ${TOOLS_DIRECTORY} && chown -R ${USERNAME}:${USERNAME} ${TOOLS_DIRECTORY}
+RUN mkdir -p ${TOOLS_DIRECTORY} && chmod -R a+rx ${TOOLS_DIRECTORY}
 
 # Install ARM toolchain
 ARG ARM_TOOLCHAIN_VERSION=13.2
@@ -72,11 +66,5 @@ RUN git clone https://github.com/danmar/cppcheck.git /tmp/cppcheck && \
     cmake --build build && cmake --install build && \
     rm -rf /tmp/cppcheck
 
-# Set ownership and permissions
-RUN chown -R ${USERNAME}:${USERNAME} ${USER_HOME}
-
-# Switch to non-root user
-USER ${USERNAME}
-
-# Default command
+# Default to running as root
 CMD ["/bin/bash"]
