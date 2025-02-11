@@ -118,7 +118,7 @@ extern "C"
         {'æ', pol_c}, /**< Extended ASCII 'æ' mapped to the custom character 'æ' (address 0x04) */
         {'¹', pol_a}, /**< Extended ASCII '¹' mapped to the custom character '¹' (address 0x05) */
         {'?', pol_n}, /**< Extended ASCII 'ñ' mapped to the custom character 'ñ' (address 0x06) */
-        {'\0', 0}     /**< Null terminator to mark the end of the mapping table */
+        {'\0', 0}     /**< MANDATORY!!! - Null terminator to mark the end of the mapping table */
     };
 
     /**********************USER CHAR CGRAM BANKS DEFINITIONS END*********************/
