@@ -97,7 +97,28 @@ extern "C"
 #define LCD_LINE2_ADR   0x40 
 #endif
 
-    // clang-format on
+#if LCD_TYPE==2002
+#define LCD_Y   2 
+#define LCD_X   20 
+#define LCD_LINE1_ADR   0x00 
+#define LCD_LINE2_ADR   0x40 
+#endif
+
+#if LCD_TYPE==802
+#define LCD_Y   2 
+#define LCD_X   8 
+#define LCD_LINE1_ADR   0x00 
+#define LCD_LINE2_ADR   0x40 
+#endif
+
+#if LCD_TYPE==801
+#define LCD_Y   1 
+#define LCD_X   8 
+#define LCD_LINE1_ADR   0x00 
+#define LCD_LINE2_ADR   0x40 
+#endif
+
+// clang-format on
 
 #ifdef __cplusplus
 }
