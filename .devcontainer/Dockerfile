@@ -28,7 +28,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     pipx \
     make \
     clang-format \
-    stlink-tools && \
+    stlink-tools \
+    graphviz && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Ensure pipx installs globally and is available for all users
@@ -66,5 +67,33 @@ RUN git clone https://github.com/danmar/cppcheck.git /tmp/cppcheck && \
     cmake --build build && cmake --install build && \
     rm -rf /tmp/cppcheck
 
-# Default to running as root
+# Install latest Doxygen from source
+ARG DOXYGEN_VERSION=1.13.2
+ARG DOXYGEN_FILE=doxygen-${DOXYGEN_VERSION}.linux.bin.tar.gz
+ARG DOXYGEN_DIRECTORY=doxygen-${DOXYGEN_VERSION}
+
+RUN wget -q https://www.doxygen.nl/files/doxygen-${DOXYGEN_VERSION}.linux.bin.tar.gz && \
+    tar xf ${DOXYGEN_FILE} -C ${TOOLS_DIRECTORY} && \
+    rm ${DOXYGEN_FILE}
+
+
+# Install latest Doxygen from source
+ARG DOXYGEN_VERSION=1.13.2
+ARG DOXYGEN_FILE=doxygen-${DOXYGEN_VERSION}.linux.bin.tar.gz
+ARG DOXYGEN_DIRECTORY=doxygen-${DOXYGEN_VERSION}
+
+# Pobieranie i rozpakowywanie Doxygena
+RUN wget -q https://www.doxygen.nl/files/doxygen-${DOXYGEN_VERSION}.linux.bin.tar.gz && \
+    tar xf ${DOXYGEN_FILE} -C ${TOOLS_DIRECTORY} && \
+    rm ${DOXYGEN_FILE}
+
+# Ustawienie zmiennych ścieżek
+ENV DOXYGEN_BIN_DIR=${TOOLS_DIRECTORY}/${DOXYGEN_DIRECTORY}/bin
+
+# Dodanie ścieżki do Doxygena w systemie PATH
+ENV PATH="${PATH}:${DOXYGEN_BIN_DIR}"
+
+# Ustawienie domyślnego powłoki
 CMD ["/bin/bash"]
+
+
