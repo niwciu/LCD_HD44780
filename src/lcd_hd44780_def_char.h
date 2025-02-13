@@ -100,24 +100,30 @@ extern "C"
     };
 
     /**
-     * @brief Mapping between extended ASCII characters and their corresponding custom character addresses.
+     * @brief Mapping of extended ASCII characters to their corresponding custom character addresses.
      *
-     * This array maps specific extended ASCII characters (which are typically 1 byte in modern encodings like UTF-8)
-     * to the custom character addresses defined in the `lcd_cgram_bank_1`.
-     * This allows the usage of custom characters based on their extended ASCII representation.
+     * This array maps selected extended ASCII characters (which typically occupy 1 byte in modern encodings like UTF-8)
+     * to custom character addresses defined in `lcd_cgram_bank_1`.
+     * This allows the use of custom characters based on their extended ASCII representation.
      *
-     * @warning It is required that this file and all files containing strings with Polish characters
-     *          (e.g., 'ê', 'ó', 'œ', etc.) be saved with Windows-1250 encoding to ensure proper
-     *          translation of Polish characters to the corresponding LCD-defined characters.
+     * @warning This file and all files containing strings with Polish characters
+     *          (e.g., 'ê', 'ó', 'œ', etc.) **must** be saved using the Windows-1250 encoding.
+     *          Failure to do so will result in incorrect character translation on the LCD.
+     *
+     * @warning A null terminator **must** be placed at the end of the mapping table.
+     *          Without this, the mapping algorithm will cause a critical fault.
      */
-    static const LCD_char_mapping_struct_t lcd_bank_1_special_chars_map[] = {
+    static const LCD_char_mapping_struct_t lcd_special_chars_map[] = {
         {'ê', pol_e}, /**< Extended ASCII 'ê' mapped to the custom character 'ê' (address 0x01) */
         {'ó', pol_o}, /**< Extended ASCII 'ó' mapped to the custom character 'ó' (address 0x05) */
         {'œ', pol_s}, /**< Extended ASCII 'œ' mapped to the custom character 'œ' (address 0x02) */
+        {'Œ', pol_s}, /**< Extended ASCII 'Œ' mapped to the custom character 'œ' (address 0x02) */
         {'³', pol_l}, /**< Extended ASCII '³' mapped to the custom character '³' (address 0x03) */
+        {'£', pol_l}, /**< Extended ASCII '£' mapped to the custom character '³' (address 0x03) */
         {'æ', pol_c}, /**< Extended ASCII 'æ' mapped to the custom character 'æ' (address 0x04) */
+        {'Æ', pol_c}, /**< Extended ASCII 'Æ' mapped to the custom character 'æ' (address 0x04) */
         {'¹', pol_a}, /**< Extended ASCII '¹' mapped to the custom character '¹' (address 0x05) */
-        {'?', pol_n}, /**< Extended ASCII 'ñ' mapped to the custom character 'ñ' (address 0x06) */
+        {'ñ', pol_n}, /**< Extended ASCII 'ñ' mapped to the custom character 'ñ' (address 0x06) */
         {'\0', 0}     /**< MANDATORY!!! - Null terminator to mark the end of the mapping table */
     };
 
