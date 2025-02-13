@@ -39,7 +39,7 @@ PRIVATE char prev_lcd_buffer[LCD_Y][LCD_X];
 
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
 
-bool LCD_BUFFER_UPDATE_FLAG = false;
+PRIVATE bool LCD_BUFFER_UPDATE_FLAG = false;
 
 static void register_LCD_IO_driver(void);
 static void lcd_set_all_SIG(void);

@@ -69,8 +69,6 @@ extern "C"
         C20  /**< @brief pass as argument when calling lcd_locate() or lcd_buf_locate() to move curson to 20'th char/collumn of LCD */
     };
 
-    extern bool LCD_BUFFER_UPDATE_FLAG;
-
     void lcd_init(void);
     void lcd_enable_backlight(void);
     void lcd_disable_backlight(void);
