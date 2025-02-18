@@ -110,7 +110,6 @@ void lcd_bin_AVR(int val, uint8_t width)
     buffer[0] = '\0';
 
     itoa(val, buffer, 2);
-    // if (buf_lenght < (width - VAL_PREFIX_LENGHT))
     if (width <= (strlen(buffer) + VAL_PREFIX_LENGHT))
     {
         lcd_str(prefix);

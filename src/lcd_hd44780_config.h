@@ -40,12 +40,12 @@ extern "C"
 *               OFF - when buffering of LCD is NOT planned to be used in the project
 ********************************************************************************************/
 
-#define LCD_TYPE                1602
-#define USE_RW_PIN              OFF 
+#define LCD_TYPE                1602   // init
+#define USE_RW_PIN              OFF    // compilation
 
-#define LCD_BCKL_PIN_EN_STATE   HIGH
+#define LCD_BCKL_PIN_EN_STATE   HIGH    // init
 
-#define LCD_BUFFERING           ON
+#define LCD_BUFFERING           ON      // compilation
 
 /********************************  LCD LIBRARY COMPILATION SETTINGS ************************
  *      Setting USE_(procedure name) to:

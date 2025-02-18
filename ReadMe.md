@@ -12,7 +12,7 @@
 
 <b><a href='https://niwciu.github.io/LCD_HD44780/reports/CCR/lcd_hd44780_report.html'>Library GCOVR Report</a></b>  
 <b><a href='https://niwciu.github.io/LCD_HD44780/reports/CCM/lcd_hd44780.html'>Library Code Complexity Report</a></b>  <br><br>
-<b><a href='https://niwciu.github.io/LCD_HD44780/doc/LCD_HD44780_lib_doc/html/index.html'>Doxygen Code Documentation </a></b>  
+<b><a href='https://niwciu.github.io/LCD_HD44780/doc/LCD_HD44780_lib_doc/html/index.html'>Code Documentation </a></b>  
 
 
 ## Features
