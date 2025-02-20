@@ -1,6 +1,6 @@
 import sys
 import numpy as np
- from PyQt6.QtWidgets import (
+from PyQt6.QtWidgets import (
     QApplication, QWidget, QHBoxLayout, QVBoxLayout, QLabel, QComboBox, QLineEdit, QTextEdit, QPushButton, QListWidget,
     QMessageBox, QFileDialog, QInputDialog
 )
@@ -207,6 +207,8 @@ class LCDCharDesigner(QWidget):
 
     def update_c_code(self):
         c_code = self.generate_c_code()
+        c_code += "\n"
+        c_code += self.generate_char_bank_c_code()
         self.code_view.setText(c_code)
         self.adjust_code_view_width()
         self.adjustSize()
@@ -220,6 +222,32 @@ class LCDCharDesigner(QWidget):
             max_line_length = max(max_line_length, len(char_code))
         self.max_code_width = max_line_length
         return c_code
+    
+    def generate_char_bank_c_code(self):
+        char_bank_c_code = ""
+        if self.bank_list.count() > 0:
+            for i in range(self.bank_list.count()):  
+                bank_name_item= self.bank_list.item(i)
+                bank_name= bank_name_item.text()
+                char_bank_c_code += "static const char_bank_struct_t " + bank_name + " = {\n"
+                for char in self.banks[bank_name]:
+                    char_bank_c_code += char + ",\n"
+                char_bank_c_code += "};\n"
+                char_bank_c_code += "\n"
+                char_bank_c_code += "enum " + bank_name +"_e \n{\n"
+                for char in self.banks[bank_name]:
+                    if char[0].islower():
+                        new_char = char[0].upper() + char[1:]  # Zamień na dużą
+                    elif char[0].isupper():
+                        new_char = char[0].lower() + char[1:]  # Zamień na małą
+                    
+                    char_bank_c_code += new_char + ",\n"
+                char_bank_c_code += "};\n"
+                char_bank_c_code += "\n"
+
+                # self.banks[bank_name_item]
+
+        return char_bank_c_code
 
     def adjust_code_view_width(self):
         text_length = self.max_code_width
@@ -330,6 +358,7 @@ class LCDCharDesigner(QWidget):
             else:
                 self.banks[bank_name] = []
                 self.bank_list.addItem(bank_name)
+        self.update_c_code()
 
     def delete_bank(self):
         selected_item = self.bank_list.currentItem()
@@ -338,6 +367,7 @@ class LCDCharDesigner(QWidget):
             del self.banks[bank_name]
             self.bank_list.takeItem(self.bank_list.row(selected_item))
             self.bank_chars_list.clear()
+        self.update_c_code()
 
     def add_char_to_bank(self):
         selected_char_item = self.char_list.currentItem()
@@ -367,6 +397,7 @@ class LCDCharDesigner(QWidget):
         self.bank_list.clear()
         for bank_name in self.banks.keys():
             self.bank_list.addItem(bank_name)
+        self.update_c_code()
 
     def update_bank_view(self):
         selected_bank_item = self.bank_list.currentItem()
