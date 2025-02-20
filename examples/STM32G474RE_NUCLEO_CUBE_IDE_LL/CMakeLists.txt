@@ -38,8 +38,6 @@ set(INCLUDE_DIRS
 
 ./Drivers/STM32G4xx_HAL_Driver/Inc
 
-../../src
-
 .
 )
 
@@ -60,8 +58,6 @@ set(C_SRCS
     Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c
     # Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_tim.c
     Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c
-
-    ../../src/lcd_hd44780.c
 	
 )
 
@@ -88,9 +84,10 @@ set(GLOBAL_DEFINES
 )
 
 set(LINKED_LIBS
-
+  lib_lcd_hd44780
 )
 
+add_subdirectory(../../src lib_lcd_hd44780)
 link_directories(
 
 )
@@ -105,4 +102,3 @@ include(    ../config/STM32/compiler_flags.cmake)
 add_arm_executable(${CMAKE_PROJECT_NAME} ${C_SRCS} ${ASM_SRCS})
 
 arm_link_libraries(${CMAKE_PROJECT_NAME} ${LINKED_LIBS})
-

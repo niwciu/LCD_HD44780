@@ -52,7 +52,7 @@ set(LOCK_BIT 0xff)
 
 set(INCLUDE_DIRS
 	./inc
-	../../src	
+	# ../../src	
 )
 
 set(C_SRCS
@@ -60,7 +60,7 @@ set(C_SRCS
 	./src/debug.c
 	./src/LCD_IO_driver.c
 
-	../../src/lcd_hd44780.c
+	# ../../src/lcd_hd44780.c
 
 )
 
@@ -75,10 +75,10 @@ set(GLOBAL_DEFINES
 )
 
 set(LINKED_LIBS
-
+ lib_lcd_hd44780
 )
 
-
+add_subdirectory(../../src lib_lcd_hd44780)
 
 link_directories(
 

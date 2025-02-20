@@ -36,12 +36,6 @@ set(INCLUDE_DIRS
     ./Drivers/CMSIS/Device
     ./Drivers/CMSIS/Include
     ./Drivers/CMSIS/STM32G0_Drivers
-
-
-    ../../src
-
-    ../../lib
-
 .
 )
 
@@ -53,7 +47,6 @@ set(C_SRCS
     ./Core/Src/tim_delay.c
     ./Core/Src/LCD_IO_driver.c
 
-    ../../src/lcd_hd44780.c
 )
 
 set(ASM_SRCS
@@ -66,9 +59,10 @@ set(GLOBAL_DEFINES
 )
 
 set(LINKED_LIBS
-
+ lib_lcd_hd44780
 )
 
+add_subdirectory(../../src lib_lcd_hd44780)
 link_directories(
 
 )

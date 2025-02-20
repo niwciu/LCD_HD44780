@@ -13,7 +13,7 @@
 #         	3. ninja -C out -o lcd_hd44780.o (optional with -V )
 # 
 #############################################################################################################################
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.20)
 
 project(lcd_hd44780_test C)
 
@@ -22,11 +22,7 @@ add_subdirectory(../unity unity)
 set(CUSTOM_TARGETS_FILE_DIR ./custom_targets.cmake)
 
 set(CMAKE_C_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -Wextra")
-if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU")
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fdiagnostics-color=always")
-elseif ("${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
-	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fcolor-diagnostics")
-endif()
+set(CMAKE_COLOR_DIAGNOSTICS ON)
 
 set(INCLUDE_DIRS
 	../../src
@@ -59,11 +55,12 @@ set(GLOBAL_DEFINES
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g3")
 include(${CUSTOM_TARGETS_FILE_DIR})
 
-include_directories(${INCLUDE_DIRS} ${TEST_INCLUDE_DIRS})
 add_definitions(${GLOBAL_DEFINES})
 
-link_libraries(unity)
-add_executable(${PROJECT_NAME} ${SRCS} ${TEST_SRCS})
+add_executable(${CMAKE_PROJECT_NAME} ${SRCS} ${TEST_SRCS})
 
-target_compile_options(${PROJECT_NAME} PRIVATE -fprofile-arcs -ftest-coverage)
-target_link_options(${PROJECT_NAME} PRIVATE -fprofile-arcs)
+target_link_libraries(${CMAKE_PROJECT_NAME} unity)
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${INCLUDE_DIRS} ${TEST_INCLUDE_DIRS})
+
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -fprofile-arcs -ftest-coverage)
+target_link_options(${CMAKE_PROJECT_NAME} PRIVATE -fprofile-arcs)

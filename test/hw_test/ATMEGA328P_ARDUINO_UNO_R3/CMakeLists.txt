@@ -53,7 +53,7 @@ set(LOCK_BIT 0xff)
 set(INCLUDE_DIRS
 	../
 	./inc	
-	../../../src/
+	# ../../../src/
 )
 
 set(C_SRCS
@@ -61,8 +61,8 @@ set(C_SRCS
 	./src/debug.c
 	./src/LCD_IO_driver.c
 
-	../../../src/lcd_hd44780.c
-	../../../src/lcd_hd44780_avr_specific.c
+	# ../../../src/lcd_hd44780.c
+	# ../../../src/lcd_hd44780_avr_specific.c
 	../hw_test_main.c
 )
 
@@ -77,14 +77,15 @@ set(GLOBAL_DEFINES
 )
 
 set(LINKED_LIBS
-
+    lcd_hd44780_lib
 )
-
 
 
 link_directories(
 
 )
+add_definitions(${GLOBAL_DEFINES})
+add_subdirectory(../../../src lcd_hd44780_lib)
 
 include_directories(${INCLUDE_DIRS})
 add_definitions(${GLOBAL_DEFINES})
@@ -92,6 +93,8 @@ add_definitions(${GLOBAL_DEFINES})
 include(    ./config/AVR_compiler_flags.cmake)
 add_compile_options(${COMPILE_OPTIONS})
 # generate elf file
+
+
 add_AVR_executable(${CMAKE_PROJECT_NAME} ${C_SRCS} ${ASM_SRCS})
 
 AVR_link_libraries(${CMAKE_PROJECT_NAME} ${LINKED_LIBS})

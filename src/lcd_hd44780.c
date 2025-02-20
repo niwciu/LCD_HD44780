@@ -331,9 +331,9 @@ void lcd_enable_backlight(void)
 }
 
 /**
- * @brief Function that disable backlight of the LCD. 
- * This function change the backlight GPIO pin  state to inactive. 
- * Active state of the GPIO backlight pin is defined by @ lcd_init() 
+ * @brief Function that disable backlight of the LCD.
+ * This function change the backlight GPIO pin  state to inactive.
+ * Active state of the GPIO backlight pin is defined by @ lcd_init()
  */
 void lcd_disable_backlight(void)
 {

@@ -115,7 +115,6 @@ extern "C"
 #define LCD_Y   1 
 #define LCD_X   8 
 #define LCD_LINE1_ADR   0x00 
-#define LCD_LINE2_ADR   0x40 
 #endif
 
     // clang-format on

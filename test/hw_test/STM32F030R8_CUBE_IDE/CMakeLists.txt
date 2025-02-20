@@ -17,7 +17,7 @@
 #          cmake -S ./ -B Release -G"Ninja" -DCMAKE_BUILD_TYPE=Release
 #          ninja -C Release (optional -V  and -jxx ->xx numnber of cores)
 #############################################################################################################################
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.20)
 
 set(CMAKE_TOOLCHAIN_FILE config/Toolchain-arm-gcc.cmake)
 
@@ -26,6 +26,8 @@ enable_language(ASM)
 
 project(STM32F030R8_LCD_HW_TEST)
 
+
+set(CMAKE_COLOR_DIAGNOSTICS ON)
 set(INCLUDE_DIRS
 ../
 ./Core
@@ -37,8 +39,6 @@ set(INCLUDE_DIRS
 ./Drivers/CMSIS/Device/ST/STM32F0xx/Include
 
 ./Drivers/STM32F0xx_HAL_Driver/Inc
-
-../../../src
 
 .
 )
@@ -58,7 +58,6 @@ set(C_SRCS
     Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_rcc.c
     Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_utils.c
 
-    ../../../src/lcd_hd44780.c
     ../hw_test_main.c
 	
 )
@@ -85,18 +84,15 @@ set(GLOBAL_DEFINES
 )
 
 set(LINKED_LIBS
-
+    lcd_hd44780_lib
 )
-
-link_directories(
-
-)
+add_subdirectory(../../../src lcd_hd44780_lib)
 
 include_directories(${INCLUDE_DIRS})
 add_definitions(${GLOBAL_DEFINES})
 
 set(MCPU "-mcpu=cortex-m0")
-include(    config/compiler_flags.cmake)
+include(config/compiler_flags.cmake)
 
 # generate elf file
 add_arm_executable(${CMAKE_PROJECT_NAME} ${C_SRCS} ${ASM_SRCS})
