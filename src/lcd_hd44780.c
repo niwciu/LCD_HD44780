@@ -41,7 +41,7 @@ static const struct LCD_IO_driver_interface_struct *LCD = NULL;
 #if USE_DEF_CHAR_FUNCTION == ON
 static const lcd_char_mapping_struct_t *char_mapping_tab = NULL;
 #endif
-    PRIVATE bool LCD_BUFFER_UPDATE_FLAG = false;
+PRIVATE bool LCD_BUFFER_UPDATE_FLAG = false;
 
 static void register_LCD_IO_driver(void);
 static void lcd_set_all_SIG(void);
