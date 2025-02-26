@@ -35,10 +35,10 @@ set(INCLUDE_DIRS
 # Core/Src
 # Core/Startup
 
-./Drivers/CMSIS/Include
-./Drivers/CMSIS/Device/ST/STM32F0xx/Include
+# ./Drivers/CMSIS/Include
+# ./Drivers/CMSIS/Device/ST/STM32F0xx/Include
 
-./Drivers/STM32F0xx_HAL_Driver/Inc
+# ./Drivers/STM32F0xx_HAL_Driver/Inc
 
 .
 )
@@ -52,11 +52,11 @@ set(C_SRCS
     Core/Src/LCD_IO_driver.c
     Core/Src/tim_delay.c
 
-    Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_exti.c
-    Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_gpio.c
-    Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_pwr.c
-    Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_rcc.c
-    Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_utils.c
+    # Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_exti.c
+    # Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_gpio.c
+    # Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_pwr.c
+    # Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_rcc.c
+    # Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_ll_utils.c
 
     ../hw_test_main.c
 	
@@ -84,16 +84,18 @@ set(GLOBAL_DEFINES
 )
 
 set(LINKED_LIBS
-    lcd_hd44780_lib
+    lib_lcd_hd44780
+    lib_hal_ll_drivers
 )
-add_subdirectory(../../../src lcd_hd44780_lib)
-
-include_directories(${INCLUDE_DIRS})
-add_definitions(${GLOBAL_DEFINES})
-
 set(MCPU "-mcpu=cortex-m0")
 include(config/compiler_flags.cmake)
 
+add_definitions(${GLOBAL_DEFINES})
+
+add_subdirectory(../../../src lib_lcd_hd44780)
+add_subdirectory(./Drivers lib_hal_ll_drivers)
+
+include_directories(${INCLUDE_DIRS})
 # generate elf file
 add_arm_executable(${CMAKE_PROJECT_NAME} ${C_SRCS} ${ASM_SRCS})
 

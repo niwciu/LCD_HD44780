@@ -92,10 +92,10 @@ void buffering_func_tests(void)
     lcd_update();
     _delay_ms(1000);
     lcd_buf_cls();
-    lcd_load_char_bank(&lcd_cgram_bank_1);
-    lcd_buf_char(pol_e);
-    lcd_buf_char(pol_o);
-    lcd_buf_char(zn_wody);
+    lcd_load_char_bank(&bank_1_load_data);
+    lcd_buf_char(bank_1_Pol_e);
+    lcd_buf_char(bank_1_Pol_o);
+    lcd_buf_char(bank_1_Zn_wody);
     lcd_update();
     _delay_ms(1000);
     lcd_buf_cls();

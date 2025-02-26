@@ -77,7 +77,7 @@ set(GLOBAL_DEFINES
 )
 
 set(LINKED_LIBS
-    lcd_hd44780_lib
+    lib_lcd_hd44780
 )
 
 
@@ -85,7 +85,7 @@ link_directories(
 
 )
 add_definitions(${GLOBAL_DEFINES})
-add_subdirectory(../../../src lcd_hd44780_lib)
+add_subdirectory(../../../src lib_lcd_hd44780)
 
 include_directories(${INCLUDE_DIRS})
 add_definitions(${GLOBAL_DEFINES})

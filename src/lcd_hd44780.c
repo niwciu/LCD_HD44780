@@ -38,8 +38,10 @@ PRIVATE char prev_lcd_buffer[LCD_Y][LCD_X];
 #endif
 
 static const struct LCD_IO_driver_interface_struct *LCD = NULL;
-
-PRIVATE bool LCD_BUFFER_UPDATE_FLAG = false;
+#if USE_DEF_CHAR_FUNCTION == ON
+static const lcd_char_mapping_struct_t *char_mapping_tab = NULL;
+#endif
+    PRIVATE bool LCD_BUFFER_UPDATE_FLAG = false;
 
 static void register_LCD_IO_driver(void);
 static void lcd_set_all_SIG(void);
@@ -68,9 +70,7 @@ static void update_lcd_curosr_possition(uint8_t *lcd_cursor_position, uint8_t *l
 static void write_lcd_buf_2_lcd(const uint8_t *lcd_cursor_position, const uint8_t *lcd_line, uint8_t *missed_char_counter_in_LCD_line, const lcd_pos_t *prev_lcd_buff_pos_ptr);
 #endif
 #if USE_DEF_CHAR_FUNCTION == ON
-
 char lcd_translate_char(char c);
-
 #endif
 
 static void register_LCD_IO_driver(void)
@@ -264,14 +264,17 @@ static void write_lcd_buf_2_lcd(const uint8_t *lcd_cursor_position, const uint8_
 
 char lcd_translate_char(char c)
 {
-    int i = 0;
-    while (lcd_special_chars_map[i].ascii_char != '\0')
-    { // Iteracja przez mapowanie
-        if (lcd_special_chars_map[i].ascii_char == c)
-        {
-            return lcd_special_chars_map[i].lcd_def_char; // Zwrócenie odpowiednika LCD
+    if (char_mapping_tab != NULL)
+    {
+        int i = 0;
+        while (char_mapping_tab[i].ascii_char != '\0')
+        { // Iteracja przez mapowanie
+            if (char_mapping_tab[i].ascii_char == c)
+            {
+                return char_mapping_tab[i].lcd_def_char_addr; // Zwrócenie odpowiednika LCD
+            }
+            i++;
         }
-        i++;
     }
     return c; // Jeśli brak mapowania, zwróć oryginalny znak
 }
@@ -384,16 +387,17 @@ void lcd_def_char(const uint8_t CGRAM_bank_x_char_adr, const uint8_t *def_char)
  *
  * @param char_bank - pointer to selected user char bank that function should load to LCD_CGRAM. Char banks are defined in lcd_hd44780_def_char.h
  */
-void lcd_load_char_bank(const char_bank_struct_t *char_bank)
+void lcd_load_char_bank(const lcd_bank_load_struct_t *char_bank_data)
 {
-    lcd_def_char(0, char_bank->char_0);
-    lcd_def_char(1, char_bank->char_1);
-    lcd_def_char(2, char_bank->char_2);
-    lcd_def_char(3, char_bank->char_3);
-    lcd_def_char(4, char_bank->char_4);
-    lcd_def_char(5, char_bank->char_5);
-    lcd_def_char(6, char_bank->char_6);
-    lcd_def_char(7, char_bank->char_7);
+    lcd_def_char(0, char_bank_data->char_bank->char_0);
+    lcd_def_char(1, char_bank_data->char_bank->char_1);
+    lcd_def_char(2, char_bank_data->char_bank->char_2);
+    lcd_def_char(3, char_bank_data->char_bank->char_3);
+    lcd_def_char(4, char_bank_data->char_bank->char_4);
+    lcd_def_char(5, char_bank_data->char_bank->char_5);
+    lcd_def_char(6, char_bank_data->char_bank->char_6);
+    lcd_def_char(7, char_bank_data->char_bank->char_7);
+    char_mapping_tab = char_bank_data->char_mapping_tab;
 }
 #endif
 #if USE_DEF_CHAR_FUNCTION == ON
