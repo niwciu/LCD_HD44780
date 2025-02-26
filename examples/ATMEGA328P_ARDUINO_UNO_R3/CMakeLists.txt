@@ -78,6 +78,9 @@ set(LINKED_LIBS
  lib_lcd_hd44780
 )
 
+include(    ../config/AVR/AVR_compiler_flags.cmake)
+add_compile_options(${COMPILE_OPTIONS})
+
 add_subdirectory(../../src lib_lcd_hd44780)
 
 link_directories(
@@ -87,8 +90,6 @@ link_directories(
 include_directories(${INCLUDE_DIRS})
 add_definitions(${GLOBAL_DEFINES})
 
-include(    ../config/AVR/AVR_compiler_flags.cmake)
-add_compile_options(${COMPILE_OPTIONS})
 # generate elf file
 add_AVR_executable(${CMAKE_PROJECT_NAME} ${C_SRCS} ${ASM_SRCS})
 

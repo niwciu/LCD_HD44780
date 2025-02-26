@@ -30,14 +30,6 @@ set(INCLUDE_DIRS
 ../
 ./Core
 ./Core/Inc
-# Core/Src
-# Core/Startup
-
-./Drivers/CMSIS/Include
-./Drivers/CMSIS/Device/ST/STM32G4xx/Include
-
-./Drivers/STM32G4xx_HAL_Driver/Inc
-
 .
 )
 
@@ -50,14 +42,14 @@ set(C_SRCS
     Core/Src/LCD_IO_driver.c
     Core/Src/tim_delay.c
 
-    Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c
-    Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_exti.c
-    Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_gpio.c
-    Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_lpuart.c
-    Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_pwr.c
-    Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c
-    # Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_tim.c
-    Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c
+    # Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_dma.c
+    # Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_exti.c
+    # Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_gpio.c
+    # Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_lpuart.c
+    # Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_pwr.c
+    # Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_rcc.c
+    # # Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_tim.c
+    # Drivers/STM32G4xx_HAL_Driver/Src/stm32g4xx_ll_utils.c
 	
 )
 
@@ -80,23 +72,24 @@ set(GLOBAL_DEFINES
 -DPREFETCH_ENABLE=0 
 -DINSTRUCTION_CACHE_ENABLE=1 
 -DDATA_CACHE_ENABLE=1 
-# -std=gnu11 -g3 -c -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb
 )
 
 set(LINKED_LIBS
   lib_lcd_hd44780
+  lib_hal_ll_drivers
 )
+set(MCPU "-mcpu=cortex-m4")
+include(    ../config/STM32/compiler_flags.cmake)
 
-add_subdirectory(../../src lib_lcd_hd44780)
-link_directories(
-
-)
 
 include_directories(${INCLUDE_DIRS})
 add_definitions(${GLOBAL_DEFINES})
 
-set(MCPU "-mcpu=cortex-m4")
-include(    ../config/STM32/compiler_flags.cmake)
+add_subdirectory(../../src lib_lcd_hd44780)
+add_subdirectory(./Drivers lib_hal_ll_drivers)
+link_directories(
+  
+)
 
 # generate elf file
 add_arm_executable(${CMAKE_PROJECT_NAME} ${C_SRCS} ${ASM_SRCS})

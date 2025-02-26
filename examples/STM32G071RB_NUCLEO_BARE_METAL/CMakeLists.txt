@@ -59,7 +59,7 @@ set(GLOBAL_DEFINES
 )
 
 set(LINKED_LIBS
- lib_lcd_hd44780
+  lib_lcd_hd44780
 )
 
 add_subdirectory(../../src lib_lcd_hd44780)
