@@ -27,7 +27,7 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true
+    # i: github.event.pull_request.merged == true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -56,6 +56,11 @@ jobs:
           path: ./reports/
           search_artifacts: true
 
+      - name: Generte Doxygen html doc
+        uses: mattnotmitt/doxygen-action@v1.9.5
+        with:
+            working-directory: './doc/'
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
@@ -68,7 +73,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
   cleanup:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true
+    # i: github.event.pull_request.merged == true
     permissions: write-all
     steps:
       - name: 🗑 Delete deployment
@@ -84,7 +89,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true
+    # i: github.event.pull_request.merged == true
     needs: [build, cleanup]
     steps:
       - name: Deploy to GitHub Pages

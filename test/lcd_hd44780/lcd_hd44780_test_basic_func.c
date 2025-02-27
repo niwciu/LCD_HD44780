@@ -60,24 +60,24 @@ TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenLcdClearScreenThenSignalSequen
 #if USE_DEF_CHAR_FUNCTION == ON
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenLcdDefCharPol_eCalledThenSignalSequenceForLcdDefCharIsCorrect)
 {
-    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, pol_e, Pol_e);
+    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, bank_1_Pol_e, Pol_e);
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
-    lcd_def_char(pol_e, Pol_e);
+    lcd_def_char(bank_1_Pol_e, Pol_e);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 
 TEST(lcd_hd44780_basic_functions, GivenLcdInitWhenDefineSepcialCharactersFromBank1ThenSignalSequenceIsCorrect)
 {
-    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, pol_e, Pol_e);
-    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, pol_o, Pol_o);
-    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, pol_s, Pol_s);
-    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, pol_l, Pol_l);
-    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, pol_c, Pol_c);
-    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, pol_a, Pol_a);
-    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, pol_n, Pol_n);
-    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, zn_wody, Zn_wody);
+    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, bank_1_Pol_e, Pol_e);
+    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, bank_1_Pol_o, Pol_o);
+    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, bank_1_Pol_s, Pol_s);
+    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, bank_1_Pol_l, Pol_l);
+    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, bank_1_Pol_c, Pol_c);
+    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, bank_1_Pol_a, Pol_a);
+    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, bank_1_Pol_n, Pol_n);
+    next_log_no = define_expect_sequence_for_lcd_def_char(next_log_no, bank_1_Zn_wody, Zn_wody);
     expected_buf_lenght = (next_log_no) * (LOG_DATA_AMOUNT);
-    lcd_load_char_bank(&lcd_cgram_bank_1, lcd_bank_1_special_chars_map);
+    lcd_load_char_bank(&bank_1_load_data);
     TEST_ASSERT_EQUAL_UINT16_ARRAY(expected_LCD_Port_delay_dump_data, mock_LCD_Port_delay_dump_data, expected_buf_lenght);
 }
 #endif
