@@ -20,6 +20,8 @@ extern char lcd_buffer[LCD_Y][LCD_X];
 extern char prev_lcd_buffer[LCD_Y][LCD_X];
 char expected_lcd_buf[LCD_Y][LCD_X];
 
+extern bool LCD_BUFFER_UPDATE_FLAG;
+
 static void define_expected_buffer_value_for_cls(void);
 static log_no_t define_expected_sequence_for_move_to_last_character_from_first_line_whne_nothing_to_print_on_lcd(log_no_t start_log_no);
 static log_no_t define_expected_sequence_for_lcd_locate_0_0(log_no_t start_log_no);

@@ -17,6 +17,7 @@ myVenv/
 .venv/
 venv/
 __pycache__
+ToDo.txt
 
 
 

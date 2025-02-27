@@ -1,2 +1,0 @@
-nump
-PyQt6
